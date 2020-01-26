@@ -5,13 +5,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import lt.vtmc.restApi.dto.CreateUserCommand;
-import lt.vtmc.security.service.UserService;
 
 /**
  * Security controller for system users.
@@ -23,6 +19,7 @@ import lt.vtmc.security.service.UserService;
 public class SecurityController {
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
+
 	/**
 	 * This method will return logged in users username.
 	 * 

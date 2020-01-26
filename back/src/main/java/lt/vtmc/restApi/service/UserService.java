@@ -1,10 +1,6 @@
 package lt.vtmc.restApi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,12 +16,13 @@ import lt.vtmc.restApi.model.User;
  *
  */
 @Service
-public class UserService{
+public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	/**
+	 * 
 	 * This method finds users from user repository.
 	 */
 	public User findUserByUsername(String username) {
@@ -51,7 +48,7 @@ public class UserService{
 
 		newUser.setRole("USER");
 		return newUser;
-		
+
 	}
 
 	/**

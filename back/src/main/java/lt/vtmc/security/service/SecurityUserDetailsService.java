@@ -5,22 +5,11 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import lt.vtmc.restApi.dao.UserRepository;
 import lt.vtmc.restApi.model.User;
 
-/**
- * User service class to create and manipulate user instaces.
- * 
- * @author pra-va
- *
- */
-@Service
-public class UserService implements UserDetailsService {
+public class SecurityUserDetailsService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -41,33 +30,11 @@ public class UserService implements UserDetailsService {
 	}
 
 	/**
+	 * 
 	 * This method finds users from user repository.
 	 */
-	@Transactional
 	public User findUserByUsername(String username) {
 		return userRepository.findUserByUsername(username);
 	}
-<<<<<<< HEAD
 
-	/**
-	 * Method to create users. It can grant either ADMIN or USER rights.
-	 * 
-	 * @param username
-	 * @param password
-	 * @param role
-	 */
-	@Transactional
-	public void createUser(String username, String password, String role) {
-		if (findUserByUsername(username) == null) {
-			User newUser = new User();
-			newUser.setUsername(username);
-			PasswordEncoder encoder = new BCryptPasswordEncoder();
-			newUser.setPassword(encoder.encode(password));
-			newUser.setRole(role);
-			userRepository.save(newUser);
-		}
-	}
-
-=======
->>>>>>> a702bf256682c660a6e1a017c9af537be4693fce
 }
