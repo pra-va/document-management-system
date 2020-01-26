@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import lt.vtmc.security.dto.CreateUserCommand;
+import lt.vtmc.restApi.dto.CreateUserCommand;
 import lt.vtmc.security.service.UserService;
 
 /**
@@ -23,18 +23,14 @@ import lt.vtmc.security.service.UserService;
 public class SecurityController {
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
-
-	@Autowired
-	private UserService userService;
-
 	/**
 	 * This method will return logged in users username.
 	 * 
-	 * @url /api/loggedAdmin
+	 * @url /api/loggedin
 	 * @method GET
 	 * @return username or "not logged".
 	 */
-	@RequestMapping(path = "/api/loggedAdmin", method = RequestMethod.GET)
+	@RequestMapping(path = "/api/loggedin", method = RequestMethod.GET)
 	public String getLoggedInUsername() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -43,31 +39,4 @@ public class SecurityController {
 		}
 		return "Not logged in.";
 	}
-
-	/**
-	 * Creates user with ADMIN role. Only system administrator should be able to
-	 * access this method.
-	 * 
-	 * @url /api/createadmin
-	 * @method POST
-	 * @param user details
-	 */
-	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
-	public void createAdmin(@RequestBody CreateUserCommand command) {
-		userService.createSystemAdministrator(command.getUsername(), command.getPassword());
-	}
-
-	/**
-	 * Creates user with ADMIN role. Only system administrator should be able to
-	 * access this method.
-	 * 
-	 * @url /api/createadmin
-	 * @method POST
-	 * @param user details
-	 */
-	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
-	public void createUser(@RequestBody CreateUserCommand command) {
-		userService.createUser(command.getUsername(), command.getPassword());
-	}
-
 }
