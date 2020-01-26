@@ -39,4 +39,34 @@ public class SecurityController {
 		}
 		return "Not logged in.";
 	}
+<<<<<<< HEAD
+
+	/**
+	 * Creates user with ADMIN role. Only system administrator should be able to
+	 * access this method.
+	 * 
+	 * @url /api/createadmin
+	 * @method POST
+	 * @param user details
+	 */
+	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
+	public void createAdmin(@RequestBody CreateUserCommand command) {
+		userService.createUser(command.getUsername(), command.getPassword(), "ADMIN");
+	}
+
+	/**
+	 * Creates user with ADMIN role. Only system administrator should be able to
+	 * access this method.
+	 * 
+	 * @url /api/createadmin
+	 * @method POST
+	 * @param user details
+	 */
+	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
+	public void createUser(@RequestBody CreateUserCommand command) {
+		userService.createUser(command.getUsername(), command.getPassword(), "USER");
+	}
+
+=======
+>>>>>>> a702bf256682c660a6e1a017c9af537be4693fce
 }

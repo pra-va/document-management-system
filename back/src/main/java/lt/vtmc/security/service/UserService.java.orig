@@ -47,4 +47,27 @@ public class UserService implements UserDetailsService {
 	public User findUserByUsername(String username) {
 		return userRepository.findUserByUsername(username);
 	}
+<<<<<<< HEAD
+
+	/**
+	 * Method to create users. It can grant either ADMIN or USER rights.
+	 * 
+	 * @param username
+	 * @param password
+	 * @param role
+	 */
+	@Transactional
+	public void createUser(String username, String password, String role) {
+		if (findUserByUsername(username) == null) {
+			User newUser = new User();
+			newUser.setUsername(username);
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			newUser.setPassword(encoder.encode(password));
+			newUser.setRole(role);
+			userRepository.save(newUser);
+		}
+	}
+
+=======
+>>>>>>> a702bf256682c660a6e1a017c9af537be4693fce
 }
