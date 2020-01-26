@@ -26,66 +26,57 @@ import lt.vtmc.security.SecurityEntryPoint;
 @WebMvcTest(value = UserController.class)
 public class UserControllerTest {
 
-	@Autowired private MockMvc mockMvc;
-	
+	@Autowired
+	private MockMvc mockMvc;
+
 	@MockBean
 	private SecurityEntryPoint securityEntryPoint;
-	
+
 	@MockBean
 	private UserService userService;
-	
+
 	@MockBean
 	private User user;
-	
-@Test
-public void testCreateUser() throws Exception {
-	User mockUser = new User("testUser", "testing123", "USER");
 
-	// userService.createUser to respond back with mockUser
-	Mockito.when(
-			userService.createUser(Mockito.anyString(), Mockito.anyString())
-			)
-			.thenReturn(mockUser);
-	
-	String exampleCreateUserCommand = "{\"username\":\"testUser\",\"password\":\"testing123\"}";
-	
-	// Send CreateUserCommand as body to /api/createuser
-	RequestBuilder requestBuilder = MockMvcRequestBuilders
-			.post("/api/createuser")
-			.accept(MediaType.APPLICATION_JSON)
-			.content(exampleCreateUserCommand)
-			.contentType(MediaType.APPLICATION_JSON);
+	@Test
+	public void testCreateUser() throws Exception {
+		User mockUser = new User("testUser", "testing123", "USER");
 
-	MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		// userService.createUser to respond back with mockUser
+		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
 
-	MockHttpServletResponse response = result.getResponse();
+		String exampleCreateUserCommand = "{\"username\":\"testUser\",\"password\":\"testing123\"}";
 
-	assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-}
+		// Send CreateUserCommand as body to /api/createuser
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/createuser")
+				.accept(MediaType.APPLICATION_JSON).content(exampleCreateUserCommand)
+				.contentType(MediaType.APPLICATION_JSON);
 
-@Test
-public void testCreateAdminUser() throws Exception {
-	User mockUser = new User("testAdminUser", "testing123", "ADMIN");
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-	// userService.createUser to respond back with mockUser
-	Mockito.when(
-			userService.createUser(Mockito.anyString(), Mockito.anyString())
-			)
-			.thenReturn(mockUser);
-	
-	String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"password\":\"testing123\"}";
-	
-	// Send CreateUserCommand as body to /api/createadmin
-	RequestBuilder requestBuilder = MockMvcRequestBuilders
-			.post("/api/createadmin")
-			.accept(MediaType.APPLICATION_JSON)
-			.content(exampleCreateUserCommand)
-			.contentType(MediaType.APPLICATION_JSON);
+		MockHttpServletResponse response = result.getResponse();
 
-	MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+	}
 
-	MockHttpServletResponse response = result.getResponse();
+	@Test
+	public void testCreateAdminUser() throws Exception {
+		User mockUser = new User("testAdminUser", "testing123", "ADMIN");
 
-	assertEquals(HttpStatus.CREATED.value(), response.getStatus());
-}
+		// userService.createUser to respond back with mockUser
+		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
+
+		String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"password\":\"testing123\"}";
+
+		// Send CreateUserCommand as body to /api/createadmin
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/createadmin")
+				.accept(MediaType.APPLICATION_JSON).content(exampleCreateUserCommand)
+				.contentType(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		MockHttpServletResponse response = result.getResponse();
+
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+	}
 }

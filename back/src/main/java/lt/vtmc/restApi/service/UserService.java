@@ -41,12 +41,10 @@ public class UserService {
 	public User createUser(String username, String password) {
 		User newUser = new User();
 		newUser.setUsername(username);
-
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-
 		newUser.setPassword(encoder.encode(password));
-
 		newUser.setRole("USER");
+		userRepository.save(newUser);
 		return newUser;
 
 	}
@@ -62,12 +60,10 @@ public class UserService {
 	public User createSystemAdministrator(String username, String password) {
 		User newUser = new User();
 		newUser.setUsername(username);
-
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-
 		newUser.setPassword(encoder.encode(password));
-
 		newUser.setRole("ADMIN");
+		userRepository.save(newUser);
 		return newUser;
 	}
 
