@@ -1,8 +1,8 @@
-package lt.vtmc.restApi.dao;
+package lt.vtmc.user.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import lt.vtmc.restApi.model.User;
+import lt.vtmc.user.model.User;
 
 /**
  * User repositroy.

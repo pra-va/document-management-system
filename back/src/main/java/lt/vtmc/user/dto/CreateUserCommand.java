@@ -1,10 +1,10 @@
-package lt.vtmc.restApi.dto;
+package lt.vtmc.user.dto;
 
 /**
  * Create user command used by controller
- * {@link lt.vtmc.restApi.controller.UserController#createAdmin(CreateUserCommand)}
+ * {@link lt.vtmc.user.controller.UserController#createAdmin(CreateUserCommand)}
  * and
- * {@link lt.vtmc.restApi.controller.UserController#crerateUser(CreateUserCommand)}
+ * {@link lt.vtmc.user.controller.UserController#crerateUser(CreateUserCommand)}
  * 
  * @author pra-va
  *

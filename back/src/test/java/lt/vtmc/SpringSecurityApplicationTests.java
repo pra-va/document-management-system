@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import lt.vtmc.restApi.service.UserService;
+import lt.vtmc.user.service.UserService;
 
 @SpringBootTest
 class SpringSecurityApplicationTests {

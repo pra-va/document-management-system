@@ -1,4 +1,4 @@
-package lt.vtmc.restApi;
+package lt.vtmc.user;
 
 import static org.junit.Assert.assertEquals;
 
@@ -17,10 +17,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import lt.vtmc.restApi.controller.UserController;
-import lt.vtmc.restApi.model.User;
-import lt.vtmc.restApi.service.UserService;
 import lt.vtmc.security.SecurityEntryPoint;
+import lt.vtmc.user.controller.UserController;
+import lt.vtmc.user.model.User;
+import lt.vtmc.user.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebMvcTest(value = UserController.class)

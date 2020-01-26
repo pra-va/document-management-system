@@ -1,4 +1,4 @@
-package lt.vtmc.restApi;
+package lt.vtmc.user;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,9 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import lt.vtmc.restApi.dao.UserRepository;
-import lt.vtmc.restApi.model.User;
-import lt.vtmc.restApi.service.UserService;
+import lt.vtmc.user.dao.UserRepository;
+import lt.vtmc.user.model.User;
+import lt.vtmc.user.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest

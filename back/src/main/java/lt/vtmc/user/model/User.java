@@ -1,4 +1,4 @@
-package lt.vtmc.restApi.model;
+package lt.vtmc.user.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

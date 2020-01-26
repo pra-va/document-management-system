@@ -1,4 +1,4 @@
-package lt.vtmc.restApi.controller;
+package lt.vtmc.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import lt.vtmc.restApi.dto.CreateUserCommand;
-import lt.vtmc.restApi.service.UserService;
+import lt.vtmc.user.dto.CreateUserCommand;
+import lt.vtmc.user.service.UserService;
 
 /**
  * Controller for managing system users.
