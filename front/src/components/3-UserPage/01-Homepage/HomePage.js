@@ -51,7 +51,7 @@ class AdminHomePage extends Component {
       .get("http://localhost:8080/dvs/api/logout")
       .then(response => {
         console.log("Logged out.");
-        this.props.history.push("/login");
+        this.props.history.push("/");
       })
       .catch(error => {
         console.log(error);

@@ -49,42 +49,22 @@ public class UserService implements UserDetailsService {
 	}
 
 	/**
-	 * Method to create users.
+	 * Method to create users. It can grant either ADMIN or USER rights.
 	 * 
 	 * @param username
 	 * @param password
 	 * @param role
 	 */
 	@Transactional
-	public void createUser(String username, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
-
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
-
-		newUser.setPassword(encoder.encode(password));
-
-		newUser.setRole("USER");
-		userRepository.save(newUser);
-	}
-
-	/**
-	 * Method to create system administrators.
-	 * 
-	 * @param username
-	 * @param password
-	 */
-	@Transactional
-	public void createSystemAdministrator(String username, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
-
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
-
-		newUser.setPassword(encoder.encode(password));
-
-		newUser.setRole("ADMIN");
-		userRepository.save(newUser);
+	public void createUser(String username, String password, String role) {
+		if (findUserByUsername(username) == null) {
+			User newUser = new User();
+			newUser.setUsername(username);
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			newUser.setPassword(encoder.encode(password));
+			newUser.setRole(role);
+			userRepository.save(newUser);
+		}
 	}
 
 }

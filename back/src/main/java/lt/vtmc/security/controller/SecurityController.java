@@ -34,7 +34,7 @@ public class SecurityController {
 	 * @method GET
 	 * @return username or "not logged".
 	 */
-	@RequestMapping(path = "/api/loggedAdmin", method = RequestMethod.GET)
+	@RequestMapping(path = "/api/loggedin", method = RequestMethod.GET)
 	public String getLoggedInUsername() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -54,7 +54,7 @@ public class SecurityController {
 	 */
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public void createAdmin(@RequestBody CreateUserCommand command) {
-		userService.createSystemAdministrator(command.getUsername(), command.getPassword());
+		userService.createUser(command.getUsername(), command.getPassword(), "ADMIN");
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class SecurityController {
 	 */
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public void createUser(@RequestBody CreateUserCommand command) {
-		userService.createUser(command.getUsername(), command.getPassword());
+		userService.createUser(command.getUsername(), command.getPassword(), "USER");
 	}
 
 }
