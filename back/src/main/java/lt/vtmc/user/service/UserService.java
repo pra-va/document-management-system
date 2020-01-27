@@ -1,4 +1,4 @@
-package lt.vtmc.security.service;
+package lt.vtmc.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lt.vtmc.security.dao.UserRepository;
-import lt.vtmc.security.model.User;
+import lt.vtmc.user.dao.UserRepository;
+import lt.vtmc.user.model.User;
 
 /**
  * User service class to create and manipulate user instaces.
@@ -41,9 +41,9 @@ public class UserService implements UserDetailsService {
 	}
 
 	/**
+	 * 
 	 * This method finds users from user repository.
 	 */
-	@Transactional
 	public User findUserByUsername(String username) {
 		return userRepository.findUserByUsername(username);
 	}
@@ -54,18 +54,18 @@ public class UserService implements UserDetailsService {
 	 * @param username
 	 * @param password
 	 * @param role
+	 * @return User
 	 */
 	@Transactional
-	public void createUser(String username, String password) {
+	public User createUser(String username, String password) {
 		User newUser = new User();
 		newUser.setUsername(username);
-
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-
 		newUser.setPassword(encoder.encode(password));
-
 		newUser.setRole("USER");
 		userRepository.save(newUser);
+		return newUser;
+
 	}
 
 	/**
@@ -73,18 +73,17 @@ public class UserService implements UserDetailsService {
 	 * 
 	 * @param username
 	 * @param password
+	 * @return User
 	 */
 	@Transactional
-	public void createSystemAdministrator(String username, String password) {
+	public User createSystemAdministrator(String username, String password) {
 		User newUser = new User();
 		newUser.setUsername(username);
-
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-
 		newUser.setPassword(encoder.encode(password));
-
 		newUser.setRole("ADMIN");
 		userRepository.save(newUser);
+		return newUser;
 	}
 
 }

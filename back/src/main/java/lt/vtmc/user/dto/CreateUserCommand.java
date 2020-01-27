@@ -1,10 +1,10 @@
-package lt.vtmc.security.dto;
+package lt.vtmc.user.dto;
 
 /**
  * Create user command used by controller
- * {@link lt.vtmc.security.controller.SecurityController#createAdmin(CreateUserCommand)}
+ * {@link lt.vtmc.user.controller.UserController#createAdmin(CreateUserCommand)}
  * and
- * {@link lt.vtmc.security.controller.SecurityController#crerateUser(CreateUserCommand)}
+ * {@link lt.vtmc.user.controller.UserController#crerateUser(CreateUserCommand)}
  * 
  * @author pra-va
  *

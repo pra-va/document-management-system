@@ -16,18 +16,16 @@ import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
 // Other imports
-import App from "./components/00-MainWindow/App";
-import PageNotFound from "./components/01-Errors/PageNotFound";
-import LoginPicker from "./components/02-LoginPicker/LoginPicker";
-import LoginForm from "./components/03-LoginForm/LoginForm";
-import HomePage from "./components/04-Homepage/HomePage";
+import App from "./components/0-MainWindow/App";
+import PageNotFound from "./components/1-Errors/PageNotFound";
+import LoginForm from "./components/2-LoginForm/LoginForm";
+import HomePage from "./components/3-UserPage/01-Homepage/HomePage";
 
 ReactDOM.render(
   <BrowserRouter>
     <App>
       <Switch>
-        <Route exact path="/" component={LoginPicker} />
-        <Route exact path="/login" component={LoginForm} />
+        <Route exact path="/" component={LoginForm} />
         <Route exact path="/home" component={HomePage} />
 
         <Route path="*" component={PageNotFound} />
