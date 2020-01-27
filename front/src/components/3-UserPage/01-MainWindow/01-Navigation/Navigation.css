@@ -1,0 +1,20 @@
+.invert {
+  filter: invert(100%);
+}
+
+.width-30 {
+  margin-left: 2em;
+  max-width: 10vh;
+  max-height: min-content;
+  width: auto;
+  height: auto;
+}
+
+a {
+  color: #fff;
+}
+
+.link-text-format {
+  font-size: 1.1em;
+  margin: 0 1em;
+}

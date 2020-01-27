@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Navigation from "./01-Navigation/Navigation";
+import Main from "./02-Main/Main";
 
 class AdminHomePage extends Component {
   constructor(props) {
     super(props);
-    this.state = { userMessage: "", adminMessage: "" };
+    this.state = {
+      userMessage: "",
+      adminMessage: "",
+      isUserAdmin: props.role
+    };
   }
 
   componentDidMount() {
@@ -45,27 +51,13 @@ class AdminHomePage extends Component {
       });
   };
 
-  handleLogout = event => {
-    event.preventDefault();
-    axios
-      .get("http://localhost:8080/dvs/api/logout")
-      .then(response => {
-        console.log("Logged out.");
-        this.props.history.push("/");
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   render() {
     return (
       <div>
+        <Navigation isUserAdmin={this.state.isUserAdmin} />
+        <Main />
         <h1 className="m-3">{this.state.userMessage}</h1>
         <h1 className="m-3">{this.state.adminMessage}</h1>
-        <button className="btn btn-info m-3" onClick={this.handleLogout}>
-          Logout
-        </button>
       </div>
     );
   }
