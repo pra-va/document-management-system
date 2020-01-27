@@ -13,44 +13,6 @@ class AdminHomePage extends Component {
     };
   }
 
-  componentDidMount() {
-    this.message();
-  }
-
-  message = () => {
-    axios
-      .get("http://localhost:8080/dvs/api/user/")
-      .then(response => {
-        if (
-          response.status === 200 &&
-          this.state.userMessage !== response.data
-        ) {
-          this.setState({ userMessage: response.data });
-        }
-        console.log("user response");
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    axios
-      .get("http://localhost:8080/dvs/api/admin/")
-      .then(response => {
-        if (
-          response.status === 200 &&
-          this.state.adminMessage !== response.data
-        ) {
-          this.setState({ adminMessage: response.data });
-        }
-        console.log("admin response");
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   render() {
     return (
       <div>

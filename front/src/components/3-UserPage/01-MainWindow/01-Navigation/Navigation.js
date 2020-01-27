@@ -31,8 +31,17 @@ class Navigation extends Component {
           <img src={logo} alt="unable to load" className="width-30" />
         </Link>
 
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target=".navbar-collapse"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav mr-auto link-text-format">
             <li className="nav-item active">
               <Link className="nav-link link-text-format" to="/home">
                 Create Document <span className="sr-only">(current)</span>
@@ -69,13 +78,26 @@ class Navigation extends Component {
                     to="/admin/add"
                     className="dropdown-item link-text-format"
                   >
-                    Add New Product
+                    New User
+                  </Link>
+                  <Link
+                    to="/admin/add"
+                    className="dropdown-item link-text-format"
+                  >
+                    New Group
+                  </Link>
+
+                  <Link
+                    to="/admin/list"
+                    className="dropdown-item link-text-format"
+                  >
+                    Groups
                   </Link>
                   <Link
                     to="/admin/list"
                     className="dropdown-item link-text-format"
                   >
-                    Products List
+                    Users
                   </Link>
                 </div>
               </li>

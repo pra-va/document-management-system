@@ -2,6 +2,11 @@
   filter: invert(100%);
 }
 
+.invert:hover {
+  filter: invert(85%);
+  cursor: pointer;
+}
+
 .width-30 {
   margin-left: 2em;
   max-width: 10vh;
@@ -17,4 +22,27 @@ a {
 .link-text-format {
   font-size: 1.1em;
   margin: 0 1em;
+}
+
+.link-text-format:hover {
+  color: rgb(216, 216, 216);
+}
+
+.navbar-dark .navbar-nav .active > .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active:hover,
+.navbar-dark .navbar-nav .nav-link.show:hover,
+.navbar-dark .navbar-nav .show > .nav-link:hover {
+  color: rgb(216, 216, 216);
+}
+
+.dropdown-item {
+  background-color: #fff;
+  max-width: 2em;
+}
+
+.dropdown-item:hover {
+  background-color: #fff;
+  color: black;
+  font-weight: bold;
+  text-decoration: underline;
 }
