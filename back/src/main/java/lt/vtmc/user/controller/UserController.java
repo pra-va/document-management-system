@@ -34,7 +34,7 @@ public class UserController {
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
-			userService.createSystemAdministrator(command.getUsername(), command.getPassword());
+			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(), command.getPassword());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -53,7 +53,7 @@ public class UserController {
 		if (userService.findUserByUsername(command.getUsername()) == null) { // creates a new user entity ONLY if there
 																				// are no user in the database with the
 																				// same username
-			userService.createUser(command.getUsername(), command.getPassword());
+			userService.createUser(command.getUsername(), command.getName(), command.getSurname(), command.getPassword());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);

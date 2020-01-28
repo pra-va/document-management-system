@@ -12,6 +12,8 @@ package lt.vtmc.user.dto;
 public class CreateUserCommand {
 
 	private String username;
+	private String name;
+	private String surname;
 	private String password;
 
 	/**
@@ -20,8 +22,10 @@ public class CreateUserCommand {
 	 * @param username
 	 * @param password
 	 */
-	public CreateUserCommand(String username, String password) {
+	public CreateUserCommand(String username, String name, String surname, String password) {
 		this.username = username;
+		this.name = name;
+		this.surname = surname;
 		this.password = password;
 
 	}
@@ -58,4 +62,35 @@ public class CreateUserCommand {
 		this.password = password;
 	}
 
+	/**
+	 * 
+	 * @param name
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * 
+	 * @return name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @param surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+	/**
+	 * 
+	 * @return surname
+	 */
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+	
+	
 }
