@@ -40,10 +40,10 @@ public class UserControllerTest {
 
 	@Test
 	public void testCreateUser() throws Exception {
-		User mockUser = new User("testUser", "testing123", "USER");
+		User mockUser = new User("testUsername", "testName", "testSurname", "testing123", "USER");
 
 		// userService.createUser to respond back with mockUser
-		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
+		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
 
 		String exampleCreateUserCommand = "{\"username\":\"testUser\",\"password\":\"testing123\"}";
 
@@ -61,10 +61,10 @@ public class UserControllerTest {
 
 	@Test
 	public void testCreateAdminUser() throws Exception {
-		User mockUser = new User("testAdminUser", "testing123", "ADMIN");
+		User mockUser = new User("testUsername", "testName", "testSurname", "testing123", "ADMIN");
 
 		// userService.createUser to respond back with mockUser
-		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
+		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
 
 		String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"password\":\"testing123\"}";
 

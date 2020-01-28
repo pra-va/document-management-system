@@ -52,14 +52,17 @@ public class UserService implements UserDetailsService {
 	 * Method to create users.
 	 * 
 	 * @param username
+	 * @param name
+	 * @param surname
 	 * @param password
-	 * @param role
 	 * @return User
 	 */
 	@Transactional
-	public User createUser(String username, String password) {
+	public User createUser(String username, String name, String surname, String password) {
 		User newUser = new User();
 		newUser.setUsername(username);
+		newUser.setUsername(name);
+		newUser.setUsername(surname);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
 		newUser.setRole("USER");
@@ -72,13 +75,17 @@ public class UserService implements UserDetailsService {
 	 * Method to create system administrators.
 	 * 
 	 * @param username
+	 * @param name
+	 * @param surname
 	 * @param password
 	 * @return User
 	 */
 	@Transactional
-	public User createSystemAdministrator(String username, String password) {
+	public User createSystemAdministrator(String username, String name, String surname, String password) {
 		User newUser = new User();
 		newUser.setUsername(username);
+		newUser.setUsername(name);
+		newUser.setUsername(surname);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
 		newUser.setRole("ADMIN");
