@@ -17,12 +17,20 @@ import javax.validation.constraints.Size;
 public class User {
 
 	@NotEmpty
+	// @Size(min = 8)
 	private String password;
 
 	@Id
 	@Size(min = 4)
 	private String username;
 
+	@NotEmpty(message = "Name field may not be empty")
+	private String name;
+
+	@NotEmpty(message = "Surname field may not be empty")
+	private String surname;
+
+	@NotEmpty(message = "Rple field may not be empty")
 	private String role;
 
 	/**
@@ -32,9 +40,11 @@ public class User {
 	 * @param username
 	 * @param role
 	 */
-	public User(String username, String password, String role) {
-		this.password = password;
+	public User(String username, String name, String surname, String password, String role) {
 		this.username = username;
+		this.name = name;
+		this.surname = surname;
+		this.password = password;
 		this.role = role;
 	}
 
@@ -46,7 +56,7 @@ public class User {
 
 	/**
 	 * 
-	 * @return
+	 * @return password
 	 */
 	public String getPassword() {
 		return password;
@@ -62,7 +72,7 @@ public class User {
 
 	/**
 	 * 
-	 * @return
+	 * @return username
 	 */
 	public String getUsername() {
 		return username;
@@ -78,7 +88,39 @@ public class User {
 
 	/**
 	 * 
-	 * @return
+	 * @return name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * 
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * 
+	 * @return surname
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	public void/**
+				 * 
+				 * @param surname
+				 */
+			setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	/**
+	 * 
+	 * @return role
 	 */
 	public String getRole() {
 		return role;
@@ -92,6 +134,10 @@ public class User {
 		this.role = role;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@Override
 	public String toString() {
 		return "User [username=" + username + "password=" + password + ",role=" + role + "]";

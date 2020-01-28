@@ -19,7 +19,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./components/0-MainWindow/App";
 import PageNotFound from "./components/1-Errors/PageNotFound";
 import LoginForm from "./components/2-LoginForm/LoginForm";
-import HomePage from "./components/3-UserPage/01-Homepage/HomePage";
+import HomePage from "./components/3-UserPage/01-MainWindow/HomePagePreLoader";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -27,7 +27,6 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={LoginForm} />
         <Route exact path="/home" component={HomePage} />
-
         <Route path="*" component={PageNotFound} />
         <Route component={PageNotFound} />
       </Switch>

@@ -11,15 +11,16 @@ import lt.vtmc.user.model.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class UserEntityTest {
-	
+
 	@Test
 	public void testUserEntity() throws Exception {
-		
-		User user = new User("testUser", "testing123", "USER");
+
+		User user = new User("testUsername", "testName", "testSurname", "testing123", "USER");
 		assertNotNull(user);
-		assertEquals(user.getUsername(), "testUser");
+		assertEquals(user.getUsername(), "testUsername");
+		assertEquals(user.getName(), "testName");
+		assertEquals(user.getSurname(), "testSurname");
 		assertEquals(user.getPassword(), "testing123");
 		assertEquals(user.getRole(), "USER");
-		assertEquals(user.toString(), "User [username=" + "testUser" + "password=" + "testing123" + ",role=" + "USER" + "]");
 	}
 }

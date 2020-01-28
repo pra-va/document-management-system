@@ -52,36 +52,34 @@ public class UserService implements UserDetailsService {
 	 * Method to create users.
 	 * 
 	 * @param username
+	 * @param name
+	 * @param surname
 	 * @param password
-	 * @param role
 	 * @return User
 	 */
 	@Transactional
-	public User createUser(String username, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
+	public User createUser(String username, String name, String surname, String password) {
+		User newUser = new User(username, name, surname, password, "USER");
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
-		newUser.setRole("USER");
 		userRepository.save(newUser);
 		return newUser;
-
 	}
 
 	/**
 	 * Method to create system administrators.
 	 * 
 	 * @param username
+	 * @param name
+	 * @param surname
 	 * @param password
 	 * @return User
 	 */
 	@Transactional
-	public User createSystemAdministrator(String username, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
+	public User createSystemAdministrator(String username, String name, String surname, String password) {
+		User newUser = new User(username, name, surname, password, "ADMIN");
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
-		newUser.setRole("ADMIN");
 		userRepository.save(newUser);
 		return newUser;
 	}

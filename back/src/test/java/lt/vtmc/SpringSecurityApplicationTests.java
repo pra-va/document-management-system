@@ -23,8 +23,8 @@ class SpringSecurityApplicationTests {
 	 */
 	@Test
 	public void createFakeUserAndSystemAdministrator() {
-		userService.createSystemAdministrator("admin", "admin");
-		userService.createUser("user", "user");
+		userService.createSystemAdministrator("admin", "testName", "testSurname", "admin");
+		userService.createUser("user", "testName", "testSurname", "user");
 	}
 
 }

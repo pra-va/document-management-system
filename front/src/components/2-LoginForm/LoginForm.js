@@ -25,6 +25,7 @@ class LoginForm extends Component {
 
   handleSubmit = event => {
     let userData = new URLSearchParams();
+    let isUserAdmin = false;
     userData.append("username", this.state.username);
     userData.append("password", this.state.password);
     axios
@@ -32,8 +33,13 @@ class LoginForm extends Component {
         headers: { "Content-type": "application/x-www-form-urlencoded" }
       })
       .then(response => {
+        console.log(response);
+        isUserAdmin = response.data.su;
         if (response.status === 200) {
-          this.props.history.push("/home");
+          this.props.history.push({
+            pathname: "/home",
+            state: { isUserAdmin: isUserAdmin }
+          });
         }
       })
       .catch(error => {
@@ -50,43 +56,47 @@ class LoginForm extends Component {
     return (
       <div className="container">
         <div
-          className="row d-flex
-            justify-content-center
+          className="row d-flex justify-content-center
            align-items-lg heigth-100"
         >
-          <form onSubmit={this.handleSubmit}>
-            <img className="my-3" src={logo} alt="unable to load" />
+          <form onSubmit={this.handleSubmit} className="form-width ">
+            <img className="my-3 width" src={logo} alt="unable to load" />
             <div className="form-group">
               <label
-                className="d-flex justify-content-start col-form-label-lg mb-0"
+                className="d-flex justify-content-start col-form-label-lg mb-0 pb-0"
                 htmlFor="username"
               >
                 Username
               </label>
               <input
                 type="text"
-                className="form-control form-control-lg"
+                className="form-control"
                 id="username"
                 aria-describedby="username"
                 onChange={this.handleUsernameChange}
+                autoComplete="on"
               />
             </div>
             <div className="form-group">
               <label
-                className="d-flex justify-content-start col-form-label-lg mb-0"
+                className="d-flex justify-content-start col-form-label-lg mb-0 pb-0 pt-0"
                 htmlFor="password"
               >
                 Password
               </label>
               <input
                 type="password"
-                className="form-control form-control-lg"
+                className="form-control"
                 id="password"
                 onChange={this.handlePasswordChange}
+                autoComplete="on"
               />
             </div>
-            <button type="submit" className="btn btn-black btn-lg btn-block">
-              Submit
+            <button
+              type="submit"
+              className="btn btn-black btn-lg btn-block mt-4"
+            >
+              Log In
             </button>
             {this.state.loginFailed ? (
               <div className="alert alert-danger my-3" role="alert">

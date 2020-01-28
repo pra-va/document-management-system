@@ -15,3 +15,14 @@
   background-color: rgb(0, 0, 0);
   color: #fff;
 }
+
+.width {
+  max-width: 22vh;
+  max-height: min-content;
+  width: auto;
+  height: auto;
+}
+
+.form-width {
+  min-width: 22em;
+}
