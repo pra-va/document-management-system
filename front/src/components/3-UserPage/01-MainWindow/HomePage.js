@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import Navigation from "./01-Navigation/Navigation";
 import Main from "./02-Main/Main";
 

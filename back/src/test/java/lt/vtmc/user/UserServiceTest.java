@@ -30,17 +30,21 @@ public class UserServiceTest {
 	@Test
 	public void testCreateUser() throws Exception {
 		assertNotNull(userService.createUser("testUsername", "testName", "testSurname", "testing123"));
-		assertEquals(userService.createUser("testUsername", "testName", "testSurname", "testing123").getUsername(), "testUser");
+		assertEquals(userService.createUser("testUsername", "testName", "testSurname", "testing123").getUsername(),
+				"testUsername");
 		assertEquals(userService.createUser("testUsername", "testName", "testSurname", "testing123").getRole(), "USER");
 
-		userRepository.deleteById("testUser");
+		userRepository.deleteById("testUsername");
 	}
 
 	@Test
 	public void testCreateAdmin() throws Exception {
-		assertNotNull(userService.createSystemAdministrator("testUsername", "testName", "testSurname", "testing123"));
-		assertEquals(userService.createSystemAdministrator("testAdmin", "testName", "testSurname", "testing123").getUsername(), "testAdmin");
-		assertEquals(userService.createSystemAdministrator("testUsername", "testName", "testSurname", "testing123").getRole(), "ADMIN");
+		assertNotNull(userService.createSystemAdministrator("testAdmin", "testName", "testSurname", "testing123"));
+		assertEquals(userService.createSystemAdministrator("testAdmin", "testName", "testSurname", "testing123")
+				.getUsername(), "testAdmin");
+		assertEquals(
+				userService.createSystemAdministrator("testAdmin", "testName", "testSurname", "testing123").getRole(),
+				"ADMIN");
 
 		userRepository.deleteById("testAdmin");
 	}

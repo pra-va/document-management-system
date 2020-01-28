@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -18,19 +17,20 @@ import javax.validation.constraints.Size;
 public class User {
 
 	@NotEmpty
-	//@Size(min = 8)
+	// @Size(min = 8)
 	private String password;
 
 	@Id
 	@Size(min = 4)
 	private String username;
-	
-	@NotEmpty(message = "Name may not be empty")
+
+	@NotEmpty(message = "Name field may not be empty")
 	private String name;
-	
-	@NotEmpty(message = "Surname may not be empty")
+
+	@NotEmpty(message = "Surname field may not be empty")
 	private String surname;
-	
+
+	@NotEmpty(message = "Rple field may not be empty")
 	private String role;
 
 	/**
@@ -85,7 +85,7 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	/**
 	 * 
 	 * @return name
@@ -93,6 +93,7 @@ public class User {
 	public String getName() {
 		return name;
 	}
+
 	/**
 	 * 
 	 * @param name
@@ -100,6 +101,7 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * 
 	 * @return surname
@@ -107,11 +109,12 @@ public class User {
 	public String getSurname() {
 		return surname;
 	}
-	
+
 	public void/**
-	 * 
-	 * @param surname
-	 */setSurname(String surname) {
+				 * 
+				 * @param surname
+				 */
+			setSurname(String surname) {
 		this.surname = surname;
 	}
 
@@ -130,9 +133,10 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	/**
 	 * 
-	 * @return 
+	 * @return
 	 */
 	@Override
 	public String toString() {

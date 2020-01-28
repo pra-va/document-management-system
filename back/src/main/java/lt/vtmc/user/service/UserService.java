@@ -59,16 +59,11 @@ public class UserService implements UserDetailsService {
 	 */
 	@Transactional
 	public User createUser(String username, String name, String surname, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
-		newUser.setUsername(name);
-		newUser.setUsername(surname);
+		User newUser = new User(username, name, surname, password, "USER");
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
-		newUser.setRole("USER");
 		userRepository.save(newUser);
 		return newUser;
-
 	}
 
 	/**
@@ -82,13 +77,9 @@ public class UserService implements UserDetailsService {
 	 */
 	@Transactional
 	public User createSystemAdministrator(String username, String name, String surname, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
-		newUser.setUsername(name);
-		newUser.setUsername(surname);
+		User newUser = new User(username, name, surname, password, "ADMIN");
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
-		newUser.setRole("ADMIN");
 		userRepository.save(newUser);
 		return newUser;
 	}
