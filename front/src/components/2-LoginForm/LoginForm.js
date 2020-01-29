@@ -55,8 +55,11 @@ class LoginForm extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row ">
-          <form onSubmit={this.handleSubmit} className="form-width">
+        <div
+          className="row d-flex justify-content-center
+           align-items-lg heigth-100"
+        >
+          <form onSubmit={this.handleSubmit} className="form-width ">
             <img className="my-3 width" src={logo} alt="unable to load" />
             <div className="form-group">
               <label

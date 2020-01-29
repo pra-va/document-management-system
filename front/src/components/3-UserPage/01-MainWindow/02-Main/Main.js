@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Main.css";
+import RoleContext from "./../../../5-Context/UserRole";
 import AdminPhoto from "./../../../../resources/admin.svg";
 import MyDocuments from "./../../../../resources/my-documents.svg";
 import NewDocument from "./../../../../resources/new-document.svg";
 import SignDocument from "./../../../../resources/sign-document.svg";
 
 var Main = () => {
+  var userIsAdmin = useContext(RoleContext);
   return (
     <div className="container">
-      <div className="row justify-content-center">
+      <div className="row justify-content-center mt-4">
         <div className="col-12 col-md-6 my-4 card-width">
           <div className="card text-white bg-dark card-heigth">
             <img
@@ -47,18 +49,22 @@ var Main = () => {
             </div>
           </div>
         </div>
-        <div className="col-12 col-md-6 my-4 card-width">
-          <div className="card text-white bg-dark card-heigth">
-            <img
-              src={AdminPhoto}
-              className="card-img-top p-3 mt-4 invert"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">Admin</h5>
+        {userIsAdmin.role === "true" ? (
+          <div className="col-12 col-md-6 my-4 card-width">
+            <div className="card text-white bg-dark card-heigth">
+              <img
+                src={AdminPhoto}
+                className="card-img-top p-3 mt-4 invert"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Admin</h5>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <span> </span>
+        )}
       </div>
     </div>
   );

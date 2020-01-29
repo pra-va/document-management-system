@@ -1,5 +1,7 @@
 package lt.vtmc.user.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,16 +61,11 @@ public class UserService implements UserDetailsService {
 	 */
 	@Transactional
 	public User createUser(String username, String name, String surname, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
-		newUser.setUsername(name);
-		newUser.setUsername(surname);
+		User newUser = new User(username, name, surname, password, "USER");
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
-		newUser.setRole("USER");
 		userRepository.save(newUser);
 		return newUser;
-
 	}
 
 	/**
@@ -82,15 +79,20 @@ public class UserService implements UserDetailsService {
 	 */
 	@Transactional
 	public User createSystemAdministrator(String username, String name, String surname, String password) {
-		User newUser = new User();
-		newUser.setUsername(username);
-		newUser.setUsername(name);
-		newUser.setUsername(surname);
+		User newUser = new User(username, name, surname, password, "ADMIN");
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
-		newUser.setRole("ADMIN");
 		userRepository.save(newUser);
 		return newUser;
 	}
 
+	public List<User> retrieveAllUsers() {
+		List<User> userList = userRepository.findAll();
+		return userList;
+	}
+	
+	@Transactional
+	public void deleteUser(User user) {
+		userRepository.delete(user);
+	}
 }

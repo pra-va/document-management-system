@@ -27,7 +27,6 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={LoginForm} />
         <Route exact path="/home" component={HomePage} />
-
         <Route path="*" component={PageNotFound} />
         <Route component={PageNotFound} />
       </Switch>

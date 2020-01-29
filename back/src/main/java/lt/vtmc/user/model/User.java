@@ -1,11 +1,21 @@
 package lt.vtmc.user.model;
 
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import lt.vtmc.groups.model.Group;
 
 /**
  * User entity for database.
@@ -14,25 +24,36 @@ import javax.validation.constraints.Size;
  *
  */
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 public class User {
 
-	@NotEmpty
-	//@Size(min = 8)
-	private String password;
 
 	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
 	@Size(min = 4)
+	@Column(name="username")
 	private String username;
-	
-	@NotEmpty(message = "Name may not be empty")
-	private String name;
-	
-	@NotEmpty(message = "Surname may not be empty")
-	private String surname;
-	
-	private String role;
 
+
+	@NotEmpty
+	// @Size(min = 8)
+	private String password;
+	
+	@NotEmpty(message = "Name field may not be empty")
+	private String name;
+
+	@NotEmpty(message = "Surname field may not be empty")
+	private String surname;
+
+	@NotEmpty(message = "Role field may not be empty")
+	private String role;
+	
+	@ManyToMany
+	@JoinTable(name="USERS_TO_GROUPS",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="user_id"))
+	private List<Group> groupList;
 	/**
 	 * Constructor.
 	 * 
@@ -85,7 +106,7 @@ public class User {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
+
 	/**
 	 * 
 	 * @return name
@@ -93,6 +114,7 @@ public class User {
 	public String getName() {
 		return name;
 	}
+
 	/**
 	 * 
 	 * @param name
@@ -100,6 +122,7 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * 
 	 * @return surname
@@ -107,11 +130,12 @@ public class User {
 	public String getSurname() {
 		return surname;
 	}
-	
+
 	public void/**
-	 * 
-	 * @param surname
-	 */setSurname(String surname) {
+				 * 
+				 * @param surname
+				 */
+			setSurname(String surname) {
 		this.surname = surname;
 	}
 
@@ -132,19 +156,29 @@ public class User {
 	}
 	/**
 	 * 
-	 * @return 
+	 * @return
 	 */
-	@Override
-	public String toString() {
-		return "User [username=" + username + "password=" + password + ",role=" + role + "]";
+	public Collection<Group> getGroupList() {
+		return groupList;
+	}
+	/**
+	 * 
+	 * @param groupList
+	 */
+	public void setGroupList(List<Group> groupList) {
+		this.groupList = groupList;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((groupList == null) ? 0 : groupList.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((surname == null) ? 0 : surname.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -158,6 +192,18 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
+		if (groupList == null) {
+			if (other.groupList != null)
+				return false;
+		} else if (!groupList.equals(other.groupList))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
@@ -168,6 +214,11 @@ public class User {
 				return false;
 		} else if (!role.equals(other.role))
 			return false;
+		if (surname == null) {
+			if (other.surname != null)
+				return false;
+		} else if (!surname.equals(other.surname))
+			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -175,5 +226,17 @@ public class User {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "User [password=" + password + ", id=" + id + ", username=" + username + ", name=" + name + ", surname="
+				+ surname + ", role=" + role + ", groupList=" + groupList + "]";
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	
 
 }
