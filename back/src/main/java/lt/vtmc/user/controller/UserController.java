@@ -1,14 +1,21 @@
 package lt.vtmc.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import lt.vtmc.user.dto.CreateUserCommand;
+import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
 
 /**
@@ -58,4 +65,53 @@ public class UserController {
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
 	}
+	/**
+	 * Finds and returns all users registered in the database.
+	 * 
+	 * @url /api/users
+	 * @method GET
+	 */
+	@GetMapping(path = "/api/users")
+	public List<User> listAllUsers(){
+		return userService.retrieveAllUsers();
+	}
+	/**
+	 * Finds and returns a user using username.
+	 * 
+	 * @url /api/user/{username}
+	 * @method GET
+	 */
+	@GetMapping(path = "/api/user/{username}")
+	public User findUserByUsername(@RequestBody String username){
+		return userService.findUserByUsername(username);
+	}
+	
+	/**
+	 * Deletes user from database 
+	 * 
+	 * @url /api/delete/{username}
+	 * @method DELETE
+	 */
+	@DeleteMapping("/api/delete/{username}")
+	public ResponseEntity<String> deleteUserByUsername(@RequestBody String username){
+		User tmpUser = userService.findUserByUsername(username);
+		if (tmpUser != null) {
+			userService.deleteUser(tmpUser);
+		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
+	}
+	/**
+	 * Updates user information in the database database 
+	 * 
+	 * @url /api/user/{username}
+	 * @method POST
+	 */
+	@PostMapping(path = "/api/user/{username}")
+	public ResponseEntity<String> updateUserByUsername(@RequestBody CreateUserCommand command, String username){
+		deleteUserByUsername(username);
+		userService.createUser(command.getUsername(), command.getName(), command.getSurname(), command.getPassword());
+		return new ResponseEntity<String>("Saved succesfully", HttpStatus.ACCEPTED);
+	}
+	
 }

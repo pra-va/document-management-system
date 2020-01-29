@@ -1,5 +1,7 @@
 package lt.vtmc.user.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -84,4 +86,13 @@ public class UserService implements UserDetailsService {
 		return newUser;
 	}
 
+	public List<User> retrieveAllUsers() {
+		List<User> userList = userRepository.findAll();
+		return userList;
+	}
+	
+	@Transactional
+	public void deleteUser(User user) {
+		userRepository.delete(user);
+	}
 }
