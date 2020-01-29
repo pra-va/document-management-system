@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-
 import axios from "axios";
 import "./Navigation.css";
 import NavigationPresentation from "./NavigationPresentation";
+import { withRouter } from "react-router";
 
 class Navigation extends Component {
   constructor(props) {
@@ -39,11 +39,13 @@ class Navigation extends Component {
     axios
       .get("http://localhost:8080/dvs/api/authenticated")
       .then(response => {
-        if (response.data === "false") {
+        if (response.data === false) {
+          console.log(this.props);
           this.props.history.push("/");
         } else {
           this.setState({ authenticated: "true" });
         }
+        console.log(response);
       })
       .catch(error => {
         console.log(error);
@@ -64,4 +66,4 @@ class Navigation extends Component {
   }
 }
 
-export default Navigation;
+export default withRouter(Navigation);

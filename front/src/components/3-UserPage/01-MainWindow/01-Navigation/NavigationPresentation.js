@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "./../../../../resources/logo.png";
 
-import NewUser from "./../../../4-Admin/1-NewUser/NewUserPreLoader";
+import NewUser from "./../../../4-Admin/1-NewUser/NewUser";
 
 var NavigationPresentation = props => {
   return (
