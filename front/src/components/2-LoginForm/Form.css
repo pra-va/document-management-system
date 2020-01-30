@@ -1,0 +1,28 @@
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .align-items-lg {
+    align-items: center;
+  }
+}
+
+.btn-black {
+  color: #fff;
+  background-color: #535353;
+  border-color: #000000;
+}
+
+.btn-black:hover {
+  background-color: rgb(0, 0, 0);
+  color: #fff;
+}
+
+.width {
+  max-width: 22vh;
+  max-height: min-content;
+  width: auto;
+  height: auto;
+}
+
+.form-width {
+  min-width: 22em;
+}

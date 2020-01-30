@@ -2,16 +2,13 @@ package lt.vtmc.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import lt.vtmc.security.dto.CreateUserCommand;
-import lt.vtmc.security.service.UserService;
 
 /**
  * Security controller for system users.
@@ -24,17 +21,14 @@ public class SecurityController {
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
 
-	@Autowired
-	private UserService userService;
-
 	/**
 	 * This method will return logged in users username.
 	 * 
-	 * @url /api/loggedAdmin
+	 * @url /api/loggedin
 	 * @method GET
 	 * @return username or "not logged".
 	 */
-	@RequestMapping(path = "/api/loggedAdmin", method = RequestMethod.GET)
+	@RequestMapping(path = "/api/loggedin", method = RequestMethod.GET)
 	public String getLoggedInUsername() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
@@ -45,29 +39,29 @@ public class SecurityController {
 	}
 
 	/**
-	 * Creates user with ADMIN role. Only system administrator should be able to
-	 * access this method.
 	 * 
-	 * @url /api/createadmin
-	 * @method POST
-	 * @param user details
+	 * @return true, if user, that sends the request is authenticated.
 	 */
-	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
-	public void createAdmin(@RequestBody CreateUserCommand command) {
-		userService.createSystemAdministrator(command.getUsername(), command.getPassword());
+	@RequestMapping(path = "/api/authenticated", method = RequestMethod.GET)
+	public boolean isUserLoggedIn() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
-	 * Creates user with ADMIN role. Only system administrator should be able to
-	 * access this method.
 	 * 
-	 * @url /api/createadmin
-	 * @method POST
-	 * @param user details
+	 * @return true, if user, that sends the request has ADMIN role and is
+	 *         authenticated. Will return "UNAUTHORIZED" if the user is not
+	 *         authenticated.
 	 */
-	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
-	public void createUser(@RequestBody CreateUserCommand command) {
-		userService.createUser(command.getUsername(), command.getPassword());
-	}
 
+	@RequestMapping(path = "/api/administrator", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
+	public boolean isUserAdmin() {
+		return true;
+	}
 }
