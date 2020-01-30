@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import lt.vtmc.user.dto.CreateUserCommand;
 import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
@@ -41,7 +40,8 @@ public class UserController {
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
-			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(), command.getPassword());
+			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
+					command.getPassword());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -57,14 +57,14 @@ public class UserController {
 	 */
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
-		if (userService.findUserByUsername(command.getUsername()) == null) { // creates a new user entity ONLY if there
-																				// are no user in the database with the
-																				// same username
-			userService.createUser(command.getUsername(), command.getName(), command.getSurname(), command.getPassword());
+		if (userService.findUserByUsername(command.getUsername()) == null) { 
+			userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
+					command.getPassword());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
 	}
+
 	/**
 	 * Finds and returns all users registered in the database.
 	 * 
@@ -72,9 +72,10 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/users")
-	public List<User> listAllUsers(){
+	public List<User> listAllUsers() {
 		return userService.retrieveAllUsers();
 	}
+
 	/**
 	 * Finds and returns a user using username.
 	 * 
@@ -82,36 +83,40 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/user/{username}")
-	public User findUserByUsername(@RequestBody String username){
+	public User findUserByUsername(@RequestBody String username) {
 		return userService.findUserByUsername(username);
 	}
-	
+
 	/**
-	 * Deletes user from database 
+	 * Deletes user from database
 	 * 
 	 * @url /api/delete/{username}
 	 * @method DELETE
 	 */
 	@DeleteMapping("/api/delete/{username}")
-	public ResponseEntity<String> deleteUserByUsername(@RequestBody String username){
+	public ResponseEntity<String> deleteUserByUsername(@RequestBody String username) {
 		User tmpUser = userService.findUserByUsername(username);
 		if (tmpUser != null) {
 			userService.deleteUser(tmpUser);
-		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
+			return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
+
 	/**
-	 * Updates user information in the database database 
+	 * Updates user information in the database database
 	 * 
 	 * @url /api/user/{username}
 	 * @method POST
 	 */
-	@PostMapping(path = "/api/user/{username}")
-	public ResponseEntity<String> updateUserByUsername(@RequestBody CreateUserCommand command, String username){
-		deleteUserByUsername(username);
-		userService.createUser(command.getUsername(), command.getName(), command.getSurname(), command.getPassword());
-		return new ResponseEntity<String>("Saved succesfully", HttpStatus.ACCEPTED);
+	@PostMapping(path = "/api/user/update/{username}")
+	public ResponseEntity<String> updateUserByUsername(@RequestBody CreateUserCommand command, String username) {
+		if (userService.findUserByUsername(command.getUsername()) != null) {
+			userService.updateUserDetails(command.getUsername(), command.getName(), command.getSurname(),
+					command.getPassword());
+			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
+		}
+		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
-	
+
 }
