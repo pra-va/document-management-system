@@ -57,7 +57,7 @@ public class User {
 	/**
 	 * Constructor.
 	 * 
-	 * @param password
+	 * @param passwordGroups
 	 * @param username
 	 * @param role
 	 */
@@ -148,7 +148,7 @@ public class User {
 	}
 
 	/**
-	 * 
+	 * Groups
 	 * @param role
 	 */
 	public void setRole(String role) {
@@ -158,7 +158,7 @@ public class User {
 	 * 
 	 * @return
 	 */
-	public Collection<Group> getGroupList() {
+	public List<Group> getGroupList() {
 		return groupList;
 	}
 	/**

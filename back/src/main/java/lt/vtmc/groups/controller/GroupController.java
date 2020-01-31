@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,11 +42,20 @@ public class GroupController {
 			groupService.createGroup(command.getName(), command.getDescription());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
-			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
+			return new ResponseEntity<String>("Failed to create group", HttpStatus.CONFLICT);
 	}
 	
 	@RequestMapping(path = "/api/groups", method = RequestMethod.GET)
 	public List<Group> listAllGroups(){
 		return groupService.retrieveAllGroups();
+	}
+	
+	@PostMapping(path = "/api/addGroup/{name}")
+	public ResponseEntity<String> addGroup(@PathVariable("name") String name, @RequestBody String username){
+		if (groupService.findGroupByName(name) != null) {
+			groupService.addUserToGroup(name, username);
+			return new ResponseEntity<String>("User added succesfully", HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("Failed to add user to group", HttpStatus.NOT_FOUND);
 	}
 }

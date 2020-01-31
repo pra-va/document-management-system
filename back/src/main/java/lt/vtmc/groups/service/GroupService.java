@@ -59,7 +59,10 @@ public class GroupService{
 		User userToAdd = userRepository.findUserByUsername(username);
 		Group groupToAddTo = groupRepository.findGroupByName(groupName);
 		List<User> tmpUserList = groupToAddTo.getUserList();
+		List<Group> tmpGroupList = userToAdd.getGroupList();
+		tmpGroupList.add(groupToAddTo);
 		tmpUserList.add(userToAdd);
+		userToAdd.setGroupList(tmpGroupList);
 		groupToAddTo.setUserList(tmpUserList);
 		return groupToAddTo;
 	}

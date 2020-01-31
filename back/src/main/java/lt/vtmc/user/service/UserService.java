@@ -116,7 +116,8 @@ public class UserService implements UserDetailsService {
 		User updatedUser = findUserByUsername(username);
 		updatedUser.setName(name);
 		updatedUser.setSurname(surname);
-		updatedUser.setPassword(password);
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		updatedUser.setPassword(encoder.encode(password));
 		userRepository.save(updatedUser);
 		return updatedUser;
 		

@@ -10,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import lt.vtmc.groups.dao.GroupRepository;
+import lt.vtmc.groups.model.Group;
+import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
@@ -19,34 +22,23 @@ import lt.vtmc.user.service.UserService;
 public class GroupServiceTest {
 
 	@MockBean
-	private User user;
+	private Group group;
 
 	@MockBean
-	private UserRepository userRepository;
+	private GroupRepository groupRepository;
 
 	@Autowired
-	private UserService userService;
-
+	private GroupService groupService;
+	
 	@Test
-	public void testCreateUser() throws Exception {
-		assertNotNull(userService.createUser("testUsername", "testName", "testSurname", "testing123"));
-		assertEquals(userService.createUser("testUsername", "testName", "testSurname", "testing123").getUsername(),
-				"testUsername");
-		assertEquals(userService.createUser("testUsername", "testName", "testSurname", "testing123").getRole(), "USER");
-
-		userRepository.deleteById("testUsername");
+	public void testCreateGroup() throws Exception {
+		assertNotNull(groupService.createGroup("testName", "testing123"));
+		assertEquals(groupService.createGroup("testName", "testing123").getName(),
+				"testName");
+		assertEquals(groupService.createGroup("testName", "testing123").getDescription(),
+				"testing123");
+		groupRepository.deleteById("testName");
 	}
-
-	@Test
-	public void testCreateAdmin() throws Exception {
-		assertNotNull(userService.createSystemAdministrator("testAdmin", "testName", "testSurname", "testing123"));
-		assertEquals(userService.createSystemAdministrator("testAdmin", "testName", "testSurname", "testing123")
-				.getUsername(), "testAdmin");
-		assertEquals(
-				userService.createSystemAdministrator("testAdmin", "testName", "testSurname", "testing123").getRole(),
-				"ADMIN");
-
-		userRepository.deleteById("testAdmin");
-	}
-
+	
+	
 }
