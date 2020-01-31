@@ -15,6 +15,9 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import { Switch, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
+//Table imports
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+
 // Other imports
 import App from "./components/0-MainWindow/App";
 import PageNotFound from "./components/1-Errors/PageNotFound";

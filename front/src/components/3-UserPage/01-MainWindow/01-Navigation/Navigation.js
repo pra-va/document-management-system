@@ -16,9 +16,7 @@ class Navigation extends Component {
   handleLogout = event => {
     axios
       .get("http://localhost:8080/dvs/api/logout")
-      .then(response => {
-        console.log("Logged out.");
-      })
+      .then(response => {})
       .catch(error => {
         console.log(error);
       });
@@ -40,12 +38,10 @@ class Navigation extends Component {
       .get("http://localhost:8080/dvs/api/authenticated")
       .then(response => {
         if (response.data === false) {
-          console.log(this.props);
           this.props.history.push("/");
         } else {
           this.setState({ authenticated: "true" });
         }
-        console.log(response);
       })
       .catch(error => {
         console.log(error);

@@ -21,7 +21,6 @@ class Main extends Component {
       .get("http://localhost:8080/dvs/api/administrator")
       .then(response => {
         this.setState({ isUserAdmin: response.data });
-        console.log(this.state.isUserAdmin);
       })
       .catch(error => {
         console.log(error);

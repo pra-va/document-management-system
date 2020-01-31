@@ -15,34 +15,36 @@ class UserInformation extends Component {
 
   handleFirstNameChange = event => {
     this.setState({ firstName: event.target.value });
-    console.log(this.state.firstName);
+    this.props.handleFirstNameChange(event.target.value);
   };
 
   handleLastNameChange = event => {
     this.setState({ lastName: event.target.value });
-    console.log(this.state.lastName);
+    this.props.handleLastNameChange(event.target.value);
   };
 
   handleUsernameChange = event => {
     this.setState({ username: event.target.value });
-    console.log(this.state.username);
+    this.props.handleUsernameChange(event.target.value);
   };
 
   handlePasswordChange = event => {
     this.setState({ password: event.target.value });
-    console.log(this.state.password);
+    this.props.handlePasswordChange(event.target.value);
   };
 
-  handleClick = event => {
+  handleShowPassword = event => {
     this.setState({ showPassword: event.target.checked });
   };
 
   adminRadioChange = event => {
-    this.setState({ adminRole: event.target.value });
+    this.setState({ userRole: event.target.value });
+    this.props.handleRoleChange(event.target.value);
   };
 
   userRadioChange = event => {
     this.setState({ userRole: event.target.value });
+    this.props.handleRoleChange(event.target.value);
   };
 
   render() {
@@ -64,7 +66,6 @@ class UserInformation extends Component {
               className="form-control"
               id="inputFirstName"
               placeholder="John"
-              pattern="[A-Za-z0-9]{1,20}"
               onChange={this.handleFirstNameChange}
               value={this.state.firstName}
             />
@@ -82,7 +83,6 @@ class UserInformation extends Component {
               className="form-control"
               id="inputLastName"
               placeholder="Smith"
-              pattern="[A-Za-z0-9]{1,20}"
               onChange={this.handleLastNameChange}
               value={this.state.lastName}
             />
@@ -139,7 +139,7 @@ class UserInformation extends Component {
                 className="form-check-input"
                 type="checkbox"
                 id="checkBoxShowPassword"
-                onClick={this.handleClick}
+                onClick={this.handleShowPassword}
               />
             </div>
           </div>
