@@ -42,6 +42,12 @@ class SpringSecurityApplicationTests {
 			groupService.createGroup("dummy4", "testDescription");
 			groupService.createGroup("dummy5", "testDescription");
 			groupService.createGroup("dummy6", "testDescription");
+			groupService.createGroup("dummy11", "testDescription");
+			groupService.createGroup("dummy21", "testDescription");
+			groupService.createGroup("dummy31", "testDescription");
+			groupService.createGroup("dummy41", "testDescription");
+			groupService.createGroup("dummy51", "testDescription");
+			groupService.createGroup("dummy61", "testDescription");
 		}
 	}
 }
