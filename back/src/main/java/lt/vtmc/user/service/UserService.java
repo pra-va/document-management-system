@@ -85,14 +85,41 @@ public class UserService implements UserDetailsService {
 		userRepository.save(newUser);
 		return newUser;
 	}
-
+	/**
+	 * Method to return all system users.
+	 * 
+	 */
 	public List<User> retrieveAllUsers() {
 		List<User> userList = userRepository.findAll();
 		return userList;
 	}
-	
+	/**
+	 * Method to delete system users.
+	 * 
+	 * @param User
+	 */
 	@Transactional
 	public void deleteUser(User user) {
 		userRepository.delete(user);
+	}
+	/**
+	 * Method to update system user details.
+	 * 
+	 * @param username
+	 * @param name
+	 * @param surname
+	 * @param password
+	 * @return User
+	 */
+	@Transactional
+	public User updateUserDetails(String username, String name, String surname, String password) {
+		User updatedUser = findUserByUsername(username);
+		updatedUser.setName(name);
+		updatedUser.setSurname(surname);
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		updatedUser.setPassword(encoder.encode(password));
+		userRepository.save(updatedUser);
+		return updatedUser;
+		
 	}
 }
