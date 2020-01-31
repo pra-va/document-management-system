@@ -1,6 +1,5 @@
 package lt.vtmc.user.model;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -139,7 +138,7 @@ public class User {
 		this.surname = surname;
 	}
 
-	/**
+	/**Set
 	 * 
 	 * @return role
 	 */

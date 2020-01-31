@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.dto.CreateUserCommand;
 import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
@@ -30,6 +31,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private GroupService groupService;
 	/**
 	 * Creates user with ADMIN role. Only system administrator should be able to
 	 * access this method.
@@ -43,6 +46,9 @@ public class UserController {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
 			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
+			if (command.getGroupList().length != 0) {
+				groupService.addUserToGroup(command.getGroupList(), command.getUsername());
+			}
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -61,6 +67,9 @@ public class UserController {
 		if (userService.findUserByUsername(command.getUsername()) == null) { 
 			userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
+			if (command.getGroupList().length != 0) {
+				groupService.addUserToGroup(command.getGroupList(), command.getUsername());
+			}
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -119,5 +128,12 @@ public class UserController {
 		}
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
-
+	
+	@GetMapping(path = "/api/{username}/exists")
+	public boolean checkIfUserExists(@PathVariable("username") String username) {
+		if (findUserByUsername(username) != null) {
+			return true;
+		}
+		return false;
+	}
 }

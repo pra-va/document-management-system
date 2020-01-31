@@ -15,6 +15,7 @@ public class CreateUserCommand {
 	private String name;
 	private String surname;
 	private String password;
+	private String[] names;
 
 	/**
 	 * Constructor method for CreateUserCommand
@@ -22,11 +23,12 @@ public class CreateUserCommand {
 	 * @param username
 	 * @param password
 	 */
-	public CreateUserCommand(String username, String name, String surname, String password) {
+	public CreateUserCommand(String username, String name, String surname, String password, String[] names) {
 		this.username = username;
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
+		this.names = names;
 
 	}
 
@@ -64,14 +66,14 @@ public class CreateUserCommand {
 
 	/**
 	 * 
-	 * @param name
+	 * @return name
 	 */
 	public String getName() {
 		return name;
 	}
 	/**
 	 * 
-	 * @return name
+	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -79,17 +81,31 @@ public class CreateUserCommand {
 
 	/**
 	 * 
-	 * @param surname
+	 * @return surname
 	 */
 	public String getSurname() {
 		return surname;
 	}
 	/**
 	 * 
-	 * @return surname
+	 * @param surname
 	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+	/**
+	 * 
+	 * @return groupList
+	 */
+	public String[] getGroupList() {
+		return names;
+	}
+	/**
+	 * 
+	 * @param groupList
+	 */
+	public void setGroupList(String[] names) {
+		this.names = names;
 	}
 	
 	

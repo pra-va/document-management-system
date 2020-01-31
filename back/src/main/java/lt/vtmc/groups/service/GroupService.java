@@ -1,6 +1,7 @@
 package lt.vtmc.groups.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +19,14 @@ import lt.vtmc.user.model.User;
  *
  */
 @Service
-public class GroupService{
+public class GroupService {
 
 	@Autowired
 	private GroupRepository groupRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
+
 	/**
 	 * 
 	 * This method finds groups from group repository.
@@ -51,25 +53,27 @@ public class GroupService{
 	/**
 	 * Method to add users to groups.
 	 * 
-	 * @param groupName
+	 * @param names
 	 * @param username
 	 */
 	@Transactional
-	public Group addUserToGroup(String groupName, String username) {
+	public void addUserToGroup(String[] names, String username) {
 		User userToAdd = userRepository.findUserByUsername(username);
-		Group groupToAddTo = groupRepository.findGroupByName(groupName);
-		List<User> tmpUserList = groupToAddTo.getUserList();
-		List<Group> tmpGroupList = userToAdd.getGroupList();
-		tmpGroupList.add(groupToAddTo);
-		tmpUserList.add(userToAdd);
-		userToAdd.setGroupList(tmpGroupList);
-		groupToAddTo.setUserList(tmpUserList);
-		return groupToAddTo;
+		for (int i = 0; i < names.length; i++) {
+			Group groupToAddTo = groupRepository.findGroupByName(names[i]);
+			List<User> tmpUserList = groupToAddTo.getUserList();
+			List<Group> tmpGroupList = userToAdd.getGroupList();
+			if (tmpUserList.contains(userToAdd) == false && tmpGroupList.contains(groupToAddTo) == false) {
+				tmpGroupList.add(groupToAddTo);
+				userToAdd.setGroupList(tmpGroupList);
+				tmpUserList.add(userToAdd);
+				groupToAddTo.setUserList(tmpUserList);
+				}
+		}
 	}
 
 	public List<Group> retrieveAllGroups() {
 		List<Group> grouplist = groupRepository.findAll();
 		return grouplist;
 	}
-
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lt.vtmc.groups.dto.CreateGroupCommand;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
+import lt.vtmc.user.service.UserService;
 
 /**
  * Controller for managing groups.
@@ -28,6 +29,8 @@ public class GroupController {
 	@Autowired
 	private GroupService groupService;
 
+	@Autowired
+	private UserService userService;
 	/**
 	 * Creates group with ADMIN role. Only system administrator should be able to
 	 * access this method.
@@ -50,10 +53,10 @@ public class GroupController {
 		return groupService.retrieveAllGroups();
 	}
 	
-	@PostMapping(path = "/api/addGroup/{name}")
-	public ResponseEntity<String> addGroup(@PathVariable("name") String name, @RequestBody String username){
-		if (groupService.findGroupByName(name) != null) {
-			groupService.addUserToGroup(name, username);
+	@PostMapping(path = "/api/addGroup/{username}")
+	public ResponseEntity<String> addGroup(@PathVariable("username") String username, @RequestBody String[] names){
+		if (userService.findUserByUsername(username) != null) {
+			groupService.addUserToGroup(names, username);
 			return new ResponseEntity<String>("User added succesfully", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Failed to add user to group", HttpStatus.NOT_FOUND);

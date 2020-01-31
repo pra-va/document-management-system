@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.security.SecurityEntryPoint;
 import lt.vtmc.user.controller.UserController;
 import lt.vtmc.user.model.User;
@@ -37,6 +38,9 @@ public class UserControllerTest {
 
 	@MockBean
 	private User user;
+	
+	@MockBean
+	private GroupService groupService;
 
 	@Test
 	public void testCreateUser() throws Exception {
@@ -45,7 +49,7 @@ public class UserControllerTest {
 		// userService.createUser to respond back with mockUser
 		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
 
-		String exampleCreateUserCommand = "{\"username\":\"testUser\",\"password\":\"testing123\"}";
+		String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"name\":\"testing123\",\"surname\":\"testing123\",\"password\":\"testing123\",\"names\":[\"dummy1\"]}";
 
 		// Send CreateUserCommand as body to /api/createuser
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/createuser")
@@ -63,10 +67,10 @@ public class UserControllerTest {
 	public void testCreateAdminUser() throws Exception {
 		User mockUser = new User("testUsername", "testName", "testSurname", "testing123", "ADMIN");
 
-		// userService.createUser to respond back with mockUser
-		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
+		// userService.createSystemAdministrator to respond back with mockUser
+		Mockito.when(userService.createSystemAdministrator(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
 
-		String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"password\":\"testing123\"}";
+		String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"name\":\"testing123\",\"surname\":\"testing123\",\"password\":\"testing123\",\"names\":[\"dummy1\"]}";
 
 		// Send CreateUserCommand as body to /api/createadmin
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/createadmin")
