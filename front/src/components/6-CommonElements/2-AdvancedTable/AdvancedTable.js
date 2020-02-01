@@ -84,8 +84,6 @@ class Table extends Component {
       totalSize: this.props.tableData.length
     };
 
-    console.log("table");
-
     return (
       <div>
         <ToolkitProvider

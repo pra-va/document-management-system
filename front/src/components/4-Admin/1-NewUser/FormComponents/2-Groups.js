@@ -1,40 +1,23 @@
 import React, { Component } from "react";
 import "./2-Groups.css";
 import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
-import axios from "axios";
-import AddOrRemoveButton from "./4-ButtonAddOrRemoveUserGroup";
 
 class Groups extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableData: []
+      tableData: props.tableData
     };
   }
 
   dataFields = ["number", "name", "addOrRemove"];
   columnNames = ["#", "Name", "Add/Remove"];
 
-  renderTable = () => {
-    axios
-      .get("http://localhost:8080/dvs/api/groups")
-      .then(response => {
-        let tempData = response.data.map((item, index) => {
-          return {
-            number: index + 1,
-            name: item.name,
-            addOrRemove: <AddOrRemoveButton />
-          };
-        });
-        this.setState({ tableData: tempData });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  componentDidMount() {
-    this.renderTable();
+  componentDidUpdate() {
+    if (this.props.tableData.length !== this.state.tableData.length) {
+      this.setState({ tableData: this.props.tableData });
+    }
+    console.log("Table data updated");
   }
 
   render() {
