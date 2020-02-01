@@ -15,14 +15,13 @@ class AddButton extends Component {
 
   componentDidMount() {
     this.setState({ added: this.props.added, groupName: this.props.groupName });
-    console.log(this.props.added);
   }
 
   render() {
     return (
       <button
         onClick={this.handleAdd}
-        className={this.state.added ? "btn btn-danger" : "btn btn-dark"}
+        className={this.state.added ? "btn btn-danger" : "btn btn-secondary"}
       >
         {this.state.added ? "Remove" : "Add"}
       </button>

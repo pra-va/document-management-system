@@ -112,16 +112,22 @@ class NewUser extends Component {
       url += "createuser/";
     }
 
+    let userGroups = [];
+
+    for (let i = 0; i < this.state.addedGroups.length; i++) {
+      const element = this.state.addedGroups[i];
+      userGroups.push(element.name);
+    }
+
     axios
       .post(url, {
+        groupList: userGroups,
         name: this.state.firstName,
         password: this.state.password,
         surname: this.state.lastName,
         username: this.state.username
       })
-      .then(response => {
-        console.log("User " + this.state.username + " created.");
-      })
+      .then(response => {})
       .catch(error => {
         console.log(error);
       });
@@ -180,14 +186,14 @@ class NewUser extends Component {
                   <div className="modal-footer ">
                     <button
                       type="button"
-                      className="btn btn-secondary"
+                      className="btn btn-danger"
                       data-dismiss="modal"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="btn btn-primary"
+                      className="btn btn-secondary"
                       onClick={this.handleNewUserSubmit}
                     >
                       Create

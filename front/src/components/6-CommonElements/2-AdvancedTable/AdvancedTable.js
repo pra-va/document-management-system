@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import paginationFactory, {
   PaginationProvider
 } from "react-bootstrap-table2-paginator";
 import "./AdvancedTable.css";
-import SearchIcon from "./../../../resources/search.svg";
+
+import CustomSearchBar from "./CustomSearch";
 
 // Template for table data:
 // products = [{ id: "asd", ... }];
@@ -77,8 +78,6 @@ class Table extends Component {
   };
 
   render() {
-    const { SearchBar } = Search;
-
     const paginationOption = {
       custom: true,
       totalSize: this.props.tableData.length
@@ -94,34 +93,7 @@ class Table extends Component {
         >
           {props => (
             <div>
-              <div className="row p-3">
-                <div className="input-group md-form form-sm form-1 pl-0">
-                  <div className="input-group-prepend">
-                    <span
-                      className="input-group-text purple lighten-3"
-                      id="basic-text1"
-                    >
-                      <i
-                        className="text-white"
-                        aria-hidden="true"
-                        href={SearchIcon}
-                      ></i>
-                      <img
-                        src={SearchIcon}
-                        alt="..."
-                        className="searchIconResize"
-                      />
-                    </span>
-                  </div>
-                  <SearchBar
-                    className="form-control my-0 py-1"
-                    type="text"
-                    placeholder="Search"
-                    aria-label="Search"
-                    {...props.searchProps}
-                  />
-                </div>
-              </div>
+              <CustomSearchBar {...props.searchProps} id={props.searchBarId} />
 
               {this.state.tableData.length > 8 ? (
                 <PaginationProvider

@@ -14,7 +14,6 @@ class UsersGroup extends Component {
 
   componentDidUpdate() {
     if (this.props.usersGroups.length !== this.state.usersGroups.length) {
-      console.log("setting up state");
       this.setState({ usersGroups: this.props.usersGroups });
     }
   }
@@ -30,6 +29,7 @@ class UsersGroup extends Component {
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.usersGroups}
+          searchBarId={"addedGroupsSearchBar"}
         />
       </div>
     );

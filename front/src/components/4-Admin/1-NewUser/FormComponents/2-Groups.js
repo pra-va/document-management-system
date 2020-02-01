@@ -17,7 +17,6 @@ class Groups extends Component {
     if (this.props.tableData.length !== this.state.tableData.length) {
       this.setState({ tableData: this.props.tableData });
     }
-    console.log("Table data updated");
   }
 
   render() {
@@ -33,6 +32,7 @@ class Groups extends Component {
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.tableData}
+          searchBarId={"currentGroupsSearchBar"}
         />
       </div>
     );

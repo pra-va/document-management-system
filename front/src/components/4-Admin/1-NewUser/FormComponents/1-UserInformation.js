@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import InputLine from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 
 class UserInformation extends Component {
   constructor(props) {
@@ -54,76 +55,46 @@ class UserInformation extends Component {
           1. Enter new user information.
         </h3>
 
-        <div className="form-group row">
-          <label htmlFor="inputFirstName" className="col-sm-2 col-form-label">
-            First Name:
-          </label>
-          <div className="col-sm-10">
-            <input
-              autoComplete="on"
-              required
-              type="text"
-              className="form-control"
-              id="inputFirstName"
-              placeholder="John"
-              onChange={this.handleFirstNameChange}
-              value={this.state.firstName}
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <label htmlFor="inputLastName" className="col-sm-2 col-form-label">
-            Last Name:
-          </label>
-          <div className="col-sm-10">
-            <input
-              autoComplete="on"
-              required
-              type="text"
-              className="form-control"
-              id="inputLastName"
-              placeholder="Smith"
-              onChange={this.handleLastNameChange}
-              value={this.state.lastName}
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <label htmlFor="inputUsername" className="col-sm-2 col-form-label">
-            Username:
-          </label>
-          <div className="col-sm-10">
-            <input
-              autoComplete="on"
-              required
-              type="text"
-              className="form-control"
-              id="inputUsername"
-              placeholder="JohnSmith"
-              pattern="[A-Za-z0-9]{1,20}"
-              onChange={this.handleUsernameChange}
-              value={this.state.username}
-            />
-          </div>
-        </div>
-        <div className="form-group row">
-          <label htmlFor="inputPassword" className="col-sm-2 col-form-label">
-            Password:
-          </label>
-          <div className="col-sm-10">
-            <input
-              autoComplete="on"
-              required
-              type={this.state.showPassword === true ? "text" : "password"}
-              className="form-control"
-              id="inputPassword"
-              placeholder="1234"
-              pattern="[A-Za-z0-9]{8,20}"
-              onChange={this.handlePasswordChange}
-              value={this.state.password}
-            />
-          </div>
-        </div>
+        <InputLine
+          id={"inputFirstName"}
+          labelName={"First Name:"}
+          required={true}
+          type={"text"}
+          placeholder={"John"}
+          onChange={this.handleFirstNameChange}
+          value={this.state.firstName}
+        />
+
+        <InputLine
+          id={"inputLastName"}
+          labelName={"Last Name:"}
+          required={true}
+          type={"text"}
+          placeholder={"Smith"}
+          onChange={this.handleLastNameChange}
+          value={this.state.lastName}
+        />
+
+        <InputLine
+          id={"inputUsername"}
+          labelName={"Username:"}
+          required={true}
+          type={"text"}
+          placeholder={"holyDiver"}
+          onChange={this.handleUsernameChange}
+          value={this.state.username}
+        />
+
+        <InputLine
+          id={"inputPassword"}
+          labelName={"Password:"}
+          required={true}
+          type={this.state.showPassword === true ? "text" : "password"}
+          placeholder={"1234"}
+          onChange={this.handlePasswordChange}
+          value={this.state.password}
+        />
+
         <div className="form-group row">
           <div className="col-sm-2"></div>
           <div className="col-sm-10">
