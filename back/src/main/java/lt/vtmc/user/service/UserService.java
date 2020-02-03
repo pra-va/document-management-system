@@ -1,5 +1,6 @@
 package lt.vtmc.user.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 
@@ -62,6 +64,8 @@ public class UserService implements UserDetailsService {
 	@Transactional
 	public User createUser(String username, String name, String surname, String password) {
 		User newUser = new User(username, name, surname, password, "USER");
+		List<Group> tmpList = new ArrayList<Group>();
+		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
 		userRepository.save(newUser);
@@ -80,6 +84,8 @@ public class UserService implements UserDetailsService {
 	@Transactional
 	public User createSystemAdministrator(String username, String name, String surname, String password) {
 		User newUser = new User(username, name, surname, password, "ADMIN");
+		List<Group> tmpList = new ArrayList<Group>();
+		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
 		userRepository.save(newUser);

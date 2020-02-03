@@ -33,6 +33,7 @@ public class UserController {
 
 	@Autowired
 	private GroupService groupService;
+
 	/**
 	 * Creates user with ADMIN role. Only system administrator should be able to
 	 * access this method.
@@ -44,11 +45,9 @@ public class UserController {
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
-			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
+			User tmpUser = userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
-			if (command.getGroupList().length != 0) {
-				groupService.addUserToGroup(command.getGroupList(), command.getUsername());
-			}
+			groupService.addUserToGroup(command.getGroupList(), tmpUser);
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -64,12 +63,10 @@ public class UserController {
 	 */
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
-		if (userService.findUserByUsername(command.getUsername()) == null) { 
-			userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
+		if (userService.findUserByUsername(command.getUsername()) == null) {
+			User tmpUser = userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
-			if (command.getGroupList().length != 0) {
-				groupService.addUserToGroup(command.getGroupList(), command.getUsername());
-			}
+			groupService.addUserToGroup(command.getGroupList(), tmpUser);
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -128,7 +125,7 @@ public class UserController {
 		}
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
-	
+
 	@GetMapping(path = "/api/{username}/exists")
 	public boolean checkIfUserExists(@PathVariable("username") String username) {
 		if (findUserByUsername(username) != null) {

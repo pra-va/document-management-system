@@ -57,10 +57,10 @@ public class GroupService {
 	 * @param username
 	 */
 	@Transactional
-	public void addUserToGroup(String[] names, String username) {
+	public void addUserToGroupByUsername(String[] groupList, String username) {
 		User userToAdd = userRepository.findUserByUsername(username);
-		for (int i = 0; i < names.length; i++) {
-			Group groupToAddTo = groupRepository.findGroupByName(names[i]);
+		for (int i = 0; i < groupList.length; i++) {
+			Group groupToAddTo = groupRepository.findGroupByName(groupList[i]);
 			List<User> tmpUserList = groupToAddTo.getUserList();
 			List<Group> tmpGroupList = userToAdd.getGroupList();
 			if (tmpUserList.contains(userToAdd) == false && tmpGroupList.contains(groupToAddTo) == false) {
@@ -71,7 +71,28 @@ public class GroupService {
 				}
 		}
 	}
-
+	
+	/**
+	 * Method to add users to groups.
+	 * 
+	 * @param names
+	 * @param username
+	 */
+	@Transactional
+	public void addUserToGroup(String[] groupList, User user) {
+		User userToAdd = user;
+		for (int i = 0; i < groupList.length; i++) {
+			Group groupToAddTo = groupRepository.findGroupByName(groupList[i]);
+			List<User> tmpUserList = groupToAddTo.getUserList();
+			List<Group> tmpGroupList = userToAdd.getGroupList();
+			if (tmpUserList.contains(userToAdd) == false && tmpGroupList.contains(groupToAddTo) == false) {
+				tmpGroupList.add(groupToAddTo);
+				userToAdd.setGroupList(tmpGroupList);
+				tmpUserList.add(userToAdd);
+				groupToAddTo.setUserList(tmpUserList);
+				}
+		}
+	}
 	public List<Group> retrieveAllGroups() {
 		List<Group> grouplist = groupRepository.findAll();
 		return grouplist;

@@ -56,7 +56,7 @@ public class GroupController {
 	@PostMapping(path = "/api/addGroup/{username}")
 	public ResponseEntity<String> addGroup(@PathVariable("username") String username, @RequestBody String[] names){
 		if (userService.findUserByUsername(username) != null) {
-			groupService.addUserToGroup(names, username);
+			groupService.addUserToGroupByUsername(names, username);
 			return new ResponseEntity<String>("User added succesfully", HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("Failed to add user to group", HttpStatus.NOT_FOUND);
