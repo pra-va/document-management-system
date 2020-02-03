@@ -31,6 +31,12 @@ class Table extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.state.tableData !== this.props.tableData) {
+      this.setState({ tableData: this.props.tableData });
+    }
+  }
+
   componentDidUpdate() {
     if (this.state.tableData !== this.props.tableData) {
       this.setState({ tableData: this.props.tableData });
@@ -106,12 +112,19 @@ class Table extends Component {
                         {...props.baseProps}
                         {...paginationTableProps}
                         pagination={paginationFactory(this.options)}
+                        classes="table-striped table-dark table-sm"
+                        hover
                       />
                     </div>
                   )}
                 </PaginationProvider>
               ) : (
-                <BootstrapTable keyField="id" {...props.baseProps} />
+                <BootstrapTable
+                  keyField="id"
+                  {...props.baseProps}
+                  classes="table-striped table-dark table-sm"
+                  hover
+                />
               )}
             </div>
           )}

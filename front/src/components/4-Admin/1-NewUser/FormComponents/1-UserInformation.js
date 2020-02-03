@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import InputLine from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
+import axios from "axios";
 
 class UserInformation extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class UserInformation extends Component {
       lastName: "",
       username: "",
       password: "",
-      role: "USER"
+      role: "USER",
+      usernameExists: false
     };
   }
 
@@ -27,6 +29,7 @@ class UserInformation extends Component {
   handleUsernameChange = event => {
     this.setState({ username: event.target.value });
     this.props.handleUsernameChange(event.target.value);
+    this.checkIfUsernameExists();
   };
 
   handlePasswordChange = event => {
@@ -46,6 +49,28 @@ class UserInformation extends Component {
   userRadioChange = event => {
     this.setState({ userRole: event.target.value });
     this.props.handleRoleChange(event.target.value);
+  };
+
+  checkIfUsernameExists = () => {
+    setTimeout(() => {
+      if (this.state.username.length > 0) {
+        axios
+          .get(
+            "http://localhost:8080/dvs/api/" + this.state.username + "/exists"
+          )
+          .then(response => {
+            this.setState({ usernameExists: response.data });
+            if (response.data) {
+              this.setState({ usernameExists: true });
+            } else {
+              this.setState({ usernameExists: false });
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+    }, 1000);
   };
 
   render() {
@@ -94,6 +119,18 @@ class UserInformation extends Component {
           onChange={this.handlePasswordChange}
           value={this.state.password}
         />
+
+        <div className="form-group row d-flex justify-content-center">
+          {this.state.username.length > 0 ? (
+            this.state.usernameExists ? (
+              <h5>Username {this.state.username} is taken.</h5>
+            ) : (
+              <div></div>
+            )
+          ) : (
+            <div></div>
+          )}
+        </div>
 
         <div className="form-group row">
           <div className="col-sm-2"></div>

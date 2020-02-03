@@ -1,12 +1,13 @@
 import React, { Component } from "react";
+import Modal from "react-bootstrap/Modal";
 import "./NewUser.css";
 import UserInformation from "./FormComponents/1-UserInformation";
 import Groups from "./FormComponents/2-Groups";
 import UsersGroups from "./FormComponents/3-UsersGroups";
 import axios from "axios";
-import AddOrRemoveButton from "./FormComponents/4-ButtonAddOrRemoveUserGroup";
+import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 
-class NewUser extends Component {
+class NewModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,7 +22,7 @@ class NewUser extends Component {
     };
   }
 
-  changeAddedStatus = (name, itemIsAdded) => {
+  changeAddedStatus = name => {
     let tmpGroups = this.state.allGroups;
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];
@@ -29,7 +30,7 @@ class NewUser extends Component {
         tmpGroups[i].added = !tmpGroups[i].added;
         tmpGroups[i].addOrRemove = (
           <AddOrRemoveButton
-            groupName={element.name}
+            itemName={element.name}
             changeAddedStatus={this.changeAddedStatus}
             added={element.added}
           />
@@ -56,8 +57,6 @@ class NewUser extends Component {
     this.setState({ addedGroups: added });
   };
 
-  // IMPORTANT
-  // TODO. Padaryti, kad uzkrautu tik pirma karta.
   componentDidMount() {
     axios
       .get("http://localhost:8080/dvs/api/groups")
@@ -68,7 +67,7 @@ class NewUser extends Component {
             name: item.name,
             addOrRemove: (
               <AddOrRemoveButton
-                groupName={item.name}
+                itemName={item.name}
                 changeAddedStatus={this.changeAddedStatus}
                 added={false}
               />
@@ -76,7 +75,11 @@ class NewUser extends Component {
             added: false
           };
         });
-        this.setState({ allGroups: tempData });
+        this.setState({
+          allGroups: tempData,
+          notAddedGroups: [],
+          addedGroups: []
+        });
         this.filterAddedGroups();
       })
       .catch(error => {
@@ -104,7 +107,9 @@ class NewUser extends Component {
     this.setState({ role: value });
   };
 
-  handleNewUserSubmit = () => {
+  handleNewUserSubmit = event => {
+    event.preventDefault();
+    console.log("submit");
     let url = "http://localhost:8080/dvs/api/";
     if (this.state.role === "ADMIN") {
       url += "createadmin/";
@@ -127,7 +132,12 @@ class NewUser extends Component {
         surname: this.state.lastName,
         username: this.state.username
       })
-      .then(response => {})
+      .then(response => {
+        if (response.status === 201) {
+          console.log("201");
+        }
+        this.props.onHide();
+      })
       .catch(error => {
         console.log(error);
       });
@@ -135,78 +145,61 @@ class NewUser extends Component {
 
   render() {
     return (
-      <div
-        className="modal fade"
-        id="newUser"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="Create New User"
-        aria-hidden="true"
+      <Modal
+        show={this.props.show}
+        onHide={this.props.onHide}
+        size={"lg"}
+        id="newUserModal"
       >
-        <div className="modal-dialog modal-lg" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="newUserModal">
-                New User
-              </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                id="closeNewUserModal"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
+        <Modal.Header closeButton>
+          <Modal.Title>New User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={this.handleNewUserSubmit}>
+            <UserInformation
+              handleFirstNameChange={this.handleFirstNameChange}
+              handleLastNameChange={this.handleLastNameChange}
+              handleUsernameChange={this.handleUsernameChange}
+              handlePasswordChange={this.handlePasswordChange}
+              handleRoleChange={this.handleRoleChange}
+              firstName={this.state.firstName}
+              lastName={this.state.lastName}
+              username={this.state.username}
+              password={this.state.password}
+              role={this.state.role}
+            />
+
+            <hr className="m-1" />
+
+            <Groups tableData={this.state.notAddedGroups} />
+
+            <hr className="m-1" />
+
+            <UsersGroups usersGroups={this.state.addedGroups} />
+
+            <div className="form-group row d-flex justify-content-center">
+              <div className="modal-footer ">
+                <button
+                  type="button"
+                  className="btn btn-outline-dark"
+                  onClick={this.props.onHide}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-dark"
+                  data-dismiss="modal"
+                >
+                  Create
+                </button>
+              </div>
             </div>
-            <div className="modal-body">
-              <form>
-                <UserInformation
-                  handleFirstNameChange={this.handleFirstNameChange}
-                  handleLastNameChange={this.handleLastNameChange}
-                  handleUsernameChange={this.handleUsernameChange}
-                  handlePasswordChange={this.handlePasswordChange}
-                  handleRoleChange={this.handleRoleChange}
-                  firstName={this.state.firstName}
-                  lastName={this.state.lastName}
-                  username={this.state.username}
-                  password={this.state.password}
-                  role={this.state.role}
-                />
-
-                <hr />
-
-                <Groups tableData={this.state.notAddedGroups} />
-
-                <hr />
-
-                <UsersGroups usersGroups={this.state.addedGroups} />
-
-                <div className="form-group row d-flex justify-content-center">
-                  <div className="modal-footer ">
-                    <button
-                      type="button"
-                      className="btn btn-danger"
-                      data-dismiss="modal"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="btn btn-secondary"
-                      onClick={this.handleNewUserSubmit}
-                    >
-                      Create
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+          </form>
+        </Modal.Body>
+      </Modal>
     );
   }
 }
 
-export default NewUser;
+export default NewModal;

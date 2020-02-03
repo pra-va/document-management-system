@@ -53,10 +53,6 @@ class Navigation extends Component {
     this.isUserAdminChecker();
   }
 
-  componentWillUnmount = () => {
-    this.handleLogout();
-  };
-
   render() {
     return <NavigationPresentation role={this.state.isUserAdmin} />;
   }

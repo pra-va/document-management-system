@@ -12,6 +12,12 @@ class UsersGroup extends Component {
   dataFields = ["number", "name", "addOrRemove"];
   columnNames = ["#", "Name", "Add/Remove"];
 
+  componentDidMount() {
+    if (this.props.usersGroups.length !== this.state.usersGroups.length) {
+      this.setState({ usersGroups: this.props.usersGroups });
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.usersGroups.length !== this.state.usersGroups.length) {
       this.setState({ usersGroups: this.props.usersGroups });

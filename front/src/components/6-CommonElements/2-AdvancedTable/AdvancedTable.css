@@ -6,9 +6,28 @@
   color: black;
 }
 
-form .dropdown-menu.show {
+form .dropdown-menu.show,
+ul.dropdown-menu.show {
   min-width: 4.5em;
 }
 
-.page-link {
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+a.page-link {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+a.page-link:hover {
+  color: black;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
 }
