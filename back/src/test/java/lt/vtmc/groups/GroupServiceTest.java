@@ -13,9 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
-import lt.vtmc.user.dao.UserRepository;
-import lt.vtmc.user.model.User;
-import lt.vtmc.user.service.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -26,7 +23,7 @@ public class GroupServiceTest {
 
 	@MockBean
 	private GroupRepository groupRepository;
-
+	
 	@Autowired
 	private GroupService groupService;
 	
@@ -39,6 +36,5 @@ public class GroupServiceTest {
 				"testing123");
 		groupRepository.deleteById("testName");
 	}
-	
 	
 }
