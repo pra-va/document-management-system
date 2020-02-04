@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import "./../../../1-NewUser/NewUser.css";
-import UserInformation from "./../../../1-NewUser/FormComponents/1-UserInformation";
+import UserInformation from "./1-EditUserInformation";
 import Groups from "./../../../1-NewUser/FormComponents/2-Groups";
 import UsersGroups from "./../../../1-NewUser/FormComponents/3-UsersGroups";
 import axios from "axios";
@@ -11,16 +11,22 @@ class NewModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      owner: "",
       firstName: "",
       lastName: "",
       username: "",
       password: "",
       role: "",
+      userGroups: [],
       allGroups: [],
       notAddedGroups: [],
       addedGroups: [],
       usernameExists: false
     };
+  }
+
+  componentDidMount() {
+    this.getGroupData();
   }
 
   changeAddedStatus = name => {
@@ -58,7 +64,7 @@ class NewModal extends Component {
     this.setState({ addedGroups: added });
   };
 
-  componentDidMount() {
+  getGroupData = () => {
     axios
       .get("http://localhost:8080/dvs/api/groups")
       .then(response => {
@@ -70,23 +76,35 @@ class NewModal extends Component {
               <AddOrRemoveButton
                 itemName={item.name}
                 changeAddedStatus={this.changeAddedStatus}
-                added={false}
+                added={this.hasUserAddedGroup(item.name)}
               />
             ),
             added: false
           };
         });
         this.setState({
-          allGroups: tempData,
-          notAddedGroups: [],
-          addedGroups: []
+          allGroups: tempData
         });
         this.filterAddedGroups();
       })
       .catch(error => {
         console.log(error);
       });
-  }
+  };
+
+  hasUserAddedGroup = groupName => {
+    for (let i = 0; i < this.state.userGroups.length; i++) {
+      const element = this.state.userGroups[i];
+      if (element === groupName) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  setUserGroups = userGroups => {
+    this.setState({ userGroups: userGroups });
+  };
 
   handleFirstNameChange = value => {
     this.setState({ firstName: value });
@@ -168,11 +186,15 @@ class NewModal extends Component {
               handlePasswordChange={this.handlePasswordChange}
               handleRoleChange={this.handleRoleChange}
               handleUsernameExists={this.handleUsernameExists}
+              setUserGroups={this.setUserGroups}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               username={this.state.username}
               password={this.state.password}
               role={this.state.role}
+              userData={this.props.userData}
+              groupData={this.state.allGroups}
+              ownerName={this.props.ownerName}
             />
 
             <hr className="m-1" />

@@ -52,7 +52,7 @@ class ListOfUsers extends Component {
             surname: item.surname,
             username: item.username,
             role: item.role,
-            edit: <EditButton ownerName={item.name} ownerType={"user"} />
+            edit: <EditButton ownerName={item.username} ownerType={"user"} />
           };
         });
 
