@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.dto.CreateUserCommand;
+import lt.vtmc.user.dto.UpdateUserCommand;
+import lt.vtmc.user.dto.UserDetailsDTO;
 import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
 
@@ -79,7 +81,7 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/users")
-	public List<User> listAllUsers() {
+	public String[] listAllUsers() {
 		return userService.retrieveAllUsers();
 	}
 
@@ -90,8 +92,8 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/user/{username}")
-	public User findUserByUsername(@PathVariable("username") String username) {
-		return userService.findUserByUsername(username);
+	public String findUserByUsername(@PathVariable("username") String username) {
+		return new UserDetailsDTO(userService.findUserByUsername(username)).toString();
 	}
 
 	/**
@@ -101,7 +103,7 @@ public class UserController {
 	 * @method DELETE
 	 */
 	@DeleteMapping("/api/delete/{username}")
-	public ResponseEntity<String> deleteUserByUsername(@RequestBody String username) {
+	public ResponseEntity<String> deleteUserByUsername(@PathVariable("username") String username) {
 		User tmpUser = userService.findUserByUsername(username);
 		if (tmpUser != null) {
 			userService.deleteUser(tmpUser);
@@ -111,16 +113,18 @@ public class UserController {
 	}
 
 	/**
-	 * Updates user information in the database database
+	 * Updates user information in the database 
 	 * 
-	 * @url /api/user/{username}
+	 * @url /api/user/update/{username}
 	 * @method POST
 	 */
 	@PostMapping(path = "/api/user/update/{username}")
-	public ResponseEntity<String> updateUserByUsername(@RequestBody CreateUserCommand command, String username) {
-		if (userService.findUserByUsername(command.getUsername()) != null) {
-			userService.updateUserDetails(command.getUsername(), command.getName(), command.getSurname(),
+	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username, @RequestBody UpdateUserCommand command) {
+		if (userService.findUserByUsername(username) != null) {
+			userService.updateUserDetails(username, command.getName(), command.getSurname(),
 					command.getPassword());
+//			groupService.addUserToGroupByUsername(command.getGroupList(), username);
+			userService.rewriteLists(command.getGroupList(), username);
 			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);

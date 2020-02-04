@@ -1,6 +1,7 @@
 package lt.vtmc.groups.dto;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import lt.vtmc.documents.model.DocType;
@@ -52,7 +53,7 @@ public class GroupDetails {
 		return userList;
 	}
 	public String[] getUserListNames() {
-		String[]userListNames = new String[0];
+		String[]userListNames = new String[userList.size()];
 		for (int i = 0; i < userList.size(); i++) {
 			userListNames[i] = userList.get(i).getName();
 		}
@@ -65,7 +66,7 @@ public class GroupDetails {
 		return docTypesToCreate;
 	}
 	public String[] getDocTypesToCreateNames() {
-		String[]docTypesNames = new String[0];
+		String[]docTypesNames = new String[userList.size()];
 		for (int i = 0; i < docTypesToCreate.size(); i++) {
 			docTypesNames[i] = docTypesToCreate.get(i).getDocumentType();
 		}
@@ -78,7 +79,7 @@ public class GroupDetails {
 		return docTypesToApprove;
 	}
 	public String[] getDocTypesToApproveNames() {
-		String[]docTypesNames = new String[0];
+		String[]docTypesNames = new String[userList.size()];
 		for (int i = 0; i < docTypesToApprove.size(); i++) {
 			docTypesNames[i] = docTypesToApprove.get(i).getDocumentType();
 		}
@@ -86,6 +87,11 @@ public class GroupDetails {
 	}
 	public void setDocTypesToApprove(List<DocType> docTypesToApprove) {
 		this.docTypesToApprove = docTypesToApprove;
+	}
+	@Override
+	public String toString() {
+		return "[name: " + name + ", description: " + getDescription() + ", users: " + Arrays.toString(getUserListNames())
+				+ ", Can create: " + Arrays.toString(getDocTypesToCreateNames()) + ", Can approve: " + Arrays.toString(getDocTypesToApproveNames()) + "]";
 	}
 	
 	

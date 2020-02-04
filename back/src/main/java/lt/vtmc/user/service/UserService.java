@@ -13,8 +13,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
+import lt.vtmc.user.dto.UserDetailsDTO;
 import lt.vtmc.user.model.User;
 
 /**
@@ -28,6 +30,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private GroupRepository groupRepository;
 
 	/**
 	 * Will return User object based user found by
@@ -95,9 +100,13 @@ public class UserService implements UserDetailsService {
 	 * Method to return all system users.
 	 * 
 	 */
-	public List<User> retrieveAllUsers() {
-		List<User> userList = userRepository.findAll();
-		return userList;
+	public String[] retrieveAllUsers() {
+		List<User> tmpList = userRepository.findAll();
+		String[]allUsers = new String [tmpList.size()];
+		for (int i = 0; i < tmpList.size(); i++) {
+			allUsers[i] = new UserDetailsDTO(tmpList.get(i)).toString();
+		}
+		return allUsers;
 	}
 	/**
 	 * Method to delete system users.
@@ -126,6 +135,23 @@ public class UserService implements UserDetailsService {
 		updatedUser.setPassword(encoder.encode(password));
 		userRepository.save(updatedUser);
 		return updatedUser;
-		
 	}
+	
+	//temporary method to rewrite user list and group list
+		public User rewriteLists(String[] groupList, String username) {
+			User tmpUser = findUserByUsername(username);
+			List<Group>tmpGroupList = new ArrayList<Group>();
+			for (int i = 0; i < groupList.length; i++) {
+				Group tmpGroup = groupRepository.findGroupByName(groupList[i]);
+				tmpGroupList.add(tmpGroup);
+				if(tmpGroup.getUserList().contains(tmpUser)) {
+					tmpGroup.getUserList().remove(tmpUser);
+				}
+				else {
+					tmpGroup.getUserList().add(tmpUser);
+				}
+			}
+			tmpUser.setGroupList(tmpGroupList);
+			return tmpUser;
+		}
 }

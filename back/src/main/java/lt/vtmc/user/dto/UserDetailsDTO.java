@@ -1,12 +1,13 @@
 package lt.vtmc.user.dto;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.model.User;
 
-public class UserDetails {
+public class UserDetailsDTO {
 	
 	private String username;
 	
@@ -30,7 +31,7 @@ public class UserDetails {
 	 * @param groupList
 	 */
 
-	public UserDetails(User user) {
+	public UserDetailsDTO(User user) {
 		super();
 		this.username = user.getUsername();
 		this.password = user.getPassword();
@@ -73,7 +74,7 @@ public class UserDetails {
 		return groupList;
 	}
 	public String[] getGroupListNames() {
-		String[]groupNames = new String[0];
+		String[]groupNames = new String[groupList.size()];
 		for (int i = 0; i < groupList.size(); i++) {
 			groupNames[i] = groupList.get(i).getName();
 		}
@@ -82,6 +83,9 @@ public class UserDetails {
 	public void setGroupList(List<Group> groupList) {
 		this.groupList = groupList;
 	}
-
-	
+	@Override
+	public String toString() {
+		return "[username: " + username + ", name: " + name + ", surname: "
+				+ surname + ", role: " + role + ", groups: " + Arrays.toString(getGroupListNames()) + "]";
+	}
 }
