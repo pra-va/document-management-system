@@ -18,7 +18,8 @@ class NewModal extends Component {
       role: "",
       allGroups: [],
       notAddedGroups: [],
-      addedGroups: []
+      addedGroups: [],
+      usernameExists: false
     };
   }
 
@@ -107,6 +108,10 @@ class NewModal extends Component {
     this.setState({ role: value });
   };
 
+  handleUsernameExists = value => {
+    this.setState({ usernameExists: value });
+  };
+
   handleNewUserSubmit = event => {
     event.preventDefault();
     console.log("submit");
@@ -162,6 +167,7 @@ class NewModal extends Component {
               handleUsernameChange={this.handleUsernameChange}
               handlePasswordChange={this.handlePasswordChange}
               handleRoleChange={this.handleRoleChange}
+              handleUsernameExists={this.handleUsernameExists}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               username={this.state.username}
@@ -187,9 +193,10 @@ class NewModal extends Component {
                   Cancel
                 </button>
                 <button
-                  type="submit"
+                  type={this.state.usernameExists ? "" : "submit"}
                   className="btn btn-dark"
                   data-dismiss="modal"
+                  disabled={this.state.usernameExists ? true : false}
                 >
                   Create
                 </button>

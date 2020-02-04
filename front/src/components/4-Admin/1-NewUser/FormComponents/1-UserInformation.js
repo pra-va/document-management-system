@@ -62,8 +62,10 @@ class UserInformation extends Component {
             this.setState({ usernameExists: response.data });
             if (response.data) {
               this.setState({ usernameExists: true });
+              this.props.handleUsernameExists(true);
             } else {
               this.setState({ usernameExists: false });
+              this.props.handleUsernameExists(false);
             }
           })
           .catch(error => {

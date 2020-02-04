@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 html,
@@ -24,4 +25,8 @@ button.close {
 
 button.close:hover {
   color: red;
+}
+
+.container {
+  height: 100vh;
 }
