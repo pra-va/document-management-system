@@ -24,4 +24,5 @@ public class MainController {
 	public String helloAdmin() {
 		return "Hello, Admin!";
 	}
+
 }
