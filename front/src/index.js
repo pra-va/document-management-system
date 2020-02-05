@@ -21,7 +21,6 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 // Other imports
-import App from "./components/0-MainWindow/App";
 import PageNotFound from "./components/1-Errors/PageNotFound";
 import LoginForm from "./components/2-LoginForm/LoginForm";
 import HomePage from "./components/3-UserPage/01-MainWindow/HomePage";
