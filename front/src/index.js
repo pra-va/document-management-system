@@ -12,26 +12,38 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // Router imports
-import { Switch, Route } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+// import { Switch, Route } from "react-router";
+// import { BrowserRouter } from "react-router-dom";
+
+import { HashRouter as Router, Route } from "react-router-dom";
+
+//Table imports
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 // Other imports
-import App from "./components/0-MainWindow/App";
 import PageNotFound from "./components/1-Errors/PageNotFound";
 import LoginForm from "./components/2-LoginForm/LoginForm";
-import HomePage from "./components/3-UserPage/01-MainWindow/HomePagePreLoader";
+import HomePage from "./components/3-UserPage/01-MainWindow/HomePage";
+import ListOfUsers from "./components/4-Admin/3and4-UsersAndGroups/3-Users/ListOfUsers";
+import ListOfGroups from "./components/4-Admin/3and4-UsersAndGroups/4-Groups/ListOfGroups";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App>
-      <Switch>
-        <Route exact path="/" component={LoginForm} />
-        <Route exact path="/home" component={HomePage} />
-        <Route path="*" component={PageNotFound} />
-        <Route component={PageNotFound} />
-      </Switch>
-    </App>
-  </BrowserRouter>,
+  // <BrowserRouter>
+  //   <App>
+  //     <Switch>
+  <Router>
+    <div>
+      <Route exact path="/" component={LoginForm} />
+      <Route path="/home" component={HomePage} />
+      <Route path="/users" component={ListOfUsers} />
+      <Route path="/groups" component={ListOfGroups} />
+      <Route path="*" component={PageNotFound} />
+      <Route component={PageNotFound} />
+    </div>
+  </Router>,
+  //     </Switch>
+  //   </App>
+  // </BrowserRouter>,
   document.getElementById("root")
 );
 

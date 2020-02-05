@@ -2,6 +2,7 @@ package lt.vtmc.security.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,5 +36,32 @@ public class SecurityController {
 			return currentUsername;
 		}
 		return "Not logged in.";
+	}
+
+	/**
+	 * 
+	 * @return true, if user, that sends the request is authenticated.
+	 */
+	@RequestMapping(path = "/api/authenticated", method = RequestMethod.GET)
+	public boolean isUserLoggedIn() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 
+	 * @return true, if user, that sends the request has ADMIN role and is
+	 *         authenticated. Will return "UNAUTHORIZED" if the user is not
+	 *         authenticated.
+	 */
+
+	@RequestMapping(path = "/api/administrator", method = RequestMethod.GET)
+	@PreAuthorize("hasRole('ADMIN')")
+	public boolean isUserAdmin() {
+		return true;
 	}
 }
