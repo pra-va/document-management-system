@@ -1,7 +1,5 @@
 package lt.vtmc.user.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -122,9 +120,8 @@ public class UserController {
 	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username, @RequestBody UpdateUserCommand command) {
 		if (userService.findUserByUsername(username) != null) {
 			userService.updateUserDetails(username, command.getName(), command.getSurname(),
-					command.getPassword());
-//			groupService.addUserToGroupByUsername(command.getGroupList(), username);
-//			userService.rewriteLists(command.getGroupList(), username);
+					command.getPassword(), command.getRole());
+			groupService.compareGroups(command.getGroupList(), username);
 			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);

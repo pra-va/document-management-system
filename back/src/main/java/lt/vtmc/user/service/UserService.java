@@ -127,12 +127,13 @@ public class UserService implements UserDetailsService {
 	 * @return User
 	 */
 	@Transactional
-	public User updateUserDetails(String username, String name, String surname, String password) {
+	public User updateUserDetails(String username, String name, String surname, String password,String role) {
 		User updatedUser = findUserByUsername(username);
 		updatedUser.setName(name);
 		updatedUser.setSurname(surname);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		updatedUser.setPassword(encoder.encode(password));
+		updatedUser.setRole(role);
 		userRepository.save(updatedUser);
 		return updatedUser;
 	}

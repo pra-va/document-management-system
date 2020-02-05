@@ -15,6 +15,7 @@ public class UpdateUserCommand {
 	private String surname;
 	private String password;
 	private String[] groupList;
+	private String role; //TODO should be ENUM
 
 	/**
 	 * Constructor method for CreateUserCommand
@@ -22,11 +23,12 @@ public class UpdateUserCommand {
 	 * @param username
 	 * @param password
 	 */
-	public UpdateUserCommand(String name, String surname, String password, String[] groupList) {
+	public UpdateUserCommand(String name, String surname, String password, String[] groupList, String role) {
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
 		this.groupList = groupList;
+		this.role = role;
 
 	}
 	/**
@@ -87,6 +89,20 @@ public class UpdateUserCommand {
 	 */
 	public void setGroupList(String[] groupList) {
 		this.groupList = groupList;
+	}
+	/**
+	 * 
+	 * @return role
+	 */
+	public String getRole() {
+		return role;
+	}
+	/**
+	 * 
+	 * @param role
+	 */
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	
