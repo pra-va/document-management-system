@@ -49,7 +49,7 @@ public class UserController {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
 			User tmpUser = userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
-			groupService.addUserToGroup(command.getGroupList(), tmpUser);
+			groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -68,7 +68,7 @@ public class UserController {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
 			User tmpUser = userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
-			groupService.addUserToGroup(command.getGroupList(), tmpUser);
+			groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
@@ -124,14 +124,14 @@ public class UserController {
 			userService.updateUserDetails(username, command.getName(), command.getSurname(),
 					command.getPassword());
 //			groupService.addUserToGroupByUsername(command.getGroupList(), username);
-			userService.rewriteLists(command.getGroupList(), username);
+//			userService.rewriteLists(command.getGroupList(), username);
 			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
 		}
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping(path = "/api/{username}/exists")
-	public boolean checkIfUserExists(@PathVariable("username") String username) {
+	public boolean checkIfUserExists(@PathVariable("username") String username) throws Exception {
 		if (findUserByUsername(username) != null) {
 			return true;
 		}

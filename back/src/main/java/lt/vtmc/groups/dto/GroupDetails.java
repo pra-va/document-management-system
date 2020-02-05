@@ -55,7 +55,7 @@ public class GroupDetails {
 	public String[] getUserListNames() {
 		String[]userListNames = new String[userList.size()];
 		for (int i = 0; i < userList.size(); i++) {
-			userListNames[i] = userList.get(i).getName();
+			userListNames[i] = userList.get(i).getUsername();
 		}
 		return userListNames;
 	}
