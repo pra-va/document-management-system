@@ -137,22 +137,4 @@ public class UserService implements UserDetailsService {
 		userRepository.save(updatedUser);
 		return updatedUser;
 	}
-	
-	//temporary method to rewrite user list and group list
-		public User rewriteLists(String[] groupList, String username) {
-			User tmpUser = findUserByUsername(username);
-			List<Group>tmpGroupList = new ArrayList<Group>();
-			for (int i = 0; i < groupList.length; i++) {
-				Group tmpGroup = groupRepository.findGroupByName(groupList[i]);
-				tmpGroupList.add(tmpGroup);
-				if(tmpGroup.getUserList().contains(tmpUser)) {
-					tmpGroup.getUserList().remove(tmpUser);
-				}
-				else {
-					tmpGroup.getUserList().add(tmpUser);
-				}
-			}
-			tmpUser.setGroupList(tmpGroupList);
-			return tmpUser;
-		}
 }

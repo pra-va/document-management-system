@@ -47,7 +47,7 @@ public class UserController {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
 			User tmpUser = userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
-			groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
+			groupService.addUserToGroupByUsername(command.getGroupList(), command.getUsername());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
 			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
