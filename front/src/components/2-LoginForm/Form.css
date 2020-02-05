@@ -1,7 +1,10 @@
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .align-items-lg {
-    align-items: center;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
   }
 }
 
@@ -19,10 +22,9 @@
 .width {
   max-width: 22vh;
   max-height: min-content;
-  width: auto;
-  height: auto;
 }
 
-.form-width {
+#loginForm {
   min-width: 22em;
+  margin: 0;
 }

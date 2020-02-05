@@ -39,7 +39,7 @@ public class UserController {
 	 * access this method.
 	 * 
 	 * @url /api/createadmin
-	 * @method POST
+	 * @method POST }
 	 * @param user details
 	 */
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)

@@ -33,7 +33,6 @@ class LoginForm extends Component {
         headers: { "Content-type": "application/x-www-form-urlencoded" }
       })
       .then(response => {
-        console.log(response);
         isUserAdmin = response.data.su;
         if (response.status === 200) {
           this.props.history.push({
@@ -45,7 +44,6 @@ class LoginForm extends Component {
       .catch(error => {
         console.log(error);
         if (error.response.status === 401) {
-          console.log("failing");
           this.setState({ loginFailed: true });
         }
       });
@@ -55,11 +53,12 @@ class LoginForm extends Component {
   render() {
     return (
       <div className="container">
-        <div
-          className="row d-flex justify-content-center
-           align-items-lg heigth-100"
-        >
-          <form onSubmit={this.handleSubmit} className="form-width ">
+        <div className="row d-flex justify-content-center">
+          <form
+            onSubmit={this.handleSubmit}
+            id="loginForm"
+            className="align-items-lg"
+          >
             <img className="my-3 width" src={logo} alt="unable to load" />
             <div className="form-group">
               <label
