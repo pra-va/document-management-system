@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.dto.UserDetailsDTO;
@@ -30,17 +29,13 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private GroupRepository groupRepository;
-
 	/**
 	 * Will return User object based user found by
 	 * {@link lt.vtmc.security.service.UserService.findUserByUsername(String)}.
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User newUser = findUserByUsername(username);
+		User newUser = userRepository.findUserByUsername(username);
 		if (newUser == null) {
 			throw new UsernameNotFoundException(username + " not found.");
 		} else {
@@ -100,11 +95,11 @@ public class UserService implements UserDetailsService {
 	 * Method to return all system users.
 	 * 
 	 */
-	public String[] retrieveAllUsers() {
+	public List<UserDetailsDTO> retrieveAllUsers() {
 		List<User> tmpList = userRepository.findAll();
-		String[]allUsers = new String [tmpList.size()];
+		List<UserDetailsDTO> allUsers = new ArrayList<UserDetailsDTO>();
 		for (int i = 0; i < tmpList.size(); i++) {
-			allUsers[i] = new UserDetailsDTO(tmpList.get(i)).toString();
+			allUsers.add(new UserDetailsDTO(tmpList.get(i)));
 		}
 		return allUsers;
 	}
@@ -128,7 +123,7 @@ public class UserService implements UserDetailsService {
 	 */
 	@Transactional
 	public User updateUserDetails(String username, String name, String surname, String password,String role) {
-		User updatedUser = findUserByUsername(username);
+		User updatedUser = userRepository.findUserByUsername(username);
 		updatedUser.setName(name);
 		updatedUser.setSurname(surname);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();

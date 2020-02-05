@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.service.UserService;
 

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lt.vtmc.documents.model.DocType;
 import lt.vtmc.groups.dao.GroupRepository;
-import lt.vtmc.groups.dto.GroupDetails;
+import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
@@ -135,13 +135,13 @@ public class GroupService {
 		}
 	}
 
-	public String[] retrieveAllGroups() {
+	public List<GroupDetailsDTO> retrieveAllGroups() {
 		List<Group> grouplist = groupRepository.findAll();
-		String[] details = new String[grouplist.size()];
+		List<GroupDetailsDTO> allGroupss = new ArrayList<GroupDetailsDTO>();
 		for (int i = 0; i < grouplist.size(); i++) {
-			details[i] = new GroupDetails(grouplist.get(i)).toString();
+			allGroupss.add(new GroupDetailsDTO(grouplist.get(i)));
 		}
-		return details;
+		return allGroupss;
 	}
 	
 	public void compareGroups(String[] newGroupList, String username ) {
