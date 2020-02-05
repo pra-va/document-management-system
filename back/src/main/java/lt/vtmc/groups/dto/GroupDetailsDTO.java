@@ -4,20 +4,25 @@ package lt.vtmc.groups.dto;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lt.vtmc.documents.model.DocType;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.model.User;
 
-public class GroupDetails {
+public class GroupDetailsDTO {
 	
 	private String name;
 	
 	private String description;
 	
+	@JsonIgnore
 	private List<User> userList;
 	
+	@JsonIgnore
 	private List<DocType> docTypesToCreate;
 	
+	@JsonIgnore
 	private List<DocType> docTypesToApprove;
 	/**
 	 * Constructor method for GroupDetails
@@ -29,7 +34,7 @@ public class GroupDetails {
 	 * @param docTypesToApprove
 	 */
 
-	public GroupDetails(Group group) {
+	public GroupDetailsDTO(Group group) {
 		super();
 		this.name = group.getName();
 		this.description = group.getDescription();

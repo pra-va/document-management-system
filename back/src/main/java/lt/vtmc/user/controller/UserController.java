@@ -1,5 +1,7 @@
 package lt.vtmc.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +47,7 @@ public class UserController {
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
 		if (userService.findUserByUsername(command.getUsername()) == null) {
-			User tmpUser = userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
+			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
 			groupService.addUserToGroupByUsername(command.getGroupList(), command.getUsername());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
@@ -79,7 +81,7 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/users")
-	public String[] listAllUsers() {
+	public List<UserDetailsDTO> listAllUsers() {
 		return userService.retrieveAllUsers();
 	}
 
@@ -90,8 +92,8 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/user/{username}")
-	public String findUserByUsername(@PathVariable("username") String username) {
-		return new UserDetailsDTO(userService.findUserByUsername(username)).toString();
+	public UserDetailsDTO findUserByUsername(@PathVariable("username") String username) {
+		return new UserDetailsDTO(userService.findUserByUsername(username));
 	}
 
 	/**

@@ -4,6 +4,8 @@ package lt.vtmc.user.dto;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.model.User;
 
@@ -19,6 +21,7 @@ public class UserDetailsDTO {
 	
 	private String role;
 
+	@JsonIgnore
 	private List<Group> groupList;
 	/**
 	 * Constructor method for GroupDetails
