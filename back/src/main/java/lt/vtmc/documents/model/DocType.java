@@ -3,6 +3,7 @@ package lt.vtmc.documents.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -24,10 +25,10 @@ public class DocType {
 	
 	private String documentType;
 	
-	@ManyToMany(mappedBy = "docTypesToApprove")
+	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER)
 	private List<Group> groupsApproving;
 	
-	@ManyToMany(mappedBy = "docTypesToCreate")
+	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER)
 	private List<Group> groupsCreating;
 	/**
 	 * Empty constructor.

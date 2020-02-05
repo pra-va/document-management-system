@@ -2,33 +2,36 @@ package lt.vtmc.groups.dto;
 
 public class CreateGroupCommand {
 
-	private String name;
+	private String[] userList;
 	
 	private String description;
+	
+	private String groupName;
 	/**
 	 * Constructor method for CreateGroupCommand
 	 * 
-	 * @param name
+	 * @param userList
 	 * @param description
 	 */
-	public CreateGroupCommand(String name, String description) {
+	public CreateGroupCommand(String[] userList, String groupName, String description) {
 		super();
-		this.name = name;
+		this.groupName = groupName;
 		this.description = description;
+		this.userList = userList;
 	}
 	/**
 	 * 
 	 * @param name
 	 */
-	public String getName() {
-		return name;
+	public String[] getUserList() {
+		return userList;
 	}
 	/**
 	 * 
 	 * @return name
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setUserList(String[] userList) {
+		this.userList = userList;
 	}
 	/**
 	 * 
@@ -43,6 +46,12 @@ public class CreateGroupCommand {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 	
 	

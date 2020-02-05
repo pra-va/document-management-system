@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,17 +37,17 @@ public class Group {
 	
 	private String description;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="GROUPS_CREATING",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="doc_id"))
 	//@ElementCollection(targetClass=DocType.class)
 	private List<DocType> docTypesToCreate;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="GROUPS_APPROVING",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="doc_id"))
 	//@ElementCollection(targetClass=DocType.class)
 	private List<DocType> docTypesToApprove;
 
-	@ManyToMany(mappedBy = "groupList")
+	@ManyToMany(mappedBy = "groupList", fetch = FetchType.EAGER)
 	private List<User> userList;
 	
 	

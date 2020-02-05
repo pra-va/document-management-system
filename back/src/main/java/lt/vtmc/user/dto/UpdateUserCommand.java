@@ -2,20 +2,20 @@ package lt.vtmc.user.dto;
 
 /**
  * Create user command used by controller
- * {@link lt.vtmc.user.controller.UserController#createAdmin(CreateUserCommand)}
+ * {@link lt.vtmc.user.controller.UserController#createAdmin(CreateUserCommand2)}
  * and
- * {@link lt.vtmc.user.controller.UserController#crerateUser(CreateUserCommand)}
+ * {@link lt.vtmc.user.controller.UserController#crerateUser(CreateUserCommand2)}
  * 
  * @author pra-va
  *
  */
-public class CreateUserCommand {
+public class UpdateUserCommand {
 
-	private String username;
 	private String name;
 	private String surname;
 	private String password;
 	private String[] groupList;
+	private String role; //TODO should be ENUM
 
 	/**
 	 * Constructor method for CreateUserCommand
@@ -23,31 +23,14 @@ public class CreateUserCommand {
 	 * @param username
 	 * @param password
 	 */
-	public CreateUserCommand(String username, String name, String surname, String password, String[] groupList) {
-		this.username = username;
+	public UpdateUserCommand(String name, String surname, String password, String[] groupList, String role) {
 		this.name = name;
 		this.surname = surname;
 		this.password = password;
 		this.groupList = groupList;
+		this.role = role;
 
 	}
-
-	/**
-	 * 
-	 * @return username
-	 */
-	public String getUsername() {
-		return username;
-	}
-
-	/**
-	 * 
-	 * @param username
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	/**
 	 * 
 	 * @return password
@@ -106,6 +89,20 @@ public class CreateUserCommand {
 	 */
 	public void setGroupList(String[] groupList) {
 		this.groupList = groupList;
+	}
+	/**
+	 * 
+	 * @return role
+	 */
+	public String getRole() {
+		return role;
+	}
+	/**
+	 * 
+	 * @param role
+	 */
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	
