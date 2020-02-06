@@ -114,7 +114,6 @@ class NewModal extends Component {
 
   handleNewUserSubmit = event => {
     event.preventDefault();
-    console.log("submit");
     let url = "http://localhost:8080/dvs/api/";
     if (this.state.role === "ADMIN") {
       url += "createadmin/";

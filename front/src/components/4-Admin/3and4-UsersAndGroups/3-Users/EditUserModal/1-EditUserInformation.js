@@ -11,6 +11,7 @@ class UserInformation extends Component {
       lastName: "",
       username: "",
       password: "",
+      groupList: [],
       role: "",
       usernameExists: false,
       updatePassword: false
@@ -57,8 +58,9 @@ class UserInformation extends Component {
     this.getUserData();
   }
 
+  componentDidUpdate() {}
+
   getUserData = () => {
-    console.log(this.props.ownerName);
     axios
       .get("http://localhost:8080/dvs/api/user/" + this.props.ownerName)
       .then(response => {
@@ -66,9 +68,17 @@ class UserInformation extends Component {
           firstName: response.data.name,
           lastName: response.data.surname,
           username: response.data.username,
-          role: response.data.role
+          role: response.data.role,
+          groupList: response.data.groupList
         });
-        this.props.initalDataTransfer({});
+        console.log(response.data);
+        this.props.initalDataTransfer({
+          firstName: response.data.name,
+          lastName: response.data.surname,
+          username: response.data.username,
+          role: response.data.role,
+          groupList: response.data.groupList
+        });
         this.props.setUserGroups(response.data.groupList);
       })
       .catch(error => console.log(error));

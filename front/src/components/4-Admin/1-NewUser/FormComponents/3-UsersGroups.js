@@ -5,7 +5,7 @@ class UsersGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      usersGroups: []
+      userGroups: []
     };
   }
 
@@ -13,15 +13,20 @@ class UsersGroup extends Component {
   columnNames = ["#", "Name", "Add/Remove"];
 
   componentDidMount() {
-    if (this.props.usersGroups.length !== this.state.usersGroups.length) {
-      this.setState({ usersGroups: this.props.usersGroups });
+    if (this.props.userGroups) {
+      if (this.props.userGroups.length !== this.state.userGroups.length) {
+        this.setState({ userGroups: this.props.userGroups });
+      }
     }
   }
 
   componentDidUpdate() {
-    if (this.props.usersGroups.length !== this.state.usersGroups.length) {
-      this.setState({ usersGroups: this.props.usersGroups });
+    if (this.props.userGroups) {
+      if (this.props.userGroups.length !== this.state.userGroups.length) {
+        this.setState({ userGroups: this.props.userGroups });
+      }
     }
+
   }
 
   render() {
@@ -34,7 +39,7 @@ class UsersGroup extends Component {
         <Table
           dataFields={this.dataFields}
           columnNames={this.columnNames}
-          tableData={this.state.usersGroups}
+          tableData={this.state.userGroups}
           searchBarId={"addedGroupsSearchBar"}
         />
       </div>
