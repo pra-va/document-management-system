@@ -113,16 +113,17 @@ public class UserController {
 	}
 
 	/**
-	 * Updates user information in the database 
+	 * Updates user information in the database
 	 * 
 	 * @url /api/user/update/{username}
 	 * @method POST
 	 */
 	@PostMapping(path = "/api/user/update/{username}")
-	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username, @RequestBody UpdateUserCommand command) {
+	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username,
+			@RequestBody UpdateUserCommand command) {
 		if (userService.findUserByUsername(username) != null) {
-			userService.updateUserDetails(username, command.getName(), command.getSurname(),
-					command.getPassword(), command.getRole());
+			userService.updateUserDetails(username, command.getName(), command.getSurname(), command.getPassword(),
+					command.getRole());
 			groupService.compareGroups(command.getGroupList(), username);
 			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
 		}
@@ -131,9 +132,15 @@ public class UserController {
 
 	@GetMapping(path = "/api/{username}/exists")
 	public boolean checkIfUserExists(@PathVariable("username") String username) throws Exception {
-		if (findUserByUsername(username) != null) {
+//		if (findUserByUsername(username) != null) {
+//			return true;
+//		}
+//		return false;
+
+		if (userService.findUserByUsername(username) != null) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
 	}
 }
