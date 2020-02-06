@@ -27,7 +27,7 @@ class SpringSecurityApplicationTests {
 	 */
 	@Test
 	public void createFakeUserAndSystemAdministrator() {
-		if (userService.retrieveAllUsers().isEmpty()) {
+		if (userService.findUserByUsername("admin") == null) {
 			userService.createSystemAdministrator("admin", "testName", "testSurname", "admin");
 			userService.createUser("user", "testName", "testSurname", "user");
 		}
@@ -35,7 +35,7 @@ class SpringSecurityApplicationTests {
 
 	@Test
 	public void createFakeGroups() {
-		if (groupService.retrieveAllGroups().isEmpty()) {
+		if (groupService.findGroupByName("dummy1") == null) {
 			groupService.createGroup("dummy1", "testDescription");
 			groupService.createGroup("dummy2", "testDescription");
 			groupService.createGroup("dummy3", "testDescription");

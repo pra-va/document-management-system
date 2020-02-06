@@ -1,5 +1,6 @@
 package lt.vtmc.user.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
+import lt.vtmc.user.dto.UserDetailsDTO;
 import lt.vtmc.user.model.User;
 
 /**
@@ -26,14 +29,13 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
-
 	/**
 	 * Will return User object based user found by
 	 * {@link lt.vtmc.security.service.UserService.findUserByUsername(String)}.
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User newUser = findUserByUsername(username);
+		User newUser = userRepository.findUserByUsername(username);
 		if (newUser == null) {
 			throw new UsernameNotFoundException(username + " not found.");
 		} else {
@@ -62,6 +64,8 @@ public class UserService implements UserDetailsService {
 	@Transactional
 	public User createUser(String username, String name, String surname, String password) {
 		User newUser = new User(username, name, surname, password, "USER");
+		List<Group> tmpList = new ArrayList<Group>();
+		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
 		userRepository.save(newUser);
@@ -80,6 +84,8 @@ public class UserService implements UserDetailsService {
 	@Transactional
 	public User createSystemAdministrator(String username, String name, String surname, String password) {
 		User newUser = new User(username, name, surname, password, "ADMIN");
+		List<Group> tmpList = new ArrayList<Group>();
+		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
 		userRepository.save(newUser);
@@ -89,9 +95,13 @@ public class UserService implements UserDetailsService {
 	 * Method to return all system users.
 	 * 
 	 */
-	public List<User> retrieveAllUsers() {
-		List<User> userList = userRepository.findAll();
-		return userList;
+	public List<UserDetailsDTO> retrieveAllUsers() {
+		List<User> tmpList = userRepository.findAll();
+		List<UserDetailsDTO> allUsers = new ArrayList<UserDetailsDTO>();
+		for (int i = 0; i < tmpList.size(); i++) {
+			allUsers.add(new UserDetailsDTO(tmpList.get(i)));
+		}
+		return allUsers;
 	}
 	/**
 	 * Method to delete system users.
@@ -112,14 +122,14 @@ public class UserService implements UserDetailsService {
 	 * @return User
 	 */
 	@Transactional
-	public User updateUserDetails(String username, String name, String surname, String password) {
-		User updatedUser = findUserByUsername(username);
+	public User updateUserDetails(String username, String name, String surname, String password,String role) {
+		User updatedUser = userRepository.findUserByUsername(username);
 		updatedUser.setName(name);
 		updatedUser.setSurname(surname);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		updatedUser.setPassword(encoder.encode(password));
+		updatedUser.setRole(role);
 		userRepository.save(updatedUser);
 		return updatedUser;
-		
 	}
 }
