@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import InputLine from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
+import axios from "axios";
 
 var GroupInformation = props => {
+  var [groupNameExists, setGroupNameExists] = useState(false);
+
+  const checkIfGroupNameExists = groupName => {
+    if (groupName.length > 0) {
+      axios
+        .get("http://localhost:8080/dvs/api/group/" + groupName + "/exists")
+        .then(response => {
+          setGroupNameExists(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   const handleGroupNameChange = event => {
     props.handleGroupNameChange(event);
+    checkIfGroupNameExists(event.target.value);
   };
 
   const handleGroupDescriptionChange = event => {
@@ -26,6 +43,7 @@ var GroupInformation = props => {
         onChange={handleGroupNameChange}
         value={props.groupName}
         pattern={2}
+        groupNameExists={groupNameExists}
       />
 
       <div className="form-group row">

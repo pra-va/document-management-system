@@ -27,21 +27,19 @@ import lt.vtmc.groups.model.Group;
 @Table(name = "Users")
 public class User {
 
-
 	@Id
-	@Column(name="id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Size(min = 4)
-	@Column(name="username")
-	private String username;
 
+	@Size(min = 4)
+	@Column(name = "username")
+	private String username;
 
 	@NotEmpty
 	// @Size(min = 8)
 	private String password;
-	
+
 	@NotEmpty(message = "Name field may not be empty")
 	private String name;
 
@@ -50,10 +48,11 @@ public class User {
 
 	@NotEmpty(message = "Role field may not be empty")
 	private String role;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="USERS_TO_GROUPS",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="user_id"))
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "USERS_TO_GROUPS", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<Group> groupList;
+
 	/**
 	 * Constructor.
 	 * 
@@ -139,7 +138,8 @@ public class User {
 		this.surname = surname;
 	}
 
-	/**Set
+	/**
+	 * Set
 	 * 
 	 * @return role
 	 */
@@ -149,11 +149,13 @@ public class User {
 
 	/**
 	 * Groups
+	 * 
 	 * @param role
 	 */
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -161,6 +163,7 @@ public class User {
 	public List<Group> getGroupList() {
 		return groupList;
 	}
+
 	/**
 	 * 
 	 * @param groupList
@@ -237,6 +240,5 @@ public class User {
 	 * 
 	 * @return
 	 */
-	
 
 }

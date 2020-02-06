@@ -31,7 +31,7 @@ class UserInformation extends Component {
   handleUsernameChange = event => {
     this.setState({ username: event.target.value });
     this.props.handleUsernameChange(event.target.value);
-    this.checkIfUsernameExists();
+    this.checkIfUsernameExists(event.target.value);
   };
 
   handlePasswordChange = event => {
@@ -51,6 +51,21 @@ class UserInformation extends Component {
     this.setState({ updatePassword: event.target.checked });
     if (!event.target.checked) {
       this.setState({ password: "" });
+    }
+  };
+
+  checkIfUsernameExists = username => {
+    if (username.length > 3) {
+      axios
+        .get("http://localhost:8080/dvs/api/" + username + "/exists")
+        .then(response => {
+          this.setState({ usernameExists: response.data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      this.setState({ usernameExists: false });
     }
   };
 
@@ -145,6 +160,8 @@ class UserInformation extends Component {
           onChange={this.handleUsernameChange}
           value={this.state.username}
           pattern={1}
+          ownerName={this.props.ownerName}
+          usernameExists={this.state.usernameExists}
         />
 
         {this.state.updatePassword ? (
@@ -203,18 +220,6 @@ class UserInformation extends Component {
               />
             </div>
           </div>
-        </div>
-
-        <div className="form-group row d-flex justify-content-center">
-          {this.state.username.length > 0 ? (
-            this.state.usernameExists ? (
-              <h5>Username {this.state.username} is taken.</h5>
-            ) : (
-              <div></div>
-            )
-          ) : (
-            <div></div>
-          )}
         </div>
 
         <div className="form-group row">

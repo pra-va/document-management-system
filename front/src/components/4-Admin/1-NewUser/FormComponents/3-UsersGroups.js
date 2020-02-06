@@ -10,7 +10,7 @@ class userGroups extends Component {
   }
 
   dataFields = ["number", "name", "addOrRemove"];
-  columnNames = ["#", "Name", "Add/Remove"];
+  columnNames = ["#", "Name", ""];
 
   componentDidMount() {
     if (this.props.userGroups) {

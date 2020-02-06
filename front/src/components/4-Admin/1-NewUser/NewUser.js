@@ -15,7 +15,7 @@ class NewModal extends Component {
       lastName: "",
       username: "",
       password: "",
-      role: "",
+      role: "USER",
       allGroups: [],
       notAddedGroups: [],
       addedGroups: [],
@@ -108,10 +108,6 @@ class NewModal extends Component {
     this.setState({ role: value });
   };
 
-  handleUsernameExists = value => {
-    this.setState({ usernameExists: value });
-  };
-
   handleNewUserSubmit = event => {
     event.preventDefault();
     let url = "http://localhost:8080/dvs/api/";
@@ -165,7 +161,6 @@ class NewModal extends Component {
               handleUsernameChange={this.handleUsernameChange}
               handlePasswordChange={this.handlePasswordChange}
               handleRoleChange={this.handleRoleChange}
-              handleUsernameExists={this.handleUsernameExists}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               username={this.state.username}

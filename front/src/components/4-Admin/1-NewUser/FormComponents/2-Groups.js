@@ -11,7 +11,7 @@ class Groups extends Component {
   }
 
   dataFields = ["number", "name", "addOrRemove"];
-  columnNames = ["#", "Name", "Add/Remove"];
+  columnNames = ["#", "Name", ""];
 
   componentDidUpdate() {
     if (this.props.tableData.length !== this.state.tableData.length) {

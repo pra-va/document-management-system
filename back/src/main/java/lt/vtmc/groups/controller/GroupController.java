@@ -3,6 +3,8 @@ package lt.vtmc.groups.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,6 @@ import lt.vtmc.groups.dto.UpdateGroupCommand;
 import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.controller.UserController;
 import lt.vtmc.user.service.UserService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Controller for managing groups.
@@ -125,6 +124,21 @@ public class GroupController {
 				SecurityContextHolder.getContext().getAuthentication().getName(), name, name);
 
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
+	}
+
+	/**
+	 * Checks if provided groupname exists.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	@GetMapping(path = "/api/group/{name}/exists")
+	public boolean groupNameExists(@PathVariable("name") String name) {
+		if (this.groupService.findGroupByName(name) != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

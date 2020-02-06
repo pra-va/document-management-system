@@ -29,28 +29,26 @@ public class Group {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
+
 	@NotEmpty
 	private String name;
-	
+
 	private String description;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="GROUPS_CREATING",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="doc_id"))
-	//@ElementCollection(targetClass=DocType.class)
+	@JoinTable(name = "GROUPS_CREATING", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "doc_id"))
+	// @ElementCollection(targetClass=DocType.class)
 	private List<DocType> docTypesToCreate;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="GROUPS_APPROVING",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="doc_id"))
-	//@ElementCollection(targetClass=DocType.class)
+	@JoinTable(name = "GROUPS_APPROVING", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "doc_id"))
+	// @ElementCollection(targetClass=DocType.class)
 	private List<DocType> docTypesToApprove;
 
 	@ManyToMany(mappedBy = "groupList", fetch = FetchType.EAGER)
 	private List<User> userList;
-	
-	
 
 	/**
 	 * Constructor.
@@ -69,7 +67,7 @@ public class Group {
 	 */
 	public Group() {
 	}
-	
+
 	/**
 	 * 
 	 * @return getUserList
@@ -77,6 +75,7 @@ public class Group {
 	public List<User> getUserList() {
 		return userList;
 	}
+
 	/**
 	 * 
 	 * @param groupUserList
@@ -84,6 +83,7 @@ public class Group {
 	public void setUserList(List<User> groupUserList) {
 		this.userList = groupUserList;
 	}
+
 	/**
 	 * 
 	 * @return id
@@ -91,6 +91,7 @@ public class Group {
 	public int getId() {
 		return id;
 	}
+
 	/**
 	 * 
 	 * @return name
@@ -98,6 +99,7 @@ public class Group {
 	public String getName() {
 		return name;
 	}
+
 	/**
 	 * 
 	 * @param name
@@ -105,6 +107,7 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * 
 	 * @return description
@@ -112,6 +115,7 @@ public class Group {
 	public String getDescription() {
 		return description;
 	}
+
 	/**
 	 * 
 	 * @param description
@@ -119,6 +123,7 @@ public class Group {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	/**
 	 * 
 	 * @return docTypesToCreate
@@ -126,6 +131,7 @@ public class Group {
 	public List<DocType> getDocTypesToCreate() {
 		return docTypesToCreate;
 	}
+
 	/**
 	 * 
 	 * @param docTypesToCreate
@@ -133,6 +139,7 @@ public class Group {
 	public void setDocTypesToCreate(List<DocType> docTypesToCreate) {
 		this.docTypesToCreate = docTypesToCreate;
 	}
+
 	/**
 	 * 
 	 * @return docTypesToApprove
@@ -140,6 +147,7 @@ public class Group {
 	public List<DocType> getDocTypesToApprove() {
 		return docTypesToApprove;
 	}
+
 	/**
 	 * 
 	 * @param docTypesToApprove
