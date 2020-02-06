@@ -20,11 +20,18 @@ class NewGroup extends Component {
     };
   }
 
-  handleNewGroupSubmit = () => {
+  handleNewGroupSubmit = event => {
+    event.preventDefault();
     axios
       .post("http://localhost:8080/dvs/api/creategroup", {
         description: this.state.groupDescription,
-        name: this.state.groupName
+        groupName: this.state.groupName,
+        userList: this.state.addedUsers.map(item => {
+          return item.username;
+        })
+      })
+      .then(response => {
+        this.props.hideNewGroup();
       })
       .catch(error => console.log(error));
   };
