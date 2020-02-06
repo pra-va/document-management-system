@@ -53,25 +53,19 @@ public class UserController {
 	 */
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
-		String groupMessage = ("");
 		if (userService.findUserByUsername(command.getUsername()) == null) {
 			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
 			groupService.addUserToGroupByUsername(command.getGroupList(), command.getUsername());
 
-//			if (command.getGroupList().length == 0) {
-//				groupMessage = ("");
-//			} else {
-//				groupMessage = (" and added to group(s):" + Arrays.toString(command.getGroupList()));
-//			}
-//			LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was created{} #",
-//					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
-//					groupMessage);
+			LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was created with group(s): [{}]#",
+					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
+					command.getGroupList());
 
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
-//			LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was NOT created #",
-//					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
+			LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was NOT created #",
+					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
 		return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
 	}
 
@@ -85,23 +79,19 @@ public class UserController {
 	 */
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
-		String groupMessage = ("");
+		
 		if (userService.findUserByUsername(command.getUsername()) == null) {
 			User tmpUser = userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
 			groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
+			
 
-//			if (command.getGroupList().length != 0) {
-//				groupMessage = (" and added to group(s):" + Arrays.toString(command.getGroupList()));
-//			}
-//
-//			LOG.info("# LOG # Initiated by [{}]: User [{}] was created{} #",
-//					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
-//					groupMessage);
+			LOG.info("# LOG # Initiated by [{}]: User [{}] was created with group(s): [{}]#",
+					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(), command.getGroupList());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		} else
-//			LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT created #",
-//					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
+			LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT created #",
+					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
 		return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
 	}
 

@@ -78,6 +78,10 @@ public class GroupController {
 
 	@GetMapping(path = "/api/groups/{groupname}")
 	public GroupDetailsDTO findGroupByName(@PathVariable("groupname") String name) {
+
+		LOG.info("# LOG # Initiated by [{}]: Searched for group [{}] #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), name);
+
 		return new GroupDetailsDTO(groupService.findGroupByName(name));
 	}
 
