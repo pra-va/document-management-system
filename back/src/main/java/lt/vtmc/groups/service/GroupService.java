@@ -76,6 +76,7 @@ public class GroupService {
 			}
 		}
 	}
+
 	/**
 	 * Method to remove users from groups.
 	 * 
@@ -97,6 +98,7 @@ public class GroupService {
 			}
 		}
 	}
+
 	/**
 	 * Method to add users to groups.
 	 * 
@@ -118,7 +120,7 @@ public class GroupService {
 			}
 		}
 	}
-	
+
 	@Transactional
 	public void addUsersToGroup(String groupname, String[] userlist) {
 		Group groupToAddTo = groupRepository.findGroupByName(groupname);
@@ -143,8 +145,8 @@ public class GroupService {
 		}
 		return allGroupss;
 	}
-	
-	public void compareGroups(String[] newGroupList, String username ) {
+
+	public void compareGroups(String[] newGroupList, String username) {
 		List<Group> currentGroupList = new ArrayList<Group>();
 		for (int i = 0; i < newGroupList.length; i++) {
 			currentGroupList.add(groupRepository.findGroupByName(newGroupList[i]));
@@ -152,7 +154,7 @@ public class GroupService {
 		User tmpUser = userRepository.findUserByUsername(username);
 		tmpUser.setGroupList(currentGroupList);
 		userRepository.save(tmpUser);
-		
+
 //		***work in progress***
 //		List<Group> currentGroupList = userRepository.findUserByUsername(username).getGroupList();
 //		List<String> groupsToAdd = new ArrayList<String>();
@@ -162,7 +164,8 @@ public class GroupService {
 //			};
 //			if (currentGroupList.contains(groupRepository.findGroupByName(newGroupList[j]))){
 //				currentGroupList.remove((groupRepository.findGroupByName(newGroupList[j])));
-//			};
+//		
+//		groupRepository.save(groupToUpdate);	};
 //		}
 //		String[]groupsToRemove = new String[currentGroupList.size()];
 //		for (int i = 0; i < currentGroupList.size(); i++) {
@@ -174,5 +177,28 @@ public class GroupService {
 //		}
 //		addUserToGroupByUsername(groupsToAddString, username);
 //		removeUserFromGroupByUsername(groupsToRemove, username);
+	}
+
+	public void updateGroupDetails(String name, String description, String[] newUserList, String[] docTypesToApprove,
+			String[] docTypesToCreate) {
+		Group groupToUpdate = groupRepository.findGroupByName(name);
+		List<User> currentUserList = new ArrayList<User>();
+		groupToUpdate.setUserList(currentUserList);
+		groupToUpdate.setDescription(description);
+		groupRepository.save(groupToUpdate);
+
+		for (int i = 0; i < newUserList.length; i++) {
+			User userToAdd = userRepository.findUserByUsername(newUserList[i]);
+			List<User> tmpUserList = groupToUpdate.getUserList();
+			List<Group> tmpGroupList = userToAdd.getGroupList();
+			if (tmpUserList.contains(userToAdd) == false && tmpGroupList.contains(groupToUpdate) == false) {
+				tmpGroupList.add(groupToUpdate);
+				userToAdd.setGroupList(tmpGroupList);
+				tmpUserList.add(userToAdd);
+				groupToUpdate.setUserList(tmpUserList);
+			}
+		}
+		groupRepository.save(groupToUpdate);
+
 	}
 }

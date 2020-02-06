@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Security controller for system users.
  * 
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class SecurityController {
+
+	private static final Logger LOG = LoggerFactory.getLogger(SecurityController.class);
+
 	@Autowired
 	NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -33,8 +39,12 @@ public class SecurityController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			String currentUsername = authentication.getName();
+
+			LOG.info("# LOG # User [{}] currently logged in #", currentUsername);
+
 			return currentUsername;
 		}
+		LOG.info("# LOG # User [{}] currently NOT logged in #", authentication.getName());
 		return "Not logged in.";
 	}
 
@@ -46,8 +56,10 @@ public class SecurityController {
 	public boolean isUserLoggedIn() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			LOG.info("# LOG # User [{}] is authenticated #", authentication.getName());
 			return true;
 		} else {
+			LOG.info("# LOG # User [{}] is NOT authenticated #", authentication.getName());
 			return false;
 		}
 	}
@@ -62,6 +74,7 @@ public class SecurityController {
 	@RequestMapping(path = "/api/administrator", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ADMIN')")
 	public boolean isUserAdmin() {
+		LOG.info("# LOG # User [{}] is Admin #", SecurityContextHolder.getContext().getAuthentication().getName());
 		return true;
 	}
 }
