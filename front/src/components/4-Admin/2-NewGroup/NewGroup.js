@@ -123,7 +123,7 @@ class NewGroup extends Component {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create New Group</Modal.Title>
+          <Modal.Title>New Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.handleNewGroupSubmit}>

@@ -78,12 +78,14 @@ var InputLine = props => {
   };
 
   var oneWordAllowed = () => {
-    return (
-      <Validation
-        output={"Field must contain 1 word."}
-        satisfied={!props.value.includes(" ") && props.value.length > 0}
-      />
-    );
+    if (!props.labelName.toLowerCase().includes("group name")) {
+      return (
+        <Validation
+          output={"Field must contain 1 word."}
+          satisfied={!props.value.includes(" ") && props.value.length > 0}
+        />
+      );
+    }
   };
 
   return (

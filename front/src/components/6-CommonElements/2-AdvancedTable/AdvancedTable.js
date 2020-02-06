@@ -75,10 +75,6 @@ class Table extends Component {
       {
         text: "16",
         value: 16
-      },
-      {
-        text: "24",
-        value: 24
       }
     ]
   };
