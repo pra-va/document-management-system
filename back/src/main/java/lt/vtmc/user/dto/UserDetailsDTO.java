@@ -1,28 +1,24 @@
 package lt.vtmc.user.dto;
 
-
-import java.util.Arrays;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.model.User;
 
 public class UserDetailsDTO {
-	
+
 	private String username;
-	
-	private String password;
-	
+
+//	private String password;
+
 	private String name;
-	
+
 	private String surname;
-	
+
 	private String role;
 
-	@JsonIgnore
-	private List<Group> groupList;
+	private String[] gruopList;
+
+//	@JsonIgnore
+//	private List<Group> groupList;
+
 	/**
 	 * Constructor method for GroupDetails
 	 * 
@@ -37,58 +33,84 @@ public class UserDetailsDTO {
 	public UserDetailsDTO(User user) {
 		super();
 		this.username = user.getUsername();
-		this.password = user.getPassword();
+//		this.password = user.getPassword();
 		this.name = user.getName();
 		this.surname = user.getSurname();
 		this.role = user.getRole();
-		this.groupList = user.getGroupList();
+		this.gruopList = filterUsersGroups(user);
+//		this.groupList = user.getGroupList();
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSurname() {
-		return surname;
-	}
-	public void setSurname(String surname) {
-		this.surname = surname;
-	}
-	public String getRole() {
-		return role;
-	}
-	public void setRole(String role) {
-		this.role = role;
-	}
-	public List<Group> getGroupList() {
-		return groupList;
-	}
-	public String[] getGroupListNames() {
-		String[]groupNames = new String[groupList.size()];
-		for (int i = 0; i < groupList.size(); i++) {
-			groupNames[i] = groupList.get(i).getName();
+
+	private String[] filterUsersGroups(User user) {
+		String[] groupNames = new String[user.getGroupList().size()];
+		for (int i = 0; i < user.getGroupList().size(); i++) {
+			groupNames[i] = user.getGroupList().get(i).getName();
 		}
 		return groupNames;
 	}
-	public void setGroupList(List<Group> groupList) {
-		this.groupList = groupList;
+
+	public String[] getGruopList() {
+		return gruopList;
 	}
-	@Override
-	public String toString() {
-		return "[username: " + username + ", name: " + name + ", surname: "
-				+ surname + ", role: " + role + ", groups: " + Arrays.toString(getGroupListNames()) + "]";
+
+	public void setGruopList(String[] gruopList) {
+		this.gruopList = gruopList;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+//	public String getPassword() {
+//		return password;
+//	}
+//
+//	public void setPassword(String password) {
+//		this.password = password;
+//	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+//	public List<Group> getGroupListArray() {
+//		return groupList;
+//	}
+
+//	public String[] getGroupList() {
+//		String[] groupNames = new String[groupList.size()];
+//		for (int i = 0; i < groupList.size(); i++) {
+//			groupNames[i] = groupList.get(i).getName();
+//		}
+//		return groupNames;
+//	}
+
+//	public void setGroupList(List<Group> groupList) {
+//		this.groupList = groupList;
+//	}
+
 }

@@ -130,15 +130,14 @@ class NewModal extends Component {
     this.setState({ usernameExists: value });
   };
 
-  handleNewUserSubmit = event => {
+  initalDataTransfer = data => {
+    this.setState({ ...data });
+  };
+
+  handleSubmit = event => {
     event.preventDefault();
-    console.log("submit");
-    let url = "http://localhost:8080/dvs/api/";
-    if (this.state.role === "ADMIN") {
-      url += "createadmin/";
-    } else {
-      url += "createuser/";
-    }
+    let url =
+      "http://localhost:8080/dvs/api/user/update/" + this.props.ownerName;
 
     let userGroups = [];
 
@@ -146,6 +145,14 @@ class NewModal extends Component {
       const element = this.state.addedGroups[i];
       userGroups.push(element.name);
     }
+
+    console.log({
+      groupList: userGroups,
+      name: this.state.firstName,
+      password: this.state.password,
+      surname: this.state.lastName,
+      username: this.state.username
+    });
 
     axios
       .post(url, {
@@ -178,8 +185,9 @@ class NewModal extends Component {
           <Modal.Title>New User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleNewUserSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <UserInformation
+              initalDataTransfer={this.initalDataTransfer}
               handleFirstNameChange={this.handleFirstNameChange}
               handleLastNameChange={this.handleLastNameChange}
               handleUsernameChange={this.handleUsernameChange}
@@ -220,7 +228,7 @@ class NewModal extends Component {
                   data-dismiss="modal"
                   disabled={this.state.usernameExists ? true : false}
                 >
-                  Create
+                  Submit
                 </button>
               </div>
             </div>

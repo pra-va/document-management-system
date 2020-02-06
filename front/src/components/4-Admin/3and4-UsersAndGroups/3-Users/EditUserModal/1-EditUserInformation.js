@@ -68,6 +68,7 @@ class UserInformation extends Component {
           username: response.data.username,
           role: response.data.role
         });
+        this.props.initalDataTransfer({});
         this.props.setUserGroups(response.data.groupList);
       })
       .catch(error => console.log(error));
@@ -82,7 +83,7 @@ class UserInformation extends Component {
           )
           .then(response => {
             this.setState({ usernameExists: response.data });
-            if (response.data) {
+            if (response.data && this.state.username !== this.props.ownerName) {
               this.setState({ usernameExists: true });
               this.props.handleUsernameExists(true);
             } else {
