@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import "./../../../1-NewUser/NewUser.css";
 import UserInformation from "./1-EditUserInformation";
 import Groups from "./2-Groups";
-import UsersGroups from "./../../../1-NewUser/FormComponents/3-UsersGroups";
+import UserGroups from "./../../../1-NewUser/FormComponents/3-UsersGroups";
 import axios from "axios";
 
 class NewModal extends Component {
@@ -28,11 +28,11 @@ class NewModal extends Component {
 
   componentDidUpdate() {}
 
-  setUserGroups = userGroups => {
+  setuserGroups = userGroups => {
     this.setState({ userGroups: userGroups });
   };
 
-  setAddedUserGroups = addedGroups => {
+  setAddeduserGroups = addedGroups => {
     this.setState({ addedGroups: addedGroups });
   };
 
@@ -73,14 +73,6 @@ class NewModal extends Component {
       return item.name;
     });
 
-    console.log({
-      groupList: userGroups,
-      name: this.state.firstName,
-      password: this.state.password,
-      surname: this.state.lastName,
-      username: this.state.username
-    });
-
     axios
       .post(url, {
         groupList: userGroups,
@@ -107,7 +99,7 @@ class NewModal extends Component {
         id="editUserModal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>New User</Modal.Title>
+          <Modal.Title>Edit User: {this.props.ownerName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.handleSubmit}>
@@ -119,7 +111,7 @@ class NewModal extends Component {
               handlePasswordChange={this.handlePasswordChange}
               handleRoleChange={this.handleRoleChange}
               handleUsernameExists={this.handleUsernameExists}
-              setUserGroups={this.setUserGroups}
+              setuserGroups={this.setuserGroups}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               username={this.state.username}
@@ -134,12 +126,12 @@ class NewModal extends Component {
 
             <Groups
               userGroups={this.state.userGroups}
-              setAddedUserGroups={this.setAddedUserGroups}
+              setAddeduserGroups={this.setAddeduserGroups}
             />
 
             <hr className="m-1" />
 
-            <UsersGroups userGroups={this.state.addedGroups} />
+            <UserGroups userGroups={this.state.addedGroups} />
 
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">

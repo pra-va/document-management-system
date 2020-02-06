@@ -15,7 +15,7 @@ class Navigation extends Component {
 
   handleLogout = event => {
     axios
-      .get("http://localhost:8080/dvs/api/logout")
+      .post("http://localhost:8080/dvs/api/logout")
       .then(response => {})
       .catch(error => {
         console.log(error);
@@ -54,7 +54,12 @@ class Navigation extends Component {
   }
 
   render() {
-    return <NavigationPresentation role={this.state.isUserAdmin} />;
+    return (
+      <NavigationPresentation
+        role={this.state.isUserAdmin}
+        handleLogout={this.handleLogout}
+      />
+    );
   }
 }
 

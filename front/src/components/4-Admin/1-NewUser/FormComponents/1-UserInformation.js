@@ -90,6 +90,7 @@ class UserInformation extends Component {
           placeholder={"John"}
           onChange={this.handleFirstNameChange}
           value={this.state.firstName}
+          pattern={1}
         />
 
         <InputLine
@@ -100,6 +101,7 @@ class UserInformation extends Component {
           placeholder={"Smith"}
           onChange={this.handleLastNameChange}
           value={this.state.lastName}
+          pattern={1}
         />
 
         <InputLine
@@ -110,6 +112,7 @@ class UserInformation extends Component {
           placeholder={"holyDiver"}
           onChange={this.handleUsernameChange}
           value={this.state.username}
+          pattern={1}
         />
 
         <InputLine
@@ -120,6 +123,7 @@ class UserInformation extends Component {
           placeholder={"1234"}
           onChange={this.handlePasswordChange}
           value={this.state.password}
+          pattern={0}
         />
 
         <div className="form-group row d-flex justify-content-center">

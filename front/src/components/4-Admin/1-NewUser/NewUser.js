@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import "./NewUser.css";
 import UserInformation from "./FormComponents/1-UserInformation";
 import Groups from "./FormComponents/2-Groups";
-import UsersGroups from "./FormComponents/3-UsersGroups";
+import UserGroups from "./FormComponents/3-UsersGroups";
 import axios from "axios";
 import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 
@@ -138,7 +138,6 @@ class NewModal extends Component {
       })
       .then(response => {
         if (response.status === 201) {
-          console.log("201");
         }
         this.props.onHide();
       })
@@ -180,7 +179,7 @@ class NewModal extends Component {
 
             <hr className="m-1" />
 
-            <UsersGroups usersGroups={this.state.addedGroups} />
+            <UserGroups userGroups={this.state.addedGroups} />
 
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">

@@ -25,6 +25,7 @@ var GroupInformation = props => {
         placeholder={"Junior Java Programmers"}
         onChange={handleGroupNameChange}
         value={props.groupName}
+        pattern={2}
       />
 
       <div className="form-group row">

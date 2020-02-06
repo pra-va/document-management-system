@@ -71,7 +71,6 @@ class UserInformation extends Component {
           role: response.data.role,
           groupList: response.data.groupList
         });
-        console.log(response.data);
         this.props.initalDataTransfer({
           firstName: response.data.name,
           lastName: response.data.surname,
@@ -79,7 +78,7 @@ class UserInformation extends Component {
           role: response.data.role,
           groupList: response.data.groupList
         });
-        this.props.setUserGroups(response.data.groupList);
+        this.props.setuserGroups(response.data.groupList);
       })
       .catch(error => console.log(error));
   };
@@ -112,7 +111,7 @@ class UserInformation extends Component {
     return (
       <div>
         <h3 className="d-flex justify-content-start">
-          1. Enter new user information.
+          1. Edit user information.
         </h3>
 
         <InputLine
@@ -123,6 +122,7 @@ class UserInformation extends Component {
           placeholder={"John"}
           onChange={this.handleFirstNameChange}
           value={this.state.firstName}
+          pattern={1}
         />
 
         <InputLine
@@ -133,6 +133,7 @@ class UserInformation extends Component {
           placeholder={"Smith"}
           onChange={this.handleLastNameChange}
           value={this.state.lastName}
+          pattern={1}
         />
 
         <InputLine
@@ -143,6 +144,7 @@ class UserInformation extends Component {
           placeholder={"holyDiver"}
           onChange={this.handleUsernameChange}
           value={this.state.username}
+          pattern={1}
         />
 
         {this.state.updatePassword ? (
@@ -155,6 +157,7 @@ class UserInformation extends Component {
               placeholder={"1234"}
               onChange={this.handlePasswordChange}
               value={this.state.password}
+              pattern={0}
             />
             <div className="form-group row">
               <div className="col-sm-2"></div>

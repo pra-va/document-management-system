@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 
-class UsersGroup extends Component {
+class userGroups extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +26,6 @@ class UsersGroup extends Component {
         this.setState({ userGroups: this.props.userGroups });
       }
     }
-
   }
 
   render() {
@@ -47,4 +46,4 @@ class UsersGroup extends Component {
   }
 }
 
-export default UsersGroup;
+export default userGroups;

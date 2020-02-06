@@ -112,7 +112,7 @@ class ListOfUsers extends Component {
               Groups
             </Link>
           </div>
-          <div className="row p-1" id="tableUsersGroups">
+          <div className="row p-1" id="tableuserGroups">
             <Table
               dataFields={
                 this.props.forWhat === "users"

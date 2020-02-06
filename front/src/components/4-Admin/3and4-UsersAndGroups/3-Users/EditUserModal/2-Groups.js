@@ -62,7 +62,7 @@ class Groups extends Component {
     }
     this.setState({ notAddedGroups: notAdded });
     this.setState({ addedGroups: added });
-    this.props.setAddedUserGroups(added);
+    this.props.setAddeduserGroups(added);
   };
 
   getGroupData = () => {
@@ -71,7 +71,6 @@ class Groups extends Component {
       .then(response => {
         let tempData = response.data.map((item, index) => {
           let isItemAdded = this.hasUserAddedGroup(item.name);
-          console.log(isItemAdded);
           return {
             number: index + 1,
             name: item.name,
@@ -110,7 +109,7 @@ class Groups extends Component {
       <div className="mx-3">
         <div className="row d-flex justify-content-start">
           <h3 className="d-flex justify-content-start">
-            2. Add user to a group.
+            2. Add user to groups.
           </h3>
         </div>
 
