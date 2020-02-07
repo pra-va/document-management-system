@@ -14,7 +14,7 @@ public class UserDetailsDTO {
 
 	private String role;
 
-	private String[] gruopList;
+	private String[] groupList;
 
 //	@JsonIgnore
 //	private List<Group> groupList;
@@ -37,7 +37,7 @@ public class UserDetailsDTO {
 		this.name = user.getName();
 		this.surname = user.getSurname();
 		this.role = user.getRole();
-		this.gruopList = filterUsersGroups(user);
+		this.groupList = filterUsersGroups(user);
 //		this.groupList = user.getGroupList();
 	}
 
@@ -49,12 +49,12 @@ public class UserDetailsDTO {
 		return groupNames;
 	}
 
-	public String[] getGruopList() {
-		return gruopList;
+	public String[] getGroupList() {
+		return groupList;
 	}
 
-	public void setGruopList(String[] gruopList) {
-		this.gruopList = gruopList;
+	public void setGroupList(String[] groupList) {
+		this.groupList = groupList;
 	}
 
 	public String getUsername() {

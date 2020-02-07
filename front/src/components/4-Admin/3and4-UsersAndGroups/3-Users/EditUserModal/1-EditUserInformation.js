@@ -11,6 +11,7 @@ class UserInformation extends Component {
       lastName: "",
       username: "",
       password: "",
+      groupList: [],
       role: "",
       usernameExists: false,
       updatePassword: false
@@ -30,7 +31,7 @@ class UserInformation extends Component {
   handleUsernameChange = event => {
     this.setState({ username: event.target.value });
     this.props.handleUsernameChange(event.target.value);
-    this.checkIfUsernameExists();
+    this.checkIfUsernameExists(event.target.value);
   };
 
   handlePasswordChange = event => {
@@ -53,12 +54,28 @@ class UserInformation extends Component {
     }
   };
 
+  checkIfUsernameExists = username => {
+    if (username.length > 3) {
+      axios
+        .get("http://localhost:8080/dvs/api/" + username + "/exists")
+        .then(response => {
+          this.setState({ usernameExists: response.data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      this.setState({ usernameExists: false });
+    }
+  };
+
   componentDidMount() {
     this.getUserData();
   }
 
+  componentDidUpdate() {}
+
   getUserData = () => {
-    console.log(this.props.ownerName);
     axios
       .get("http://localhost:8080/dvs/api/user/" + this.props.ownerName)
       .then(response => {
@@ -66,10 +83,17 @@ class UserInformation extends Component {
           firstName: response.data.name,
           lastName: response.data.surname,
           username: response.data.username,
-          role: response.data.role
+          role: response.data.role,
+          groupList: response.data.groupList
         });
-        this.props.initalDataTransfer({});
-        this.props.setUserGroups(response.data.groupList);
+        this.props.initalDataTransfer({
+          firstName: response.data.name,
+          lastName: response.data.surname,
+          username: response.data.username,
+          role: response.data.role,
+          groupList: response.data.groupList
+        });
+        this.props.setuserGroups(response.data.groupList);
       })
       .catch(error => console.log(error));
   };
@@ -102,7 +126,7 @@ class UserInformation extends Component {
     return (
       <div>
         <h3 className="d-flex justify-content-start">
-          1. Enter new user information.
+          1. Edit user information.
         </h3>
 
         <InputLine
@@ -113,6 +137,7 @@ class UserInformation extends Component {
           placeholder={"John"}
           onChange={this.handleFirstNameChange}
           value={this.state.firstName}
+          pattern={1}
         />
 
         <InputLine
@@ -123,6 +148,7 @@ class UserInformation extends Component {
           placeholder={"Smith"}
           onChange={this.handleLastNameChange}
           value={this.state.lastName}
+          pattern={1}
         />
 
         <InputLine
@@ -133,6 +159,9 @@ class UserInformation extends Component {
           placeholder={"holyDiver"}
           onChange={this.handleUsernameChange}
           value={this.state.username}
+          pattern={1}
+          ownerName={this.props.ownerName}
+          usernameExists={this.state.usernameExists}
         />
 
         {this.state.updatePassword ? (
@@ -145,6 +174,7 @@ class UserInformation extends Component {
               placeholder={"1234"}
               onChange={this.handlePasswordChange}
               value={this.state.password}
+              pattern={0}
             />
             <div className="form-group row">
               <div className="col-sm-2"></div>
@@ -190,18 +220,6 @@ class UserInformation extends Component {
               />
             </div>
           </div>
-        </div>
-
-        <div className="form-group row d-flex justify-content-center">
-          {this.state.username.length > 0 ? (
-            this.state.usernameExists ? (
-              <h5>Username {this.state.username} is taken.</h5>
-            ) : (
-              <div></div>
-            )
-          ) : (
-            <div></div>
-          )}
         </div>
 
         <div className="form-group row">

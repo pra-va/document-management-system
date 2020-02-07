@@ -24,7 +24,7 @@ class ListOfUsers extends Component {
     "role",
     "edit"
   ];
-  usersTableNames = ["#", "Name", "Surname", "Username", "Role", ""];
+  usersTableNames = ["#", "First Name", "Last Name", "Username", "Role", ""];
 
   groupsTableDataFields = ["number", "name", "members", "edit"];
   groupsTableNames = ["#", "Group Name", "Members", ""];
@@ -93,8 +93,8 @@ class ListOfUsers extends Component {
               to="/users"
               className={
                 this.props.forWhat === "users"
-                  ? "btn btn-dark btn-lg m-3 disabled"
-                  : "btn btn-dark btn-lg m-3"
+                  ? "btn btn-secondary btn-lg m-3 darker"
+                  : "btn btn-secondary btn-lg m-3"
               }
               id="buttonUsers"
             >
@@ -104,15 +104,15 @@ class ListOfUsers extends Component {
               to="/groups"
               className={
                 this.props.forWhat === "groups"
-                  ? "btn btn-dark btn-lg m-3 disabled"
-                  : "btn btn-dark btn-lg m-3"
+                  ? "btn btn-secondary btn-lg m-3 darker"
+                  : "btn btn-secondary btn-lg m-3"
               }
               id="buttonGroups"
             >
               Groups
             </Link>
           </div>
-          <div className="row p-1" id="tableUsersGroups">
+          <div className="row p-1" id="tableuserGroups">
             <Table
               dataFields={
                 this.props.forWhat === "users"

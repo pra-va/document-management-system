@@ -29,7 +29,7 @@ class UserInformation extends Component {
   handleUsernameChange = event => {
     this.setState({ username: event.target.value });
     this.props.handleUsernameChange(event.target.value);
-    this.checkIfUsernameExists();
+    this.checkIfUsernameExists(event.target.value);
   };
 
   handlePasswordChange = event => {
@@ -51,28 +51,19 @@ class UserInformation extends Component {
     this.props.handleRoleChange(event.target.value);
   };
 
-  checkIfUsernameExists = () => {
-    setTimeout(() => {
-      if (this.state.username.length > 0) {
-        axios
-          .get(
-            "http://localhost:8080/dvs/api/" + this.state.username + "/exists"
-          )
-          .then(response => {
-            this.setState({ usernameExists: response.data });
-            if (response.data) {
-              this.setState({ usernameExists: true });
-              this.props.handleUsernameExists(true);
-            } else {
-              this.setState({ usernameExists: false });
-              this.props.handleUsernameExists(false);
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-    }, 1000);
+  checkIfUsernameExists = username => {
+    if (username.length > 3) {
+      axios
+        .get("http://localhost:8080/dvs/api/" + username + "/exists")
+        .then(response => {
+          this.setState({ usernameExists: response.data });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      this.setState({ usernameExists: false });
+    }
   };
 
   render() {
@@ -90,6 +81,7 @@ class UserInformation extends Component {
           placeholder={"John"}
           onChange={this.handleFirstNameChange}
           value={this.state.firstName}
+          pattern={1}
         />
 
         <InputLine
@@ -100,6 +92,7 @@ class UserInformation extends Component {
           placeholder={"Smith"}
           onChange={this.handleLastNameChange}
           value={this.state.lastName}
+          pattern={1}
         />
 
         <InputLine
@@ -110,6 +103,8 @@ class UserInformation extends Component {
           placeholder={"holyDiver"}
           onChange={this.handleUsernameChange}
           value={this.state.username}
+          pattern={1}
+          usernameExists={this.state.usernameExists}
         />
 
         <InputLine
@@ -120,19 +115,8 @@ class UserInformation extends Component {
           placeholder={"1234"}
           onChange={this.handlePasswordChange}
           value={this.state.password}
+          pattern={0}
         />
-
-        <div className="form-group row d-flex justify-content-center">
-          {this.state.username.length > 0 ? (
-            this.state.usernameExists ? (
-              <h5>Username {this.state.username} is taken.</h5>
-            ) : (
-              <div></div>
-            )
-          ) : (
-            <div></div>
-          )}
-        </div>
 
         <div className="form-group row">
           <div className="col-sm-2"></div>
@@ -166,6 +150,10 @@ class UserInformation extends Component {
                 id="radioAdmin"
                 value="ADMIN"
                 onChange={this.adminRadioChange}
+                onClick={() => {
+                  this.setState({ role: "ADMIN" });
+                }}
+                checked={this.state.role === "ADMIN" ? true : false}
               />
               <label className="form-check-label" htmlFor="inputRadioAdmin">
                 Yes
@@ -178,8 +166,11 @@ class UserInformation extends Component {
                 type="radio"
                 name="adminOrUser"
                 id="radioUser"
-                value="USER"
                 onChange={this.userRadioChange}
+                onClick={() => {
+                  this.setState({ role: "USER" });
+                }}
+                checked={this.state.role === "ADMIN" ? false : true}
               />
               <label className="form-check-label" htmlFor="inputRadioUser">
                 No

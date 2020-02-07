@@ -3,7 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import "./NewUser.css";
 import UserInformation from "./FormComponents/1-UserInformation";
 import Groups from "./FormComponents/2-Groups";
-import UsersGroups from "./FormComponents/3-UsersGroups";
+import UserGroups from "./FormComponents/3-UsersGroups";
 import axios from "axios";
 import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 
@@ -15,7 +15,7 @@ class NewModal extends Component {
       lastName: "",
       username: "",
       password: "",
-      role: "",
+      role: "USER",
       allGroups: [],
       notAddedGroups: [],
       addedGroups: [],
@@ -108,13 +108,8 @@ class NewModal extends Component {
     this.setState({ role: value });
   };
 
-  handleUsernameExists = value => {
-    this.setState({ usernameExists: value });
-  };
-
   handleNewUserSubmit = event => {
     event.preventDefault();
-    console.log("submit");
     let url = "http://localhost:8080/dvs/api/";
     if (this.state.role === "ADMIN") {
       url += "createadmin/";
@@ -139,7 +134,6 @@ class NewModal extends Component {
       })
       .then(response => {
         if (response.status === 201) {
-          console.log("201");
         }
         this.props.onHide();
       })
@@ -167,7 +161,6 @@ class NewModal extends Component {
               handleUsernameChange={this.handleUsernameChange}
               handlePasswordChange={this.handlePasswordChange}
               handleRoleChange={this.handleRoleChange}
-              handleUsernameExists={this.handleUsernameExists}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
               username={this.state.username}
@@ -181,7 +174,7 @@ class NewModal extends Component {
 
             <hr className="m-1" />
 
-            <UsersGroups usersGroups={this.state.addedGroups} />
+            <UserGroups userGroups={this.state.addedGroups} />
 
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">

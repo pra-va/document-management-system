@@ -100,7 +100,11 @@ var NavigationPresentation = props => {
           )}
         </ul>
 
-        <Link className="nav-link link-text-format" to="/">
+        <Link
+          className="nav-link link-text-format"
+          to="/"
+          onClick={props.handleLogout}
+        >
           Logout <span className="sr-only">(current)</span>
         </Link>
       </div>

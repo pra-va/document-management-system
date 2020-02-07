@@ -21,7 +21,7 @@ class EditTableItemButton extends Component {
     return (
       <div>
         <button className="btn btn-secondary btn-sm" onClick={this.handleShow}>
-          Edit
+          Edit / View
         </button>
 
         {this.props.ownerType === "user" ? (
