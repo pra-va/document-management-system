@@ -8,6 +8,17 @@
   }
 }
 
+.login-form {
+  background-color: #fff;
+  width: 40vh;
+  margin: auto;
+}
+
+.login-form.border {
+  border: 3px solid #535353 !important;
+  border-radius: 1.3em !important;
+}
+
 .btn-black {
   color: #fff;
   background-color: #535353;

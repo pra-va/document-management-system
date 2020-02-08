@@ -3,6 +3,7 @@ import "./2-Groups.css";
 import Table from "./../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
 import AddOrRemoveButton from "./../../../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
+import serverUrl from "./../../../../7-properties/1-URL";
 
 class Groups extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class Groups extends Component {
 
   getGroupData = () => {
     axios
-      .get("http://localhost:8080/dvs/api/groups")
+      .get(serverUrl + "groups")
       .then(response => {
         let tempData = response.data.map((item, index) => {
           let isItemAdded = this.hasUserAddedGroup(item.name);

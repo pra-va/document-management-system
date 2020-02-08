@@ -7,6 +7,7 @@ import AddDocumentTypes from "./FormComponents/4-AddDocumentTypes";
 import SetRights from "./FormComponents/5-SetRights";
 import axios from "axios";
 import AddRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
+import serverUrl from "./../../7-properties/1-URL";
 
 class NewGroup extends Component {
   constructor(props) {
@@ -20,10 +21,14 @@ class NewGroup extends Component {
     };
   }
 
+  setUpData = data => {
+    this.parseUsersData(data);
+  };
+
   handleNewGroupSubmit = event => {
     event.preventDefault();
     axios
-      .post("http://localhost:8080/dvs/api/creategroup", {
+      .post(serverUrl + "creategroup", {
         description: this.state.groupDescription,
         groupName: this.state.groupName,
         userList: this.state.addedUsers.map(item => {
@@ -44,40 +49,26 @@ class NewGroup extends Component {
     this.setState({ groupDescription: event.target.value });
   };
 
-  componentDidMount() {
-    this.connectForUsersData();
-  }
+  parseUsersData = data => {
+    let tmpUsersData = data.map((item, index) => {
+      return {
+        number: index + 1,
+        name: item.name,
+        surname: item.surname,
+        username: item.username,
+        role: item.role,
+        add: (
+          <AddRemoveButton
+            itemName={item.username}
+            added={false}
+            changeAddedStatus={this.changeAddedStatus}
+          />
+        ),
+        added: false
+      };
+    });
 
-  connectForUsersData = () => {
-    axios
-      .get("http://localhost:8080/dvs/api/users")
-      .then(response => {
-        let tmpUsersData = response.data.map((item, index) => {
-          return {
-            number: index + 1,
-            name: item.name,
-            surname: item.surname,
-            username: item.username,
-            role: item.role,
-            add: (
-              <AddRemoveButton
-                itemName={item.username}
-                added={false}
-                changeAddedStatus={this.changeAddedStatus}
-              />
-            ),
-            added: false
-          };
-        });
-
-        this.setState({
-          usersList: tmpUsersData,
-          notAddedUsers: tmpUsersData
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.filterAddedGroups(tmpUsersData);
   };
 
   changeAddedStatus = username => {
@@ -93,14 +84,13 @@ class NewGroup extends Component {
             changeAddedStatus={this.changeAddedStatus}
           />
         );
-        this.setState({ usersList: tmpUsers });
-        this.filterAddedGroups();
+        this.filterAddedGroups(tmpUsers);
       }
     }
   };
 
-  filterAddedGroups = () => {
-    let filterUsers = this.state.usersList;
+  filterAddedGroups = data => {
+    let filterUsers = data;
     let tmpNotAdded = [];
     let tmpAdded = [];
     for (let i = 0; i < filterUsers.length; i++) {
@@ -110,9 +100,12 @@ class NewGroup extends Component {
       } else {
         tmpNotAdded.push(element);
       }
-
-      this.setState({ notAddedUsers: tmpNotAdded, addedUsers: tmpAdded });
     }
+    this.setState({
+      usersList: data,
+      notAddedUsers: tmpNotAdded,
+      addedUsers: tmpAdded
+    });
   };
 
   render() {
@@ -134,7 +127,10 @@ class NewGroup extends Component {
               groupDescription={this.state.groupDescription}
             />
             <hr className="m-1" />
-            <AddUsersToGroup notAddedUsers={this.state.notAddedUsers} />
+            <AddUsersToGroup
+              setUpData={this.setUpData}
+              notAddedUsers={this.state.notAddedUsers}
+            />
             <hr className="m-1" />
             <GroupUsers addedUsers={this.state.addedUsers} />
             <hr className="m-1" />

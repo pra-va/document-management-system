@@ -5,6 +5,7 @@ import UserInformation from "./1-EditUserInformation";
 import Groups from "./2-Groups";
 import UserGroups from "./../../../1-NewUser/FormComponents/3-UsersGroups";
 import axios from "axios";
+import serverUrl from "./../../../../7-properties/1-URL";
 
 class NewModal extends Component {
   constructor(props) {
@@ -66,8 +67,7 @@ class NewModal extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    let url =
-      "http://localhost:8080/dvs/api/user/update/" + this.props.ownerName;
+    let url = serverUrl + "user/update/" + this.props.ownerName;
 
     let userGroups = this.state.addedGroups.map(item => {
       return item.name;

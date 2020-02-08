@@ -1,8 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
 import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
+import axios from "axios";
+import serverUrl from "./../../../7-properties/1-URL";
 
-var AddUsersToGroup = props => {
-  const usersTableDataFields = [
+class AddUsersToGroup extends Component {
+  usersTableDataFields = [
     "number",
     "name",
     "surname",
@@ -10,19 +12,36 @@ var AddUsersToGroup = props => {
     "role",
     "add"
   ];
-  const usersTableNames = ["#", "Name", "Surname", "Username", "Role", ""];
+  usersTableNames = ["#", "Name", "Surname", "Username", "Role", ""];
 
-  return (
-    <div>
-      <h3 className="d-flex justify-content-start">2. Add group users.</h3>
-      <Table
-        dataFields={usersTableDataFields}
-        columnNames={usersTableNames}
-        tableData={props.notAddedUsers}
-        searchBarId={"createGroupUsersSearchBar"}
-      />
-    </div>
-  );
-};
+  fetchUsersData = () => {
+    axios
+      .get(serverUrl + "users")
+      .then(response => {
+        this.props.setUpData(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  componentDidMount() {
+    this.fetchUsersData();
+  }
+
+  render() {
+    return (
+      <div>
+        <h3 className="d-flex justify-content-start">2. Add group users.</h3>
+        <Table
+          dataFields={this.usersTableDataFields}
+          columnNames={this.usersTableNames}
+          tableData={this.props.notAddedUsers}
+          searchBarId={"createGroupUsersSearchBar"}
+        />
+      </div>
+    );
+  }
+}
 
 export default AddUsersToGroup;

@@ -5,6 +5,7 @@ import Navigation from "../../3-UserPage/01-MainWindow/01-Navigation/Navigation"
 import "./UsersAndGroups.css";
 import { Link } from "react-router-dom";
 import EditButton from "./EditTableItemButton";
+import serverUrl from "./../../7-properties/1-URL";
 
 // forWhat={"users", "groups"}
 class ListOfUsers extends Component {
@@ -43,7 +44,7 @@ class ListOfUsers extends Component {
 
   connectForUsersData = () => {
     axios
-      .get("http://localhost:8080/dvs/api/users")
+      .get(serverUrl + "users")
       .then(response => {
         let tmpUsersData = response.data.map((item, index) => {
           return {
@@ -65,7 +66,7 @@ class ListOfUsers extends Component {
 
   connectForGroupsData = () => {
     axios
-      .get("http://localhost:8080/dvs/api/groups")
+      .get(serverUrl + "groups")
       .then(response => {
         let tmpGroupsData = response.data.map((item, index) => {
           return {

@@ -5,6 +5,7 @@ import MyDocuments from "./../../../../resources/my-documents.svg";
 import NewDocument from "./../../../../resources/new-document.svg";
 import SignDocument from "./../../../../resources/sign-document.svg";
 import axios from "axios";
+import serverUrl from "./../../../7-properties/1-URL";
 
 class Main extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class Main extends Component {
 
   isUserAdminChecker = () => {
     axios
-      .get("http://localhost:8080/dvs/api/administrator")
+      .get(serverUrl + "administrator")
       .then(response => {
         this.setState({ isUserAdmin: response.data });
       })
@@ -31,7 +32,7 @@ class Main extends Component {
     return (
       <div className="container">
         <div className="row justify-content-center mt-4">
-          <div className="col-12 col-md-6 my-4 card-width">
+          <div className="col-12 col-md-3 my-4 card-width">
             <div className="card text-white bg-dark card-heigth">
               <img
                 src={NewDocument}
@@ -43,7 +44,7 @@ class Main extends Component {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-6 my-4 card-width">
+          <div className="col-12 col-md-3 my-4 card-width">
             <div className="card text-white bg-dark card-heigth">
               <img
                 src={SignDocument}
@@ -55,9 +56,7 @@ class Main extends Component {
               </div>
             </div>
           </div>
-        </div>
-        <div className="row justify-content-center">
-          <div className="col-12 col-md-6 my-4 card-width">
+          <div className="col-12 col-md-3 my-4 card-width">
             <div className="card text-white bg-dark card-heigth">
               <img
                 src={MyDocuments}
@@ -70,11 +69,11 @@ class Main extends Component {
             </div>
           </div>
           {this.state.isUserAdmin === true ? (
-            <div className="col-12 col-md-6 my-4 card-width">
+            <div className="col-12 col-md-3 my-4 card-width">
               <div className="card text-white bg-dark card-heigth">
                 <img
-                  src={AdminPhoto}
                   className="card-img-top p-3 mt-4 invert"
+                  src={AdminPhoto}
                   alt="..."
                 />
                 <div className="card-body">

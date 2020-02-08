@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputLine from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 import axios from "axios";
+import serverUrl from "./../../../7-properties/1-URL";
 
 var GroupInformation = props => {
   var [groupNameExists, setGroupNameExists] = useState(false);
@@ -8,7 +9,7 @@ var GroupInformation = props => {
   const checkIfGroupNameExists = groupName => {
     if (groupName.length > 0) {
       axios
-        .get("http://localhost:8080/dvs/api/group/" + groupName + "/exists")
+        .get(serverUrl + "group/" + groupName + "/exists")
         .then(response => {
           setGroupNameExists(response.data);
         })
