@@ -102,27 +102,26 @@ class LoginForm extends Component {
                 Log In
               </button>
             </div>
-            {this.state.loginFailed ? (
-              <div
-                className="alert alert-danger alert-dismissible fade show my-3"
-                role="alert"
+
+            <div
+              className={
+                this.state.loginFailed
+                  ? "alert alert-danger alert-dismissible fade show my-3"
+                  : "alert alert-danger alert-dismissible fade show my-3 invisible"
+              }
+              role="alert"
+            >
+              <h5>Incorrect Username or Password!</h5>
+              <button
+                id="loginFormButton"
+                type="button"
+                className="close"
+                aria-label="Close"
+                onClick={this.handleIncorectPasswordStateReset}
               >
-                <h5>Incorrect Username or Password!</h5>
-                <button
-                  type="button"
-                  className="close"
-                  aria-label="Close"
-                  onClick={this.handleIncorectPasswordStateReset}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            ) : (
-              <div>
-                <h2>&nbsp;</h2>
-                <h2>&nbsp;</h2>
-              </div>
-            )}
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
           </form>
         </div>
       </div>

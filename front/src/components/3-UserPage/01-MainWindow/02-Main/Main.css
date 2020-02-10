@@ -3,5 +3,52 @@
 }
 
 .card-heigth {
-  min-height: 21em;
+  min-height: 18em;
+}
+
+@media (max-width: 991px) {
+  .card-heigth {
+    min-height: 14em;
+  }
+
+  .card-label-text {
+    position: absolute;
+    top: 70% !important;
+    text-align: center;
+    padding: 6% 0;
+    width: 100%;
+    height: 6vh;
+  }
+}
+
+@media (max-width: 767px) {
+  .card-heigth {
+    min-height: 18em;
+  }
+
+  .card-label-text {
+    position: absolute;
+    top: 80% !important;
+    text-align: center;
+    padding: 6% 0;
+    width: 100%;
+    height: 6vh;
+  }
+}
+
+.card-label-text {
+  position: absolute;
+  top: 80%;
+  text-align: center;
+  padding: 6% 0;
+  width: 100%;
+  height: 6vh;
+}
+
+.card-body {
+  padding: 0;
+}
+
+.third-img-heigth {
+  max-height: 21vh;
 }

@@ -58,7 +58,7 @@ class UserInformation extends Component {
   checkIfUsernameExists = username => {
     if (username.length > 3) {
       axios
-        .get(serverUrl + +username + "/exists")
+        .get(serverUrl + username + "/exists")
         .then(response => {
           this.setState({ usernameExists: response.data });
         })

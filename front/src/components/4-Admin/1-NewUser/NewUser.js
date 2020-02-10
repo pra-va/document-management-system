@@ -135,9 +135,8 @@ class NewModal extends Component {
         username: this.state.username
       })
       .then(response => {
-        if (response.status === 201) {
-        }
         this.props.onHide();
+        window.location.reload();
       })
       .catch(error => {
         console.log(error);

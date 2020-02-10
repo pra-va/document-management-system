@@ -36,6 +36,7 @@ class NewGroup extends Component {
         })
       })
       .then(response => {
+        window.location.reload();
         this.props.hideNewGroup();
       })
       .catch(error => console.log(error));

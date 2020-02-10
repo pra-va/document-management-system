@@ -31,3 +31,15 @@ a.page-link:hover {
   background-color: #343a40;
   border-color: #343a40;
 }
+
+/* pagination on the right side */
+.pagination {
+  justify-content: flex-end;
+  margin-right: 5vh;
+}
+
+/* page size dropdown on left size */
+.react-bs-table-sizePerPage-dropdown {
+  display: flex;
+  margin-left: 5vh;
+}

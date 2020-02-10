@@ -32,52 +32,52 @@ class Main extends Component {
     return (
       <div className="container">
         <div className="row justify-content-center mt-4">
-          <div className="col-12 col-md-3 my-4 card-width">
+          <div className="col-6 col-md-3 my-4 card-width">
             <div className="card text-white bg-dark card-heigth">
               <img
                 src={NewDocument}
-                className="card-img-top pl-4 p-3 mt-4 invert"
+                className="card-img-top pl-4 p-3 invert"
                 alt="..."
               />
               <div className="card-body">
-                <h5 className="card-title">Create Document</h5>
+                <h5 className="card-title card-label-text">Create Document</h5>
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-3 my-4 card-width">
+          <div className="col-6 col-md-3 my-4 card-width">
             <div className="card text-white bg-dark card-heigth">
               <img
                 src={SignDocument}
-                className="card-img-top p-3 mt-4 invert"
-                alt="..."
-              />
-              <div className="card-body">
-                <h5 className="card-title">Sign Document</h5>
-              </div>
-            </div>
-          </div>
-          <div className="col-12 col-md-3 my-4 card-width">
-            <div className="card text-white bg-dark card-heigth">
-              <img
-                src={MyDocuments}
                 className="card-img-top p-3 invert"
                 alt="..."
               />
               <div className="card-body">
-                <h5 className="card-title">My Documents</h5>
+                <h5 className="card-title card-label-text">Sign Document</h5>
+              </div>
+            </div>
+          </div>
+          <div className="col-6 col-md-3 my-4 card-width">
+            <div className="card text-white bg-dark card-heigth">
+              <img
+                src={MyDocuments}
+                className="card-img-top p-3 third-img-heigth invert"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title card-label-text">My Documents</h5>
               </div>
             </div>
           </div>
           {this.state.isUserAdmin === true ? (
-            <div className="col-12 col-md-3 my-4 card-width">
+            <div className="col-6 col-md-3 my-4 card-width">
               <div className="card text-white bg-dark card-heigth">
                 <img
-                  className="card-img-top p-3 mt-4 invert"
+                  className="card-img-top p-3 invert"
                   src={AdminPhoto}
                   alt="..."
                 />
                 <div className="card-body">
-                  <h5 className="card-title">Admin</h5>
+                  <h5 className="card-title card-label-text">Admin</h5>
                 </div>
               </div>
             </div>
