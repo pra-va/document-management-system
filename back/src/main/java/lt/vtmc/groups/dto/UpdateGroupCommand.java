@@ -5,15 +5,16 @@ import java.util.List;
 import lt.vtmc.documents.model.DocType;
 
 public class UpdateGroupCommand {
-
+	private String newName;
 	private String[] userList;
 	private String description;
 	private String[] docTypesToCreate;
 	private String[] docTypesToApprove;
 
-	public UpdateGroupCommand(String[] userList, String descirption, String[] docTypesToCreate,
+	public UpdateGroupCommand(String newName, String[] userList, String descirption, String[] docTypesToCreate,
 			String[] docTypesToApprove) {
 		super();
+		this.newName = newName;
 		this.userList = userList;
 		this.description = descirption;
 		this.docTypesToCreate = docTypesToCreate;
@@ -50,6 +51,14 @@ public class UpdateGroupCommand {
 
 	public void setDocTypesToApprove(String[] docTypesToApprove) {
 		this.docTypesToApprove = docTypesToApprove;
+	}
+
+	public String getNewName() {
+		return newName;
+	}
+
+	public void setNewName(String newName) {
+		this.newName = newName;
 	}
 
 }

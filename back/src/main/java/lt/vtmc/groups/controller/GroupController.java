@@ -111,7 +111,7 @@ public class GroupController {
 	public ResponseEntity<String> updateGroupByGroupName(@RequestBody UpdateGroupCommand command,
 			@PathVariable("groupname") String name) {
 		if (groupService.findGroupByName(name) != null) {
-			groupService.updateGroupDetails(name, command.getDescription(), command.getUserList(),
+			groupService.updateGroupDetails(command.getNewName(), name, command.getDescription(), command.getUserList(),
 					command.getDocTypesToApprove(), command.getDocTypesToCreate());
 
 			LOG.info("# LOG # Initiated by [{}]: Group [{}] was updated #",

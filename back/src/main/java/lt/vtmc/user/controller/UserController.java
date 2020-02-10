@@ -175,7 +175,6 @@ public class UserController {
 
 	@GetMapping(path = "/api/{username}/exists")
 	public boolean checkIfUserExists(@PathVariable("username") String username) throws Exception {
-
 		if (userService.findUserByUsername(username) != null) {
 			return true;
 		} else {
