@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lt.vtmc.groups.model.Group;
 
 /**
@@ -28,9 +30,11 @@ public class DocType {
 	private String documentType;
 	
 	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Group> groupsApproving;
 	
 	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private List<Group> groupsCreating;
 	/**
 	 * Empty constructor.
