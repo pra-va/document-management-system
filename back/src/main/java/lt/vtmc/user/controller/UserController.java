@@ -53,20 +53,27 @@ public class UserController {
 	 */
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
-		if (userService.findUserByUsername(command.getUsername()) == null) {
-			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
-					command.getPassword());
-			groupService.addUserToGroupByUsername(command.getGroupList(), command.getUsername());
+		try {
+			if (userService.findUserByUsername(command.getUsername()) == null & command.getPassword().length() > 7
+					& command.getPassword().length() < 21) {
+				userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
+						command.getPassword());
+				groupService.addUserToGroupByUsername(command.getGroupList(), command.getUsername());
 
-			LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was created with group(s): [{}]#",
-					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
-					command.getGroupList());
+				LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was created with group(s): [{}]#",
+						SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
+						command.getGroupList());
 
-			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
-		} else
-			LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was NOT created #",
-					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
+				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+
+		LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was NOT created #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
 		return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
+
 	}
 
 	/**
@@ -79,19 +86,25 @@ public class UserController {
 	 */
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
-		
-		if (userService.findUserByUsername(command.getUsername()) == null) {
-			User tmpUser = userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
-					command.getPassword());
-			groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
-			
 
-			LOG.info("# LOG # Initiated by [{}]: User [{}] was created with group(s): [{}]#",
-					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(), command.getGroupList());
-			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
-		} else
-			LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT created #",
-					SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
+		try {
+			if (userService.findUserByUsername(command.getUsername()) == null & command.getPassword().length() > 7
+					& command.getPassword().length() < 21) {
+				User tmpUser = userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
+						command.getPassword());
+				groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
+
+				LOG.info("# LOG # Initiated by [{}]: User [{}] was created with group(s): [{}]#",
+						SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
+						command.getGroupList());
+				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+
+		LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT created #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
 		return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
 	}
 
@@ -156,17 +169,21 @@ public class UserController {
 	@PostMapping(path = "/api/user/update/{username}")
 	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username,
 			@RequestBody UpdateUserCommand command) {
-		if (userService.findUserByUsername(username) != null) {
-			userService.updateUserDetails(username, command.getName(), command.getSurname(), command.getPassword(),
-					command.getRole());
-			groupService.compareGroups(command.getGroupList(), username);
+		try {
+			if (userService.findUserByUsername(username) != null & command.getPassword().length() > 7
+					& command.getPassword().length() < 21) {
+				userService.updateUserDetails(username, command.getName(), command.getSurname(), command.getPassword(),
+						command.getRole());
+				groupService.compareGroups(command.getGroupList(), username);
 
-			LOG.info("# LOG # Initiated by [{}]: User [{}] was updated #",
-					SecurityContextHolder.getContext().getAuthentication().getName(), username);
+				LOG.info("# LOG # Initiated by [{}]: User [{}] was updated #",
+						SecurityContextHolder.getContext().getAuthentication().getName(), username);
 
-			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
+				return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
-
 		LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT updated - [{}] was NOT found #",
 				SecurityContextHolder.getContext().getAuthentication().getName(), username, username);
 
