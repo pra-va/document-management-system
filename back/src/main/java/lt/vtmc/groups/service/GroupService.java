@@ -179,14 +179,14 @@ public class GroupService {
 //		removeUserFromGroupByUsername(groupsToRemove, username);
 	}
 
-	public void updateGroupDetails(String name, String description, String[] newUserList, String[] docTypesToApprove,
+	public void updateGroupDetails(String newName, String name, String description, String[] newUserList, String[] docTypesToApprove,
 			String[] docTypesToCreate) {
 		Group groupToUpdate = groupRepository.findGroupByName(name);
 		List<User> currentUserList = new ArrayList<User>();
 		groupToUpdate.setUserList(currentUserList);
 		groupToUpdate.setDescription(description);
 		groupRepository.save(groupToUpdate);
-
+		groupToUpdate.setName(newName);
 		for (int i = 0; i < newUserList.length; i++) {
 			User userToAdd = userRepository.findUserByUsername(newUserList[i]);
 			List<User> tmpUserList = groupToUpdate.getUserList();

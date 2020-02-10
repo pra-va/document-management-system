@@ -37,7 +37,6 @@ public class User {
 	private String username;
 
 	@NotEmpty
-	// @Size(min = 8)
 	private String password;
 
 	@NotEmpty(message = "Name field may not be empty")
