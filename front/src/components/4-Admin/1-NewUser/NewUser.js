@@ -6,6 +6,7 @@ import Groups from "./FormComponents/2-Groups";
 import UserGroups from "./FormComponents/3-UsersGroups";
 import axios from "axios";
 import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
+import serverUrl from "./../../7-properties/1-URL";
 
 class NewModal extends Component {
   constructor(props) {
@@ -23,6 +24,31 @@ class NewModal extends Component {
     };
   }
 
+  setUpGroups = data => {
+    if (data.length > 0) {
+      this.parseData(data);
+    }
+  };
+
+  parseData = data => {
+    let tempData = data.map((item, index) => {
+      return {
+        number: index + 1,
+        name: item.name,
+        addOrRemove: (
+          <AddOrRemoveButton
+            itemName={item.name}
+            changeAddedStatus={this.changeAddedStatus}
+            added={false}
+          />
+        ),
+        added: false
+      };
+    });
+
+    this.filterAddedGroups(tempData);
+  };
+
   changeAddedStatus = name => {
     let tmpGroups = this.state.allGroups;
     for (let i = 0; i < tmpGroups.length; i++) {
@@ -37,13 +63,13 @@ class NewModal extends Component {
           />
         );
         this.setState({ allGroups: tmpGroups });
-        this.filterAddedGroups();
+        this.filterAddedGroups(tmpGroups);
       }
     }
   };
 
-  filterAddedGroups = () => {
-    let filterGroups = this.state.allGroups;
+  filterAddedGroups = groupData => {
+    let filterGroups = groupData;
     let notAdded = [];
     let added = [];
     for (let i = 0; i < filterGroups.length; i++) {
@@ -54,39 +80,15 @@ class NewModal extends Component {
         notAdded.push(element);
       }
     }
-    this.setState({ notAddedGroups: notAdded });
-    this.setState({ addedGroups: added });
+
+    this.setState({
+      allGroups: groupData,
+      notAddedGroups: notAdded,
+      addedGroups: added
+    });
   };
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:8080/dvs/api/groups")
-      .then(response => {
-        let tempData = response.data.map((item, index) => {
-          return {
-            number: index + 1,
-            name: item.name,
-            addOrRemove: (
-              <AddOrRemoveButton
-                itemName={item.name}
-                changeAddedStatus={this.changeAddedStatus}
-                added={false}
-              />
-            ),
-            added: false
-          };
-        });
-        this.setState({
-          allGroups: tempData,
-          notAddedGroups: [],
-          addedGroups: []
-        });
-        this.filterAddedGroups();
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+  componentDidUpdate() {}
 
   handleFirstNameChange = value => {
     this.setState({ firstName: value });
@@ -110,7 +112,7 @@ class NewModal extends Component {
 
   handleNewUserSubmit = event => {
     event.preventDefault();
-    let url = "http://localhost:8080/dvs/api/";
+    let url = serverUrl;
     if (this.state.role === "ADMIN") {
       url += "createadmin/";
     } else {
@@ -133,9 +135,8 @@ class NewModal extends Component {
         username: this.state.username
       })
       .then(response => {
-        if (response.status === 201) {
-        }
         this.props.onHide();
+        window.location.reload();
       })
       .catch(error => {
         console.log(error);
@@ -170,7 +171,10 @@ class NewModal extends Component {
 
             <hr className="m-1" />
 
-            <Groups tableData={this.state.notAddedGroups} />
+            <Groups
+              tableData={this.state.notAddedGroups}
+              setUpGroups={this.setUpGroups}
+            />
 
             <hr className="m-1" />
 

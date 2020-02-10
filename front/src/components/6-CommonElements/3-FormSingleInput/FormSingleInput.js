@@ -78,7 +78,11 @@ var InputLine = props => {
   };
 
   var oneWordAllowed = () => {
-    if (!props.labelName.toLowerCase().includes("group name")) {
+    if (
+      !props.labelName.toLowerCase().includes("group name") &&
+      !props.labelName.toLowerCase().includes("first name") &&
+      !props.labelName.toLowerCase().includes("last name")
+    ) {
       return (
         <Validation
           output={"Field must contain 1 word."}

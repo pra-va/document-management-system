@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navigation from "./01-Navigation/Navigation";
 import Main from "./02-Main/Main";
 import axios from "axios";
+import serverUrl from "./../../7-properties/1-URL";
 
 class HomePage extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class HomePage extends Component {
   }
 
   checkUserRole = () => {
-    axios.get("http://localhost:8080/dvs/api/administrator").then(response => {
+    axios.get(serverUrl + "administrator").then(response => {
       if (response.data === true) {
         this.setState({ isUserAdmin: "true" });
       }

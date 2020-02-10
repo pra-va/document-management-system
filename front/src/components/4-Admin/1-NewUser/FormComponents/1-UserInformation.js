@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InputLine from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 import axios from "axios";
+import serverUrl from "./../../../7-properties/1-URL";
 
 class UserInformation extends Component {
   constructor(props) {
@@ -52,9 +53,10 @@ class UserInformation extends Component {
   };
 
   checkIfUsernameExists = username => {
+    console.log("check if username exists");
     if (username.length > 3) {
       axios
-        .get("http://localhost:8080/dvs/api/" + username + "/exists")
+        .get(serverUrl + +username + "/exists")
         .then(response => {
           this.setState({ usernameExists: response.data });
         })
@@ -81,7 +83,7 @@ class UserInformation extends Component {
           placeholder={"John"}
           onChange={this.handleFirstNameChange}
           value={this.state.firstName}
-          pattern={1}
+          pattern={2}
         />
 
         <InputLine
@@ -92,7 +94,7 @@ class UserInformation extends Component {
           placeholder={"Smith"}
           onChange={this.handleLastNameChange}
           value={this.state.lastName}
-          pattern={1}
+          pattern={2}
         />
 
         <InputLine
