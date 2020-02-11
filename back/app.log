@@ -70,15 +70,39 @@
 2020-02-10 08:41:01,292 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
 2020-02-10 08:41:03,871 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
 2020-02-10 08:41:03,879 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
-2020-02-10 15:54:34,554 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
-2020-02-10 15:54:34,584 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
-2020-02-10 15:54:38,542 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
-2020-02-10 15:54:38,551 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
-2020-02-11 08:27:03,930 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
-2020-02-11 08:27:03,953 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
-2020-02-11 08:27:07,174 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
-2020-02-11 08:27:07,183 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
-2020-02-11 15:25:47,878 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
-2020-02-11 15:25:47,899 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
-2020-02-11 15:25:51,185 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
-2020-02-11 15:25:51,194 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:12:47,297 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:12:47,318 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:12:52,879 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:12:52,892 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:24:50,982 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:24:51,005 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:24:56,155 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:24:56,170 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:27:35,008 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:27:35,031 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:27:39,741 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:27:39,754 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:29:37,481 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:29:37,502 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:29:42,940 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:29:42,953 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:31:19,079 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:31:19,103 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:31:25,295 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:31:25,319 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:35:39,467 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:35:39,489 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:35:44,993 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:35:45,006 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:39:22,209 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:39:22,234 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:39:27,963 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:39:27,974 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:47:34,450 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:47:34,468 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:47:41,986 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:47:42,005 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
+2020-02-10 11:56:13,328 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] with Admin role was created with group(s): [null]#
+2020-02-10 11:56:13,354 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testAdmin] was created with group(s): [null]#
+2020-02-10 11:56:17,884 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: Group [null] was created #
+2020-02-10 11:56:17,897 INFO lt.vtmc.user.controller.UserController [main] # LOG # Initiated by [anonymousUser]: User [testUsername] was added to group(s) [[dummy1, dummy2]] #
