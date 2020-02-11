@@ -13,7 +13,7 @@ public class CreateGroupCommand {
 	 * @param userList
 	 * @param description
 	 */
-	public CreateGroupCommand(String[] userList, String groupName, String description) {
+	public CreateGroupCommand(String[] userList, String description, String groupName ) { //
 		super();
 		this.groupName = groupName;
 		this.description = description;

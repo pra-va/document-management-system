@@ -2,13 +2,14 @@ package lt.vtmc.documents.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lt.vtmc.groups.model.Group;
 
@@ -23,18 +24,17 @@ import lt.vtmc.groups.model.Group;
 public class DocType {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;
 	
-	private String documentType;
+//	private String documentType;
 	
-	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER)
-	@JsonIgnore
+	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Group> groupsApproving;
 	
-	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER)
-	@JsonIgnore
+	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Group> groupsCreating;
 	/**
 	 * Empty constructor.
@@ -48,12 +48,12 @@ public class DocType {
 		this.id = id;
 	}
 	
-	public String getDocumentType() {
-		return documentType;
-	}
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
-	}
+//	public String getDocumentType() {
+//		return documentType;
+//	}
+//	public void setDocumentType(String documentType) {
+//		this.documentType = documentType;
+//	}
 	
 	public List<Group> getGroupsApproving() {
 		return groupsApproving;
@@ -73,11 +73,11 @@ public class DocType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public DocType(int id, String name, String documentType, List<Group> groupsApproving, List<Group> groupsCreating) {
+	public DocType(int id, String name, List<Group> groupsApproving, List<Group> groupsCreating) { //String documentType, 
 		super();
 		this.id = id;
 		this.name = name;
-		this.documentType = documentType;
+//		this.documentType = documentType;
 		this.groupsApproving = groupsApproving;
 		this.groupsCreating = groupsCreating;
 	}	

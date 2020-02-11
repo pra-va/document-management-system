@@ -2,6 +2,7 @@ package lt.vtmc.user.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,7 @@ public class User {
 	@NotEmpty(message = "Role field may not be empty")
 	private String role;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "USERS_TO_GROUPS", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<Group> groupList;
 
