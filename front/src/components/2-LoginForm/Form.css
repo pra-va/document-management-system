@@ -1,8 +1,20 @@
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .align-items-lg {
-    align-items: center;
+    position: absolute;
+    top: 25%;
+    /* -ms-transform: translateY(-50%); */
+    /* transform: translateY(-50%); */
   }
+}
+
+.login-form {
+  background-color: #fff;
+}
+
+.login-form.border {
+  border: 3px solid #535353 !important;
+  border-radius: 1.3em !important;
 }
 
 .btn-black {
@@ -17,12 +29,10 @@
 }
 
 .width {
-  max-width: 22vh;
-  max-height: min-content;
-  width: auto;
-  height: auto;
+  width: 22vh;
 }
 
-.form-width {
+/* #loginForm {
   min-width: 22em;
-}
+  margin: 0;
+} */

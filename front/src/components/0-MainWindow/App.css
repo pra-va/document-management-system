@@ -1,13 +1,32 @@
 .App {
   text-align: center;
+  height: 100vh;
 }
 
 html,
 body {
   height: 100%;
   background-color: rgb(216, 216, 216);
+  text-align: center;
 }
 
-.heigth-100 {
+#root {
+  min-height: 100vh;
+}
+
+.modal-header {
+  background-color: #343a40;
+  color: #fff;
+}
+
+button.close {
+  color: #fff;
+}
+
+button.close:hover {
+  color: red;
+}
+
+.container {
   height: 100vh;
 }

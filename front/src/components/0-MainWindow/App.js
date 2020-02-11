@@ -1,16 +1,8 @@
 import React from "react";
 import "./App.css";
-import RoleContext from "../5-Context/UserRole";
 
 function App(props) {
-  return (
-    <div className="App">
-      {" "}
-      <RoleContext.Provider value={{ role: "" }}>
-        {props.children}
-      </RoleContext.Provider>
-    </div>
-  );
+  return <div className="App">{props.children}</div>;
 }
 
 export default App;

@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "./../../../../resources/logo.png";
-
-import NewUser from "./../../../4-Admin/1-NewUser/NewUser";
+import NewUser from "../../../4-Admin/1-NewUser/NewUser";
+import NewGroup from "./../../../4-Admin/2-NewGroup/NewGroup";
 
 var NavigationPresentation = props => {
+  const [showCreateUser, setShowCreateUser] = useState(false);
+  const handleCloseCreateUser = () => setShowCreateUser(false);
+  const handleShowCreateUser = () => setShowCreateUser(true);
+
+  const [showCreateGroup, setShowCreateGroup] = useState(false);
+  const handleHideCreateGroup = () => setShowCreateGroup(false);
+  const handleShowCreateGroup = () => setShowCreateGroup(true);
+
   return (
     <nav className="navbar navbar-dark bg-dark navbar-expand-md navbar-fixed-top">
-      <NewUser />
+      <NewUser
+        show={showCreateUser}
+        onHide={handleCloseCreateUser}
+        onClick={handleShowCreateUser}
+      />
+
+      <NewGroup
+        showNewGroup={showCreateGroup}
+        hideNewGroup={handleHideCreateGroup}
+      />
+
       <Link to="/home" className="navbar-brand invert">
         <img src={logo} alt="unable to load" className="width-30" />
       </Link>
@@ -57,29 +75,23 @@ var NavigationPresentation = props => {
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <button
                   className="dropdown-item link-text-format"
-                  data-toggle="modal"
-                  data-target="#newUser"
+                  onClick={handleShowCreateUser}
                 >
                   New User
                 </button>
-                <Link
+                <button
                   to="/admin/add"
                   className="dropdown-item link-text-format"
+                  onClick={handleShowCreateGroup}
                 >
                   New Group
-                </Link>
+                </button>
 
-                <Link
-                  to="/admin/list"
-                  className="dropdown-item link-text-format"
-                >
-                  Groups
-                </Link>
-                <Link
-                  to="/admin/list"
-                  className="dropdown-item link-text-format"
-                >
+                <Link to="/users" className="dropdown-item link-text-format">
                   Users
+                </Link>
+                <Link to="/groups" className="dropdown-item link-text-format">
+                  Groups
                 </Link>
               </div>
             </li>
@@ -88,7 +100,11 @@ var NavigationPresentation = props => {
           )}
         </ul>
 
-        <Link className="nav-link link-text-format" to="/">
+        <Link
+          className="nav-link link-text-format"
+          to="/"
+          onClick={props.handleLogout}
+        >
           Logout <span className="sr-only">(current)</span>
         </Link>
       </div>

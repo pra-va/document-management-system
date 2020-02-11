@@ -1,0 +1,13 @@
+#buttonUsers,
+#buttonGroups {
+  min-width: 10em;
+}
+
+.darker {
+  background-color: #343a40;
+  cursor: auto;
+}
+
+.darker:hover {
+  background-color: #343a40;
+}
