@@ -10,11 +10,9 @@ class UserInformation extends Component {
       showPassword: "",
       firstName: "",
       lastName: "",
-      username: "",
       password: "",
       groupList: [],
       role: "",
-      usernameExists: false,
       updatePassword: false
     };
   }
@@ -27,12 +25,6 @@ class UserInformation extends Component {
   handleLastNameChange = event => {
     this.setState({ lastName: event.target.value });
     this.props.handleLastNameChange(event.target.value);
-  };
-
-  handleUsernameChange = event => {
-    this.setState({ username: event.target.value });
-    this.props.handleUsernameChange(event.target.value);
-    this.checkIfUsernameExists(event.target.value);
   };
 
   handlePasswordChange = event => {
@@ -55,21 +47,6 @@ class UserInformation extends Component {
     }
   };
 
-  checkIfUsernameExists = username => {
-    if (username.length > 3) {
-      axios
-        .get(serverUrl + username + "/exists")
-        .then(response => {
-          this.setState({ usernameExists: response.data });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      this.setState({ usernameExists: false });
-    }
-  };
-
   componentDidMount() {
     this.getUserData();
   }
@@ -83,42 +60,18 @@ class UserInformation extends Component {
         this.setState({
           firstName: response.data.name,
           lastName: response.data.surname,
-          username: response.data.username,
           role: response.data.role,
           groupList: response.data.groupList
         });
         this.props.initalDataTransfer({
           firstName: response.data.name,
           lastName: response.data.surname,
-          username: response.data.username,
           role: response.data.role,
           groupList: response.data.groupList
         });
         this.props.setuserGroups(response.data.groupList);
       })
       .catch(error => console.log(error));
-  };
-
-  checkIfUsernameExists = () => {
-    setTimeout(() => {
-      if (this.state.username.length > 0) {
-        axios
-          .get(serverUrl + +this.state.username + "/exists")
-          .then(response => {
-            this.setState({ usernameExists: response.data });
-            if (response.data && this.state.username !== this.props.ownerName) {
-              this.setState({ usernameExists: true });
-              this.props.handleUsernameExists(true);
-            } else {
-              this.setState({ usernameExists: false });
-              this.props.handleUsernameExists(false);
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-    }, 1000);
   };
 
   render() {
@@ -148,19 +101,6 @@ class UserInformation extends Component {
           onChange={this.handleLastNameChange}
           value={this.state.lastName}
           pattern={2}
-        />
-
-        <InputLine
-          id={"inputUsername"}
-          labelName={"Username:"}
-          required={true}
-          type={"text"}
-          placeholder={"holyDiver"}
-          onChange={this.handleUsernameChange}
-          value={this.state.username}
-          pattern={1}
-          ownerName={this.props.ownerName}
-          usernameExists={this.state.usernameExists}
         />
 
         {this.state.updatePassword ? (

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "./../../../../resources/logo.png";
 import NewUser from "../../../4-Admin/1-NewUser/NewUser";
 import NewGroup from "./../../../4-Admin/2-NewGroup/NewGroup";
+import NewDocType from "./../../../4-Admin/6-NewDocType/NewDocType";
 
 var NavigationPresentation = props => {
   const [showCreateUser, setShowCreateUser] = useState(false);
@@ -13,17 +14,22 @@ var NavigationPresentation = props => {
   const handleHideCreateGroup = () => setShowCreateGroup(false);
   const handleShowCreateGroup = () => setShowCreateGroup(true);
 
+  const [showCreateDocType, setShowCreateDocType] = useState(false);
+  const handleHideCreateDocType = () => setShowCreateDocType(false);
+  const handleShowCreateDocType = () => setShowCreateDocType(true);
+
   return (
     <nav className="navbar navbar-dark bg-dark navbar-expand-md navbar-fixed-top">
-      <NewUser
-        show={showCreateUser}
-        onHide={handleCloseCreateUser}
-        onClick={handleShowCreateUser}
-      />
+      <NewUser show={showCreateUser} onHide={handleCloseCreateUser} />
 
       <NewGroup
         showNewGroup={showCreateGroup}
         hideNewGroup={handleHideCreateGroup}
+      />
+
+      <NewDocType
+        showNewDocType={showCreateDocType}
+        hideNewDocType={handleHideCreateDocType}
       />
 
       <Link to="/home" className="navbar-brand invert">
@@ -76,15 +82,24 @@ var NavigationPresentation = props => {
                 <button
                   className="dropdown-item link-text-format"
                   onClick={handleShowCreateUser}
+                  id="showCreateUser"
                 >
                   New User
                 </button>
                 <button
-                  to="/admin/add"
                   className="dropdown-item link-text-format"
                   onClick={handleShowCreateGroup}
+                  id="showCreateGroup"
                 >
                   New Group
+                </button>
+                <button
+                  className="dropdown-item link-text-format"
+                  onClick={handleShowCreateDocType}
+                  // onClick={handleShowCreateGroup}
+                  id="showCreateDoc"
+                >
+                  New Document Type
                 </button>
 
                 <Link to="/users" className="dropdown-item link-text-format">
@@ -92,6 +107,9 @@ var NavigationPresentation = props => {
                 </Link>
                 <Link to="/groups" className="dropdown-item link-text-format">
                   Groups
+                </Link>
+                <Link to="/doctypes" className="dropdown-item link-text-format">
+                  Document Types
                 </Link>
               </div>
             </li>

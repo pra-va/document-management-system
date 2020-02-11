@@ -30,7 +30,10 @@ class UserInformation extends Component {
   handleUsernameChange = event => {
     this.setState({ username: event.target.value });
     this.props.handleUsernameChange(event.target.value);
-    this.checkIfUsernameExists(event.target.value);
+    let usernameExists = this.checkIfUsernameExists(event.target.value);
+    if (!usernameExists) {
+      event.target.setCustomValidity("Username is taken.");
+    }
   };
 
   handlePasswordChange = event => {
@@ -56,15 +59,17 @@ class UserInformation extends Component {
     console.log("check if username exists");
     if (username.length > 3) {
       axios
-        .get(serverUrl + +username + "/exists")
+        .get(serverUrl + username + "/exists")
         .then(response => {
           this.setState({ usernameExists: response.data });
+          return response.data;
         })
         .catch(error => {
           console.log(error);
         });
     } else {
       this.setState({ usernameExists: false });
+      return false;
     }
   };
 
@@ -105,7 +110,7 @@ class UserInformation extends Component {
           placeholder={"holyDiver"}
           onChange={this.handleUsernameChange}
           value={this.state.username}
-          pattern={1}
+          pattern={3}
           usernameExists={this.state.usernameExists}
         />
 
