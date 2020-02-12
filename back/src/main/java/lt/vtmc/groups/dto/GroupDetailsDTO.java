@@ -15,8 +15,6 @@ public class GroupDetailsDTO {
 
 	private String description;
 
-	private String[] userList;
-
 	@JsonIgnore
 	private List<User> userListArray;
 
@@ -43,7 +41,6 @@ public class GroupDetailsDTO {
 		this.userListArray = group.getUserList();
 		this.docTypesToCreate = group.getDocTypesToCreate();
 		this.docTypesToApprove = group.getDocTypesToApprove();
-		this.userList = getUserList();
 	}
 
 	public String getName() {
@@ -83,9 +80,9 @@ public class GroupDetailsDTO {
 	}
 
 	public String[] getDocTypesToCreateNames() {
-		String[] docTypesNames = new String[userListArray.size()];
+		String[] docTypesNames = new String[docTypesToCreate.size()];
 		for (int i = 0; i < docTypesToCreate.size(); i++) {
-			docTypesNames[i] = docTypesToCreate.get(i).getDocumentType();
+			docTypesNames[i] = docTypesToCreate.get(i).getName();
 		}
 		return docTypesNames;
 	}
@@ -99,9 +96,9 @@ public class GroupDetailsDTO {
 	}
 
 	public String[] getDocTypesToApproveNames() {
-		String[] docTypesNames = new String[userListArray.size()];
+		String[] docTypesNames = new String[docTypesToApprove.size()];
 		for (int i = 0; i < docTypesToApprove.size(); i++) {
-			docTypesNames[i] = docTypesToApprove.get(i).getDocumentType();
+			docTypesNames[i] = docTypesToApprove.get(i).getName();
 		}
 		return docTypesNames;
 	}
@@ -116,5 +113,4 @@ public class GroupDetailsDTO {
 				+ ", Can create: " + Arrays.toString(getDocTypesToCreateNames()) + ", Can approve: "
 				+ Arrays.toString(getDocTypesToApproveNames()) + "]";
 	}
-
 }

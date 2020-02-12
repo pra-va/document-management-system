@@ -1,14 +1,16 @@
 package lt.vtmc.documents.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lt.vtmc.groups.model.Group;
 
@@ -23,19 +25,18 @@ import lt.vtmc.groups.model.Group;
 public class DocType {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	private String name;
 	
-	private String documentType;
+//	private String documentType;
 	
-	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER)
-	@JsonIgnore
-	private List<Group> groupsApproving;
+	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Group> groupsApproving = new ArrayList<Group>();
 	
-	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER)
-	@JsonIgnore
-	private List<Group> groupsCreating;
+	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Group> groupsCreating = new ArrayList<Group>();
 	/**
 	 * Empty constructor.
 	 */
@@ -48,12 +49,12 @@ public class DocType {
 		this.id = id;
 	}
 	
-	public String getDocumentType() {
-		return documentType;
-	}
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
-	}
+//	public String getDocumentType() {
+//		return documentType;
+//	}
+//	public void setDocumentType(String documentType) {
+//		this.documentType = documentType;
+//	}
 	
 	public List<Group> getGroupsApproving() {
 		return groupsApproving;
@@ -73,12 +74,51 @@ public class DocType {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public DocType(int id, String name, String documentType, List<Group> groupsApproving, List<Group> groupsCreating) {
+	public DocType(int id, String name, List<Group> groupsApproving, List<Group> groupsCreating) { //String documentType, 
 		super();
 		this.id = id;
 		this.name = name;
-		this.documentType = documentType;
+//		this.documentType = documentType;
 		this.groupsApproving = groupsApproving;
 		this.groupsCreating = groupsCreating;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((groupsApproving == null) ? 0 : groupsApproving.hashCode());
+		result = prime * result + ((groupsCreating == null) ? 0 : groupsCreating.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DocType other = (DocType) obj;
+		if (groupsApproving == null) {
+			if (other.groupsApproving != null)
+				return false;
+		} else if (!groupsApproving.equals(other.groupsApproving))
+			return false;
+		if (groupsCreating == null) {
+			if (other.groupsCreating != null)
+				return false;
+		} else if (!groupsCreating.equals(other.groupsCreating))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}	
+	
 }
