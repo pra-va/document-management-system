@@ -54,7 +54,7 @@ public class GroupController {
 		if (groupService.findGroupByName(command.getGroupName()) == null) {
 			groupService.createGroup(command.getGroupName(), command.getDescription());
 			groupService.addUsersToGroup(command.getGroupName(), command.getUserList());
-
+			groupService.addDocTypes(command.getGroupName(), command.getDocTypesToSign(), command.getDocTypesToCreate());
 			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 
@@ -113,7 +113,7 @@ public class GroupController {
 		if (groupService.findGroupByName(name) != null) {
 			groupService.updateGroupDetails(command.getNewName(), name, command.getDescription(), command.getUserList(),
 					command.getDocTypesToApprove(), command.getDocTypesToCreate());
-
+			groupService.addDocTypes(command.getNewName(), command.getDocTypesToApprove(), command.getDocTypesToCreate());
 			LOG.info("# LOG # Initiated by [{}]: Group [{}] was updated #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), name);
 
