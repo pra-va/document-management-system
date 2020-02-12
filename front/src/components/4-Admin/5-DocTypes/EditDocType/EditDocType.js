@@ -3,9 +3,9 @@ import Modal from "react-bootstrap/Modal";
 import DocTypeInfo from "./FormComponents/1-DocTypeInfo";
 import AssignToGroups from "./FormComponents/2-AssignToGroups";
 import SetRights from "./FormComponents/3-SetRights";
-import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
-import CheckBox from "./../../6-CommonElements/6-CheckBox/CheckBox";
-import Validation from "./../../6-CommonElements/5-FormInputValidationLine/Validation";
+import AddOrRemoveButton from "./../../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
+import CheckBox from "./../../../6-CommonElements/6-CheckBox/CheckBox";
+import Validation from "./../../../6-CommonElements/5-FormInputValidationLine/Validation";
 // import axios from "axios";
 // import serverUrl from "./../../7-properties/1-URL";
 
@@ -27,7 +27,7 @@ class NewDocType extends Component {
     this.setState({ canCreate: [], canSign: [] });
   };
 
-  handleCreateNewDocType = event => {
+  handleSubmit = event => {
     // const newDocType = {
     //   docTypeName: this.state.docTypeName,
     //   canCreate: this.state.canCreate,
@@ -179,8 +179,8 @@ class NewDocType extends Component {
   render() {
     return (
       <Modal
-        show={this.props.showNewDocType}
-        onHide={this.props.hideNewDocType}
+        show={this.props.modalState}
+        onHide={this.props.hideModal}
         size={"lg"}
         id="newDocTypeModal"
       >
@@ -188,7 +188,7 @@ class NewDocType extends Component {
           <Modal.Title>New Document Type</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleCreateNewDocType}>
+          <form onSubmit={this.handleSubmit}>
             <DocTypeInfo
               docTypeValue={this.state.docTypeName}
               handleDocTypeNameChange={this.handleDocTypeNameChange}
@@ -212,7 +212,7 @@ class NewDocType extends Component {
                 <button
                   type="button"
                   className="btn btn-outline-dark"
-                  onClick={this.props.hideNewDocType}
+                  onClick={this.props.hideModal}
                 >
                   Cancel
                 </button>
@@ -222,7 +222,7 @@ class NewDocType extends Component {
                   data-dismiss="modal"
                   disabled={this.state.readyToSubmit ? false : true}
                 >
-                  Create
+                  Submit
                 </button>
               </div>
             </div>

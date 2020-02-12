@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./2-Groups.css";
-import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
+import Table from "./../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
-import serverUrl from "./../../../7-properties/1-URL";
+import serverUrl from "./../../../../7-properties/1-URL";
 
 class Groups extends Component {
   constructor(props) {
@@ -13,14 +13,13 @@ class Groups extends Component {
     };
   }
 
-  dataFields = ["number", "nameForTable", "addOrRemove"];
+  dataFields = ["number", "name", "addOrRemove"];
   columnNames = ["#", "Name", ""];
 
   componentDidUpdate() {
     if (this.props.tableData.length !== this.state.tableData.length) {
       this.setState({ tableData: this.props.tableData });
     }
-    console.log(this.props.tableData);
   }
 
   fetchGroupsData = () => {
@@ -36,6 +35,7 @@ class Groups extends Component {
 
   componentDidMount() {
     this.fetchGroupsData();
+    this.props.cleanUpCreateAndSignLists();
   }
 
   render() {

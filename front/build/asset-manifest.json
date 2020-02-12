@@ -1,29 +1,30 @@
 {
   "files": {
-    "main.css": "./static/css/main.464dc487.chunk.css",
-    "main.js": "./static/js/main.75c67f76.chunk.js",
-    "main.js.map": "./static/js/main.75c67f76.chunk.js.map",
+    "main.css": "./static/css/main.ffd79fb4.chunk.css",
+    "main.js": "./static/js/main.b326b547.chunk.js",
+    "main.js.map": "./static/js/main.b326b547.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.c2105b6c.js",
     "runtime-main.js.map": "./static/js/runtime-main.c2105b6c.js.map",
-    "static/css/2.b6551302.chunk.css": "./static/css/2.b6551302.chunk.css",
-    "static/js/2.262de1e3.chunk.js": "./static/js/2.262de1e3.chunk.js",
-    "static/js/2.262de1e3.chunk.js.map": "./static/js/2.262de1e3.chunk.js.map",
+    "static/css/2.839b4cb7.chunk.css": "./static/css/2.839b4cb7.chunk.css",
+    "static/js/2.7d2b9c3a.chunk.js": "./static/js/2.7d2b9c3a.chunk.js",
+    "static/js/2.7d2b9c3a.chunk.js.map": "./static/js/2.7d2b9c3a.chunk.js.map",
     "index.html": "./index.html",
-    "precache-manifest.dc0b963bfc3103541cb39dea7faf5ff9.js": "./precache-manifest.dc0b963bfc3103541cb39dea7faf5ff9.js",
+    "precache-manifest.f0306bba7dd8ddc101841c994fe95cad.js": "./precache-manifest.f0306bba7dd8ddc101841c994fe95cad.js",
     "service-worker.js": "./service-worker.js",
-    "static/css/2.b6551302.chunk.css.map": "./static/css/2.b6551302.chunk.css.map",
-    "static/css/main.464dc487.chunk.css.map": "./static/css/main.464dc487.chunk.css.map",
+    "static/css/2.839b4cb7.chunk.css.map": "./static/css/2.839b4cb7.chunk.css.map",
+    "static/css/main.ffd79fb4.chunk.css.map": "./static/css/main.ffd79fb4.chunk.css.map",
     "static/media/admin.svg": "./static/media/admin.8105a9a4.svg",
     "static/media/my-documents.svg": "./static/media/my-documents.7f8cd3dd.svg",
     "static/media/new-document.svg": "./static/media/new-document.6f3de006.svg",
     "static/media/search.svg": "./static/media/search.a4e6bfc7.svg",
-    "static/media/sign-document.svg": "./static/media/sign-document.ec22fd19.svg"
+    "static/media/sign-document.svg": "./static/media/sign-document.ec22fd19.svg",
+    "static/media/team.svg": "./static/media/team.03a0ce31.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.c2105b6c.js",
-    "static/css/2.b6551302.chunk.css",
-    "static/js/2.262de1e3.chunk.js",
-    "static/css/main.464dc487.chunk.css",
-    "static/js/main.75c67f76.chunk.js"
+    "static/css/2.839b4cb7.chunk.css",
+    "static/js/2.7d2b9c3a.chunk.js",
+    "static/css/main.ffd79fb4.chunk.css",
+    "static/js/main.b326b547.chunk.js"
   ]
 }

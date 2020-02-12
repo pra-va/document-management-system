@@ -12,7 +12,7 @@ var InputLine = props => {
     "[^' ']{1,20}",
     "^.{1,20}$",
     "[a-zA-Z0-9]{4,20}",
-    "^.{4,50}$"
+    "^.{1,50}$"
   ];
 
   var passwordLength = () => {
@@ -27,18 +27,6 @@ var InputLine = props => {
       );
     }
   };
-
-  // function alpha(e) {
-  //   var k = e.charCodeAt(0);
-  //   console.log(k);
-  //   return (
-  //     (k > 64 && k < 91) ||
-  //     (k > 96 && k < 123) ||
-  //     k == 8 ||
-  //     k == 32 ||
-  //     (k >= 48 && k <= 57)
-  //   );
-  // }
 
   var noSpecialCharactersAllowed = () => {
     if (props.labelName.toLowerCase().includes("username")) {
@@ -84,8 +72,7 @@ var InputLine = props => {
 
   var fieldNotEmpty = () => {
     if (
-      props.pattern !== 0 &&
-      props.patter === 4 &&
+      (props.pattern !== 0 || props.patter === 4) &&
       !props.labelName.toLowerCase().includes("username") &&
       !props.labelName.toLowerCase().includes("group name")
     ) {

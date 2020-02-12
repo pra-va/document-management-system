@@ -35,6 +35,7 @@ class Groups extends Component {
 
   componentDidMount() {
     this.fetchGroupsData();
+    this.props.cleanUpCreateAndSignLists();
   }
 
   render() {
