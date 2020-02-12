@@ -34,12 +34,20 @@ a.page-link:hover {
 
 /* pagination on the right side */
 .pagination {
-  justify-content: flex-end;
-  margin-right: 5vh;
+  justify-content: flex-start;
 }
 
 /* page size dropdown on left size */
 .react-bs-table-sizePerPage-dropdown {
   display: flex;
-  margin-left: 5vh;
+  justify-content: flex-end;
+}
+
+/* When table tada toes not fit, it will be replaced with parital value and "..." at the end. */
+td,
+th {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

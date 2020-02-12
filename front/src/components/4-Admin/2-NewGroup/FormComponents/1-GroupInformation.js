@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import InputLine from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 import axios from "axios";
 import serverUrl from "./../../../7-properties/1-URL";
+import FormValidation from "./../../../6-CommonElements/5-FormInputValidationLine/Validation";
 
 var GroupInformation = props => {
   var [groupNameExists, setGroupNameExists] = useState(false);
+  var [descriptionValidation, setDescriptionValidation] = useState(true);
 
   const checkIfGroupNameExists = groupName => {
     if (groupName.length > 0) {
@@ -26,6 +28,15 @@ var GroupInformation = props => {
 
   const handleGroupDescriptionChange = event => {
     props.handleGroupDescriptionChange(event);
+    handleDescriptionValidation(event.target.value.length);
+  };
+
+  const handleDescriptionValidation = descriptionLength => {
+    if (descriptionLength > 500) {
+      setDescriptionValidation(false);
+    } else {
+      setDescriptionValidation(true);
+    }
   };
 
   return (
@@ -43,7 +54,7 @@ var GroupInformation = props => {
         placeholder={"Junior Java Programmers"}
         onChange={handleGroupNameChange}
         value={props.groupName}
-        pattern={2}
+        pattern={4}
         groupNameExists={groupNameExists}
       />
 
@@ -58,10 +69,15 @@ var GroupInformation = props => {
           <textarea
             className="form-control"
             id="inputGroupDescription"
+            maxLength="500"
             rows="3"
             onChange={handleGroupDescriptionChange}
             value={props.groupDescription}
           ></textarea>
+          <FormValidation
+            satisfied={descriptionValidation}
+            output={"Group description can not be longer than 500 characters."}
+          />
         </div>
       </div>
     </div>

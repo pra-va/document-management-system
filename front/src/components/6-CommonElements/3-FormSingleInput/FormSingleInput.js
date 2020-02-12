@@ -4,13 +4,15 @@ import Validation from "./../5-FormInputValidationLine/Validation";
 // PROPS
 
 // id={""} labelName={""} required={true/false} type={""} placeholder={""} onChange={} value={}
-// pattern={0/1/2} ([0] - password, [1] - no space, [2] - with space)
+// pattern={0/1/2} ([0] - password, [1] - no space, [2] - with space, [3] - username, [4] - longer name with special characters)
 var InputLine = props => {
-  // [0] - password, [1] - no space, [2] - with space
+  // [0] - password, [1] - no space, [2] - with space, [3] - username, [4] - longer name with special characters
   const patternTypes = [
-    "[A-Za-z0-9]{8,20}",
-    "[a-zA-Z0-9]{1,20}",
-    "[a-zA-Z0-9 ]{1,20}"
+    "[^' ']{8,20}",
+    "[^' ']{1,20}",
+    "^.{1,20}$",
+    "[a-zA-Z0-9]{4,20}",
+    "^.{1,50}$"
   ];
 
   var passwordLength = () => {
@@ -26,10 +28,53 @@ var InputLine = props => {
     }
   };
 
+  var noSpecialCharactersAllowed = () => {
+    if (props.labelName.toLowerCase().includes("username")) {
+      let checkLetter = e => {
+        var k = e.charCodeAt(0);
+        return (
+          (k > 64 && k < 91) ||
+          (k > 96 && k < 123) ||
+          k === 8 ||
+          k === 32 ||
+          (k >= 48 && k <= 57)
+        );
+      };
+
+      if (props.value) {
+        for (let i = 0; i < props.value.length; i++) {
+          const element = props.value[i];
+          if (!checkLetter(element)) {
+            return (
+              <Validation
+                output={"No special characters allowed."}
+                satisfied={false}
+              />
+            );
+          }
+        }
+        return (
+          <Validation
+            output={"No special characters allowed."}
+            satisfied={true}
+          />
+        );
+      } else {
+        return (
+          <Validation
+            output={"No special characters allowed."}
+            satisfied={true}
+          />
+        );
+      }
+    }
+  };
+
   var fieldNotEmpty = () => {
     if (
-      props.pattern !== 0 &&
-      !props.labelName.toLowerCase().includes("username")
+      (props.pattern !== 0 || props.patter === 4) &&
+      !props.labelName.toLowerCase().includes("username") &&
+      !props.labelName.toLowerCase().includes("group name")
     ) {
       return (
         <Validation
@@ -49,6 +94,19 @@ var InputLine = props => {
           output={"Username must be between 4 and 20 characters long."}
           satisfied={
             props.value.length > 3 && props.value.length < 21 ? true : false
+          }
+        />
+      );
+    }
+  };
+
+  var longerName = () => {
+    if (props.pattern === 4) {
+      return (
+        <Validation
+          output={"Field must be between 1 and 50 characters long."}
+          satisfied={
+            props.value.length > 0 && props.value.length < 51 ? true : false
           }
         />
       );
@@ -81,7 +139,8 @@ var InputLine = props => {
     if (
       !props.labelName.toLowerCase().includes("group name") &&
       !props.labelName.toLowerCase().includes("first name") &&
-      !props.labelName.toLowerCase().includes("last name")
+      !props.labelName.toLowerCase().includes("last name") &&
+      !props.labelName.toLowerCase().includes("document type name")
     ) {
       return (
         <Validation
@@ -114,7 +173,9 @@ var InputLine = props => {
         {usernameLength()}
         {usernameExists()}
         {oneWordAllowed()}
+        {longerName()}
         {groupNameExists()}
+        {noSpecialCharactersAllowed()}
       </div>
     </div>
   );

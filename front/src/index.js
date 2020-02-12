@@ -7,14 +7,9 @@ import * as serviceWorker from "./serviceWorker";
 
 // Bootstrap imports
 import "bootstrap/dist/css/bootstrap.min.css";
-// Uncomment if needed for additional bootstrap functionallity.
-// import $ from "jquery";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // Router imports
-// import { Switch, Route } from "react-router";
-// import { BrowserRouter } from "react-router-dom";
-
 import { HashRouter as Router, Route, BrowserRouter } from "react-router-dom";
 import { Switch } from "react-router";
 
@@ -28,11 +23,9 @@ import LoginForm from "./components/2-LoginForm/LoginForm";
 import HomePage from "./components/3-UserPage/01-MainWindow/HomePage";
 import ListOfUsers from "./components/4-Admin/3and4-UsersAndGroups/3-Users/ListOfUsers";
 import ListOfGroups from "./components/4-Admin/3and4-UsersAndGroups/4-Groups/ListOfGroups";
+import DocTypes from "./components/4-Admin/5-DocTypes/DocTypes";
 
 ReactDOM.render(
-  // <BrowserRouter>
-  //   <App>
-  //     <Switch>
   <BrowserRouter>
     <Router>
       <App>
@@ -41,15 +34,13 @@ ReactDOM.render(
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/users" component={ListOfUsers} />
           <Route exact path="/groups" component={ListOfGroups} />
+          <Route exact path="/doctypes" component={DocTypes} />
           <Route path="*" component={PageNotFound} />
           <Route component={PageNotFound} />
         </Switch>
       </App>
     </Router>
   </BrowserRouter>,
-  //     </Switch>
-  //   </App>
-  // </BrowserRouter>,
   document.getElementById("root")
 );
 
