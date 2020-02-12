@@ -7,7 +7,6 @@ import UserGroups from "./FormComponents/3-UsersGroups";
 import axios from "axios";
 import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import serverUrl from "./../../7-properties/1-URL";
-import PopOver from "./../../6-CommonElements/8-PopOver/PopOver";
 
 class NewModal extends Component {
   constructor(props) {
@@ -36,13 +35,7 @@ class NewModal extends Component {
       return {
         number: index + 1,
         name: item.name,
-        nameForTable: (
-          <PopOver
-            popOverApparance={item.name}
-            popOverTitle={"Group Description"}
-            popOverContent={item.description}
-          />
-        ),
+
         addOrRemove: (
           <AddOrRemoveButton
             itemName={item.name}

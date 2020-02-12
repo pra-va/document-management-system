@@ -12,8 +12,6 @@ const PopOver = props => {
     event.preventDefault();
   };
 
-  console.log(props);
-
   return (
     <span
       title={props.popOverTitle}
