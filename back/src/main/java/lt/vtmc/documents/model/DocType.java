@@ -1,5 +1,6 @@
 package lt.vtmc.documents.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,10 +33,10 @@ public class DocType {
 //	private String documentType;
 	
 	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Group> groupsApproving;
+	private List<Group> groupsApproving = new ArrayList<Group>();
 	
 	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	private List<Group> groupsCreating;
+	private List<Group> groupsCreating = new ArrayList<Group>();
 	/**
 	 * Empty constructor.
 	 */
@@ -80,5 +81,44 @@ public class DocType {
 //		this.documentType = documentType;
 		this.groupsApproving = groupsApproving;
 		this.groupsCreating = groupsCreating;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((groupsApproving == null) ? 0 : groupsApproving.hashCode());
+		result = prime * result + ((groupsCreating == null) ? 0 : groupsCreating.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DocType other = (DocType) obj;
+		if (groupsApproving == null) {
+			if (other.groupsApproving != null)
+				return false;
+		} else if (!groupsApproving.equals(other.groupsApproving))
+			return false;
+		if (groupsCreating == null) {
+			if (other.groupsCreating != null)
+				return false;
+		} else if (!groupsCreating.equals(other.groupsCreating))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}	
+	
 }

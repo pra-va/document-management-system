@@ -7,17 +7,23 @@ public class CreateGroupCommand {
 	private String description;
 	
 	private String groupName;
+	
+	private String[]docTypesToCreate;
+	
+	private String[]docTypesToSign;
 	/**
 	 * Constructor method for CreateGroupCommand
 	 * 
 	 * @param userList
 	 * @param description
 	 */
-	public CreateGroupCommand(String[] userList, String description, String groupName ) { //
+	public CreateGroupCommand(String[] userList, String description, String groupName, String[]docTypesToSign, String[]docTypesToCreate ) { //
 		super();
 		this.groupName = groupName;
 		this.description = description;
 		this.userList = userList;
+		this.docTypesToCreate = docTypesToCreate;
+		this.docTypesToSign = docTypesToSign;
 	}
 	/**
 	 * 
@@ -53,6 +59,19 @@ public class CreateGroupCommand {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+	public String[] getDocTypesToCreate() {
+		return docTypesToCreate;
+	}
+	public void setDocTypesToCreate(String[] docTypesToCreate) {
+		this.docTypesToCreate = docTypesToCreate;
+	}
+	public String[] getDocTypesToSign() {
+		return docTypesToSign;
+	}
+	public void setDocTypesToSign(String[] docTypesToSign) {
+		this.docTypesToSign = docTypesToSign;
+	}
+	
 	
 	
 }

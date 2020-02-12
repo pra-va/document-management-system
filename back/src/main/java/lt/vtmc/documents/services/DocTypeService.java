@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lt.vtmc.documents.dao.DocTypeRepository;
+import lt.vtmc.documents.dto.DocTypeDetailsDTO;
 import lt.vtmc.documents.model.DocType;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
@@ -26,67 +27,85 @@ public class DocTypeService {
 
 	@Autowired
 	DocTypeRepository docTypeRepo;
-	
+
 	@Autowired
 	GroupService groupService;
-	
+
 	@Autowired
 	private GroupRepository groupRepository;
+
 	/**
 	 * 
 	 * This method finds groups from group repository.
 	 */
-	public DocType findGroupByName(String name) {
+	public DocType findDocTypeByName(String name) {
 		return docTypeRepo.findDocTypeByName(name);
 	}
 
 	@Transactional
-	public void createDocType(String name, String[] creating, String[] approving) { // String documentType, 
+	public void createDocType(String name, String[] creating, String[] approving) { // String documentType,
 		DocType newDocType = new DocType();
 		newDocType.setName(name);
 //		newDocType.setDocumentType(documentType);
-		newDocType.setGroupsApproving(new ArrayList<Group>());
-		newDocType.setGroupsCreating(new ArrayList<Group>());
+//		newDocType.setGroupsApproving(new ArrayList<Group>());
+//		newDocType.setGroupsCreating(new ArrayList<Group>());
+		addDocTypeToGroupsCreate(creating, newDocType);
+		addDocTypeToGroupsApprove(approving, newDocType);
 		docTypeRepo.save(newDocType);
-		addDocTypeToGroupsByName(creating, approving, name);
-		
 	}
 
 	@Transactional
-	public void addDocTypeToGroupsByName(String[] groupListCreate, String[] groupListApprove, String name) {
-		DocType docTypeToAdd = docTypeRepo.findDocTypeByName(name);
+	public DocType addDocTypeToGroupsApprove(String[] groupListApprove, DocType newDoc) {
 		for (int i = 0; i < groupListApprove.length; i++) {
-			Group groupToAddTo = groupRepository.findGroupByName(groupListApprove[i]);
-			List<DocType> tmpDocList = groupToAddTo.getDocTypesToApprove();
-			List<Group> tmpGroupList = docTypeToAdd.getGroupsApproving();
-			if (tmpDocList.contains(docTypeToAdd) == false && tmpGroupList.contains(groupToAddTo) == false) {
-				tmpGroupList.add(groupToAddTo);
-				docTypeToAdd.setGroupsApproving(tmpGroupList);
-				tmpDocList.add(docTypeToAdd);
-				groupToAddTo.setDocTypesToApprove(tmpDocList);
-			}
+			Group groupToAdd = groupRepository.findGroupByName(groupListApprove[i]);
+			List<DocType> tmp = groupToAdd.getDocTypesToApprove();
+			tmp.add(newDoc);
+			groupToAdd.setDocTypesToApprove(tmp);
 		}
-		for (int i = 0; i < groupListCreate.length; i++) {
-			Group groupToAddTo = groupRepository.findGroupByName(groupListCreate[i]);
-			List<DocType> tmpDocList = groupToAddTo.getDocTypesToApprove();
-			List<Group> tmpGroupList = docTypeToAdd.getGroupsApproving();
-			if (tmpDocList.contains(docTypeToAdd) == false && tmpGroupList.contains(groupToAddTo) == false) {
-				tmpGroupList.add(groupToAddTo);
-				docTypeToAdd.setGroupsApproving(tmpGroupList);
-				tmpDocList.add(docTypeToAdd);
-				groupToAddTo.setDocTypesToApprove(tmpDocList);
-			}
-		}
-	}
-	
-	public List<DocType> getAllDocTypes() {
-		return docTypeRepo.findAll();
+		return newDoc;
 	}
 
+	@Transactional
+	public DocType addDocTypeToGroupsCreate(String[] groupListCreate, DocType newDoc) {
+		for (int i = 0; i < groupListCreate.length; i++) {
+			Group groupToAdd = groupRepository.findGroupByName(groupListCreate[i]);
+			List<DocType> tmp = groupToAdd.getDocTypesToCreate();
+			tmp.add(newDoc);
+			groupToAdd.setDocTypesToCreate(tmp);
+		}
+		return newDoc;
+	}
+
+	public List<DocTypeDetailsDTO> getAllDocTypes() {
+		List<DocType> tmpList = docTypeRepo.findAll();
+		List<DocTypeDetailsDTO> list = new ArrayList<DocTypeDetailsDTO>();
+		for (int i = 0; i < tmpList.size(); i++) {
+			list.add(new DocTypeDetailsDTO(tmpList.get(i)));
+		}
+		return list;
+	}
+
+	@Transactional
 	public void deleteDocType(String name) {
-		DocType docTypeToDelete = docTypeRepo.findDocTypeByName(name);
-			docTypeRepo.delete(docTypeToDelete);
+		docTypeRepo.delete(docTypeRepo.findDocTypeByName(name));
+	}
+
+	public String[] findGroupsSigningDocType(String name) {
+		List<Group>tmpList = docTypeRepo.findDocTypeByName(name).getGroupsApproving();
+		String[]groups = new String[tmpList.size()];
+		for (int i = 0; i < tmpList.size(); i++) {
+			groups[i] = tmpList.get(i).getName();
+		}
+		return groups;
 	}
 	
+	public String[] findGroupsCreatingDocType(String name) {
+		List<Group>tmpList = docTypeRepo.findDocTypeByName(name).getGroupsCreating();
+		String[]groups = new String[tmpList.size()];
+		for (int i = 0; i < tmpList.size(); i++) {
+			groups[i] = tmpList.get(i).getName();
+		}
+		return groups;
+	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lt.vtmc.documents.dao.DocTypeRepository;
 import lt.vtmc.documents.model.DocType;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.dto.GroupDetailsDTO;
@@ -28,6 +29,9 @@ public class GroupService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private DocTypeRepository docTypesRepo;
 
 	/**
 	 * 
@@ -178,7 +182,7 @@ public class GroupService {
 //		addUserToGroupByUsername(groupsToAddString, username);
 //		removeUserFromGroupByUsername(groupsToRemove, username);
 	}
-
+	@Transactional
 	public void updateGroupDetails(String newName, String name, String description, String[] newUserList, String[] docTypesToApprove,
 			String[] docTypesToCreate) {
 		Group groupToUpdate = groupRepository.findGroupByName(name);
@@ -199,6 +203,22 @@ public class GroupService {
 			}
 		}
 		groupRepository.save(groupToUpdate);
-
+	}
+	
+	@Transactional
+	public void addDocTypes(String name, String[] docTypesToApprove,
+			String[] docTypesToCreate) {
+		Group groupToAddTo = groupRepository.findGroupByName(name);
+		List<DocType> docTypesToCreateList = new ArrayList<DocType>();
+		for (int i = 0; i < docTypesToCreate.length; i++) {
+			docTypesToCreateList.add(docTypesRepo.findDocTypeByName(docTypesToCreate[i]));
+		}
+		groupToAddTo.setDocTypesToCreate(docTypesToCreateList);
+		List<DocType> docTypesToSignList = new ArrayList<DocType>();
+		for (int i = 0; i < docTypesToApprove.length; i++) {
+			docTypesToSignList.add(docTypesRepo.findDocTypeByName(docTypesToApprove[i]));
+		}
+		groupToAddTo.setDocTypesToApprove(docTypesToSignList);
+		groupRepository.save(groupToAddTo);
 	}
 }
