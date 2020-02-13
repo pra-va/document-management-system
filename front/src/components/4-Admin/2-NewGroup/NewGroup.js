@@ -3,11 +3,10 @@ import Modal from "react-bootstrap/Modal";
 import GroupInformation from "./FormComponents/1-GroupInformation";
 import AddUsersToGroup from "./FormComponents/2-AddUsersToGroup";
 import GroupUsers from "./FormComponents/3-GroupUsers";
-import AddDocumentTypes from "./FormComponents/4-AddDocumentTypes";
-import SetRights from "./FormComponents/5-SetRights";
 import axios from "axios";
 import AddRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import serverUrl from "./../../7-properties/1-URL";
+import AddRemoveDocTypes from "./../../6-CommonElements/9-AddRemoveDocType/AddRemoveDocType";
 
 class NewGroup extends Component {
   constructor(props) {
@@ -17,9 +16,14 @@ class NewGroup extends Component {
       groupDescription: "",
       usersList: [],
       notAddedUsers: [],
-      addedUsers: []
+      addedUsers: [],
+      readyToSubmit: true,
+      canCreate: [],
+      canSign: []
     };
   }
+
+  componentDidUpdate() {}
 
   setUpData = data => {
     this.parseUsersData(data);
@@ -27,14 +31,19 @@ class NewGroup extends Component {
 
   handleNewGroupSubmit = event => {
     event.preventDefault();
-    axios
-      .post(serverUrl + "creategroup", {
-        description: this.state.groupDescription,
-        groupName: this.state.groupName,
-        userList: this.state.addedUsers.map(item => {
-          return item.username;
-        })
+
+    const newGroup = {
+      description: this.state.groupDescription,
+      docTypesToCreate: this.state.canCreate,
+      docTypesToSign: this.state.canSign,
+      groupName: this.state.groupName,
+      userList: this.state.addedUsers.map(item => {
+        return item.username;
       })
+    };
+
+    axios
+      .post(serverUrl + "creategroup", newGroup)
       .then(response => {
         window.location.reload();
         this.props.hideNewGroup();
@@ -109,6 +118,18 @@ class NewGroup extends Component {
     });
   };
 
+  readyToSubmit = readyToSubmit => {
+    this.setState({ readyToSubmit: readyToSubmit });
+  };
+
+  canCreate = data => {
+    this.setState({ canCreate: data });
+  };
+
+  canSign = data => {
+    this.setState({ canSign: data });
+  };
+
   render() {
     return (
       <Modal
@@ -135,9 +156,13 @@ class NewGroup extends Component {
             <hr className="m-1" />
             <GroupUsers addedUsers={this.state.addedUsers} />
             <hr className="m-1" />
-            <AddDocumentTypes />
-            <hr className="m-1" />
-            <SetRights />
+
+            <AddRemoveDocTypes
+              readyToSubmit={this.readyToSubmit}
+              canCreate={this.canCreate}
+              canSign={this.canSign}
+            />
+
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">
                 <button
@@ -151,6 +176,7 @@ class NewGroup extends Component {
                   type="submit"
                   className="btn btn-dark"
                   data-dismiss="modal"
+                  disabled={this.state.readyToSubmit ? false : true}
                 >
                   Create
                 </button>

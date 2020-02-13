@@ -27,7 +27,7 @@ class DocTypes extends Component {
 
   fetchServerData = () => {
     axios
-      .get(serverUrl + "alldoctypes")
+      .get(serverUrl + "doct/all")
       .then(response => {
         this.parseData(response.data);
       })
@@ -68,7 +68,7 @@ class DocTypes extends Component {
               }
             />
           ),
-          edit: <Edit />
+          edit: <Edit owner={item.name} />
         };
       });
       this.setState({ tableData: tableData });

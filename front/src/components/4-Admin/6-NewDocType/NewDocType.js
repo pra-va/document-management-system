@@ -14,8 +14,8 @@ class NewDocType extends Component {
     super(props);
     this.state = {
       docTypeName: "",
-      notAddedGroups: [],
       allGroups: [],
+      notAddedGroups: [],
       addedGroups: [],
       canCreate: [],
       canSign: [],
@@ -35,7 +35,7 @@ class NewDocType extends Component {
     };
 
     axios
-      .post(serverUrl + "createdoctype", newDocType)
+      .post(serverUrl + "doct/create", newDocType)
       .then(response => {
         event.preventDefault();
         window.location.reload();

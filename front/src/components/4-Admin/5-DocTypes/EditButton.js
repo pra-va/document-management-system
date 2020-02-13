@@ -8,6 +8,10 @@ class EditTableItemButton extends Component {
     this.state = { showModal: false };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   handleClose = () => {
     this.setState({ showModal: false });
   };

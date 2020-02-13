@@ -35,7 +35,6 @@ class Table extends Component {
     if (this.state.tableData !== this.props.tableData) {
       this.setState({ tableData: this.props.tableData });
     }
-    console.log("creating table with id: " + this.props.id);
   }
 
   componentDidUpdate() {
