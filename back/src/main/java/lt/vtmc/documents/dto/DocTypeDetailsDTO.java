@@ -1,6 +1,7 @@
 package lt.vtmc.documents.dto;
 
 import java.util.List;
+
 import lt.vtmc.documents.model.DocType;
 import lt.vtmc.groups.model.Group;
 
@@ -8,17 +9,15 @@ public class DocTypeDetailsDTO {
 
 	private String name;
 
-	
-	private List<Group> groupsToApprove;
+	private List<Group> approving;
 
-	
-	private List<Group> groupsToCreate;
+	private List<Group> creating;
 
 	public DocTypeDetailsDTO(DocType docType) {
 		super();
 		this.name = docType.getName();
-		this.groupsToCreate = docType.getGroupsCreating();
-		this.groupsToApprove = docType.getGroupsApproving();
+		this.creating = docType.getGroupsCreating();
+		this.approving = docType.getGroupsApproving();
 	}
 
 	public String getName() {
@@ -29,29 +28,28 @@ public class DocTypeDetailsDTO {
 		this.name = name;
 	}
 
-	public String[] getGroupsToApprove() {
-		String[] groupsApproving = new String[groupsToApprove.size()];
-		for (int i = 0; i < groupsToApprove.size(); i++) {
-			groupsApproving[i] = groupsToApprove.get(i).getName();
+	public String[] getApproving() {
+		String[] groupsApproving = new String[approving.size()];
+		for (int i = 0; i < approving.size(); i++) {
+			groupsApproving[i] = approving.get(i).getName();
 		}
 		return groupsApproving;
 	}
 
 	public void setGroupsToApprove(List<Group> groupsToApprove) {
-		this.groupsToApprove = groupsToApprove;
+		this.approving = groupsToApprove;
 	}
 
-	public String[] getGroupsToCreate() {
-		String[] groupsCreating = new String[groupsToCreate.size()];
-		for (int i = 0; i < groupsToCreate.size(); i++) {
-			groupsCreating[i] = groupsToCreate.get(i).getName();
+	public String[] getCreating() {
+		String[] groupsCreating = new String[creating.size()];
+		for (int i = 0; i < creating.size(); i++) {
+			groupsCreating[i] = creating.get(i).getName();
 		}
 		return groupsCreating;
 	}
 
 	public void setGroupsToCreate(List<Group> groupsToCreate) {
-		this.groupsToCreate = groupsToCreate;
+		this.creating = groupsToCreate;
 	}
 
-	
 }

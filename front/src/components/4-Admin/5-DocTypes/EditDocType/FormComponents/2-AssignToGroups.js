@@ -48,6 +48,7 @@ class Groups extends Component {
         </div>
 
         <Table
+          id={"editDocTypeAssignGroups"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.tableData}

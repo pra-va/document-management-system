@@ -35,6 +35,7 @@ class Table extends Component {
     if (this.state.tableData !== this.props.tableData) {
       this.setState({ tableData: this.props.tableData });
     }
+    console.log("creating table with id: " + this.props.id);
   }
 
   componentDidUpdate() {
@@ -86,7 +87,7 @@ class Table extends Component {
     };
 
     return (
-      <div>
+      <div id={this.props.id}>
         <ToolkitProvider
           keyField="number"
           data={this.state.tableData}

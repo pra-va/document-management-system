@@ -47,6 +47,7 @@ class Groups extends Component {
         </div>
 
         <Table
+          id={"newUserGroups"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.tableData}

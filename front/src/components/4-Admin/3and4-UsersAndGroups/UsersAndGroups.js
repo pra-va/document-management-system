@@ -115,6 +115,7 @@ class ListOfUsers extends Component {
           </div>
           <div className="row p-1" id="tableuserGroups">
             <Table
+              id={"usersAndGroupsTable"}
               dataFields={
                 this.props.forWhat === "users"
                   ? this.usersTableDataFields
