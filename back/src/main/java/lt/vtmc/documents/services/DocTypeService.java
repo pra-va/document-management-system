@@ -86,8 +86,18 @@ public class DocTypeService {
 	}
 
 	@Transactional
-	public void deleteDocType(String name) {
-		docTypeRepo.delete(docTypeRepo.findDocTypeByName(name));
+	public void deleteDocType(DocType dType) {
+		for (int i = 0; i < dType.getGroupsApproving().size(); i++) {
+			Group tmp = dType.getGroupsApproving().get(i);
+			tmp.getDocTypesToApprove().remove(dType);
+			groupRepository.save(tmp);
+		}
+		for (int i = 0; i < dType.getGroupsCreating().size(); i++) {
+			Group tmp = dType.getGroupsCreating().get(i);
+			tmp.getDocTypesToCreate().remove(dType);
+			groupRepository.save(tmp);
+		}
+		docTypeRepo.delete(dType);
 	}
 
 	public String[] findGroupsSigningDocType(String name) {
@@ -106,6 +116,13 @@ public class DocTypeService {
 			groups[i] = tmpList.get(i).getName();
 		}
 		return groups;
+	}
+	
+	@Transactional
+	public void updateDocTypeDetails(String newName, String name, String[] groupsApproving,
+			String[] groupsCreating) {
+		deleteDocType(docTypeRepo.findDocTypeByName(name));
+		createDocType(newName, groupsCreating, groupsApproving);
 	}
 
 }
