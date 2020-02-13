@@ -28,9 +28,28 @@ class UserInformation extends Component {
   };
 
   handleUsernameChange = event => {
+    event.persist();
     this.setState({ username: event.target.value });
     this.props.handleUsernameChange(event.target.value);
-    this.checkIfUsernameExists(event.target.value);
+
+    if (event.target.value.length > 3) {
+      axios
+        .get(serverUrl + event.target.value + "/exists")
+        .then(response => {
+          this.setState({ usernameExists: response.data });
+          if (response.data) {
+            event.target.setCustomValidity("Username is taken.");
+          } else {
+            event.target.setCustomValidity("");
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      event.target.setCustomValidity("");
+      this.setState({ usernameExists: false });
+    }
   };
 
   handlePasswordChange = event => {
@@ -50,22 +69,6 @@ class UserInformation extends Component {
   userRadioChange = event => {
     this.setState({ userRole: event.target.value });
     this.props.handleRoleChange(event.target.value);
-  };
-
-  checkIfUsernameExists = username => {
-    console.log("check if username exists");
-    if (username.length > 3) {
-      axios
-        .get(serverUrl + +username + "/exists")
-        .then(response => {
-          this.setState({ usernameExists: response.data });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      this.setState({ usernameExists: false });
-    }
   };
 
   render() {
@@ -105,7 +108,7 @@ class UserInformation extends Component {
           placeholder={"holyDiver"}
           onChange={this.handleUsernameChange}
           value={this.state.username}
-          pattern={1}
+          pattern={3}
           usernameExists={this.state.usernameExists}
         />
 
