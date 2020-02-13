@@ -3,14 +3,16 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="test.loginTests">
+      <class name="test.NewGroupTests">
         <methods>
+          <include name="afterTest"/>
           <include name="closeBrowser"/>
+          <include name="preconitions"/>
+          <include name="navigateToNewGroupPage"/>
           <include name="setUp"/>
-          <include name="preconditions"/>
-          <include name="emptyLoginFieldsTest"/>
+          <include name="userInGroupTest"/>
         </methods>
-      </class> <!-- test.loginTests -->
+      </class> <!-- test.NewGroupTests -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

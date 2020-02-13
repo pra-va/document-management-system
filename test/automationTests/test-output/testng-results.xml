@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+<testng-results skipped="0" failed="0" ignored="2" total="3" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="7706" started-at="2020-02-11T07:35:02Z" finished-at="2020-02-11T07:35:09Z">
+  <suite name="Default suite" duration-ms="12007" started-at="2020-02-13T07:15:35Z" finished-at="2020-02-13T07:15:47Z">
     <groups>
-      <group name="loginTests">
-        <method signature="loginTests.adminLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="adminLoginTest" class="test.loginTests"/>
-        <method signature="loginTests.emptyLoginFieldsTest()[pri:0, instance:test.loginTests@d8355a8]" name="emptyLoginFieldsTest" class="test.loginTests"/>
-        <method signature="loginTests.userLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="userLoginTest" class="test.loginTests"/>
-        <method signature="loginTests.wrongLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="wrongLoginTest" class="test.loginTests"/>
-      </group> <!-- loginTests -->
+      <group name="createGroup">
+        <method signature="NewGroupTests.userInGroupTest()[pri:1, instance:test.NewGroupTests@4501b7af]" name="userInGroupTest" class="test.NewGroupTests"/>
+      </group> <!-- createGroup -->
     </groups>
-    <test name="Default test" duration-ms="7706" started-at="2020-02-11T07:35:02Z" finished-at="2020-02-11T07:35:09Z">
-      <class name="test.loginTests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:test.loginTests@d8355a8]" name="setUp" is-config="true" duration-ms="4832" started-at="2020-02-11T07:35:02Z" finished-at="2020-02-11T07:35:07Z">
+    <test name="Default test" duration-ms="12007" started-at="2020-02-13T07:15:35Z" finished-at="2020-02-13T07:15:47Z">
+      <class name="test.NewGroupTests">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:test.NewGroupTests@4501b7af]" name="setUp" is-config="true" duration-ms="5275" started-at="2020-02-13T07:15:35Z" finished-at="2020-02-13T07:15:40Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="preconditions()[pri:0, instance:test.loginTests@d8355a8]" name="preconditions" is-config="true" duration-ms="274" started-at="2020-02-11T07:35:07Z" finished-at="2020-02-11T07:35:07Z">
+        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.NewGroupTests@4501b7af]" name="preconitions" is-config="true" duration-ms="47" started-at="2020-02-13T07:15:40Z" finished-at="2020-02-13T07:15:40Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- preconditions -->
-        <test-method status="PASS" signature="adminLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="adminLoginTest" duration-ms="1124" started-at="2020-02-11T07:35:07Z" finished-at="2020-02-11T07:35:08Z">
+        </test-method> <!-- preconitions -->
+        <test-method status="PASS" signature="login()[pri:0, instance:test.NewGroupTests@4501b7af]" name="login" is-config="true" duration-ms="300" started-at="2020-02-13T07:15:40Z" finished-at="2020-02-13T07:15:41Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- adminLoginTest -->
-        <test-method status="PASS" signature="emptyLoginFieldsTest()[pri:0, instance:test.loginTests@d8355a8]" name="emptyLoginFieldsTest" duration-ms="84" started-at="2020-02-11T07:35:08Z" finished-at="2020-02-11T07:35:08Z">
+        </test-method> <!-- login -->
+        <test-method status="PASS" signature="navigateToNewGroupPage()[pri:0, instance:test.NewGroupTests@4501b7af]" name="navigateToNewGroupPage" is-config="true" duration-ms="925" started-at="2020-02-13T07:15:41Z" finished-at="2020-02-13T07:15:41Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- emptyLoginFieldsTest -->
-        <test-method status="PASS" signature="userLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="userLoginTest" duration-ms="453" started-at="2020-02-11T07:35:08Z" finished-at="2020-02-11T07:35:08Z">
+        </test-method> <!-- navigateToNewGroupPage -->
+        <test-method status="PASS" signature="userInGroupTest()[pri:1, instance:test.NewGroupTests@4501b7af]" name="userInGroupTest" duration-ms="4609" started-at="2020-02-13T07:15:41Z" finished-at="2020-02-13T07:15:46Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- userLoginTest -->
-        <test-method status="PASS" signature="wrongLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="wrongLoginTest" duration-ms="253" started-at="2020-02-11T07:35:08Z" finished-at="2020-02-11T07:35:09Z">
+        </test-method> <!-- userInGroupTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.NewGroupTests@4501b7af]" name="afterTest" is-config="true" duration-ms="92" started-at="2020-02-13T07:15:46Z" finished-at="2020-02-13T07:15:46Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- wrongLoginTest -->
-        <test-method status="PASS" signature="closeBrowser()[pri:0, instance:test.loginTests@d8355a8]" name="closeBrowser" is-config="true" duration-ms="653" started-at="2020-02-11T07:35:09Z" finished-at="2020-02-11T07:35:09Z">
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="closeBrowser()[pri:0, instance:test.NewGroupTests@4501b7af]" name="closeBrowser" is-config="true" duration-ms="728" started-at="2020-02-13T07:15:46Z" finished-at="2020-02-13T07:15:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- closeBrowser -->
-      </class> <!-- test.loginTests -->
+      </class> <!-- test.NewGroupTests -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
