@@ -4,9 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class AdminNewGrouPage extends AbstractPage {
+public class AdminNewGroupPage extends AbstractPage {
 
-	public AdminNewGrouPage(WebDriver driver) {
+	public AdminNewGroupPage(WebDriver driver) {
 		super(driver);
 	}
 	
