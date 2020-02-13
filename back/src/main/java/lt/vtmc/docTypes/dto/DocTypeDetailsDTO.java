@@ -1,7 +1,8 @@
-package lt.vtmc.documents.dto;
+package lt.vtmc.docTypes.dto;
 
 import java.util.List;
-import lt.vtmc.documents.model.DocType;
+
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.groups.model.Group;
 
 public class DocTypeDetailsDTO {

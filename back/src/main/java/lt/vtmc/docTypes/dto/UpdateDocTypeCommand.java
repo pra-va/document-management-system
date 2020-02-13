@@ -1,4 +1,4 @@
-package lt.vtmc.documents.dto;
+package lt.vtmc.docTypes.dto;
 
 
 public class UpdateDocTypeCommand {

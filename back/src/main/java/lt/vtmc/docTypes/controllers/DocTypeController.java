@@ -1,4 +1,4 @@
-package lt.vtmc.documents.controllers;
+package lt.vtmc.docTypes.controllers;
 
 import java.util.List;
 import org.slf4j.Logger;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import lt.vtmc.documents.dto.CreateDocTypeCommand;
-import lt.vtmc.documents.dto.DocTypeDetailsDTO;
-import lt.vtmc.documents.dto.UpdateDocTypeCommand;
-import lt.vtmc.documents.services.DocTypeService;
+import lt.vtmc.docTypes.dto.CreateDocTypeCommand;
+import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
+import lt.vtmc.docTypes.dto.UpdateDocTypeCommand;
+import lt.vtmc.docTypes.services.DocTypeService;
 /**
  * Controller for managing Document Types.
  * 

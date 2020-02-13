@@ -1,4 +1,4 @@
-package lt.vtmc.documents.services;
+package lt.vtmc.docTypes.services;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lt.vtmc.documents.dao.DocTypeRepository;
-import lt.vtmc.documents.dto.DocTypeDetailsDTO;
-import lt.vtmc.documents.model.DocType;
+import lt.vtmc.docTypes.dao.DocTypeRepository;
+import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;

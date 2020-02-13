@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lt.vtmc.documents.dao.DocTypeRepository;
-import lt.vtmc.documents.model.DocType;
+import lt.vtmc.docTypes.dao.DocTypeRepository;
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.model.Group;
