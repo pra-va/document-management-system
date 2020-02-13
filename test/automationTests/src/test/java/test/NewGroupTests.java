@@ -77,17 +77,15 @@ public class NewGroupTests extends AbstractTest {
 		groupPage.clickCancelButton();
 	}
 
-	@Test(groups = { "createGroup" }, priority = 1, enabled = true)
-	public void userInGroupTest() throws InterruptedException {
+	@Test(groups = { "createGroup" }, priority = 1, enabled = false)
+	public void userInGroupTest() {
 		groupPage.clickCancelButton();
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Admin')]")));
 		mainPage.clickAdminButton();
 		mainPage.clickAdminUsersButton();
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[contains(text(),'Admin')]")));
 		driver.findElement(By.xpath("//td[contains(text(),'admin')]/..//td[6]//button")).click();
-		Thread.sleep(1000);
 		assertTrue(driver.findElement(By.xpath("//td[contains(text(), 'Junior developer')]")).isDisplayed(),
 				"User was not added to the group correctly");
-		Thread.sleep(3000);
 	}
 }
