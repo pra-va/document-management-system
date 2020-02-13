@@ -93,4 +93,10 @@ public class MainPage extends AbstractPage {
 	public void clickLogoutButton() {
 		this.buttonLogout.click();
 	}
+	
+	/* OTHER METHODS */
+
+	public void navigateToMainPage() {
+		driver.get("http://akademijait.vtmc.lt:8180/dvs/#/home");
+	}
 }

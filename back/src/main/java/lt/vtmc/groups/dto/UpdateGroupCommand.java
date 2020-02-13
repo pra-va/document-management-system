@@ -1,9 +1,5 @@
 package lt.vtmc.groups.dto;
 
-import java.util.List;
-
-import lt.vtmc.documents.model.DocType;
-
 public class UpdateGroupCommand {
 	private String newName;
 	private String[] userList;

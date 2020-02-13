@@ -13,13 +13,14 @@ class Groups extends Component {
     };
   }
 
-  dataFields = ["number", "name", "addOrRemove"];
+  dataFields = ["number", "nameForTable", "addOrRemove"];
   columnNames = ["#", "Name", ""];
 
   componentDidUpdate() {
     if (this.props.tableData.length !== this.state.tableData.length) {
       this.setState({ tableData: this.props.tableData });
     }
+    console.log(this.props.tableData);
   }
 
   fetchGroupsData = () => {

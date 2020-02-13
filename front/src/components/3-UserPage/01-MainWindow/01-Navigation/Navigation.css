@@ -46,3 +46,8 @@ a {
   font-weight: bold;
   text-decoration: underline;
 }
+
+.dropdown-menu.show a {
+  color: black;
+  min-width: 11.5em;
+}
