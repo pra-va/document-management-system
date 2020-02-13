@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-import lt.vtmc.documents.model.DocType;
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.user.model.User;
 
 /**

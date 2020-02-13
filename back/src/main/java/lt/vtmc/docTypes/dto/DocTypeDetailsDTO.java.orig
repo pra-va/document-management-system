@@ -1,8 +1,12 @@
-package lt.vtmc.documents.dto;
+package lt.vtmc.docTypes.dto;
 
 import java.util.List;
 
+<<<<<<< HEAD:back/src/main/java/lt/vtmc/documents/dto/DocTypeDetailsDTO.java
 import lt.vtmc.documents.model.DocType;
+=======
+import lt.vtmc.docTypes.model.DocType;
+>>>>>>> 0f0941c8bb884ab9a92046ab6c1ddfe2ae7d89c5:back/src/main/java/lt/vtmc/docTypes/dto/DocTypeDetailsDTO.java
 import lt.vtmc.groups.model.Group;
 
 public class DocTypeDetailsDTO {

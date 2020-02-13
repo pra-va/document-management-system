@@ -1,4 +1,4 @@
-package lt.vtmc.documents.model;
+package lt.vtmc.docTypes.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lt.vtmc.documents.model.Document;
 import lt.vtmc.groups.model.Group;
 
 /**
@@ -30,13 +32,15 @@ public class DocType {
 	
 	private String name;
 	
-//	private String documentType;
-	
 	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Group> groupsApproving = new ArrayList<Group>();
 	
 	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Group> groupsCreating = new ArrayList<Group>();
+	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Document> documentList;
+	
 	/**
 	 * Empty constructor.
 	 */
@@ -48,13 +52,6 @@ public class DocType {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-//	public String getDocumentType() {
-//		return documentType;
-//	}
-//	public void setDocumentType(String documentType) {
-//		this.documentType = documentType;
-//	}
 	
 	public List<Group> getGroupsApproving() {
 		return groupsApproving;
