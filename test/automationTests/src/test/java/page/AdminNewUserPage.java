@@ -1,8 +1,12 @@
 package page;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 
 public class AdminNewUserPage extends AbstractPage {
 
@@ -33,6 +37,9 @@ public class AdminNewUserPage extends AbstractPage {
 	@FindBy(id = "radioUser")
 	private WebElement radioUser;
 
+	@FindBy(xpath = "//*[@aria-label='Search']")
+	private List<WebElement> searchFields;
+
 	/* BUTTONS */
 
 	@FindBy(xpath = "//button[contains(text(),'Cancel')]")
@@ -40,6 +47,12 @@ public class AdminNewUserPage extends AbstractPage {
 
 	@FindBy(xpath = "//button[contains(text(),'Create')]")
 	private WebElement buttonCreate;
+
+	@FindBy(xpath = "button[text()='Add']")
+	private WebElement buttonAddUserToGroup;
+
+	@FindBy(xpath = "button[text()='Remove']")
+	private WebElement buttonRemoveUserFromGroup;
 
 	/* CLICK BUTTONS */
 
@@ -57,6 +70,14 @@ public class AdminNewUserPage extends AbstractPage {
 
 	public void clickAdminRadio() {
 		this.radioAdmin.click();
+	}
+
+	public void clickButtonAddUserToGroup() {
+		this.buttonAddUserToGroup.click();
+	}
+
+	public void clickButtonRemoveUserFromGroup() {
+		this.buttonRemoveUserFromGroup.click();
 	}
 
 	public void clickUserRadio() {
@@ -80,5 +101,23 @@ public class AdminNewUserPage extends AbstractPage {
 	public void sendKeysPassword(String password) {
 		this.passwordField.sendKeys(password);
 	}
+
+	public void sendKeysSearchGroupToAdd(String groupName) {
+		searchFields.get(0).sendKeys(groupName);
+	}
+
+	public void sendKeysSearchGroupToRemove(String groupName) {
+		searchFields.get(1).sendKeys(groupName);
+
+	}
+
+	public void clickAddSpecificGroupButton(String groupName) {
+		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
+		
+	}
+	
+//	public void clickRemoveSpecificGroupButton(String groupName) {
+//		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
+//	}
 
 }

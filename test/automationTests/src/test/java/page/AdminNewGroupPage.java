@@ -1,7 +1,6 @@
 package page;
 
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +11,7 @@ public class AdminNewGroupPage extends AbstractPage {
 	public AdminNewGroupPage(WebDriver driver) {
 		super(driver);
 	}
+
 
 	/* FIELDS */
 
@@ -41,6 +41,7 @@ public class AdminNewGroupPage extends AbstractPage {
 	public void clickCreateButton() {
 		this.buttonCreate.click();
 	}
+
 
 	public void clickAddSpecificUserButton(String user) {
 		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[6]//button")).click();
