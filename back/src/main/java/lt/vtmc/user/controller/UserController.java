@@ -170,8 +170,7 @@ public class UserController {
 	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username,
 			@RequestBody UpdateUserCommand command) {
 		try {
-			if (userService.findUserByUsername(username) != null & command.getPassword().length() > 7
-					& command.getPassword().length() < 21) {
+			if (userService.findUserByUsername(username) != null) {
 				userService.updateUserDetails(username, command.getName(), command.getSurname(), command.getPassword(),
 						command.getRole());
 				groupService.compareGroups(command.getGroupList(), username);
