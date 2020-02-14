@@ -49,7 +49,7 @@ class DocTypes extends Component {
               }
               popOverTitle={"Groups with Create rights:"}
               popOverContent={
-                item.creating.length > 0
+                item.groupsToCreate.length > 0
                   ? this.reduceList(item.creating)
                   : "None"
               }
@@ -62,7 +62,7 @@ class DocTypes extends Component {
               }
               popOverTitle={"Groups with Sign rights:"}
               popOverContent={
-                item.approving.length > 0
+                item.groupsToApprove.length > 0
                   ? this.reduceList(item.approving)
                   : "None"
               }
