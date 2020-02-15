@@ -126,7 +126,7 @@ public class UserService implements UserDetailsService {
 		User updatedUser = userRepository.findUserByUsername(username);
 		updatedUser.setName(name);
 		updatedUser.setSurname(surname);
-		if (!password.equals("")) {
+		if (!password.equals("") && password.length() > 7 && password.length() < 21) {
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			updatedUser.setPassword(encoder.encode(password));
 		}

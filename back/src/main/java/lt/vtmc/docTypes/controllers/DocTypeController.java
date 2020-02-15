@@ -56,6 +56,11 @@ public class DocTypeController {
 		return docTypeService.getAllDocTypes();
 	}
 	
+	@GetMapping(path = "/api/doct/{name}")
+	public DocTypeDetailsDTO findDocTypeByName(@PathVariable ("name") String name){
+		return new DocTypeDetailsDTO(docTypeService.findDocTypeByName(name));
+	}
+	
 	@DeleteMapping(path = "/api/doct/delete/{name}")
 	public ResponseEntity<String> deleteDocType(@PathVariable ("name") String name){
 		docTypeService.deleteDocType(docTypeService.findDocTypeByName(name));
@@ -70,6 +75,14 @@ public class DocTypeController {
 	@GetMapping(path = "/api/doct/{name}/creates")
 	public String[] findGroupsCreatingDocType(@PathVariable ("name") String name){
 		return docTypeService.findGroupsCreatingDocType(name);
+	}
+	
+	@GetMapping(path = "/api/doct/{name}/exists")
+	public ResponseEntity<String> docTypeExists(@PathVariable ("name") String name){
+		if (docTypeService.findDocTypeByName(name) != null) {
+			return new ResponseEntity<String>("Document type with specified name exists", HttpStatus.FOUND);
+		}
+		return new ResponseEntity<String>("No such document type exists", HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping(path = "/api/doct/update/{name}")
