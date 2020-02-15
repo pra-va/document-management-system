@@ -6,16 +6,16 @@ import SetRights from "./FormComponents/3-SetRights";
 import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import CheckBox from "./../../6-CommonElements/6-CheckBox/CheckBox";
 import Validation from "./../../6-CommonElements/5-FormInputValidationLine/Validation";
-// import axios from "axios";
-// import serverUrl from "./../../7-properties/1-URL";
+import axios from "axios";
+import serverUrl from "./../../7-properties/1-URL";
 
 class NewDocType extends Component {
   constructor(props) {
     super(props);
     this.state = {
       docTypeName: "",
-      notAddedGroups: [],
       allGroups: [],
+      notAddedGroups: [],
       addedGroups: [],
       canCreate: [],
       canSign: [],
@@ -28,26 +28,22 @@ class NewDocType extends Component {
   };
 
   handleCreateNewDocType = event => {
-    // const newDocType = {
-    //   docTypeName: this.state.docTypeName,
-    //   canCreate: this.state.canCreate,
-    //   canSign: this.state.canSign
-    // };
+    const newDocType = {
+      name: this.state.docTypeName,
+      creating: this.state.canCreate,
+      approving: this.state.canSign
+    };
 
-    // axios
-    //   .post(serverUrl + "/doctype", newDocType)
-    //   .then(response => {
-    //     event.preventDefault();
-    //     window.location.reload();
-    //     this.props.hideNewDocType();
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-
-    event.preventDefault();
-    window.location.reload();
-    this.props.hideNewDocType();
+    axios
+      .post(serverUrl + "doct/create", newDocType)
+      .then(response => {
+        event.preventDefault();
+        window.location.reload();
+        this.props.hideNewDocType();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   handleDocTypeNameChange = value => {

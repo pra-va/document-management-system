@@ -1,8 +1,10 @@
 package lt.vtmc;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Main controller class.
@@ -10,19 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
  * @author pra-va
  *
  */
-@RestController
+@Controller
 public class MainController {
 
-	@GetMapping("/api/user")
-	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public String helloUser() {
-		return "Hello, User!";
+	@Secured({ "ROLE_ADMIN" })
+	@RequestMapping(value = { "/users", "/groups", "/doctypes" })
+
+	public ModelAndView adminView(ModelMap model) {
+		return new ModelAndView("forward:/", model);
 	}
 
-	@GetMapping("/api/admin")
-	@PreAuthorize("hasRole('ADMIN')")
-	public String helloAdmin() {
-		return "Hello, Admin!";
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+	@RequestMapping(value = { "/home" })
+	public ModelAndView homePageView(ModelMap model) {
+		// model.addAttribute("attribute", "forwardWithForwardPrefix");
+		return new ModelAndView("forward:/", model);
 	}
 
 }

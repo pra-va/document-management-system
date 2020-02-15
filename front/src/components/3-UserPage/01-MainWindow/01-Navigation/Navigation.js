@@ -39,7 +39,7 @@ class Navigation extends Component {
       .get(serverUrl + "authenticated")
       .then(response => {
         if (response.data === false) {
-          this.props.history.push("/");
+          this.props.history.push("/dvs");
         } else {
           this.setState({ authenticated: "true" });
         }

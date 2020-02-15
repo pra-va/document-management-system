@@ -115,6 +115,7 @@ class Groups extends Component {
         </div>
 
         <Table
+          id={"editUserGroups"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.notAddedGroups}

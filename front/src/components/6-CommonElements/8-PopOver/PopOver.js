@@ -2,17 +2,15 @@ import React from "react";
 import $ from "jquery";
 import "./PopOver.css";
 
-$(function() {
-  $('[data-toggle="popover"]').popover();
-});
-
 // popOverApparance={...} popOverTitle={""} popOverContent={""}
 const PopOver = props => {
   const handleClickEvent = event => {
     event.preventDefault();
   };
 
-  console.log(props);
+  $(function() {
+    $('[data-toggle="popover"]').popover();
+  });
 
   return (
     <span

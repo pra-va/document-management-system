@@ -41,7 +41,7 @@ class LoginForm extends Component {
         isUserAdmin = response.data.su;
         if (response.status === 200) {
           this.props.history.push({
-            pathname: "/home",
+            pathname: "/dvs/home",
             state: { isUserAdmin: isUserAdmin }
           });
         }

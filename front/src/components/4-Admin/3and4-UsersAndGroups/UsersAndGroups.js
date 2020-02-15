@@ -91,7 +91,7 @@ class ListOfUsers extends Component {
         <div className="container ">
           <div className="row d-flex justify-content-center p-5">
             <Link
-              to="/users"
+              to="/dvs/users"
               className={
                 this.props.forWhat === "users"
                   ? "btn btn-secondary btn-lg m-3 darker"
@@ -102,7 +102,7 @@ class ListOfUsers extends Component {
               Users
             </Link>
             <Link
-              to="/groups"
+              to="/dvs/groups"
               className={
                 this.props.forWhat === "groups"
                   ? "btn btn-secondary btn-lg m-3 darker"
@@ -115,6 +115,7 @@ class ListOfUsers extends Component {
           </div>
           <div className="row p-1" id="tableuserGroups">
             <Table
+              id={"usersAndGroupsTable"}
               dataFields={
                 this.props.forWhat === "users"
                   ? this.usersTableDataFields

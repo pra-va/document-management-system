@@ -86,7 +86,7 @@ class Table extends Component {
     };
 
     return (
-      <div>
+      <div id={this.props.id}>
         <ToolkitProvider
           keyField="number"
           data={this.state.tableData}

@@ -32,7 +32,7 @@ var NavigationPresentation = props => {
         hideNewDocType={handleHideCreateDocType}
       />
 
-      <Link to="/home" className="navbar-brand invert">
+      <Link to="/dvs/home" className="navbar-brand invert">
         <img src={logo} alt="unable to load" className="width-30" />
       </Link>
 
@@ -48,19 +48,19 @@ var NavigationPresentation = props => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto link-text-format">
           <li className="nav-item active">
-            <Link className="nav-link link-text-format" to="/home">
+            <Link className="nav-link link-text-format" to="/dvs/home">
               Create Document <span className="sr-only">(current)</span>
             </Link>
           </li>
 
           <li className="nav-item active">
-            <Link className="nav-link link-text-format" to="/merch">
+            <Link className="nav-link link-text-format" to="/dvs/merch">
               Sign Document <span className="sr-only">(current)</span>
             </Link>
           </li>
 
           <li className="nav-item active">
-            <Link className="nav-link link-text-format" to="/merch">
+            <Link className="nav-link link-text-format" to="/dvs/merch">
               My Documents <span className="sr-only">(current)</span>
             </Link>
           </li>
@@ -102,13 +102,22 @@ var NavigationPresentation = props => {
                   New Document Type
                 </button>
 
-                <Link to="/users" className="dropdown-item link-text-format">
+                <Link
+                  to="/dvs/users"
+                  className="dropdown-item link-text-format"
+                >
                   Users
                 </Link>
-                <Link to="/groups" className="dropdown-item link-text-format">
+                <Link
+                  to="/dvs/groups"
+                  className="dropdown-item link-text-format"
+                >
                   Groups
                 </Link>
-                <Link to="/doctypes" className="dropdown-item link-text-format">
+                <Link
+                  to="/dvs/doctypes"
+                  className="dropdown-item link-text-format"
+                >
                   Document Types
                 </Link>
               </div>
@@ -120,7 +129,7 @@ var NavigationPresentation = props => {
 
         <Link
           className="nav-link link-text-format"
-          to="/"
+          to="/dvs/"
           onClick={props.handleLogout}
         >
           Logout <span className="sr-only">(current)</span>

@@ -79,8 +79,7 @@ class NewModal extends Component {
         name: this.state.firstName,
         password: this.state.password,
         role: this.state.role,
-        surname: this.state.lastName,
-        username: this.state.username
+        surname: this.state.lastName
       })
       .then(response => {
         this.props.onHide();

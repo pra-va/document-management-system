@@ -36,6 +36,7 @@ class SetRights extends Component {
         </div>
 
         <Table
+          id={"editTocTypeSetRights"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.addedGroups}

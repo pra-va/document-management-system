@@ -13,14 +13,13 @@ class Groups extends Component {
     };
   }
 
-  dataFields = ["number", "nameForTable", "addOrRemove"];
+  dataFields = ["number", "name", "addOrRemove"];
   columnNames = ["#", "Name", ""];
 
   componentDidUpdate() {
     if (this.props.tableData.length !== this.state.tableData.length) {
       this.setState({ tableData: this.props.tableData });
     }
-    console.log(this.props.tableData);
   }
 
   fetchGroupsData = () => {
@@ -48,6 +47,7 @@ class Groups extends Component {
         </div>
 
         <Table
+          id={"newUserGroups"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.tableData}
