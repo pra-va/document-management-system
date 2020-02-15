@@ -17,7 +17,6 @@ public class MainController {
 
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = { "/users", "/groups", "/doctypes" })
-
 	public ModelAndView adminView(ModelMap model) {
 		return new ModelAndView("forward:/", model);
 	}
@@ -27,6 +26,11 @@ public class MainController {
 	public ModelAndView homePageView(ModelMap model) {
 		// model.addAttribute("attribute", "forwardWithForwardPrefix");
 		return new ModelAndView("forward:/", model);
+	}
+
+	@RequestMapping(value = { "/notFound" })
+	public ModelAndView notFound(ModelMap model) {
+		return new ModelAndView("forward:/notFound", model);
 	}
 
 }
