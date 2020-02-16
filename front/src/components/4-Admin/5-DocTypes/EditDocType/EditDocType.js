@@ -59,26 +59,14 @@ class NewDocType extends Component {
   };
 
   handleDocTypeNameChange = value => {
-    console.log(value + " " + this.props.owner);
     if (value === this.props.owner) {
-      console.log("same");
       this.setState({ docTypeNameTaken: false });
     } else {
-      this.validateDocTypeName(value);
     }
     this.setState({ docTypeName: value });
   };
 
-  validateDocTypeName = docTypeName => {
-    axios
-      .get(serverUrl + "doct/" + docTypeName + "/exists")
-      .then(response => {
-        this.setState({ docTypeNameTaken: response.data });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+  validateDocTypeName = docTypeName => {};
 
   setUpGroups = data => {
     if (data.length > 0) {
@@ -237,6 +225,7 @@ class NewDocType extends Component {
               docTypeValue={this.state.docTypeName}
               handleDocTypeNameChange={this.handleDocTypeNameChange}
               docTypeUnique={this.state.docTypeNameTaken}
+              owner={this.props.owner}
             />
             <hr />
             <AssignToGroups

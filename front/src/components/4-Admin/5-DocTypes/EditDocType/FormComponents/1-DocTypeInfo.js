@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "./../../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 import Validation from "./../../../../6-CommonElements/5-FormInputValidationLine/Validation";
+import axios from "axios";
+import serverUrl from "./../../../../7-properties/1-URL";
 
 const DocTypeInfo = props => {
+  var [docTypeNameExists, setDocTypeNameExists] = useState(false);
+
   const handleDocTypeChange = event => {
-    if (props.docTypeUnique) {
-      event.target.setCustomValidity("Document Type name must be unique.");
-    } else {
-      event.target.setCustomValidity("");
-    }
+    event.persist();
     props.handleDocTypeNameChange(event.target.value);
+    axios
+      .get(serverUrl + "doct/" + event.target.value + "/exists")
+      .then(response => {
+        setDocTypeNameExists(response.data);
+        if (response.data && response.data !== props.owner) {
+          event.target.setCustomValidity("Document Type name must be unique.");
+        } else {
+          event.target.setCustomValidity("");
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
@@ -30,7 +43,7 @@ const DocTypeInfo = props => {
         <div className="col-10">
           <Validation
             output="Field must be unique."
-            satisfied={!props.docTypeUnique}
+            satisfied={!docTypeNameExists}
           />
         </div>
       </div>

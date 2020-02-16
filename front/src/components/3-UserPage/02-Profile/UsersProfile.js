@@ -24,7 +24,7 @@ class UsersProfile extends Component {
           onHide={this.props.handleHideProfile}
         >
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Logged in Profile</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div className="m-3">
