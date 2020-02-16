@@ -24,13 +24,12 @@ public class MainController {
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@RequestMapping(value = { "/home" })
 	public ModelAndView homePageView(ModelMap model) {
-		// model.addAttribute("attribute", "forwardWithForwardPrefix");
 		return new ModelAndView("forward:/", model);
 	}
 
-	@RequestMapping(value = { "/notFound" })
+	@RequestMapping(value = { "/notfound" })
 	public ModelAndView notFound(ModelMap model) {
-		return new ModelAndView("forward:/notFound", model);
+		return new ModelAndView("forward:/", model);
 	}
 
 }
