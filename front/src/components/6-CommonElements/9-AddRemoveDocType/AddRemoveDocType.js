@@ -39,7 +39,7 @@ class AddRemoveDocType extends Component {
               }
               popOverTitle={"Groups with Create rights:"}
               popOverContent={
-                item.creating.length > 0
+                item.groupsToCreate.length > 0
                   ? this.reduceList(item.creating)
                   : "None"
               }
@@ -52,7 +52,7 @@ class AddRemoveDocType extends Component {
               }
               popOverTitle={"Groups with Sign rights:"}
               popOverContent={
-                item.approving.length > 0
+                item.groupsToApprove.length > 0
                   ? this.reduceList(item.approving)
                   : "None"
               }
@@ -104,6 +104,7 @@ class AddRemoveDocType extends Component {
       notAddedDocTypes: notAdded,
       addedDocTypes: added
     });
+
     this.validateRights(added);
   };
 
@@ -124,7 +125,6 @@ class AddRemoveDocType extends Component {
     }
 
     this.filterDocTypes(tmp);
-    // this.validateRights();
   };
 
   validateRights = data => {

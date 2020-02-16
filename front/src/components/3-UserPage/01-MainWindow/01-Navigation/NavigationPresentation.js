@@ -4,6 +4,7 @@ import logo from "./../../../../resources/logo.png";
 import NewUser from "../../../4-Admin/1-NewUser/NewUser";
 import NewGroup from "./../../../4-Admin/2-NewGroup/NewGroup";
 import NewDocType from "./../../../4-Admin/6-NewDocType/NewDocType";
+import UsersProfile from "./../../02-Profile/UsersProfile";
 
 var NavigationPresentation = props => {
   const [showCreateUser, setShowCreateUser] = useState(false);
@@ -18,6 +19,10 @@ var NavigationPresentation = props => {
   const handleHideCreateDocType = () => setShowCreateDocType(false);
   const handleShowCreateDocType = () => setShowCreateDocType(true);
 
+  const [showProfile, setShowProfile] = useState(false);
+  const handleHideProfile = () => setShowProfile(false);
+  const handleShowProfile = () => setShowProfile(true);
+
   return (
     <nav className="navbar navbar-dark bg-dark navbar-expand-md navbar-fixed-top">
       <NewUser show={showCreateUser} onHide={handleCloseCreateUser} />
@@ -30,6 +35,11 @@ var NavigationPresentation = props => {
       <NewDocType
         showNewDocType={showCreateDocType}
         hideNewDocType={handleHideCreateDocType}
+      />
+
+      <UsersProfile
+        showProfile={showProfile}
+        handleHideProfile={handleHideProfile}
       />
 
       <Link to="/dvs/home" className="navbar-brand invert">
@@ -126,6 +136,14 @@ var NavigationPresentation = props => {
             <h4> </h4>
           )}
         </ul>
+
+        <Link
+          className="nav-link link-text-format"
+          to="#"
+          onClick={handleShowProfile}
+        >
+          Profile<span className="sr-only">(current)</span>
+        </Link>
 
         <Link
           className="nav-link link-text-format"
