@@ -47,7 +47,7 @@ public class DocumentService {
 	 */
 	@Transactional
 	public Document createDocument(String name, String authorUsername, String description, String dType, String currentTime) {
-		Document newDocument = new Document(description, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, currentTime);
+		Document newDocument = new Document(currentTime, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, description);
 		return docRepo.save(newDocument);
 	}
 
