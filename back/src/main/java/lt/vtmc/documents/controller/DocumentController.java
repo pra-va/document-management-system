@@ -1,5 +1,6 @@
 package lt.vtmc.documents.controller;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class DocumentController {
 	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) {
 			if (docService.findDocumentByName(command.getName()) == null) {
 				docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
-						command.getDocType());
+						command.getDocType(), Instant.now().toString());
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
@@ -56,6 +57,14 @@ public class DocumentController {
 
 	@GetMapping(path = "/api/doc/{name}")
 	public DocumentDetailsDTO findDocument(@PathVariable("name") String name) {
-		return docService.findDocumentByName(name);
+		return new DocumentDetailsDTO(docService.findDocumentByName(name));
+	}
+	
+	@GetMapping(path = "/api/doc/{name}/exists")
+	public boolean checkDocument(@PathVariable("name") String name) {
+		if (docService.findDocumentByName(name) != null) {
+			return true;
+		}
+		return false;
 	}
 }

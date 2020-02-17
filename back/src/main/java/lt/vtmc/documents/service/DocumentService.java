@@ -36,8 +36,8 @@ public class DocumentService {
 	 * 
 	 * @return Document
 	 */
-	public DocumentDetailsDTO findDocumentByName(String name) {
-		return new DocumentDetailsDTO(docRepo.findDocumentByName(name));
+	public Document findDocumentByName(String name) {
+		return docRepo.findDocumentByName(name);
 	}
 	
 	/**
@@ -46,12 +46,8 @@ public class DocumentService {
 	 * @return Document
 	 */
 	@Transactional
-	public Document createDocument(String name, String authorUsername, String description, String dType) {
-		Document newDocument = new Document("Time 123", userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, description);
-		newDocument.setDateProcessed(null);
-		newDocument.setDateSubmit(null);
-		newDocument.setHandler(null);
-		newDocument.setReasonToReject(null);
+	public Document createDocument(String name, String authorUsername, String description, String dType, String currentTime) {
+		Document newDocument = new Document(description, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, currentTime);
 		return docRepo.save(newDocument);
 	}
 
