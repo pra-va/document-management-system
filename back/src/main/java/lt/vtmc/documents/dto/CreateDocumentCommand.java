@@ -9,9 +9,6 @@ public class CreateDocumentCommand {
 	private String description;
 	
 	private String docType;
-	
-	private String currentTime;
-
 	public String getName() {
 		return name;
 	}
@@ -43,23 +40,12 @@ public class CreateDocumentCommand {
 	public void setDocType(String docType) {
 		this.docType = docType;
 	}
-
-	public String getCurrentTime() {
-		return currentTime;
-	}
-
-	public void setCurrentTime(String currentTime) {
-		this.currentTime = currentTime;
-	}
-
-	public CreateDocumentCommand(String name, String authorUsername, String description, String docType,
-			String currentTime) {
+	public CreateDocumentCommand(String name, String authorUsername, String description, String docType) { 
 		super();
 		this.name = name;
 		this.authorUsername = authorUsername;
 		this.description = description;
 		this.docType = docType;
-		this.currentTime = currentTime;
 	}
 	
 	
