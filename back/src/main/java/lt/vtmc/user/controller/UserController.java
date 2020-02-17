@@ -1,6 +1,5 @@
 package lt.vtmc.user.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,5 +195,10 @@ public class UserController {
 		} else {
 			return false;
 		}
+	}
+	
+	@GetMapping(path = "/api/{username}/dtypescreate")
+	public String[]	getUserDocTypesCreate(@PathVariable ("username") String username) {
+		return userService.getUserDocTypesToCreate(username);
 	}
 }
