@@ -34,14 +34,14 @@ public class Document {
 	@NotEmpty
 	private String description;
 	
-	private String dateSubmit;
+	private String dateSubmit = null;
 	
-	private String dateProcessed;
+	private String dateProcessed = null;
 	
-	private String reasonToReject;
+	private String reasonToReject = null;
 	
 	@ManyToOne
-	private User handler;
+	private User handler = null;
 	
 //	private String file; //placeholder
 	

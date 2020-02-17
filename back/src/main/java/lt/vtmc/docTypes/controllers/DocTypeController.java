@@ -78,11 +78,11 @@ public class DocTypeController {
 	}
 	
 	@GetMapping(path = "/api/doct/{name}/exists")
-	public ResponseEntity<String> docTypeExists(@PathVariable ("name") String name){
+	public boolean docTypeExists(@PathVariable ("name") String name){
 		if (docTypeService.findDocTypeByName(name) != null) {
-			return new ResponseEntity<String>("Document type with specified name exists", HttpStatus.FOUND);
+			return true;
 		}
-		return new ResponseEntity<String>("No such document type exists", HttpStatus.NOT_FOUND);
+		return false;
 	}
 	
 	@PostMapping(path = "/api/doct/update/{name}")
