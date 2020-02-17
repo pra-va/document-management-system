@@ -1,5 +1,7 @@
 package lt.vtmc.documents.controller;
 
+import java.time.Instant;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,7 @@ public class DocumentController {
 	@PostMapping(path = "/api/doc/create")
 	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) {
 		if (docService.findDocumentByName(command.getName()) == null) {
-			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(), command.getDocType(), command.getCurrentTime());
+			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(), command.getDocType(), Instant.now().toString());
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
