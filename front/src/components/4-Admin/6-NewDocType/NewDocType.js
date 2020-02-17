@@ -73,6 +73,7 @@ class NewDocType extends Component {
             statusChange={this.handleCreateChangeStatus}
             id={"createRightsFor:" + item.name}
             ownerName={item.name}
+            checked={false}
           />
         ),
         sign: (
@@ -80,6 +81,7 @@ class NewDocType extends Component {
             statusChange={this.handleSignChangeStatus}
             id={"signRightsFor:" + item.name}
             ownerName={item.name}
+            checked={false}
           />
         ),
         added: false
@@ -97,7 +99,7 @@ class NewDocType extends Component {
       ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
     }
     this.setState({ canCreate: ableToCreate });
-    this.validateRights();
+    this.validateRights(this.state.addedGroups);
   };
 
   handleSignChangeStatus = (status, checkBoxOwnerName) => {
@@ -108,17 +110,17 @@ class NewDocType extends Component {
       ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
     }
     this.setState({ canSign: ableToSign });
-    this.validateRights();
+    this.validateRights(this.state.addedGroups);
   };
 
-  validateRights = () => {
-    if (this.state.addedGroups.length === 0) {
-      this.setState({ readyToSubmit: false });
+  validateRights = data => {
+    if (data.length === 0) {
+      this.setState({ readyToSubmit: true });
       return;
     }
 
-    for (let i = 0; i < this.state.addedGroups.length; i++) {
-      const element = this.state.addedGroups[i].name;
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i].name;
       if (
         this.state.canCreate.includes(element) ||
         this.state.canSign.includes(element)
@@ -145,11 +147,10 @@ class NewDocType extends Component {
             added={element.added}
           />
         );
-        this.setState({ allGroups: tmpGroups });
-        this.filterAddedGroups(tmpGroups);
       }
     }
-    this.validateRights();
+    this.setState({ allGroups: tmpGroups });
+    this.filterAddedGroups(tmpGroups);
   };
 
   filterAddedGroups = groupData => {
@@ -170,6 +171,8 @@ class NewDocType extends Component {
       notAddedGroups: notAdded,
       addedGroups: added
     });
+
+    this.validateRights(added);
   };
 
   render() {

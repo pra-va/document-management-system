@@ -5,11 +5,7 @@ import EditDocType from "./EditDocType/EditDocType";
 class EditTableItemButton extends Component {
   constructor(props) {
     super(props);
-    this.state = { showModal: false };
-  }
-
-  componentDidMount() {
-    console.log(this.props);
+    this.state = { showModal: false, owner: props.owner };
   }
 
   handleClose = () => {
@@ -30,6 +26,7 @@ class EditTableItemButton extends Component {
         <EditDocType
           modalState={this.state.showModal}
           hideModal={this.handleClose}
+          owner={this.props.owner}
         />
       </div>
     );

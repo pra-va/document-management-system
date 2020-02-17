@@ -152,7 +152,7 @@ var InputLine = props => {
   };
 
   return (
-    <div className="form-group row">
+    <div className="form-group row mb-0 mt-3">
       <label htmlFor={props.id} className="col-sm-2 col-form-label">
         {props.labelName}
       </label>

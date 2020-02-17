@@ -94,9 +94,9 @@ class NewGroup extends Component {
             changeAddedStatus={this.changeAddedStatus}
           />
         );
-        this.filterAddedGroups(tmpUsers);
       }
     }
+    this.filterAddedGroups(tmpUsers);
   };
 
   filterAddedGroups = data => {

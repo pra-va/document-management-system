@@ -6,8 +6,8 @@ import SetRights from "./FormComponents/3-SetRights";
 import AddOrRemoveButton from "./../../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import CheckBox from "./../../../6-CommonElements/6-CheckBox/CheckBox";
 import Validation from "./../../../6-CommonElements/5-FormInputValidationLine/Validation";
-// import axios from "axios";
-// import serverUrl from "./../../7-properties/1-URL";
+import axios from "axios";
+import serverUrl from "./../../../7-properties/1-URL";
 
 class NewDocType extends Component {
   constructor(props) {
@@ -16,10 +16,12 @@ class NewDocType extends Component {
       docTypeName: "",
       notAddedGroups: [],
       allGroups: [],
+      addedGroupNames: [],
       addedGroups: [],
       canCreate: [],
       canSign: [],
-      readyToSubmit: true
+      readyToSubmit: true,
+      docTypeNameTaken: false
     };
   }
 
@@ -28,39 +30,51 @@ class NewDocType extends Component {
   };
 
   handleSubmit = event => {
-    // const newDocType = {
-    //   docTypeName: this.state.docTypeName,
-    //   canCreate: this.state.canCreate,
-    //   canSign: this.state.canSign
-    // };
-
-    // axios
-    //   .post(serverUrl + "/doctype", newDocType)
-    //   .then(response => {
-    //     event.preventDefault();
-    //     window.location.reload();
-    //     this.props.hideNewDocType();
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-
     event.preventDefault();
-    window.location.reload();
-    this.props.hideNewDocType();
+
+    const newDocType = {
+      newName: this.state.docTypeName,
+      groupsCreating: this.state.canCreate,
+      groupsApproving: this.state.canSign
+    };
+
+    axios
+      .post(serverUrl + "doct/update/" + this.props.owner, newDocType)
+      .then(response => {
+        event.preventDefault();
+        window.location.reload();
+        this.props.hideNewDocType();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  setUpDocTypeData = data => {
+    this.setState({
+      docTypeName: data.name,
+      canCreate: data.groupsToCreate,
+      canSign: data.groupsToApprove
+    });
   };
 
   handleDocTypeNameChange = value => {
+    if (value === this.props.owner) {
+      this.setState({ docTypeNameTaken: false });
+    } else {
+    }
     this.setState({ docTypeName: value });
   };
 
+  validateDocTypeName = docTypeName => {};
+
   setUpGroups = data => {
     if (data.length > 0) {
-      this.parseData(data);
+      this.parseData(data, this.state.canCreate, this.state.canSign);
     }
   };
 
-  parseData = data => {
+  parseData = (data, canCreate, canSign) => {
     let tempData = data.map((item, index) => {
       return {
         number: index + 1,
@@ -69,7 +83,7 @@ class NewDocType extends Component {
           <AddOrRemoveButton
             itemName={item.name}
             changeAddedStatus={this.changeAddedStatus}
-            added={false}
+            added={canCreate.includes(item.name) || canSign.includes(item.name)}
           />
         ),
         create: (
@@ -77,6 +91,7 @@ class NewDocType extends Component {
             statusChange={this.handleCreateChangeStatus}
             id={"createRightsFor:" + item.name}
             ownerName={item.name}
+            checked={canCreate.includes(item.name)}
           />
         ),
         sign: (
@@ -84,12 +99,12 @@ class NewDocType extends Component {
             statusChange={this.handleSignChangeStatus}
             id={"signRightsFor:" + item.name}
             ownerName={item.name}
+            checked={canSign.includes(item.name)}
           />
         ),
-        added: false
+        added: canCreate.includes(item.name) || canSign.includes(item.name)
       };
     });
-
     this.filterAddedGroups(tempData);
   };
 
@@ -101,7 +116,7 @@ class NewDocType extends Component {
       ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
     }
     this.setState({ canCreate: ableToCreate });
-    this.validateRights();
+    this.validateRights(this.state.addedGroups);
   };
 
   handleSignChangeStatus = (status, checkBoxOwnerName) => {
@@ -112,17 +127,18 @@ class NewDocType extends Component {
       ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
     }
     this.setState({ canSign: ableToSign });
-    this.validateRights();
+    this.validateRights(this.state.addedGroups);
   };
 
-  validateRights = () => {
-    if (this.state.addedGroups.length === 0) {
-      this.setState({ readyToSubmit: false });
+  validateRights = addedGroups => {
+    if (addedGroups.length === 0) {
+      this.setState({ readyToSubmit: true });
       return;
     }
 
-    for (let i = 0; i < this.state.addedGroups.length; i++) {
-      const element = this.state.addedGroups[i].name;
+    for (let i = 0; i < addedGroups.length; i++) {
+      const element = addedGroups[i].name;
+
       if (
         this.state.canCreate.includes(element) ||
         this.state.canSign.includes(element)
@@ -149,11 +165,26 @@ class NewDocType extends Component {
             added={element.added}
           />
         );
-        this.setState({ allGroups: tmpGroups });
-        this.filterAddedGroups(tmpGroups);
+        tmpGroups[i].create = (
+          <CheckBox
+            statusChange={this.handleCreateChangeStatus}
+            id={"createRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
+          />
+        );
+        tmpGroups[i].sign = (
+          <CheckBox
+            statusChange={this.handleSignChangeStatus}
+            id={"signRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
+          />
+        );
       }
     }
-    this.validateRights();
+    this.setState({ allGroups: tmpGroups });
+    this.filterAddedGroups(tmpGroups);
   };
 
   filterAddedGroups = groupData => {
@@ -174,6 +205,7 @@ class NewDocType extends Component {
       notAddedGroups: notAdded,
       addedGroups: added
     });
+    this.validateRights(added);
   };
 
   render() {
@@ -185,19 +217,23 @@ class NewDocType extends Component {
         id="newDocTypeModal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>New Document Type</Modal.Title>
+          <Modal.Title>Edit Document Type</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.handleSubmit}>
             <DocTypeInfo
               docTypeValue={this.state.docTypeName}
               handleDocTypeNameChange={this.handleDocTypeNameChange}
+              docTypeUnique={this.state.docTypeNameTaken}
+              owner={this.props.owner}
             />
             <hr />
             <AssignToGroups
               tableData={this.state.notAddedGroups}
               setUpGroups={this.setUpGroups}
               cleanUpCreateAndSignLists={this.cleanUpCreateAndSignLists}
+              owner={this.props.owner}
+              setUpDocTypeData={this.setUpDocTypeData}
             />
             <hr />
             <SetRights addedGroups={this.state.addedGroups} />

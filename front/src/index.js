@@ -34,7 +34,8 @@ ReactDOM.render(
         <Route exact path="/dvs/users" component={ListOfUsers} />
         <Route exact path="/dvs/groups" component={ListOfGroups} />
         <Route exact path="/dvs/doctypes" component={DocTypes} />
-        <Route path="*" component={PageNotFound} />
+        <Route exact path="/dvs/notfound" component={PageNotFound} />
+        <Route path="/dvs/**" component={PageNotFound} />
         <Route component={PageNotFound} />
       </Switch>
     </App>

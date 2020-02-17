@@ -90,10 +90,6 @@ class NewModal extends Component {
     });
   };
 
-  // componentDidUpdate() {
-  //   // console.log(window.location.href);
-  // }
-
   handleFirstNameChange = value => {
     this.setState({ firstName: value });
   };
