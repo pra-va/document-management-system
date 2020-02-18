@@ -24,6 +24,7 @@ class CreateDocument extends Component {
 
   componentDidUpdate() {
     console.log(this.state.loaded);
+    console.log(this.state.attachedFilesTableValues);
   }
 
   componentDidMount() {
@@ -90,13 +91,17 @@ class CreateDocument extends Component {
       });
   };
 
-  handleUpload = () => {
+  handleUpload = event => {
+    event.preventDefault();
     const data = new FormData();
     const attachedFiles = this.state.attachedFilesTableValues;
     for (let i = 0; i < attachedFiles.length; i++) {
       const element = attachedFiles[i];
-      data.append("file" + element.number, element.file, element.file.name);
+      data.append("file", element.file);
     }
+    console.log(data);
+
+    let tmpFileToUpload = this.state.attachedFilesTableValues[0].file;
 
     const postData = {
       authorUsername: this.state.username,
@@ -106,8 +111,22 @@ class CreateDocument extends Component {
       files: data
     };
 
+    // axios
+    //   .post(serverUrl + "doc/create", data, {
+    //     onUploadProgress: ProgressEvent => {
+    //       this.setState({
+    //         loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+    //       });
+    //     }
+    //   })
+    //   .then(function(response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
     axios
-      .post(serverUrl + "doc/create", data, {
+      .post(serverUrl + "files", data, {
         onUploadProgress: ProgressEvent => {
           this.setState({
             loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
