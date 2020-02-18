@@ -154,6 +154,8 @@ class NewDocType extends Component {
 
   changeAddedStatus = name => {
     let tmpGroups = this.state.allGroups;
+    let tmpCreate = this.state.canCreate;
+    let tmpSign = this.state.canSign;
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];
       if (element.name === name) {
@@ -181,6 +183,8 @@ class NewDocType extends Component {
             checked={false}
           />
         );
+        tmpCreate.splice(tmpCreate.indexOf(element.name), 1);
+        tmpSign.splice(tmpSign.indexOf(element.name), 1);
       }
     }
     this.setState({ allGroups: tmpGroups });

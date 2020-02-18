@@ -58,7 +58,7 @@ var NavigationPresentation = props => {
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto link-text-format">
           <li className="nav-item active">
-            <Link className="nav-link link-text-format" to="/dvs/home">
+            <Link className="nav-link link-text-format" to="/dvs/document">
               Create Document <span className="sr-only">(current)</span>
             </Link>
           </li>

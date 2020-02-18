@@ -7,6 +7,7 @@ import PopOver from "./../../6-CommonElements/8-PopOver/PopOver";
 import Edit from "./EditButton";
 import axios from "axios";
 import serverUrl from "./../../7-properties/1-URL";
+import { Link } from "react-router-dom";
 
 class DocTypes extends Component {
   constructor(props) {
@@ -94,7 +95,29 @@ class DocTypes extends Component {
       <div>
         <Navigation />
         <div className="container">
-          <h1>DOCTYPES</h1>
+          <div className="row d-flex justify-content-center p-5">
+            <Link
+              to="/dvs/users"
+              className={"btn btn-secondary btn-lg m-3"}
+              id="buttonUsers"
+            >
+              Users
+            </Link>
+            <Link
+              to="/dvs/groups"
+              className={"btn btn-secondary btn-lg m-3"}
+              id="buttonGroups"
+            >
+              Groups
+            </Link>
+            <Link
+              to="/dvs/doctypes"
+              className={"btn btn-secondary btn-lg m-3 darker"}
+              id="buttonGroups"
+            >
+              Document Types
+            </Link>
+          </div>
           <Table
             id={"docTypes"}
             dataFields={this.dataFields}

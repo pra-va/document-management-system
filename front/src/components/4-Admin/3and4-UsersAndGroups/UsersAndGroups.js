@@ -112,6 +112,13 @@ class ListOfUsers extends Component {
             >
               Groups
             </Link>
+            <Link
+              to="/dvs/doctypes"
+              className={"btn btn-secondary btn-lg m-3"}
+              id="buttonGroups"
+            >
+              Document Types
+            </Link>
           </div>
           <div className="row p-1" id="tableuserGroups">
             <Table

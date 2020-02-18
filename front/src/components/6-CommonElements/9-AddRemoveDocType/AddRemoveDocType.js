@@ -22,10 +22,6 @@ class AddRemoveDocType extends Component {
     };
   }
 
-  componentDidUpdate() {}
-
-  componentDidMount() {}
-
   parseData = data => {
     if (data) {
       const allDocTypes = data.map((item, index) => {
@@ -71,6 +67,7 @@ class AddRemoveDocType extends Component {
               statusChange={this.handleCreateChangeStatus}
               id={"createRightsFor:" + item.name}
               ownerName={item.name}
+              checked={false}
             />
           ),
           sign: (
@@ -78,6 +75,7 @@ class AddRemoveDocType extends Component {
               statusChange={this.handleSignChangeStatus}
               id={"signRightsFor:" + item.name}
               ownerName={item.name}
+              checked={false}
             />
           )
         };
@@ -128,10 +126,9 @@ class AddRemoveDocType extends Component {
   };
 
   validateRights = data => {
-    console.log(data);
     if (data.length === 0) {
-      console.log("data 0");
       this.setState({ readyToSubmit: true });
+      this.props.readyToSubmit(true);
       return;
     }
 

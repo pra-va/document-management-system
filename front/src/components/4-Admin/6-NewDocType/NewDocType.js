@@ -136,6 +136,8 @@ class NewDocType extends Component {
 
   changeAddedStatus = name => {
     let tmpGroups = this.state.allGroups;
+    let tmpCreate = this.state.canCreate;
+    let tmpSign = this.state.canSign;
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];
       if (element.name === name) {
@@ -147,6 +149,24 @@ class NewDocType extends Component {
             added={element.added}
           />
         );
+        tmpGroups[i].create = (
+          <CheckBox
+            statusChange={this.handleCreateChangeStatus}
+            id={"createRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
+          />
+        );
+        tmpGroups[i].sign = (
+          <CheckBox
+            statusChange={this.handleSignChangeStatus}
+            id={"signRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
+          />
+        );
+        tmpCreate.splice(tmpCreate.indexOf(element.name), 1);
+        tmpSign.splice(tmpSign.indexOf(element.name), 1);
       }
     }
     this.setState({ allGroups: tmpGroups });
