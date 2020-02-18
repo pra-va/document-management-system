@@ -14,7 +14,7 @@ public class MainPage extends AbstractPage {
 
 	/* BUTTONS */
 
-	@FindBy(xpath = "//a[@href='#/home']")
+	@FindBy(xpath = "//a[@href='/dvs/home']")
 	private WebElement dmsButton;
 
 	@FindBy(xpath = "//a[contains(text(),'Create Document ')]")
@@ -35,20 +35,26 @@ public class MainPage extends AbstractPage {
 	@FindBy(xpath = "//button[contains(text(),'New Group')]")
 	private WebElement buttonAdminNewGroup;
 
+	@FindBy(id = "showCreateDoc")
+	private WebElement buttonAdminNewDocType;
+	
+	@FindBy(id = "")
+	private WebElement buttonAdminDocTypes;
+
 	@FindBy(xpath = "//a[contains(text(),'Users')]")
 	private WebElement buttonAdminUsers;
 
 	@FindBy(xpath = "//a[contains(text(),'Groups')]")
 	private WebElement buttonAdminGroups;
 
+	@FindBy(xpath = "//a[contains(text(),'Document Types')]")
+	private WebElement buttonDocTypes;
+
 	@FindBy(xpath = "//a[contains(text(),'Logout ')]")
 	private WebElement buttonLogout;
 
 	/* CLICK BUTTONS */
-	public void waitForVisibility(WebElement element) {
-		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(element));
-	}
-	
+
 	public void clickDmsButton() {
 		this.dmsButton.click();
 	}
@@ -93,10 +99,22 @@ public class MainPage extends AbstractPage {
 	public void clickLogoutButton() {
 		this.buttonLogout.click();
 	}
-	
+
 	/* OTHER METHODS */
 
+	public void waitForVisibility(WebElement element) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(element));
+	}
+
 	public void navigateToMainPage() {
-		driver.get("http://akademijait.vtmc.lt:8180/dvs/#/home");
+		this.clickDmsButton();
+	}
+
+	public void waitForAdminButton() {
+		this.waitForVisibility(this.buttonAdmin);
+	}
+
+	public void waitForLogoutButton() {
+		this.waitForVisibility(this.buttonLogout);
 	}
 }

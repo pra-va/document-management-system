@@ -7,8 +7,8 @@
         <methods>
           <include name="afterTest"/>
           <include name="closeBrowser"/>
-          <include name="testTest"/>
           <include name="preconitions"/>
+          <include name="createGroupTest"/>
           <include name="navigateToNewGroupPage"/>
           <include name="setUp"/>
         </methods>
