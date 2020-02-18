@@ -1,0 +1,53 @@
+#basic-text1.input-group-text.purple.lighten-3 {
+  height: 2.35em;
+}
+
+.dropdown-menu.show a {
+  color: black;
+}
+
+form .dropdown-menu.show,
+ul.dropdown-menu.show {
+  min-width: 4.5em;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+a.page-link {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+a.page-link:hover {
+  color: black;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+/* pagination on the right side */
+.pagination {
+  justify-content: flex-start;
+}
+
+/* page size dropdown on left size */
+.react-bs-table-sizePerPage-dropdown {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* When table tada toes not fit, it will be replaced with parital value and "..." at the end. */
+td,
+th {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

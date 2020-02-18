@@ -2,6 +2,7 @@ package lt.vtmc.groups.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-import lt.vtmc.documents.model.DocType;
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.user.model.User;
 
 /**
@@ -29,28 +30,26 @@ public class Group {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
+
 	@NotEmpty
 	private String name;
+
 	
+	@Column(name = "description", length = 500)
 	private String description;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="GROUPS_CREATING",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="doc_id"))
-	//@ElementCollection(targetClass=DocType.class)
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "GROUPS_CREATING", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "doc_id"))
 	private List<DocType> docTypesToCreate;
-	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="GROUPS_APPROVING",joinColumns=@JoinColumn(name="group_id"), inverseJoinColumns=@JoinColumn(name="doc_id"))
-	//@ElementCollection(targetClass=DocType.class)
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable(name = "GROUPS_APPROVING", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "doc_id"))
 	private List<DocType> docTypesToApprove;
 
 	@ManyToMany(mappedBy = "groupList", fetch = FetchType.EAGER)
 	private List<User> userList;
-	
-	
 
 	/**
 	 * Constructor.
@@ -69,7 +68,7 @@ public class Group {
 	 */
 	public Group() {
 	}
-	
+
 	/**
 	 * 
 	 * @return getUserList
@@ -77,6 +76,7 @@ public class Group {
 	public List<User> getUserList() {
 		return userList;
 	}
+
 	/**
 	 * 
 	 * @param groupUserList
@@ -84,6 +84,7 @@ public class Group {
 	public void setUserList(List<User> groupUserList) {
 		this.userList = groupUserList;
 	}
+
 	/**
 	 * 
 	 * @return id
@@ -91,6 +92,7 @@ public class Group {
 	public int getId() {
 		return id;
 	}
+
 	/**
 	 * 
 	 * @return name
@@ -98,6 +100,7 @@ public class Group {
 	public String getName() {
 		return name;
 	}
+
 	/**
 	 * 
 	 * @param name
@@ -105,6 +108,7 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	/**
 	 * 
 	 * @return description
@@ -112,6 +116,7 @@ public class Group {
 	public String getDescription() {
 		return description;
 	}
+
 	/**
 	 * 
 	 * @param description
@@ -119,6 +124,7 @@ public class Group {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	/**
 	 * 
 	 * @return docTypesToCreate
@@ -126,6 +132,7 @@ public class Group {
 	public List<DocType> getDocTypesToCreate() {
 		return docTypesToCreate;
 	}
+
 	/**
 	 * 
 	 * @param docTypesToCreate
@@ -133,6 +140,7 @@ public class Group {
 	public void setDocTypesToCreate(List<DocType> docTypesToCreate) {
 		this.docTypesToCreate = docTypesToCreate;
 	}
+
 	/**
 	 * 
 	 * @return docTypesToApprove
@@ -140,6 +148,7 @@ public class Group {
 	public List<DocType> getDocTypesToApprove() {
 		return docTypesToApprove;
 	}
+
 	/**
 	 * 
 	 * @param docTypesToApprove

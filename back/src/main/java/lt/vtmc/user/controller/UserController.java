@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,9 @@ import lt.vtmc.user.dto.UserDetailsDTO;
 import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Controller for managing system users.
  * 
@@ -29,6 +33,8 @@ import lt.vtmc.user.service.UserService;
  */
 @RestController
 public class UserController {
+
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private UserService userService;
@@ -41,18 +47,32 @@ public class UserController {
 	 * access this method.
 	 * 
 	 * @url /api/createadmin
-	 * @method POST
+	 * @method POST }
 	 * @param user details
 	 */
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
-		if (userService.findUserByUsername(command.getUsername()) == null) {
-			User tmpUser = userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
-					command.getPassword());
-			groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
-			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
-		} else
-			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
+		try {
+			if (userService.findUserByUsername(command.getUsername()) == null & command.getPassword().length() > 7
+					& command.getPassword().length() < 21) {
+				userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
+						command.getPassword());
+				groupService.addUserToGroupByUsername(command.getGroupList(), command.getUsername());
+
+				LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was created with group(s): [{}]#",
+						SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
+						command.getGroupList());
+
+				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+
+		LOG.info("# LOG # Initiated by [{}]: User [{}] with Admin role was NOT created #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
+		return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
+
 	}
 
 	/**
@@ -65,13 +85,26 @@ public class UserController {
 	 */
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
-		if (userService.findUserByUsername(command.getUsername()) == null) {
-			User tmpUser = userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
-					command.getPassword());
-			groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
-			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
-		} else
-			return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
+
+		try {
+			if (userService.findUserByUsername(command.getUsername()) == null & command.getPassword().length() > 7
+					& command.getPassword().length() < 21) {
+				User tmpUser = userService.createUser(command.getUsername(), command.getName(), command.getSurname(),
+						command.getPassword());
+				groupService.addUserToGroupByUsername(command.getGroupList(), tmpUser.getUsername());
+
+				LOG.info("# LOG # Initiated by [{}]: User [{}] was created with group(s): [{}]#",
+						SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername(),
+						command.getGroupList());
+				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+		}
+
+		LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT created #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), command.getUsername());
+		return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
 	}
 
 	/**
@@ -81,7 +114,9 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/users")
-	public String[] listAllUsers() {
+	public List<UserDetailsDTO> listAllUsers() {
+		LOG.info("# LOG # Initiated by [{}]: requested list of all users #",
+				SecurityContextHolder.getContext().getAuthentication().getName());
 		return userService.retrieveAllUsers();
 	}
 
@@ -92,8 +127,12 @@ public class UserController {
 	 * @method GET
 	 */
 	@GetMapping(path = "/api/user/{username}")
-	public String findUserByUsername(@PathVariable("username") String username) {
-		return new UserDetailsDTO(userService.findUserByUsername(username)).toString();
+	public UserDetailsDTO findUserByUsername(@PathVariable("username") String username) {
+
+		LOG.info("# LOG # Initiated by [{}]: searching for user [{}] #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), username);
+
+		return new UserDetailsDTO(userService.findUserByUsername(username));
 	}
 
 	/**
@@ -106,35 +145,60 @@ public class UserController {
 	public ResponseEntity<String> deleteUserByUsername(@PathVariable("username") String username) {
 		User tmpUser = userService.findUserByUsername(username);
 		if (tmpUser != null) {
+
+			LOG.info("# LOG # Initiated by [{}]: User [{}] was deleted #",
+					SecurityContextHolder.getContext().getAuthentication().getName(), username);
+
 			userService.deleteUser(tmpUser);
 			return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 		}
+
+		LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT deleted - [{}] was NOT found #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), username, username);
+
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
 
 	/**
-	 * Updates user information in the database 
+	 * Updates user information in the database
 	 * 
 	 * @url /api/user/update/{username}
 	 * @method POST
 	 */
 	@PostMapping(path = "/api/user/update/{username}")
-	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username, @RequestBody UpdateUserCommand command) {
-		if (userService.findUserByUsername(username) != null) {
-			userService.updateUserDetails(username, command.getName(), command.getSurname(),
-					command.getPassword());
-//			groupService.addUserToGroupByUsername(command.getGroupList(), username);
-//			userService.rewriteLists(command.getGroupList(), username);
-			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
+	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username,
+			@RequestBody UpdateUserCommand command) {
+		try {
+			if (userService.findUserByUsername(username) != null) {
+				userService.updateUserDetails(username, command.getName(), command.getSurname(), command.getPassword(),
+						command.getRole());
+				groupService.compareGroups(command.getGroupList(), username);
+
+				LOG.info("# LOG # Initiated by [{}]: User [{}] was updated #",
+						SecurityContextHolder.getContext().getAuthentication().getName(), username);
+
+				return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
+		LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT updated - [{}] was NOT found #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), username, username);
+
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
 
 	@GetMapping(path = "/api/{username}/exists")
 	public boolean checkIfUserExists(@PathVariable("username") String username) throws Exception {
-		if (findUserByUsername(username) != null) {
+		if (userService.findUserByUsername(username) != null) {
 			return true;
+		} else {
+			return false;
 		}
-		return false;
+	}
+	
+	@GetMapping(path = "/api/{username}/dtypescreate")
+	public String[]	getUserDocTypesCreate(@PathVariable ("username") String username) {
+		return userService.getUserDocTypesToCreate(username);
 	}
 }
