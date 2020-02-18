@@ -6,7 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminNewUserPage extends AbstractPage {
 
@@ -111,11 +112,17 @@ public class AdminNewUserPage extends AbstractPage {
 
 	}
 
+	/* OTHER METHODS */
+
+	public void waitForcancelButton() {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(this.buttonCancel));
+	}
+
 	public void clickAddSpecificGroupButton(String groupName) {
 		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
-		
+
 	}
-	
+
 //	public void clickRemoveSpecificGroupButton(String groupName) {
 //		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
 //	}
