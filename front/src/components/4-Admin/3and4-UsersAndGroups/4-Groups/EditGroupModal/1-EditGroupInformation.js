@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import InputLine from "../../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 import axios from "axios";
 import serverUrl from "../../../../7-properties/1-URL";
@@ -10,23 +10,20 @@ class GroupInformation extends Component {
     this.state = {
       groupName: "",
       description: "",
-      usersList: ""
+      usersList: "",
+      groupNameExists: false,
+      descriptionValidation: true
     };
   }
 
-// var GroupInformation = props => {
-//   var [groupNameExists, setGroupNameExists] = useState(false);
-//   var [descriptionValidation, setDescriptionValidation] = useState(true);
-
   handleGroupNameChange = event => {
-    event.persist();
-    props.handleGroupNameChange(event);
+    this.props.handleGroupNameChange(event);
     if (event.target.value.length > 0) {
       axios
         .get(serverUrl + "group/" + event.target.value + "/exists")
         .then(response => {
-          setGroupNameExists(response.data);
-          if (response.data) {
+          this.setSate({ groupNameExists: response.data });
+          if (response.data && event.target.value !== this.props.groupName) {
             event.target.setCustomValidity("Group name is taken.");
           } else {
             event.target.setCustomValidity("");
@@ -40,14 +37,14 @@ class GroupInformation extends Component {
 
   handleGroupDescriptionChange = event => {
     this.props.handleGroupDescriptionChange(event);
-    handleDescriptionValidation(event.target.value.length);
+    this.handleDescriptionValidation(event.target.value.length);
   };
 
   handleDescriptionValidation = descriptionLength => {
     if (descriptionLength > 500) {
-      setDescriptionValidation(false);
+      this.setState({ descriptionValidation: false });
     } else {
-      setDescriptionValidation(true);
+      this.setState({ descriptionValidation: true });
     }
   };
   rednder() {
@@ -67,7 +64,7 @@ class GroupInformation extends Component {
           onChange={this.handleGroupNameChange}
           value={this.props.groupName}
           pattern={4}
-          groupNameExists={this.groupNameExists}
+          groupNameExists={this.state.groupNameExists}
         />
 
         <div className="form-group row">
@@ -87,10 +84,12 @@ class GroupInformation extends Component {
               value={this.props.groupDescription}
             ></textarea>
             <FormValidation
-              satisfied={descriptionValidation}
-              output={"Group description can not be longer than 500 characters."}
+              satisfied={this.state.descriptionValidation}
+              output={
+                "Group description can not be longer than 500 characters."
+              }
             />
-         </div>
+          </div>
         </div>
       </div>
     );

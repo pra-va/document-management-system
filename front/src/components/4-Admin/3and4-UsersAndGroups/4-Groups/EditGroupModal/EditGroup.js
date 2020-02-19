@@ -1,5 +1,12 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
+import GroupInformation from "./1-GroupInformation";
+import AddUsersToGroup from "./2-AddUsersToGroup";
+import GroupUsers from "./3-GroupUsers";
+import axios from "axios";
+import AddRemoveButton from "./../../../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
+import serverUrl from "./../../../../7-properties/1-URL";
+import AddRemoveDocTypes from "./../../../../6-CommonElements/9-AddRemoveDocType/AddRemoveDocType";
 
 class EditGroup extends Component {
   constructor(props) {
@@ -127,16 +134,56 @@ class EditGroup extends Component {
   render() {
     return (
       <Modal
-        show={this.props.show}
-        onHide={this.props.onHide}
-        size={"lg"}
-        id="editUserModal"
+        show={this.props.showNewGroup}
+        onHide={this.props.hideNewGroup}
+        size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Edit Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h1>Edit group modal.</h1>
+          <form onSubmit={this.handleSubmit}>
+            <GroupInformation
+              handleGroupNameChange={this.handleGroupNameChange}
+              groupName={this.state.groupName}
+              handleGroupDescriptionChange={this.handleGroupDescriptionChange}
+              groupDescription={this.state.groupDescription}
+            />
+            <hr className="m-1" />
+            <AddUsersToGroup
+              setUpData={this.setUpData}
+              notAddedUsers={this.state.notAddedUsers}
+            />
+            <hr className="m-1" />
+            <GroupUsers addedUsers={this.state.addedUsers} />
+            <hr className="m-1" />
+
+            <AddRemoveDocTypes
+              readyToSubmit={this.readyToSubmit}
+              canCreate={this.canCreate}
+              canSign={this.canSign}
+            />
+
+            <div className="form-group row d-flex justify-content-center">
+              <div className="modal-footer ">
+                <button
+                  type="button"
+                  className="btn btn-outline-dark"
+                  onClick={this.props.hideNewGroup}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-dark"
+                  data-dismiss="modal"
+                  disabled={this.state.readyToSubmit ? false : true}
+                >
+                  Save
+                </button>
+              </div>
+            </div>
+          </form>
         </Modal.Body>
       </Modal>
     );
