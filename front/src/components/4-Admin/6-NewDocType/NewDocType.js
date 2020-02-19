@@ -92,11 +92,14 @@ class NewDocType extends Component {
   };
 
   handleCreateChangeStatus = (status, checkBoxOwnerName) => {
+    console.log("handleCreateChangeStatus " + status + " " + checkBoxOwnerName);
     let ableToCreate = this.state.canCreate;
     if (status) {
       ableToCreate.push(checkBoxOwnerName);
     } else {
-      ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      if (ableToCreate.indexOf(checkBoxOwnerName) !== -1) {
+        ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canCreate: ableToCreate });
     this.validateRights(this.state.addedGroups);
@@ -107,7 +110,9 @@ class NewDocType extends Component {
     if (status) {
       ableToSign.push(checkBoxOwnerName);
     } else {
-      ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      if (ableToSign.indexOf(checkBoxOwnerName) !== -1) {
+        ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canSign: ableToSign });
     this.validateRights(this.state.addedGroups);
@@ -121,6 +126,8 @@ class NewDocType extends Component {
 
     for (let i = 0; i < data.length; i++) {
       const element = data[i].name;
+      console.log(this.state.canCreate);
+      console.log(this.state.canSign);
       if (
         this.state.canCreate.includes(element) ||
         this.state.canSign.includes(element)
@@ -136,8 +143,6 @@ class NewDocType extends Component {
 
   changeAddedStatus = name => {
     let tmpGroups = this.state.allGroups;
-    let tmpCreate = this.state.canCreate;
-    let tmpSign = this.state.canSign;
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];
       if (element.name === name) {
@@ -165,8 +170,6 @@ class NewDocType extends Component {
             checked={false}
           />
         );
-        tmpCreate.splice(tmpCreate.indexOf(element.name), 1);
-        tmpSign.splice(tmpSign.indexOf(element.name), 1);
       }
     }
     this.setState({ allGroups: tmpGroups });

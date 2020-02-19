@@ -169,7 +169,9 @@ class AddRemoveDocType extends Component {
     if (status) {
       ableToCreate.push(checkBoxOwnerName);
     } else {
-      ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      if (ableToCreate.indexOf(checkBoxOwnerName) !== -1) {
+        ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canCreate: ableToCreate });
     this.props.canCreate(ableToCreate);
@@ -181,7 +183,9 @@ class AddRemoveDocType extends Component {
     if (status) {
       ableToSign.push(checkBoxOwnerName);
     } else {
-      ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      if (ableToSign.indexOf(checkBoxOwnerName) !== -1) {
+        ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canSign: ableToSign });
     this.props.canSign(ableToSign);

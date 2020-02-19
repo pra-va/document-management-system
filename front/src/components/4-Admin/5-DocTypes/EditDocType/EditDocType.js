@@ -113,7 +113,9 @@ class NewDocType extends Component {
     if (status) {
       ableToCreate.push(checkBoxOwnerName);
     } else {
-      ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      if (ableToCreate.indexOf(checkBoxOwnerName) !== -1) {
+        ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canCreate: ableToCreate });
     this.validateRights(this.state.addedGroups);
@@ -124,7 +126,9 @@ class NewDocType extends Component {
     if (status) {
       ableToSign.push(checkBoxOwnerName);
     } else {
-      ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      if (ableToSign.indexOf(checkBoxOwnerName) !== -1) {
+        ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canSign: ableToSign });
     this.validateRights(this.state.addedGroups);

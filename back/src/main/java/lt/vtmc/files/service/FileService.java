@@ -17,6 +17,13 @@ import lt.vtmc.files.dao.FilesRepository;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.controller.UserController;
 
+/**
+ * Service layer for uploading and downloading files. Note that files that are
+ * being uploaded are saved on database as BLOBs.
+ * 
+ * @author pra-va
+ *
+ */
 @Service
 public class FileService {
 
@@ -25,13 +32,12 @@ public class FileService {
 	@Autowired
 	private FilesRepository filesRepository;
 
-	@Transactional
-	public void saveMultipleFiles(MultipartFile[] files) throws Exception {
-		for (int i = 0; i < files.length; i++) {
-			saveFile(files[i]);
-		}
-	}
-
+	/**
+	 * This method saves single files to a database.
+	 * 
+	 * @param file
+	 * @throws Exception
+	 */
 	@Transactional
 	public void saveFile(MultipartFile file) throws Exception {
 		LOG.info("saving file to db");
@@ -42,6 +48,13 @@ public class FileService {
 		filesRepository.save(file4db);
 	}
 
+	/**
+	 * This method handles single file download from database. It looks for specific
+	 * file name and returns this file as response entity.
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	@Transactional
 	public ResponseEntity<Resource> downloadFileByName(String fileName) {
 		File4DB file4db = filesRepository.findFile4dbByFileName(fileName);

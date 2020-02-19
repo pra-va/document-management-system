@@ -23,7 +23,6 @@ class CreateDocument extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.loaded);
     console.log(this.state.attachedFilesTableValues);
   }
 
@@ -96,10 +95,9 @@ class CreateDocument extends Component {
     const data = new FormData();
     const attachedFiles = this.state.attachedFilesTableValues;
     for (let i = 0; i < attachedFiles.length; i++) {
-      const element = attachedFiles[i];
-      data.append("file", element.file);
+      const element = attachedFiles[i].file;
+      data.append("files", element);
     }
-    console.log(data);
 
     let tmpFileToUpload = this.state.attachedFilesTableValues[0].file;
 
@@ -125,13 +123,12 @@ class CreateDocument extends Component {
     //   .catch(function(error) {
     //     console.log(error);
     //   });
+
+    axios.post();
+
     axios
       .post(serverUrl + "files", data, {
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          });
-        }
+        headers: { "Content-Type": "multipart/form-data" }
       })
       .then(function(response) {
         console.log(response);
