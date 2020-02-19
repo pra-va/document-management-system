@@ -61,4 +61,12 @@ public class DocumentService {
 		}
 		return list;
 	}
+
+	public void deleteDocument(Document document) {
+		document.setFileList(null);
+		document.setHandler(null);
+		document.setAuthor(null);
+		document.setdType(null);
+		docRepo.delete(document);
+	}
 }
