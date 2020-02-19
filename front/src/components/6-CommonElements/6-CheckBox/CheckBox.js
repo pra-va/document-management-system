@@ -19,7 +19,13 @@ class CheckBox extends Component {
     this.props.checkedStatus(this.state.checked);
   };
 
-  doNothing = () => {};
+  componentWillUnmount() {
+    this.props.statusChange(false, this.state.owner);
+  }
+
+  doNothing = event => {
+    console.log(event.target.checked);
+  };
 
   render() {
     return (

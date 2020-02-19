@@ -92,11 +92,14 @@ class NewDocType extends Component {
   };
 
   handleCreateChangeStatus = (status, checkBoxOwnerName) => {
+    console.log("handleCreateChangeStatus " + status + " " + checkBoxOwnerName);
     let ableToCreate = this.state.canCreate;
     if (status) {
       ableToCreate.push(checkBoxOwnerName);
     } else {
-      ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      if (ableToCreate.indexOf(checkBoxOwnerName) !== -1) {
+        ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canCreate: ableToCreate });
     this.validateRights(this.state.addedGroups);
@@ -107,7 +110,9 @@ class NewDocType extends Component {
     if (status) {
       ableToSign.push(checkBoxOwnerName);
     } else {
-      ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      if (ableToSign.indexOf(checkBoxOwnerName) !== -1) {
+        ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canSign: ableToSign });
     this.validateRights(this.state.addedGroups);
@@ -121,6 +126,8 @@ class NewDocType extends Component {
 
     for (let i = 0; i < data.length; i++) {
       const element = data[i].name;
+      console.log(this.state.canCreate);
+      console.log(this.state.canSign);
       if (
         this.state.canCreate.includes(element) ||
         this.state.canSign.includes(element)
@@ -145,6 +152,22 @@ class NewDocType extends Component {
             itemName={element.name}
             changeAddedStatus={this.changeAddedStatus}
             added={element.added}
+          />
+        );
+        tmpGroups[i].create = (
+          <CheckBox
+            statusChange={this.handleCreateChangeStatus}
+            id={"createRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
+          />
+        );
+        tmpGroups[i].sign = (
+          <CheckBox
+            statusChange={this.handleSignChangeStatus}
+            id={"signRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
           />
         );
       }
