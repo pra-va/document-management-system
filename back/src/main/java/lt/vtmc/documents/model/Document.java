@@ -1,14 +1,18 @@
 package lt.vtmc.documents.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.model.User;
 
 @Entity
@@ -43,11 +47,20 @@ public class Document {
 	@ManyToOne
 	private User handler = null;
 	
-//	private String file; //placeholder
+	@OneToMany
+	private List<File4DB>fileList;
 	
 	
 	public Document() {
 		
+	}
+
+	public List<File4DB> getFileList() {
+		return fileList;
+	}
+
+	public void setFileList(List<File4DB> fileList) {
+		this.fileList = fileList;
 	}
 
 	public int getId() {
