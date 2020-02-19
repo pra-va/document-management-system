@@ -221,4 +221,9 @@ public class GroupService {
 		groupToAddTo.setDocTypesToApprove(docTypesToSignList);
 		groupRepository.save(groupToAddTo);
 	}
+
+	public void deleteGroup(Group tmpGroup) {
+		groupRepository.delete(tmpGroup);
+		}
+		
 }
