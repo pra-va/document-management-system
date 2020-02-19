@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lt.vtmc.documents.dto.CreateDocumentCommand;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.service.DocumentService;
+import lt.vtmc.files.controller.FilesController;
 
 /**
  * Controller for managing documents.
@@ -28,6 +31,8 @@ public class DocumentController {
 	@Autowired
 	private DocumentService docService;
 
+	@Autowired
+	private FilesController filesControl;
 	/**
 	 * Creates document with specified fields.
 	 * 
@@ -36,9 +41,12 @@ public class DocumentController {
 	 * @param document details
 	 */
 	@PostMapping(path = "/api/doc/create")
-	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) {
+	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command, @RequestParam("Files") MultipartFile[] files) {
 		if (docService.findDocumentByName(command.getName()) == null) {
 			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(), command.getDocType(), Instant.now().toString());
+			if (files != null) {
+				addFiles(command.getName(), files);
+			}
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
@@ -49,6 +57,11 @@ public class DocumentController {
 
 	}
 
+	@PostMapping
+	public void addFiles( String docName, MultipartFile[] files){ // @PathVariable("docName"), ,@RequestParam("Files") 
+		filesControl.uploadFiles(files, docService.findDocumentByName(docName));
+	}
+	
 	@GetMapping(path = "/api/doc/all")
 	public List<DocumentDetailsDTO> findAllDocuments() {
 		return docService.findAll();

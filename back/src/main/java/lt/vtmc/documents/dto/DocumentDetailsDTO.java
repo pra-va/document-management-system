@@ -1,5 +1,7 @@
 package lt.vtmc.documents.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.user.model.User;
@@ -8,8 +10,10 @@ public class DocumentDetailsDTO {
 	
 	private String name;
 
+	@JsonIgnore
 	private User author;
 	
+	@JsonIgnore
 	private DocType dType;
 	
 	private String dateCreate;
@@ -22,6 +26,7 @@ public class DocumentDetailsDTO {
 	
 	private String reasonToReject;
 	
+	@JsonIgnore
 	private User handler;
 
 	public String getName() {
