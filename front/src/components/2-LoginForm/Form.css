@@ -3,8 +3,6 @@
   .align-items-lg {
     position: absolute;
     top: 25%;
-    /* -ms-transform: translateY(-50%); */
-    /* transform: translateY(-50%); */
   }
 }
 
@@ -31,8 +29,3 @@
 .width {
   width: 22vh;
 }
-
-/* #loginForm {
-  min-width: 22em;
-  margin: 0;
-} */

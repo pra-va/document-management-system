@@ -70,7 +70,7 @@ var NavigationPresentation = props => {
           </li>
 
           <li className="nav-item active">
-            <Link className="nav-link link-text-format" to="/dvs/merch">
+            <Link className="nav-link link-text-format" to="/dvs/documents">
               My Documents <span className="sr-only">(current)</span>
             </Link>
           </li>
@@ -106,7 +106,6 @@ var NavigationPresentation = props => {
                 <button
                   className="dropdown-item link-text-format"
                   onClick={handleShowCreateDocType}
-                  // onClick={handleShowCreateGroup}
                   id="showCreateDoc"
                 >
                   New Document Type

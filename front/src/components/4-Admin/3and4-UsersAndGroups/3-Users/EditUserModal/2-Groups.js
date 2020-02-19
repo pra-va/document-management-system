@@ -70,7 +70,6 @@ class Groups extends Component {
     axios
       .get(serverUrl + "groups")
       .then(response => {
-        console.log(response.data);
         let tempData = response.data.map((item, index) => {
           let isItemAdded = this.hasUserAddedGroup(item.name);
           return {

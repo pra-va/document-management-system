@@ -22,10 +22,6 @@ class CreateDocument extends Component {
     };
   }
 
-  componentDidUpdate() {
-    console.log(this.state.attachedFilesTableValues);
-  }
-
   componentDidMount() {
     this.fetchUsername();
   }
@@ -93,36 +89,23 @@ class CreateDocument extends Component {
   handleUpload = event => {
     event.preventDefault();
     const data = new FormData();
-    const attachedFiles = this.state.attachedFilesTableValues;
-    for (let i = 0; i < attachedFiles.length; i++) {
-      const element = attachedFiles[i].file;
-      data.append("files", element);
+    var attachedFiles = this.state.attachedFilesTableValues;
+    if (attachedFiles.length !== 0) {
+      for (let i = 0; i < attachedFiles.length; i++) {
+        const element = attachedFiles[i].file;
+        data.append("files", element);
+      }
+    } else {
+      attachedFiles = null;
     }
 
-    let tmpFileToUpload = this.state.attachedFilesTableValues[0].file;
-
-    const postData = {
-      authorUsername: this.state.username,
-      description: this.state.description,
-      docType: this.state.selectedDocType,
-      name: this.state.name,
-      files: data
-    };
-
-    // axios
-    //   .post(serverUrl + "doc/create", data, {
-    //     onUploadProgress: ProgressEvent => {
-    //       this.setState({
-    //         loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-    //       });
-    //     }
-    //   })
-    //   .then(function(response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    // const postData = {
+    //   authorUsername: this.state.username,
+    //   description: this.state.description,
+    //   docType: this.state.selectedDocType,
+    //   name: this.state.name,
+    //   files: data
+    // };
 
     axios.post();
 
@@ -143,7 +126,7 @@ class CreateDocument extends Component {
       <div>
         <Navigation />{" "}
         <div className="container" id="newDocument">
-          <form onSubmit={this.handleUpload}>
+          <form onSubmit={this.handleUpload} id="createDocumentForm">
             <h2>Create New Document Type</h2>
             <EditInfo
               handleNameChange={this.handleNameChange}
@@ -152,11 +135,14 @@ class CreateDocument extends Component {
               description={this.state.description}
             />
             <hr />
-            <SelectDocType handleDocTypeSelect={this.handleDocTypeSelect} />
+            <SelectDocType
+              handleDocTypeSelect={this.handleDocTypeSelect}
+              username={this.state.username}
+            />
             <hr />
             <AttachFiles handleFileAdd={this.handleFileAdd} />
             <AttachedFiles values={this.state.attachedFilesTableValues} />
-            <div className="form-group row d-flex justify-content-center">
+            <div className="form-group row d-flex justify-content-center m-0">
               <div className="modal-footer ">
                 <button
                   type="button"

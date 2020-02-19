@@ -6,6 +6,7 @@ import NewDocument from "./../../../../resources/new-document.svg";
 import SignDocument from "./../../../../resources/sign-document.svg";
 import axios from "axios";
 import serverUrl from "./../../../7-properties/1-URL";
+import { Link } from "react-router-dom";
 
 class Main extends Component {
   constructor(props) {
@@ -33,7 +34,10 @@ class Main extends Component {
       <div className="container">
         <div className="row justify-content-center mt-4">
           <div className="col-6 col-md-3 my-4 card-width">
-            <div className="card text-white bg-dark card-heigth">
+            <Link
+              className="card text-white bg-dark card-heigth"
+              to={"/dvs/document"}
+            >
               <img
                 src={NewDocument}
                 className="card-img-top pl-4 p-3 invert"
@@ -42,7 +46,7 @@ class Main extends Component {
               <div className="card-body">
                 <h5 className="card-title card-label-text">Create Document</h5>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="col-6 col-md-3 my-4 card-width">
             <div className="card text-white bg-dark card-heigth">
@@ -57,7 +61,10 @@ class Main extends Component {
             </div>
           </div>
           <div className="col-6 col-md-3 my-4 card-width">
-            <div className="card text-white bg-dark card-heigth">
+            <Link
+              className="card text-white bg-dark card-heigth"
+              to={"/dvs/documents"}
+            >
               <img
                 src={MyDocuments}
                 className="card-img-top p-3 third-img-heigth invert"
@@ -66,7 +73,7 @@ class Main extends Component {
               <div className="card-body">
                 <h5 className="card-title card-label-text">My Documents</h5>
               </div>
-            </div>
+            </Link>
           </div>
           {this.state.isUserAdmin === true ? (
             <div className="col-6 col-md-3 my-4 card-width">

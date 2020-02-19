@@ -59,7 +59,7 @@ class Groups extends Component {
       <div className="mx-3">
         <div className="row d-flex justify-content-start">
           <h3 className="d-flex justify-content-start">
-            2. Add user to a group.
+            2. Assign new document type to a group.
           </h3>
         </div>
 
