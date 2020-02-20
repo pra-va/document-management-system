@@ -26,7 +26,7 @@ public class MainPage extends AbstractPage {
 	@FindBy(xpath = "//a[contains(text(),'My Documents ')]")
 	private WebElement buttonMyDocuments;
 
-	@FindBy(xpath = "//a[contains(text(),'Admin')]")
+	@FindBy(xpath = "//a[contains(text(),'Admin')]")	
 	private WebElement buttonAdmin;
 
 	@FindBy(xpath = "//button[contains(text(),'New User')]")
@@ -44,8 +44,12 @@ public class MainPage extends AbstractPage {
 	@FindBy(xpath = "//a[contains(text(),'Users')]")
 	private WebElement buttonAdminUsers;
 
+
 	@FindBy(xpath = "//a[contains(text(),'Groups')]")
 	private WebElement buttonAdminGroups;
+
+	@FindBy(xpath = "//a[contains(text(),'Profile')]")
+	private WebElement buttonProfile;
 
 	@FindBy(xpath = "//a[contains(text(),'Document Types')]")
 	private WebElement buttonDocTypes;
@@ -70,6 +74,13 @@ public class MainPage extends AbstractPage {
 	public void clickMyDocumentsButton() {
 		this.buttonMyDocuments.click();
 	}
+	
+	public void clickProfileButton() {
+		waitForVisibility(buttonProfile);
+		this.buttonProfile.click();
+	}
+
+	
 
 	public void clickAdminButton() {
 		waitForVisibility(buttonAdmin);
@@ -124,5 +135,9 @@ public class MainPage extends AbstractPage {
 
 	public void waitForLogoutButton() {
 		this.waitForVisibility(this.buttonLogout);
+	}
+		
+	public void waitForVisibility(WebElement element) {
+		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element));
 	}
 }

@@ -32,9 +32,13 @@ public class NewGroupTests extends AbstractTest {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		groupPage = new AdminNewGroupPage(driver);
+
+		wait = new WebDriverWait(driver, 2);		
+
 		userPage = new UserListPage(driver);
 		newUserPage = new AdminNewUserPage(driver);
 		groupListPage = new GroupListPage(driver);
+
 	}
 
 	@Parameters({ "adminUserName", "adminPasswrod" })

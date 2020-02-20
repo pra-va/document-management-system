@@ -41,6 +41,7 @@ public class LoginPage extends AbstractPage {
 		this.passwordField.sendKeys(str);
 	}
 
+
 	/* OTHER METHODS */
 
 	public void waitForLoginButton() {
