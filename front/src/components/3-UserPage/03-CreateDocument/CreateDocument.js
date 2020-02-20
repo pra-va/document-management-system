@@ -99,22 +99,28 @@ class CreateDocument extends Component {
       attachedFiles = null;
     }
 
-    // const postData = {
-    //   authorUsername: this.state.username,
-    //   description: this.state.description,
-    //   docType: this.state.selectedDocType,
-    //   name: this.state.name,
-    //   files: data
-    // };
+    const postData = {
+      authorUsername: this.state.username,
+      description: this.state.description,
+      docType: this.state.selectedDocType,
+      name: this.state.name
+    };
 
-    axios.post();
-
+    console.log(serverUrl + "doc/create");
     axios
-      .post(serverUrl + "files", data, {
-        headers: { "Content-Type": "multipart/form-data" }
-      })
-      .then(function(response) {
-        console.log(response);
+      .post(serverUrl + "doc/create", postData)
+      .then(response => {
+        console.log(serverUrl + "doc/upload/" + this.state.name);
+        axios
+          .post(serverUrl + "doc/upload/" + this.state.name, data, {
+            headers: { "Content-Type": "multipart/form-data" }
+          })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       })
       .catch(function(error) {
         console.log(error);
@@ -127,7 +133,7 @@ class CreateDocument extends Component {
         <Navigation />{" "}
         <div className="container" id="newDocument">
           <form onSubmit={this.handleUpload} id="createDocumentForm">
-            <h2>Create New Document Type</h2>
+            <h2 className="mb-3">New Document</h2>
             <EditInfo
               handleNameChange={this.handleNameChange}
               handleDescriptionChange={this.handleDescriptionChange}

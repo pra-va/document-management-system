@@ -34,6 +34,7 @@ public class DocumentController {
 
 	@Autowired
 	private FilesController filesControl;
+
 	/**
 	 * Creates document with specified fields.
 	 * 
@@ -42,27 +43,28 @@ public class DocumentController {
 	 * @param document details
 	 */
 	@PostMapping(path = "/api/doc/create")
-	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command, @RequestParam("Files") MultipartFile[] files) {
+	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) {
 		if (docService.findDocumentByName(command.getName()) == null) {
-			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(), command.getDocType(), Instant.now().toString());
-			if (files != null) {
-				addFiles(command.getName(), files);
-			}
+			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
+					command.getDocType(), Instant.now().toString());
+
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
-				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
-			}
+			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+		}
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 		return new ResponseEntity<String>("Failed to create document", HttpStatus.CONFLICT);
 
 	}
 
-	@PostMapping
-	public void addFiles( String docName, MultipartFile[] files){ // @PathVariable("docName"), ,@RequestParam("Files") 
-		filesControl.uploadFiles(files, docService.findDocumentByName(docName));
+	@PostMapping("/api/doc/upload/{docName}")
+	public void addFiles(@PathVariable("docName") String docName, @RequestParam("files") MultipartFile[] files) {
+		for (MultipartFile multipartFile : files) {
+			filesControl.uploadFiles(multipartFile, docService.findDocumentByName(docName));
+		}
 	}
-	
+
 	@GetMapping(path = "/api/doc/all")
 	public List<DocumentDetailsDTO> findAllDocuments() {
 		return docService.findAll();
@@ -72,7 +74,7 @@ public class DocumentController {
 	public DocumentDetailsDTO findDocument(@PathVariable("name") String name) {
 		return new DocumentDetailsDTO(docService.findDocumentByName(name));
 	}
-	
+
 	@GetMapping(path = "/api/doc/{name}/exists")
 	public boolean checkDocument(@PathVariable("name") String name) {
 		if (docService.findDocumentByName(name) != null) {
@@ -80,9 +82,9 @@ public class DocumentController {
 		}
 		return false;
 	}
-	
+
 	@DeleteMapping(path = "/api/doc/delete/{name}")
-	public ResponseEntity<String> deleteDocument(@PathVariable ("name") String name){
+	public ResponseEntity<String> deleteDocument(@PathVariable("name") String name) {
 		docService.deleteDocument(docService.findDocumentByName(name));
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}

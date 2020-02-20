@@ -1,9 +1,5 @@
 package lt.vtmc.files.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +7,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,17 +36,15 @@ public class FilesController {
 	 * @param file
 	 * @return
 	 */
-	@PostMapping("/api/file")
-	public void uploadFiles(@RequestParam("files") MultipartFile[] files, Document doc) {
-		for (MultipartFile file : files) {
-			try {
-				LOG.info("File uploaded with file name: " + file.getOriginalFilename());
-				fileService.saveFile(file, doc);
-			} catch (Exception e) {
-				LOG.error("Error saving file", e);
-			}
+	public void uploadFiles(MultipartFile file, Document doc) {
+//		for (MultipartFile file : files) {
+		try {
+			LOG.info("File uploaded with file name: " + file.getOriginalFilename());
+			fileService.saveFile(file, doc);
+		} catch (Exception e) {
+			LOG.error("Error saving file", e);
 		}
-		
+//		}
 	}
 
 	/**

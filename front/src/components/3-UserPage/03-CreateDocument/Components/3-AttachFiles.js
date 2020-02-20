@@ -1,4 +1,5 @@
 import React from "react";
+import "./AttachFiles.css";
 
 const UploadFile = props => {
   const handleFileUploaded = event => {
