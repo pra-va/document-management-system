@@ -28,27 +28,28 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>com.integralblue</groupId>
 			<artifactId>log4jdbc-spring-boot-starter</artifactId>
 			<version>1.0.2</version>
-			
+
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
-			
+
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			
+
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
-			
+
 		</dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -63,7 +64,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-			
+
 		</dependency>
 
 		<!-- SECURITY -->
@@ -76,7 +77,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-			
+
 		</dependency>
 
 		<!-- Tests -->
@@ -114,7 +115,7 @@
 			<version>2.9.2</version>
 		</dependency>
 
-		
+
 
 
 	</dependencies>

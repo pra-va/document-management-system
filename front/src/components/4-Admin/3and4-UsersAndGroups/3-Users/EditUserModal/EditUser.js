@@ -25,10 +25,6 @@ class NewModal extends Component {
     };
   }
 
-  componentDidMount() {}
-
-  componentDidUpdate() {}
-
   setuserGroups = userGroups => {
     this.setState({ userGroups: userGroups });
   };

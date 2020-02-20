@@ -2,7 +2,13 @@ package test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
+
+import org.testng.annotations.AfterSuite;
+
 import org.testng.annotations.BeforeSuite;
 
 import com.thoughtworks.xstream.XStream;
@@ -24,7 +30,7 @@ public abstract class AbstractTest {
 		driver.get("http://akademijait.vtmc.lt:8180/dvs/#/");
 		driver.manage().window().maximize();
 	}
-	
+
 	@AfterSuite
 	public void afterSuite() {
 		driver.quit();

@@ -5,7 +5,11 @@ public class User {
 	private String lastName;
 	private String userName;
 	private String passWord;
-
+	private String role;
+	private String groupOne;
+	private String groupTwo;
+	private String groupThree;
+	
 	public User() {
 	}
 
@@ -39,5 +43,37 @@ public class User {
 
 	public void setPassWord(String passWord) {
 		this.passWord = passWord;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getGroupOne() {
+		return groupOne;
+	}
+
+	public void setGroupOne(String groupOne) {
+		this.groupOne = groupOne;
+	}
+
+	public String getGroupThree() {
+		return groupThree;
+	}
+
+	public void setGroupThree(String groupThree) {
+		this.groupThree = groupThree;
+	}
+
+	public String getGroupTwo() {
+		return groupTwo;
+	}
+
+	public void setGroupTwo(String groupTwo) {
+		this.groupTwo = groupTwo;
 	}
 }

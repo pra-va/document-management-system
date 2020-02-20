@@ -15,6 +15,15 @@ class UserDetails extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.username !== this.state.username) {
+      this.setState({ username: this.props.username });
+    }
+    if (this.state.username.length > 0) {
+      this.fetchUserData();
+    }
+  }
+
   componentDidUpdate() {
     if (this.props.username !== this.state.username) {
       this.setState({ username: this.props.username });
@@ -32,7 +41,6 @@ class UserDetails extends Component {
       userGroups:
         data.groupList.length === 0 ? "None" : this.reduceGroups(data.groupList)
     });
-    console.log(data.groupList);
   };
 
   reduceGroups = list => {
@@ -40,7 +48,7 @@ class UserDetails extends Component {
       if (index === 0) {
         return (sum = item);
       } else {
-        return (sum += sum + ", " + item);
+        return (sum += ", " + item);
       }
     });
     return reducedList;

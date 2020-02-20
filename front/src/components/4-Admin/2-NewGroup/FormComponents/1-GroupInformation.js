@@ -51,7 +51,6 @@ var GroupInformation = props => {
         id={"inputGroupName"}
         labelName={"Group name:"}
         required={true}
-        asd
         type={"text"}
         placeholder={"Junior Java Programmers"}
         onChange={handleGroupNameChange}
@@ -60,7 +59,7 @@ var GroupInformation = props => {
         groupNameExists={groupNameExists}
       />
 
-      <div className="form-group row">
+      <div className="form-group row mt-3">
         <label
           htmlFor="inputGroupDescription"
           className="col-sm-2 col-form-label"

@@ -18,11 +18,15 @@ public class UserListPage extends MainPage {
 
 	/* BUTTONS */
 
+	// @FindBy(xpath = "//*[@aria-label='Search']")
+	// private WebElement specificUserEditViewButton;
+
 	/* CLICK BUTTONS */
 
 	public void clickEditSpecificUserButton(String user) {
 		driver.findElement(By.xpath("//td[contains(text(),'" + user + "')]/..//td[6]//button")).click();
 	}
+
 
 	/* SEND KEYS */
 
@@ -30,4 +34,32 @@ public class UserListPage extends MainPage {
 		searchField.sendKeys(userInformation);
 	}
 
+
+	/* CLICK BUTTONS */
+
+	public void clickViewEditSpecificUserButton(String userInformation) {
+		searchField.sendKeys(userInformation);
+		driver.findElement(By.xpath("//td[contains(text()," + userInformation + ")]/..//td[6]//button")).click();
+	}
+
+	/* GET TEXT METHODS */
+
+	
+	
+	public String getFirstNameFromUserListByUsername(String username) {
+
+		return driver.findElement(By.xpath("//td[4][text()='" + username + "']/..//td[2]")).getText();
+	}
+	
+	public String getLastNameFromUserListByUsername(String username) {
+
+		return driver.findElement(By.xpath("//td[4][text()='" + username + "']/..//td[3]")).getText();
+	}
+	
+	public String getRoleFromUserListByUsername(String username) {
+
+		return driver.findElement(By.xpath("//td[4][text()='" + username + "']/..//td[5]")).getText();
+	}
+		
 }
+
