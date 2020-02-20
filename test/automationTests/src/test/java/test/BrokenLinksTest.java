@@ -15,6 +15,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import page.AdminNewDocTypePage;
@@ -46,10 +47,11 @@ public class BrokenLinksTest extends AbstractTest {
 		respCode = 200;
 	}
 
+	@Parameters({ "adminUserName", "adminPasswrod" })
 	@BeforeGroups("brokenLinks")
-	public void login() {
-		loginPage.sendKeysUserName(admin.getUserName());
-		loginPage.sendKeysPassword(admin.getPassWord());
+	public void login(String p1, String p2) {
+		loginPage.sendKeysUserName(p1);
+		loginPage.sendKeysPassword(p2);
 		loginPage.clickButtonLogin();
 	}
 
