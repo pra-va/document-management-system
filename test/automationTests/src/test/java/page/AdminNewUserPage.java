@@ -83,6 +83,10 @@ public class AdminNewUserPage extends AbstractPage {
 	public void clickUserRadio() {
 		this.radioUser.click();
 	}
+	
+	public void clickAddSpecificGroupButton(String groupName) {
+		driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]/..//td[3]//button")).click();		
+	}
 
 	/* SEND KEYS */
 
@@ -110,14 +114,12 @@ public class AdminNewUserPage extends AbstractPage {
 		searchFields.get(1).sendKeys(groupName);
 
 	}
-
-	public void clickAddSpecificGroupButton(String groupName) {
-		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
-		
-	}
 	
-//	public void clickRemoveSpecificGroupButton(String groupName) {
-//		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
-//	}
+	/* IS CLICKABLE METHOD */
+
+	public boolean isCreateButtonDisplayed() {
+		return buttonCreate.isDisplayed();
+
+	}
 
 }

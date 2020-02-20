@@ -31,8 +31,7 @@ public class NewGroupTests extends AbstractTest {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		groupPage = new AdminNewGroupPage(driver);
-		wait = new WebDriverWait(driver, 2);
-		description = TestData.getTestData("src/test/resources/groupDescription.txt");
+		wait = new WebDriverWait(driver, 2);		
 	}
 
 	@BeforeGroups("createGroup")
