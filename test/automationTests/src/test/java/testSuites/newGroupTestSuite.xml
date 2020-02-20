@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="newGrouTests" preserve-order="true">
+	<test name="newGroupTests">
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
+		<parameter name="groupName" value="Project managers" />
+		<parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers." />
+		<parameter name="docTypeName" value="Resignation letter" />
+		<classes>
+			<class name="test.NewGroupTests"/>
+		</classes>
+	</test>
+</suite>
