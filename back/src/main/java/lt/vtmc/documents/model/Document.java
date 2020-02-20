@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.Status;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.model.User;
 
@@ -44,6 +45,16 @@ public class Document {
 	
 	private String reasonToReject = null;
 	
+	private Status status;
+	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
 	@ManyToOne
 	private User handler = null;
 	
