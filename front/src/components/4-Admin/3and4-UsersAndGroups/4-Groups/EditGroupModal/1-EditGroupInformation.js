@@ -12,9 +12,46 @@ class GroupInformation extends Component {
       description: "",
       usersList: "",
       groupNameExists: false,
-      descriptionValidation: true
+      descriptionValidation: true,
+      canCreate: [],
+      canSign: []
     };
   }
+
+  componentDidMount() {
+    console.log("component mounted");
+    this.getGroupData();
+  }
+
+  componentDidUpdate() {
+    console.log(this.props.ownerName);
+  }
+
+  getGroupData = () => {
+    console.log(serverUrl + "groups/" + this.props.ownerName);
+    axios
+      .get(serverUrl + "groups/" + this.props.ownerName)
+      .then(response => {
+        this.setState({
+          groupName: response.data.name,
+          description: response.data.description,
+          userList: response.data.userList,
+          canCreate: response.data.docTypesToCreateNames,
+          canSign: response.data.docTypesToApproveNames
+        });
+        this.props.initalDataTransfer({
+          groupName: response.data.name,
+          description: response.data.description,
+          userList: response.data.userList,
+          canCreate: response.data.docTypesToCreateNames,
+          canSign: response.data.docTypesToApproveNames
+        });
+        this.props.setGroupUsers(response.data.groupList);
+        this.props.setCanCreate(response.data.docTypesToCreateNames);
+        this.props.setCanCreate(response.data.docTypesToApproveNames);
+      })
+      .catch(error => console.log(error));
+  };
 
   handleGroupNameChange = event => {
     this.props.handleGroupNameChange(event);
@@ -23,7 +60,7 @@ class GroupInformation extends Component {
         .get(serverUrl + "group/" + event.target.value + "/exists")
         .then(response => {
           this.setSate({ groupNameExists: response.data });
-          if (response.data && event.target.value !== this.props.groupName) {
+          if (response.data && event.target.value !== this.props.ownerName) {
             event.target.setCustomValidity("Group name is taken.");
           } else {
             event.target.setCustomValidity("");
@@ -47,7 +84,8 @@ class GroupInformation extends Component {
       this.setState({ descriptionValidation: true });
     }
   };
-  rednder() {
+
+  render() {
     return (
       <div>
         <h3 className="d-flex justify-content-start">
@@ -58,11 +96,10 @@ class GroupInformation extends Component {
           id={"inputGroupName"}
           labelName={"Group name:"}
           required={true}
-          asd
           type={"text"}
-          placeholder={"Junior Java Programmers"}
+          placeholder={"Enter new name of this Group"}
           onChange={this.handleGroupNameChange}
-          value={this.props.groupName}
+          value={this.state.groupName}
           pattern={4}
           groupNameExists={this.state.groupNameExists}
         />
@@ -81,7 +118,7 @@ class GroupInformation extends Component {
               maxLength="500"
               rows="3"
               onChange={this.handleGroupDescriptionChange}
-              value={this.props.groupDescription}
+              value={this.state.description}
             ></textarea>
             <FormValidation
               satisfied={this.state.descriptionValidation}
@@ -95,4 +132,5 @@ class GroupInformation extends Component {
     );
   }
 }
+
 export default GroupInformation;

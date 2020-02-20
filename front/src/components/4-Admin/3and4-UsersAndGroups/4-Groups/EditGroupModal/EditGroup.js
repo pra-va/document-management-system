@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
-import GroupInformation from "./1-GroupInformation";
+import GroupInformation from "./1-EditGroupInformation";
 import AddUsersToGroup from "./2-AddUsersToGroup";
 import GroupUsers from "./3-GroupUsers";
 import axios from "axios";
@@ -47,7 +47,7 @@ class EditGroup extends Component {
       .post(serverUrl + "groups/update/" + this.props.ownerName, editedGroup)
       .then(response => {
         window.location.reload();
-        this.props.hideNewGroup();
+        this.props.onHide();
       })
       .catch(error => console.log(error));
   };
@@ -100,6 +100,10 @@ class EditGroup extends Component {
     this.filterAddedGroups(tmpUsers);
   };
 
+  setGroupUsers = groupUsers => {
+    this.setState({ usersList: groupUsers });
+  };
+
   filterAddedGroups = data => {
     let filterUsers = data;
     let tmpNotAdded = [];
@@ -131,12 +135,17 @@ class EditGroup extends Component {
     this.setState({ canSign: data });
   };
 
+  initalDataTransfer = data => {
+    this.setState({ ...data });
+  };
+
   render() {
     return (
       <Modal
-        show={this.props.showNewGroup}
-        onHide={this.props.hideNewGroup}
-        size="lg"
+        show={this.props.show}
+        onHide={this.props.onHide}
+        size={"lg"}
+        id="editGroupModal"
       >
         <Modal.Header closeButton>
           <Modal.Title>Edit Group</Modal.Title>
@@ -145,9 +154,13 @@ class EditGroup extends Component {
           <form onSubmit={this.handleSubmit}>
             <GroupInformation
               handleGroupNameChange={this.handleGroupNameChange}
-              groupName={this.state.groupName}
+              ownerName={this.props.ownerName}
               handleGroupDescriptionChange={this.handleGroupDescriptionChange}
               groupDescription={this.state.groupDescription}
+              setGroupUsers={this.setGroupUsers}
+              setCanCreate={this.canCreate}
+              setCanSign={this.canSign}
+              initalDataTransfer={this.initalDataTransfer}
             />
             <hr className="m-1" />
             <AddUsersToGroup
@@ -169,7 +182,7 @@ class EditGroup extends Component {
                 <button
                   type="button"
                   className="btn btn-outline-dark"
-                  onClick={this.props.hideNewGroup}
+                  onClick={this.props.onHide}
                 >
                   Cancel
                 </button>
