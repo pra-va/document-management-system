@@ -1,0 +1,23 @@
+#uploadedFilesTable tr {
+  display: flex;
+}
+
+#uploadedFilesTable th:nth-child(1) {
+  min-width: 80%;
+}
+
+#uploadedFilesTable th:nth-child(2) {
+  min-width: 20%;
+}
+
+#uploadedFilesTable td:nth-child(1) {
+  min-width: 80%;
+}
+
+#uploadedFilesTable td:nth-child(2) {
+  min-width: 20%;
+}
+
+.btn-sm {
+  padding: 2px;
+}

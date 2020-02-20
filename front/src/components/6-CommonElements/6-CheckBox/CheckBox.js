@@ -7,7 +7,7 @@ import React, { Component } from "react";
 class CheckBox extends Component {
   constructor(props) {
     super(props);
-    this.state = { checked: false, owner: this.props.ownerName };
+    this.state = { checked: props.checked, owner: this.props.ownerName };
   }
 
   handleChangeCheckedState = event => {
@@ -19,6 +19,14 @@ class CheckBox extends Component {
     this.props.checkedStatus(this.state.checked);
   };
 
+  componentWillUnmount() {
+    this.props.statusChange(false, this.state.owner);
+  }
+
+  doNothing = event => {
+    console.log(event.target.checked);
+  };
+
   render() {
     return (
       <div>
@@ -27,6 +35,8 @@ class CheckBox extends Component {
           type="checkbox"
           id={this.props.id}
           onClick={this.handleChangeCheckedState}
+          onChange={this.doNothing}
+          checked={this.state.checked}
         />
       </div>
     );

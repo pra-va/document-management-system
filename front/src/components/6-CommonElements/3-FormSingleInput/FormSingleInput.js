@@ -72,7 +72,8 @@ var InputLine = props => {
 
   var fieldNotEmpty = () => {
     if (
-      (props.pattern !== 0 || props.patter === 4) &&
+      props.pattern !== 0 &&
+      props.pattern !== 4 &&
       !props.labelName.toLowerCase().includes("username") &&
       !props.labelName.toLowerCase().includes("group name")
     ) {
@@ -140,7 +141,7 @@ var InputLine = props => {
       !props.labelName.toLowerCase().includes("group name") &&
       !props.labelName.toLowerCase().includes("first name") &&
       !props.labelName.toLowerCase().includes("last name") &&
-      !props.labelName.toLowerCase().includes("document type name")
+      !props.labelName.toLowerCase().includes("document")
     ) {
       return (
         <Validation
@@ -152,7 +153,7 @@ var InputLine = props => {
   };
 
   return (
-    <div className="form-group row">
+    <div className="form-group row mb-0 mt-3">
       <label htmlFor={props.id} className="col-sm-2 col-form-label">
         {props.labelName}
       </label>

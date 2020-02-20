@@ -34,6 +34,7 @@ class AddUsersToGroup extends Component {
       <div>
         <h3 className="d-flex justify-content-start">2. Add group users.</h3>
         <Table
+          id={"newGroupUsers"}
           dataFields={this.usersTableDataFields}
           columnNames={this.usersTableNames}
           tableData={this.props.notAddedUsers}

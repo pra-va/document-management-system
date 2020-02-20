@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="newUserCreationTests" preserve-order="true">
+	<test name="newUserCreationTests">
+		<parameter name="" value="" />
+		<parameter name="" value="" />
+		<parameter name="" value="" />
+		<parameter name="" value="" />
+		<classes>
+			<class name="test.newUserCreationTests"/>
+		</classes>
+	</test>
+</suite>

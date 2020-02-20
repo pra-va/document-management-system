@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // Router imports
-import { HashRouter as Router, Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import { Switch } from "react-router";
 
 //Table imports
@@ -24,22 +24,23 @@ import HomePage from "./components/3-UserPage/01-MainWindow/HomePage";
 import ListOfUsers from "./components/4-Admin/3and4-UsersAndGroups/3-Users/ListOfUsers";
 import ListOfGroups from "./components/4-Admin/3and4-UsersAndGroups/4-Groups/ListOfGroups";
 import DocTypes from "./components/4-Admin/5-DocTypes/DocTypes";
+import NewDocument from "./components/3-UserPage/03-CreateDocument/CreateDocument";
 
 ReactDOM.render(
   <BrowserRouter>
-    <Router>
-      <App>
-        <Switch>
-          <Route exact path="/" component={LoginForm} />
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/users" component={ListOfUsers} />
-          <Route exact path="/groups" component={ListOfGroups} />
-          <Route exact path="/doctypes" component={DocTypes} />
-          <Route path="*" component={PageNotFound} />
-          <Route component={PageNotFound} />
-        </Switch>
-      </App>
-    </Router>
+    <App>
+      <Switch>
+        <Route exact path="/dvs/" component={LoginForm} />
+        <Route exact path="/dvs/home" component={HomePage} />
+        <Route exact path="/dvs/users" component={ListOfUsers} />
+        <Route exact path="/dvs/groups" component={ListOfGroups} />
+        <Route exact path="/dvs/doctypes" component={DocTypes} />
+        <Route exact path="/dvs/notfound" component={PageNotFound} />
+        <Route exact path="/dvs/document" component={NewDocument} />
+        <Route path="/dvs/**" component={PageNotFound} />
+        <Route component={PageNotFound} />
+      </Switch>
+    </App>
   </BrowserRouter>,
   document.getElementById("root")
 );

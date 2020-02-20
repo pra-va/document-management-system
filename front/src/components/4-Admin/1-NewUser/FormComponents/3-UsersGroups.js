@@ -36,6 +36,7 @@ class userGroups extends Component {
         </div>
 
         <Table
+          id={"newUserAddedGroups"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.userGroups}

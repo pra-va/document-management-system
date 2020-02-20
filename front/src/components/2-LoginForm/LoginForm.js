@@ -39,11 +39,13 @@ class LoginForm extends Component {
       })
       .then(response => {
         isUserAdmin = response.data.su;
-        if (response.status === 200) {
+        if (response.data.su === "true" || response.data.su === "false") {
           this.props.history.push({
-            pathname: "/home",
+            pathname: "/dvs/home",
             state: { isUserAdmin: isUserAdmin }
           });
+        } else {
+          this.setState({ loginFailed: true });
         }
       })
       .catch(error => {

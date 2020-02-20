@@ -18,6 +18,7 @@ var AddUsersToGroup = props => {
         3. Users added to a group.
       </h3>
       <Table
+        id={"newUserAddedGroups"}
         dataFields={usersTableDataFields}
         columnNames={usersTableNames}
         tableData={props.addedUsers}

@@ -1,6 +1,5 @@
 package lt.vtmc.user.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,8 +169,7 @@ public class UserController {
 	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username,
 			@RequestBody UpdateUserCommand command) {
 		try {
-			if (userService.findUserByUsername(username) != null & command.getPassword().length() > 7
-					& command.getPassword().length() < 21) {
+			if (userService.findUserByUsername(username) != null) {
 				userService.updateUserDetails(username, command.getName(), command.getSurname(), command.getPassword(),
 						command.getRole());
 				groupService.compareGroups(command.getGroupList(), username);
@@ -197,5 +195,10 @@ public class UserController {
 		} else {
 			return false;
 		}
+	}
+	
+	@GetMapping(path = "/api/{username}/dtypescreate")
+	public String[]	getUserDocTypesCreate(@PathVariable ("username") String username) {
+		return userService.getUserDocTypesToCreate(username);
 	}
 }

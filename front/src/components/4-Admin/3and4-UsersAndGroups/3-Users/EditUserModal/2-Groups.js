@@ -70,6 +70,7 @@ class Groups extends Component {
     axios
       .get(serverUrl + "groups")
       .then(response => {
+        console.log(response.data);
         let tempData = response.data.map((item, index) => {
           let isItemAdded = this.hasUserAddedGroup(item.name);
           return {
@@ -115,6 +116,7 @@ class Groups extends Component {
         </div>
 
         <Table
+          id={"editUserGroups"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.notAddedGroups}

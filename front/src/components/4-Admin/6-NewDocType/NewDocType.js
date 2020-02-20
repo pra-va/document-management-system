@@ -6,16 +6,16 @@ import SetRights from "./FormComponents/3-SetRights";
 import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import CheckBox from "./../../6-CommonElements/6-CheckBox/CheckBox";
 import Validation from "./../../6-CommonElements/5-FormInputValidationLine/Validation";
-// import axios from "axios";
-// import serverUrl from "./../../7-properties/1-URL";
+import axios from "axios";
+import serverUrl from "./../../7-properties/1-URL";
 
 class NewDocType extends Component {
   constructor(props) {
     super(props);
     this.state = {
       docTypeName: "",
-      notAddedGroups: [],
       allGroups: [],
+      notAddedGroups: [],
       addedGroups: [],
       canCreate: [],
       canSign: [],
@@ -28,26 +28,22 @@ class NewDocType extends Component {
   };
 
   handleCreateNewDocType = event => {
-    // const newDocType = {
-    //   docTypeName: this.state.docTypeName,
-    //   canCreate: this.state.canCreate,
-    //   canSign: this.state.canSign
-    // };
+    const newDocType = {
+      name: this.state.docTypeName,
+      creating: this.state.canCreate,
+      approving: this.state.canSign
+    };
 
-    // axios
-    //   .post(serverUrl + "/doctype", newDocType)
-    //   .then(response => {
-    //     event.preventDefault();
-    //     window.location.reload();
-    //     this.props.hideNewDocType();
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-
-    event.preventDefault();
-    window.location.reload();
-    this.props.hideNewDocType();
+    axios
+      .post(serverUrl + "doct/create", newDocType)
+      .then(response => {
+        event.preventDefault();
+        window.location.reload();
+        this.props.hideNewDocType();
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   handleDocTypeNameChange = value => {
@@ -77,6 +73,7 @@ class NewDocType extends Component {
             statusChange={this.handleCreateChangeStatus}
             id={"createRightsFor:" + item.name}
             ownerName={item.name}
+            checked={false}
           />
         ),
         sign: (
@@ -84,6 +81,7 @@ class NewDocType extends Component {
             statusChange={this.handleSignChangeStatus}
             id={"signRightsFor:" + item.name}
             ownerName={item.name}
+            checked={false}
           />
         ),
         added: false
@@ -94,14 +92,17 @@ class NewDocType extends Component {
   };
 
   handleCreateChangeStatus = (status, checkBoxOwnerName) => {
+    console.log("handleCreateChangeStatus " + status + " " + checkBoxOwnerName);
     let ableToCreate = this.state.canCreate;
     if (status) {
       ableToCreate.push(checkBoxOwnerName);
     } else {
-      ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      if (ableToCreate.indexOf(checkBoxOwnerName) !== -1) {
+        ableToCreate.splice(ableToCreate.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canCreate: ableToCreate });
-    this.validateRights();
+    this.validateRights(this.state.addedGroups);
   };
 
   handleSignChangeStatus = (status, checkBoxOwnerName) => {
@@ -109,20 +110,24 @@ class NewDocType extends Component {
     if (status) {
       ableToSign.push(checkBoxOwnerName);
     } else {
-      ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      if (ableToSign.indexOf(checkBoxOwnerName) !== -1) {
+        ableToSign.splice(ableToSign.indexOf(checkBoxOwnerName), 1);
+      }
     }
     this.setState({ canSign: ableToSign });
-    this.validateRights();
+    this.validateRights(this.state.addedGroups);
   };
 
-  validateRights = () => {
-    if (this.state.addedGroups.length === 0) {
-      this.setState({ readyToSubmit: false });
+  validateRights = data => {
+    if (data.length === 0) {
+      this.setState({ readyToSubmit: true });
       return;
     }
 
-    for (let i = 0; i < this.state.addedGroups.length; i++) {
-      const element = this.state.addedGroups[i].name;
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i].name;
+      console.log(this.state.canCreate);
+      console.log(this.state.canSign);
       if (
         this.state.canCreate.includes(element) ||
         this.state.canSign.includes(element)
@@ -149,11 +154,26 @@ class NewDocType extends Component {
             added={element.added}
           />
         );
-        this.setState({ allGroups: tmpGroups });
-        this.filterAddedGroups(tmpGroups);
+        tmpGroups[i].create = (
+          <CheckBox
+            statusChange={this.handleCreateChangeStatus}
+            id={"createRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
+          />
+        );
+        tmpGroups[i].sign = (
+          <CheckBox
+            statusChange={this.handleSignChangeStatus}
+            id={"signRightsFor:" + element.name}
+            ownerName={element.name}
+            checked={false}
+          />
+        );
       }
     }
-    this.validateRights();
+    this.setState({ allGroups: tmpGroups });
+    this.filterAddedGroups(tmpGroups);
   };
 
   filterAddedGroups = groupData => {
@@ -174,6 +194,8 @@ class NewDocType extends Component {
       notAddedGroups: notAdded,
       addedGroups: added
     });
+
+    this.validateRights(added);
   };
 
   render() {

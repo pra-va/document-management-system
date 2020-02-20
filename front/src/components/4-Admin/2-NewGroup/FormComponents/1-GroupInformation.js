@@ -8,22 +8,24 @@ var GroupInformation = props => {
   var [groupNameExists, setGroupNameExists] = useState(false);
   var [descriptionValidation, setDescriptionValidation] = useState(true);
 
-  const checkIfGroupNameExists = groupName => {
-    if (groupName.length > 0) {
+  const handleGroupNameChange = event => {
+    event.persist();
+    props.handleGroupNameChange(event);
+    if (event.target.value.length > 0) {
       axios
-        .get(serverUrl + "group/" + groupName + "/exists")
+        .get(serverUrl + "group/" + event.target.value + "/exists")
         .then(response => {
           setGroupNameExists(response.data);
+          if (response.data) {
+            event.target.setCustomValidity("Group name is taken.");
+          } else {
+            event.target.setCustomValidity("");
+          }
         })
         .catch(error => {
           console.log(error);
         });
     }
-  };
-
-  const handleGroupNameChange = event => {
-    props.handleGroupNameChange(event);
-    checkIfGroupNameExists(event.target.value);
   };
 
   const handleGroupDescriptionChange = event => {
@@ -49,7 +51,6 @@ var GroupInformation = props => {
         id={"inputGroupName"}
         labelName={"Group name:"}
         required={true}
-        asd
         type={"text"}
         placeholder={"Junior Java Programmers"}
         onChange={handleGroupNameChange}
@@ -58,7 +59,7 @@ var GroupInformation = props => {
         groupNameExists={groupNameExists}
       />
 
-      <div className="form-group row">
+      <div className="form-group row mt-3">
         <label
           htmlFor="inputGroupDescription"
           className="col-sm-2 col-form-label"

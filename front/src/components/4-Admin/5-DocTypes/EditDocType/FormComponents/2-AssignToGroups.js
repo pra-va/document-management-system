@@ -9,7 +9,8 @@ class Groups extends Component {
     super(props);
     this.state = {
       tableData: props.tableData,
-      groupsData: []
+      groupsData: [],
+      docTypeData: null
     };
   }
 
@@ -21,6 +22,20 @@ class Groups extends Component {
       this.setState({ tableData: this.props.tableData });
     }
   }
+
+  fetchDocTypeData = () => {
+    if (!this.state.docTypeData) {
+      axios
+        .get(serverUrl + "doct/" + this.props.owner)
+        .then(response => {
+          this.setState({ docTypeData: response.data });
+          this.props.setUpDocTypeData(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
 
   fetchGroupsData = () => {
     axios
@@ -34,6 +49,7 @@ class Groups extends Component {
   };
 
   componentDidMount() {
+    this.fetchDocTypeData();
     this.fetchGroupsData();
     this.props.cleanUpCreateAndSignLists();
   }
@@ -48,6 +64,7 @@ class Groups extends Component {
         </div>
 
         <Table
+          id={"editDocTypeAssignGroups"}
           dataFields={this.dataFields}
           columnNames={this.columnNames}
           tableData={this.state.tableData}

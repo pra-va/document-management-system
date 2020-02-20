@@ -126,7 +126,7 @@ class UserInformation extends Component {
         <div className="form-group row">
           <div className="col-sm-2"></div>
           <div className="col-sm-10">
-            <div className="form-check d-flex justify-content-start">
+            <div className="form-check d-flex justify-content-start mt-3">
               <label
                 className="form-check-label"
                 htmlFor="checkBoxShowPassword"

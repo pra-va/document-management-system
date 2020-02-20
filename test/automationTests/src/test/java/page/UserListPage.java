@@ -21,11 +21,19 @@ public class UserListPage extends MainPage {
 	// @FindBy(xpath = "//*[@aria-label='Search']")
 	// private WebElement specificUserEditViewButton;
 
+	/* CLICK BUTTONS */
+
+	public void clickEditSpecificUserButton(String user) {
+		driver.findElement(By.xpath("//td[contains(text(),'" + user + "')]/..//td[6]//button")).click();
+	}
+
+
 	/* SEND KEYS */
 
 	public void sendKeysSearchForUser(String userInformation) {
 		searchField.sendKeys(userInformation);
 	}
+
 
 	/* CLICK BUTTONS */
 
@@ -54,3 +62,4 @@ public class UserListPage extends MainPage {
 	}
 		
 }
+

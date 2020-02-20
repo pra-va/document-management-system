@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lt.vtmc.documents.model.DocType;
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.model.User;
 
