@@ -2,7 +2,8 @@
 
 <suite name="brokenLinks">
 	<test name="brokenLinks">
-		<parameter name="userName" value="user" />
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
 		<classes>
 			<class name="test.BrokenLinksTest"/>
 		</classes>

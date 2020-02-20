@@ -7,7 +7,7 @@
 		<parameter name="" value="" />
 		<parameter name="" value="" />
 		<classes>
-			<class name="test.newUserCreationTest"/>
+			<class name="test.newUserCreationTests"/>
 		</classes>
 	</test>
 </suite>
