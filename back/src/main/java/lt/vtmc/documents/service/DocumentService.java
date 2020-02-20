@@ -1,6 +1,5 @@
 package lt.vtmc.documents.service;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lt.vtmc.docTypes.dao.DocTypeRepository;
+import lt.vtmc.documents.Status;
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
@@ -68,5 +68,23 @@ public class DocumentService {
 		document.setAuthor(null);
 		document.setdType(null);
 		docRepo.delete(document);
+	}
+	
+	public void setStatusPateiktas(String doc) {
+		Document tmp = findDocumentByName(doc);
+		tmp.setStatus(Status.PATEIKTAS);
+		docRepo.save(tmp);
+	}
+	
+	public void setStatusPriimtas(String doc) {
+		Document tmp = findDocumentByName(doc);
+		tmp.setStatus(Status.PRIIMTAS);
+		docRepo.save(tmp);
+	}
+	
+	public void setStatusAtmestas(String doc) {
+		Document tmp = findDocumentByName(doc);
+		tmp.setStatus(Status.ATMESTAS);
+		docRepo.save(tmp);
 	}
 }
