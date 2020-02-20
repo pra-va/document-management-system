@@ -37,8 +37,8 @@ public class MainPage extends AbstractPage {
 
 	@FindBy(id = "showCreateDoc")
 	private WebElement buttonAdminNewDocType;
-	
-	@FindBy(id = "")
+
+	@FindBy(xpath = "//a[contains(text(),'Document Types')]")
 	private WebElement buttonAdminDocTypes;
 
 	@FindBy(xpath = "//a[contains(text(),'Users')]")
@@ -100,6 +100,14 @@ public class MainPage extends AbstractPage {
 		this.buttonLogout.click();
 	}
 
+	public void clickAdminNewDocTypeButton() {
+		this.buttonAdminNewDocType.click();
+	}
+
+	public void clickAdminDocTypesButton() {
+		this.buttonAdminDocTypes.click();
+	}
+
 	/* OTHER METHODS */
 
 	public void waitForVisibility(WebElement element) {
@@ -107,7 +115,7 @@ public class MainPage extends AbstractPage {
 	}
 
 	public void navigateToMainPage() {
-		this.clickDmsButton();
+		driver.get("http://akademijait.vtmc.lt:8180/dvs/home");
 	}
 
 	public void waitForAdminButton() {

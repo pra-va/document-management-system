@@ -2,9 +2,12 @@ package page;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminNewDocTypePage extends AbstractPage {
 
@@ -15,7 +18,7 @@ public class AdminNewDocTypePage extends AbstractPage {
 	/* FIELDS */
 
 	@FindBy(id = "groupNameInput")
-	private WebElement groupNameField;
+	private WebElement docTypeNameField;
 
 	@FindBy(xpath = "//*[@aria-label='Search']")
 	private List<WebElement> searchFields;
@@ -38,13 +41,37 @@ public class AdminNewDocTypePage extends AbstractPage {
 		this.buttonCreate.click();
 	}
 
+	public void clickAddSpecificGroupButton(String groupName) {
+		driver.findElement(By.xpath(
+				"//div[@id='newDocTypeAssignToGroups']//td[contains(text(),'" + groupName + "')]/..//td[3]//button"))
+				.click();
+	}
+
+	public void clickCreateDocRigthsCheckBox(String sameGroupName) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//input[@id='createRightsFor:" + sameGroupName + "']")));
+		driver.findElement(By.xpath("//input[@id='createRightsFor:" + sameGroupName + "']")).click();
+	}
+
+	public void clickSignDocRigthsCheckBox(String sameGroupName) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//input[@id='signRightsFor:" + sameGroupName + "']")));
+		driver.findElement(By.xpath("//input[@id='signRightsFor:" + sameGroupName + "']")).click();
+	}
+
 	/* SEND KEYS */
 
-	public void sendKeysSearchAssignNewDocType(String groupName) {
-		searchFields.get(0).sendKeys(groupName);
+	public void sendKeysDocTypeName(String name) {
+		this.docTypeNameField.sendKeys(name);
 	}
 
 	public void sendKeysSearchSetRigths(String groupName) {
 		searchFields.get(1).sendKeys(groupName);
+	}
+
+	/* OTHER METHODS */
+
+	public void waitForCreateButton() {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.elementToBeClickable(this.buttonCreate));
 	}
 }

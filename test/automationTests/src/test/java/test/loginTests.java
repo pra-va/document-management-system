@@ -5,6 +5,8 @@ import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import page.LoginPage;
@@ -20,11 +22,17 @@ public class loginTests extends AbstractTest {
 		mainPage = new MainPage(driver);
 	}
 
-	@Test(groups = { "loginTests" }, priority = 1, enabled = true)
-	public void adminLoginTest() {
+	@AfterClass
+	public void after() {
 		loginPage.clearLoginFields();
-		loginPage.sendKeysUserName(admin.getUserName());
-		loginPage.sendKeysPassword(admin.getPassWord());
+	}
+
+	@Parameters({ "adminUserName", "adminPasswrod" })
+	@Test(groups = { "loginTests" }, priority = 2, enabled = true)
+	public void adminLoginTest(String p1, String p2) {
+		loginPage.clearLoginFields();
+		loginPage.sendKeysUserName(p1);
+		loginPage.sendKeysPassword(p2);
 		loginPage.clickButtonLogin();
 		mainPage.waitForAdminButton();
 		assertTrue(driver.findElement(By.xpath("//a[contains(text(),'Admin')]")).isDisplayed(),
@@ -35,11 +43,12 @@ public class loginTests extends AbstractTest {
 				"You should no be able to navigate back after logging out");
 	}
 
-	@Test(groups = { "loginTests" }, priority = 2, enabled = true)
-	public void userLoginTest() {
+	@Parameters({ "userUserName", "userPassword" })
+	@Test(groups = { "loginTests" }, priority = 3, enabled = true)
+	public void userLoginTest(String p1, String p2) {
 		loginPage.clearLoginFields();
-		loginPage.sendKeysUserName(user.getUserName());
-		loginPage.sendKeysPassword(user.getPassWord());
+		loginPage.sendKeysUserName(p1);
+		loginPage.sendKeysPassword(p2);
 		loginPage.clickButtonLogin();
 		mainPage.waitForLogoutButton();
 		assertFalse(driver.findElements(By.xpath("//a[contains(text(),'Admin')]")).size() == 1,
@@ -52,6 +61,7 @@ public class loginTests extends AbstractTest {
 
 	@Test(groups = { "loginTests" }, priority = 0, enabled = true)
 	public void emptyLoginFieldsTest() {
+		loginPage.clearLoginFields();
 		loginPage.waitForLoginButton();
 		loginPage.clickButtonLogin();
 		loginPage.waitForLoginButton();
@@ -60,11 +70,13 @@ public class loginTests extends AbstractTest {
 				"Incorrect Username or Password! text is not displayed");
 	}
 
-	@Test(groups = { "loginTests" }, priority = 0, enabled = true)
-	public void wrongLoginTest() {
+	@Parameters({ "userNameWrong", "passwordWrong" })
+	@Test(groups = { "loginTests" }, priority = 1, enabled = true)
+	public void wrongLoginTest(String p1, String p2) {
+		loginPage.clearLoginFields();
 		loginPage.waitForLoginButton();
-		loginPage.sendKeysUserName(wrongInfo.getUserName());
-		loginPage.sendKeysPassword(wrongInfo.getPassWord());
+		loginPage.sendKeysUserName(p1);
+		loginPage.sendKeysPassword(p2);
 		loginPage.clickButtonLogin();
 		loginPage.waitForLoginButton();
 		assertTrue(

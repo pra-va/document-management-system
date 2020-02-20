@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [newGriupTests]">
+  <test thread-count="5" name="newGroupTests(failed)">
+    <parameter name="docTypeName" value="Resignation letter"/>
+    <parameter name="groupName" value="Project managers"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers."/>
+    <parameter name="adminPasswrod" value="adminadmin"/>
+    <classes>
+      <class name="test.NewGroupTests">
+        <methods>
+          <include name="afterTest"/>
+          <include name="beforeSuite"/>
+          <include name="preconitions"/>
+          <include name="createGroupTest"/>
+          <include name="navigateToNewGroupPage"/>
+          <include name="groupWithoutNameTest"/>
+          <include name="userInGroupTest"/>
+          <include name="afterSuite"/>
+        </methods>
+      </class> <!-- test.NewGroupTests -->
+    </classes>
+  </test> <!-- newGroupTests(failed) -->
+</suite> <!-- Failed suite [newGriupTests] -->

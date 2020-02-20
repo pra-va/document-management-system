@@ -3,13 +3,13 @@ package test;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.List;
-
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterGroups;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import page.AdminNewGroupPage;
@@ -18,7 +18,6 @@ import page.GroupListPage;
 import page.LoginPage;
 import page.MainPage;
 import page.UserListPage;
-import utilities.TestData;
 
 public class NewGroupTests extends AbstractTest {
 	LoginPage loginPage;
@@ -27,7 +26,6 @@ public class NewGroupTests extends AbstractTest {
 	UserListPage userPage;
 	AdminNewUserPage newUserPage;
 	GroupListPage groupListPage;
-	List<String> description;
 
 	@BeforeClass
 	public void preconitions() throws IOException {
@@ -37,14 +35,20 @@ public class NewGroupTests extends AbstractTest {
 		userPage = new UserListPage(driver);
 		newUserPage = new AdminNewUserPage(driver);
 		groupListPage = new GroupListPage(driver);
-		description = TestData.getTestData("src/test/resources/groupDescription.txt");
 	}
 
+	@Parameters({ "adminUserName", "adminPasswrod" })
 	@BeforeGroups("createGroup")
-	public void login() {
-		loginPage.sendKeysUserName(admin.getUserName());
-		loginPage.sendKeysPassword(admin.getPassWord());
+	public void login(String p1, String p2) {
+		loginPage.sendKeysUserName(p1);
+		loginPage.sendKeysPassword(p2);
 		loginPage.clickButtonLogin();
+	}
+
+	@AfterGroups("createGroup")
+	public void logout() {
+		mainPage.waitForLogoutButton();
+		mainPage.clickLogoutButton();
 	}
 
 	@BeforeMethod
@@ -59,25 +63,26 @@ public class NewGroupTests extends AbstractTest {
 		mainPage.navigateToMainPage();
 	}
 
-	@Test(groups = { "createGroup" }, priority = 1, enabled = true)
-	public void createGroupTest() {
-		groupPage.sendKeysGroupName("Junior developer");
-		groupPage.sendKeysGroupDescription(description.get(0));
-		groupPage.clickAddSpecificUserButton("admin");
-		groupPage.clickAddSpecificDocTypeButton("test");
-		groupPage.clickCreateDocRigthsCheckBox("test");
-		groupPage.clickSignDocRigthsCheckBox("test");
+	@Parameters({ "adminUserName", "groupName", "groupDescription", "docTypeName" })
+	@Test(groups = { "createGroup" }, priority = 0, enabled = true)
+	public void createGroupTest(String p1, String p2, String p3, String p4) {
+		groupPage.sendKeysGroupName(p2);
+		groupPage.sendKeysGroupDescription(p3);
+		groupPage.clickAddSpecificUserButton(p1);
+		groupPage.clickAddSpecificDocTypeButton(p4);
+		groupPage.clickCreateDocRigthsCheckBox(p4);
+		groupPage.clickSignDocRigthsCheckBox(p4);
 		// groupPage.clickCreateButton();
 		groupPage.clickCancelButton();
 		mainPage.waitForAdminButton();
 		mainPage.clickAdminButton();
 		mainPage.clickAdminGroupsButton();
 		mainPage.waitForAdminButton();
-		assertTrue(driver.findElement(By.xpath("//td[contains(text(), 'Junior developer')]")).isDisplayed(),
+		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]")).isDisplayed(),
 				"Created group name isn't displayed or group wasn't created");
 	}
 
-	@Test(groups = { "createGroup" }, priority = 0, enabled = true)
+	@Test(groups = { "createGroup" }, priority = 1, enabled = true)
 	public void groupWithoutNameTest() {
 		groupPage.clickCreateButton();
 		assertTrue(driver.findElement(By.xpath("//div[contains(text(), 'New Group')]")).isDisplayed(),
@@ -85,17 +90,17 @@ public class NewGroupTests extends AbstractTest {
 		groupPage.clickCancelButton();
 	}
 
+	@Parameters({ "adminUserName", "groupName" })
 	@Test(groups = { "createGroup" }, priority = 2, enabled = true)
-	public void userInGroupTest() throws InterruptedException {
+	public void userInGroupTest(String p1, String p2) {
 		groupPage.clickCancelButton();
 		mainPage.waitForAdminButton();
 		mainPage.clickAdminButton();
 		mainPage.clickAdminUsersButton();
 		mainPage.waitForAdminButton();
-		userPage.clickEditSpecificUserButton("admin");
-		newUserPage.waitForcancelButton();
-		assertTrue(driver
-				.findElement(By.xpath("//div[@id='newUserAddedGroups']//td[contains(text(), 'Junior developer')]"))
+		userPage.clickEditSpecificUserButton(p1);
+		newUserPage.waitForCancelButton();
+		assertTrue(driver.findElement(By.xpath("//div[@id='newUserAddedGroups']//td[contains(text(), '" + p2 + "')]"))
 				.isDisplayed(), "User was not added to the group correctly");
 		groupPage.clickCancelButton();
 	}
@@ -111,6 +116,6 @@ public class NewGroupTests extends AbstractTest {
 		mainPage.waitForAdminButton();
 		mainPage.clickAdminButton();
 		mainPage.clickAdminGroupsButton();
-		groupListPage.clickEditSpecificGroupButton("juniors");
+		groupListPage.clickEditSpecificGroupButton("");
 	}
 }

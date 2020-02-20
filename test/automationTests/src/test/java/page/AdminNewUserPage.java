@@ -114,13 +114,12 @@ public class AdminNewUserPage extends AbstractPage {
 
 	/* OTHER METHODS */
 
-	public void waitForcancelButton() {
+	public void waitForCancelButton() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(this.buttonCancel));
 	}
 
 	public void clickAddSpecificGroupButton(String groupName) {
 		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
-
 	}
 
 //	public void clickRemoveSpecificGroupButton(String groupName) {

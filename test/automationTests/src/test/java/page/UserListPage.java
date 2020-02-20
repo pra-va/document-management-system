@@ -21,7 +21,7 @@ public class UserListPage extends MainPage {
 	/* CLICK BUTTONS */
 
 	public void clickEditSpecificUserButton(String user) {
-		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[6]//button")).click();
+		driver.findElement(By.xpath("//td[contains(text(),'" + user + "')]/..//td[6]//button")).click();
 	}
 
 	/* SEND KEYS */

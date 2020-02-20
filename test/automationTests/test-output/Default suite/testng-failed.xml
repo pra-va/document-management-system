@@ -3,16 +3,16 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="test.NewGroupTests">
+      <class name="test.NewDocTypeTests">
         <methods>
-          <include name="afterTest"/>
-          <include name="closeBrowser"/>
+          <include name="createNewDocTypeTest"/>
+          <include name="docTypeGroupsTest"/>
+          <include name="beforeSuite"/>
           <include name="preconitions"/>
-          <include name="createGroupTest"/>
-          <include name="navigateToNewGroupPage"/>
-          <include name="setUp"/>
+          <include name="docTypeNoNameTest"/>
+          <include name="afterSuite"/>
         </methods>
-      </class> <!-- test.NewGroupTests -->
+      </class> <!-- test.NewDocTypeTests -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

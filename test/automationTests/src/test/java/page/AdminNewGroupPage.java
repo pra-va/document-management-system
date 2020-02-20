@@ -86,4 +86,10 @@ public class AdminNewGroupPage extends AbstractPage {
 	public void sendKeysSearchUserToRemove(String groupName) {
 		searchFields.get(1).sendKeys(groupName);
 	}
+
+	/* OTHER METHODS */
+
+	public void waitForcancelButton() {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(this.buttonCancel));
+	}
 }

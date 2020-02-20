@@ -1,47 +1,322 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+<testng-results skipped="0" failed="0" ignored="2" total="14" passed="12">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="15584" started-at="2020-02-17T10:56:13Z" finished-at="2020-02-17T10:56:28Z">
+  <suite name="brokenLinks" duration-ms="3969" started-at="2020-02-20T07:21:36Z" finished-at="2020-02-20T07:21:40Z">
     <groups>
-      <group name="loginTests">
-        <method signature="loginTests.adminLoginTest()[pri:1, instance:test.loginTests@d8355a8]" name="adminLoginTest" class="test.loginTests"/>
-        <method signature="loginTests.emptyLoginFieldsTest()[pri:0, instance:test.loginTests@d8355a8]" name="emptyLoginFieldsTest" class="test.loginTests"/>
-        <method signature="loginTests.userLoginTest()[pri:2, instance:test.loginTests@d8355a8]" name="userLoginTest" class="test.loginTests"/>
-        <method signature="loginTests.wrongLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="wrongLoginTest" class="test.loginTests"/>
-      </group> <!-- loginTests -->
+      <group name="brokenLinks">
+        <method signature="BrokenLinksTest.brokeButtonsTest()[pri:0, instance:test.BrokenLinksTest@1ce92674]" name="brokeButtonsTest" class="test.BrokenLinksTest"/>
+        <method signature="BrokenLinksTest.brokenLinksTest()[pri:1, instance:test.BrokenLinksTest@1ce92674]" name="brokenLinksTest" class="test.BrokenLinksTest"/>
+      </group> <!-- brokenLinks -->
     </groups>
-    <test name="Default test" duration-ms="15584" started-at="2020-02-17T10:56:13Z" finished-at="2020-02-17T10:56:28Z">
-      <class name="test.loginTests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:test.loginTests@d8355a8]" name="setUp" is-config="true" duration-ms="11905" started-at="2020-02-17T10:56:13Z" finished-at="2020-02-17T10:56:25Z">
+    <test name="brokenLinks" duration-ms="3969" started-at="2020-02-20T07:21:36Z" finished-at="2020-02-20T07:21:40Z">
+      <class name="test.BrokenLinksTest">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.BrokenLinksTest@1ce92674]" name="beforeSuite" is-config="true" duration-ms="9819" started-at="2020-02-20T07:21:26Z" finished-at="2020-02-20T07:21:36Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="preconditions()[pri:0, instance:test.loginTests@d8355a8]" name="preconditions" is-config="true" duration-ms="35" started-at="2020-02-17T10:56:25Z" finished-at="2020-02-17T10:56:25Z">
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.BrokenLinksTest@1ce92674]" name="preconitions" is-config="true" duration-ms="2" started-at="2020-02-20T07:21:36Z" finished-at="2020-02-20T07:21:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preconitions -->
+        <test-method status="PASS" signature="login()[pri:0, instance:test.BrokenLinksTest@1ce92674]" name="login" is-config="true" duration-ms="296" started-at="2020-02-20T07:21:36Z" finished-at="2020-02-20T07:21:36Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method status="PASS" signature="brokeButtonsTest()[pri:0, instance:test.BrokenLinksTest@1ce92674]" name="brokeButtonsTest" duration-ms="2143" started-at="2020-02-20T07:21:36Z" finished-at="2020-02-20T07:21:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- brokeButtonsTest -->
+        <test-method status="PASS" signature="brokenLinksTest()[pri:1, instance:test.BrokenLinksTest@1ce92674]" name="brokenLinksTest" duration-ms="1424" started-at="2020-02-20T07:21:38Z" finished-at="2020-02-20T07:21:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- brokenLinksTest -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:test.BrokenLinksTest@1ce92674]" name="logout" is-config="true" duration-ms="101" started-at="2020-02-20T07:21:40Z" finished-at="2020-02-20T07:21:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logout -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.BrokenLinksTest@1ce92674]" name="afterSuite" is-config="true" duration-ms="666" started-at="2020-02-20T07:21:40Z" finished-at="2020-02-20T07:21:41Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- test.BrokenLinksTest -->
+    </test> <!-- brokenLinks -->
+  </suite> <!-- brokenLinks -->
+  <suite name="regressionTests" duration-ms="0" started-at="2020-02-20T07:21:41Z" finished-at="2020-02-20T07:21:41Z">
+    <groups>
+    </groups>
+  </suite> <!-- regressionTests -->
+  <suite name="newDocTypeTests" duration-ms="3486" started-at="2020-02-20T07:21:22Z" finished-at="2020-02-20T07:21:25Z">
+    <groups>
+      <group name="newDocType">
+        <method signature="NewDocTypeTests.createNewDocTypeTest(java.lang.String, java.lang.String)[pri:0, instance:test.NewDocTypeTests@42dafa95]" name="createNewDocTypeTest" class="test.NewDocTypeTests"/>
+        <method signature="NewDocTypeTests.docTypeGroupsTest(java.lang.String)[pri:2, instance:test.NewDocTypeTests@42dafa95]" name="docTypeGroupsTest" class="test.NewDocTypeTests"/>
+        <method signature="NewDocTypeTests.docTypeNoNameTest()[pri:1, instance:test.NewDocTypeTests@42dafa95]" name="docTypeNoNameTest" class="test.NewDocTypeTests"/>
+      </group> <!-- newDocType -->
+    </groups>
+    <test name="newDocTypeTests" duration-ms="3486" started-at="2020-02-20T07:21:22Z" finished-at="2020-02-20T07:21:25Z">
+      <class name="test.NewDocTypeTests">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.NewDocTypeTests@42dafa95]" name="beforeSuite" is-config="true" duration-ms="9801" started-at="2020-02-20T07:21:12Z" finished-at="2020-02-20T07:21:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.NewDocTypeTests@42dafa95]" name="preconitions" is-config="true" duration-ms="5" started-at="2020-02-20T07:21:22Z" finished-at="2020-02-20T07:21:22Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preconitions -->
+        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.NewDocTypeTests@42dafa95]" name="login" is-config="true" duration-ms="351" started-at="2020-02-20T07:21:22Z" finished-at="2020-02-20T07:21:22Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[adminadmin]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method status="PASS" signature="createNewDocTypeTest(java.lang.String, java.lang.String)[pri:0, instance:test.NewDocTypeTests@42dafa95]" name="createNewDocTypeTest" duration-ms="2108" started-at="2020-02-20T07:21:22Z" finished-at="2020-02-20T07:21:24Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Resignation letter]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Project managers]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createNewDocTypeTest -->
+        <test-method status="PASS" signature="docTypeNoNameTest()[pri:1, instance:test.NewDocTypeTests@42dafa95]" name="docTypeNoNameTest" duration-ms="596" started-at="2020-02-20T07:21:24Z" finished-at="2020-02-20T07:21:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- docTypeNoNameTest -->
+        <test-method status="PASS" signature="docTypeGroupsTest(java.lang.String)[pri:2, instance:test.NewDocTypeTests@42dafa95]" name="docTypeGroupsTest" duration-ms="326" started-at="2020-02-20T07:21:25Z" finished-at="2020-02-20T07:21:25Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Resignation letter]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- docTypeGroupsTest -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:test.NewDocTypeTests@42dafa95]" name="logout" is-config="true" duration-ms="96" started-at="2020-02-20T07:21:25Z" finished-at="2020-02-20T07:21:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logout -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.NewDocTypeTests@42dafa95]" name="afterSuite" is-config="true" duration-ms="671" started-at="2020-02-20T07:21:25Z" finished-at="2020-02-20T07:21:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- test.NewDocTypeTests -->
+    </test> <!-- newDocTypeTests -->
+  </suite> <!-- newDocTypeTests -->
+  <suite name="loginTests" duration-ms="3329" started-at="2020-02-20T07:20:51Z" finished-at="2020-02-20T07:20:54Z">
+    <groups>
+      <group name="loginTests">
+        <method signature="loginTests.adminLoginTest(java.lang.String, java.lang.String)[pri:2, instance:test.loginTests@68c4039c]" name="adminLoginTest" class="test.loginTests"/>
+        <method signature="loginTests.emptyLoginFieldsTest()[pri:0, instance:test.loginTests@68c4039c]" name="emptyLoginFieldsTest" class="test.loginTests"/>
+        <method signature="loginTests.userLoginTest(java.lang.String, java.lang.String)[pri:3, instance:test.loginTests@68c4039c]" name="userLoginTest" class="test.loginTests"/>
+        <method signature="loginTests.wrongLoginTest(java.lang.String, java.lang.String)[pri:1, instance:test.loginTests@68c4039c]" name="wrongLoginTest" class="test.loginTests"/>
+      </group> <!-- loginTests -->
+    </groups>
+    <test name="loginTests" duration-ms="3329" started-at="2020-02-20T07:20:51Z" finished-at="2020-02-20T07:20:54Z">
+      <class name="test.loginTests">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.loginTests@68c4039c]" name="beforeSuite" is-config="true" duration-ms="11225" started-at="2020-02-20T07:20:40Z" finished-at="2020-02-20T07:20:51Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="preconditions()[pri:0, instance:test.loginTests@68c4039c]" name="preconditions" is-config="true" duration-ms="33" started-at="2020-02-20T07:20:51Z" finished-at="2020-02-20T07:20:51Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preconditions -->
-        <test-method status="PASS" signature="emptyLoginFieldsTest()[pri:0, instance:test.loginTests@d8355a8]" name="emptyLoginFieldsTest" duration-ms="300" started-at="2020-02-17T10:56:25Z" finished-at="2020-02-17T10:56:25Z">
+        <test-method status="PASS" signature="emptyLoginFieldsTest()[pri:0, instance:test.loginTests@68c4039c]" name="emptyLoginFieldsTest" duration-ms="438" started-at="2020-02-20T07:20:51Z" finished-at="2020-02-20T07:20:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- emptyLoginFieldsTest -->
-        <test-method status="PASS" signature="wrongLoginTest()[pri:0, instance:test.loginTests@d8355a8]" name="wrongLoginTest" duration-ms="406" started-at="2020-02-17T10:56:25Z" finished-at="2020-02-17T10:56:25Z">
+        <test-method status="PASS" signature="wrongLoginTest(java.lang.String, java.lang.String)[pri:1, instance:test.loginTests@68c4039c]" name="wrongLoginTest" duration-ms="507" started-at="2020-02-20T07:20:52Z" finished-at="2020-02-20T07:20:52Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[qwerty]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[qwerty]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- wrongLoginTest -->
-        <test-method status="PASS" signature="adminLoginTest()[pri:1, instance:test.loginTests@d8355a8]" name="adminLoginTest" duration-ms="1118" started-at="2020-02-17T10:56:25Z" finished-at="2020-02-17T10:56:27Z">
+        <test-method status="PASS" signature="adminLoginTest(java.lang.String, java.lang.String)[pri:2, instance:test.loginTests@68c4039c]" name="adminLoginTest" duration-ms="1088" started-at="2020-02-20T07:20:52Z" finished-at="2020-02-20T07:20:53Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[adminadmin]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- adminLoginTest -->
-        <test-method status="PASS" signature="userLoginTest()[pri:2, instance:test.loginTests@d8355a8]" name="userLoginTest" duration-ms="1099" started-at="2020-02-17T10:56:27Z" finished-at="2020-02-17T10:56:28Z">
+        <test-method status="PASS" signature="userLoginTest(java.lang.String, java.lang.String)[pri:3, instance:test.loginTests@68c4039c]" name="userLoginTest" duration-ms="1126" started-at="2020-02-20T07:20:53Z" finished-at="2020-02-20T07:20:54Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[user]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[useruser]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- userLoginTest -->
-        <test-method status="PASS" signature="closeBrowser()[pri:0, instance:test.loginTests@d8355a8]" name="closeBrowser" is-config="true" duration-ms="667" started-at="2020-02-17T10:56:28Z" finished-at="2020-02-17T10:56:28Z">
+        <test-method status="PASS" signature="after()[pri:0, instance:test.loginTests@68c4039c]" name="after" is-config="true" duration-ms="96" started-at="2020-02-20T07:20:54Z" finished-at="2020-02-20T07:20:54Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- closeBrowser -->
+        </test-method> <!-- after -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.loginTests@68c4039c]" name="afterSuite" is-config="true" duration-ms="667" started-at="2020-02-20T07:20:54Z" finished-at="2020-02-20T07:20:55Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
       </class> <!-- test.loginTests -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+    </test> <!-- loginTests -->
+  </suite> <!-- loginTests -->
+  <suite name="newGrouTests" duration-ms="6430" started-at="2020-02-20T07:21:05Z" finished-at="2020-02-20T07:21:11Z">
+    <groups>
+      <group name="createGroup">
+        <method signature="NewGroupTests.createGroupTest(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:test.NewGroupTests@57fffcd7]" name="createGroupTest" class="test.NewGroupTests"/>
+        <method signature="NewGroupTests.groupWithoutNameTest()[pri:1, instance:test.NewGroupTests@57fffcd7]" name="groupWithoutNameTest" class="test.NewGroupTests"/>
+        <method signature="NewGroupTests.userInGroupTest(java.lang.String, java.lang.String)[pri:2, instance:test.NewGroupTests@57fffcd7]" name="userInGroupTest" class="test.NewGroupTests"/>
+      </group> <!-- createGroup -->
+    </groups>
+    <test name="newGroupTests" duration-ms="6430" started-at="2020-02-20T07:21:05Z" finished-at="2020-02-20T07:21:11Z">
+      <class name="test.NewGroupTests">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="beforeSuite" is-config="true" duration-ms="9762" started-at="2020-02-20T07:20:55Z" finished-at="2020-02-20T07:21:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="preconitions" is-config="true" duration-ms="11" started-at="2020-02-20T07:21:05Z" finished-at="2020-02-20T07:21:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preconitions -->
+        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.NewGroupTests@57fffcd7]" name="login" is-config="true" duration-ms="304" started-at="2020-02-20T07:21:05Z" finished-at="2020-02-20T07:21:05Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[adminadmin]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method status="PASS" signature="navigateToNewGroupPage()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="navigateToNewGroupPage" is-config="true" duration-ms="882" started-at="2020-02-20T07:21:05Z" finished-at="2020-02-20T07:21:06Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- navigateToNewGroupPage -->
+        <test-method status="PASS" signature="createGroupTest(java.lang.String, java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:test.NewGroupTests@57fffcd7]" name="createGroupTest" duration-ms="2057" started-at="2020-02-20T07:21:06Z" finished-at="2020-02-20T07:21:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Project managers]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Project managers who manage projects that need managing by the managers.]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Resignation letter]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createGroupTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="afterTest" is-config="true" duration-ms="217" started-at="2020-02-20T07:21:08Z" finished-at="2020-02-20T07:21:08Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="navigateToNewGroupPage()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="navigateToNewGroupPage" is-config="true" duration-ms="267" started-at="2020-02-20T07:21:08Z" finished-at="2020-02-20T07:21:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- navigateToNewGroupPage -->
+        <test-method status="PASS" signature="groupWithoutNameTest()[pri:1, instance:test.NewGroupTests@57fffcd7]" name="groupWithoutNameTest" duration-ms="453" started-at="2020-02-20T07:21:09Z" finished-at="2020-02-20T07:21:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- groupWithoutNameTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="afterTest" is-config="true" duration-ms="286" started-at="2020-02-20T07:21:09Z" finished-at="2020-02-20T07:21:09Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="navigateToNewGroupPage()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="navigateToNewGroupPage" is-config="true" duration-ms="276" started-at="2020-02-20T07:21:09Z" finished-at="2020-02-20T07:21:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- navigateToNewGroupPage -->
+        <test-method status="PASS" signature="userInGroupTest(java.lang.String, java.lang.String)[pri:2, instance:test.NewGroupTests@57fffcd7]" name="userInGroupTest" duration-ms="1324" started-at="2020-02-20T07:21:10Z" finished-at="2020-02-20T07:21:11Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Project managers]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- userInGroupTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="afterTest" is-config="true" duration-ms="247" started-at="2020-02-20T07:21:11Z" finished-at="2020-02-20T07:21:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="logout" is-config="true" duration-ms="99" started-at="2020-02-20T07:21:11Z" finished-at="2020-02-20T07:21:11Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logout -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.NewGroupTests@57fffcd7]" name="afterSuite" is-config="true" duration-ms="680" started-at="2020-02-20T07:21:11Z" finished-at="2020-02-20T07:21:12Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- test.NewGroupTests -->
+    </test> <!-- newGroupTests -->
+  </suite> <!-- newGrouTests -->
 </testng-results>
