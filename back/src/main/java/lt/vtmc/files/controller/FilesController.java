@@ -1,8 +1,7 @@
 package lt.vtmc.files.controller;
 
-import java.util.Arrays;
+
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +10,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lt.vtmc.documents.model.Document;
+import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.service.FileService;
 import lt.vtmc.user.controller.UserController;
 
@@ -75,9 +76,18 @@ public class FilesController {
 	 * @param fileName
 	 * @return
 	 */
-	@GetMapping("/api/file/{fileName}")
-	public ResponseEntity<Resource> downloadFileByFileName(String fileName) {
-		return fileService.downloadFileByName(fileName);
+	@GetMapping("/api/files/{fileUID}")
+	public ResponseEntity<Resource> downloadFileByFileName(@PathVariable("fileUID") String fileUID) {
+		return fileService.downloadFileByUID(fileUID);
 	}
 
+	@GetMapping("/api/files/allfileinfo/{username}")
+	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username){
+		return fileService.findAllFileDetailsByUsername(username);
+	}
+	
+	@GetMapping("/api/files/allfileinfo/{docname}")
+	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName){
+		return fileService.findAllFileDetailsByDocument(docName);
+	}
 }

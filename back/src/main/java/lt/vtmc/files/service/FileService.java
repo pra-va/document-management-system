@@ -1,6 +1,9 @@
 package lt.vtmc.files.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -17,9 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.model.Document;
+import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.files.dao.FilesRepository;
+import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.controller.UserController;
+import lt.vtmc.user.dao.UserRepository;
+import lt.vtmc.user.model.User;
 
 /**
  * Service layer for uploading and downloading files. Note that files that are
@@ -38,6 +45,12 @@ public class FileService {
 
 	@Autowired
 	private DocumentRepository documentRepository;
+	
+	@Autowired
+	private UserRepository userRepo;
+	
+	@Autowired
+	private DocumentService docService;
 	/**
 	 * This method saves single files to a database.
 	 * 
@@ -50,7 +63,7 @@ public class FileService {
 		byte[] bytes = file.getBytes();
 		String fileName = file.getOriginalFilename();
 		String fileType = file.getContentType();
-		File4DB file4db = new File4DB(fileName, fileType, bytes);
+		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID());
 		file4db.setDocument(doc);
 		List<File4DB> tmplist = doc.getFileList();
 		tmplist.add(file4db);
@@ -67,11 +80,35 @@ public class FileService {
 	 * @return
 	 */
 	@Transactional
-	public ResponseEntity<Resource> downloadFileByName(String fileName) {
-		File4DB file4db = filesRepository.findFile4dbByFileName(fileName);
+	public ResponseEntity<Resource> downloadFileByUID(String fileUID) {
+		File4DB file4db = filesRepository.findFile4dbByUID(fileUID);
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(file4db.getFileType()))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file4db.getFileName() + "\"")
 				.body(new ByteArrayResource(file4db.getData()));
 	}
 
+	public List<FileDetailsDTO> findAllFileDetailsByUsername(String username) {
+		List<Document> tmpList = docService.findAllDocumentsByUsername(username);
+		Set<File4DB> listToReturn = new HashSet<File4DB>();
+		for (Document document : tmpList) {
+			List<File4DB> tmp = document.getFileList();
+			listToReturn.addAll(tmp);
+		}
+		List<FileDetailsDTO> returnList = new ArrayList<FileDetailsDTO>();
+		for (File4DB file4db : listToReturn) {
+			returnList.add(new FileDetailsDTO(file4db));
+		}
+		return returnList;
+	}
+	
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String docName){
+		Document tmpDoc = docService.findDocumentByName(docName);
+		Set<File4DB> listToReturn = new HashSet<File4DB>();
+		listToReturn.addAll(tmpDoc.getFileList());
+		List<FileDetailsDTO> returnList = new ArrayList<FileDetailsDTO>();
+		for (File4DB file4db : listToReturn) {
+			returnList.add(new FileDetailsDTO(file4db));
+		}
+		return returnList;
+	}
 }
