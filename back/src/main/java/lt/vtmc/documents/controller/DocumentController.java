@@ -46,7 +46,7 @@ public class DocumentController {
 	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) { // ,
 																								// @RequestParam("Files")
 																								// MultipartFile[] files
-		if (docService.findDocumentByName(command.getName()) == null) {
+		if (docService.findDocumentByUID(command.getName()) == null) {
 			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
 					command.getDocType(), Instant.now().toString());
 //			if (files != null) {
@@ -65,7 +65,7 @@ public class DocumentController {
 	@PostMapping("/api/doc/upload/{docName}")
 	public void addFiles(@PathVariable("docName") String docName, @RequestParam("files") MultipartFile[] files) {
 		for (MultipartFile multipartFile : files) {
-			filesControl.uploadFiles(multipartFile, docService.findDocumentByName(docName));
+			filesControl.uploadFiles(multipartFile, docService.findDocumentByUID(docName));
 		}
 	}
 
@@ -74,9 +74,9 @@ public class DocumentController {
 		return docService.findAll();
 	}
 
-	@GetMapping(path = "/api/doc/{name}")
-	public DocumentDetailsDTO findDocument(@PathVariable("name") String name) {
-		return new DocumentDetailsDTO(docService.findDocumentByName(name));
+	@GetMapping(path = "/api/doc/{UID}")
+	public DocumentDetailsDTO findDocument(@PathVariable("UID") String UID) {
+		return new DocumentDetailsDTO(docService.findDocumentByUID(UID));
 	}
 
 //	@GetMapping(path = "/api/doc/{name}/exists")
@@ -87,27 +87,27 @@ public class DocumentController {
 //		return false;
 //	}
 
-	@DeleteMapping(path = "/api/doc/delete/{name}")
-	public ResponseEntity<String> deleteDocument(@PathVariable("name") String name) {
-		docService.deleteDocument(docService.findDocumentByName(name));
+	@DeleteMapping(path = "/api/doc/delete/{UID}")
+	public ResponseEntity<String> deleteDocument(@PathVariable("name") String UID) {
+		docService.deleteDocument(docService.findDocumentByUID(UID));
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/api/doc/submit/{name}")
-	public ResponseEntity<String> submitDocument(@PathVariable("name") String name) {
-		docService.setStatusPateiktas(name);
+	@PostMapping(path = "/api/doc/submit/{UID}")
+	public ResponseEntity<String> submitDocument(@PathVariable("UID") String UID) {
+		docService.setStatusPateiktas(UID);
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/api/doc/approve/{name}")
-	public ResponseEntity<String> approveDocument(@PathVariable("name") String name) {
-		docService.setStatusPriimtas(name);
+	@PostMapping(path = "/api/doc/approve/{UID}")
+	public ResponseEntity<String> approveDocument(@PathVariable("UID") String UID) {
+		docService.setStatusPriimtas(UID);
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 
-	@PostMapping(path = "/api/doc/reject/{name}")
-	public ResponseEntity<String> rejectDocument(@PathVariable("name") String name) {
-		docService.setStatusAtmestas(name);
+	@PostMapping(path = "/api/doc/reject/{UID}")
+	public ResponseEntity<String> rejectDocument(@PathVariable("UID") String UID) {
+		docService.setStatusAtmestas(UID);
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 }

@@ -1,5 +1,7 @@
 package lt.vtmc.files.service;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -101,8 +103,8 @@ public class FileService {
 		return returnList;
 	}
 	
-	public List<FileDetailsDTO> findAllFileDetailsByDocument(String docName){
-		Document tmpDoc = docService.findDocumentByName(docName);
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID){
+		Document tmpDoc = docService.findDocumentByUID(UID);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
 		listToReturn.addAll(tmpDoc.getFileList());
 		List<FileDetailsDTO> returnList = new ArrayList<FileDetailsDTO>();
@@ -110,5 +112,21 @@ public class FileService {
 			returnList.add(new FileDetailsDTO(file4db));
 		}
 		return returnList;
+	}
+
+	public void generateCSV(String UID) throws IOException {
+		File4DB tmpFile = filesRepository.findFile4dbByUID(UID);
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("File name: " + tmpFile.getFileName());
+		stringBuilder.append("File UID: " + tmpFile.getUID());
+		stringBuilder.append("File type: " + tmpFile.getFileType());
+		stringBuilder.append("Belongs to document: " + tmpFile.getDocument().getName());
+		stringBuilder.append("Document submitted on: " + tmpFile.getDocument().getDateSubmit());
+		
+		FileWriter writer = new FileWriter("~/test.csv");
+		writer.write(stringBuilder.toString());
+		writer.flush();
+		writer.close();
 	}
 }
