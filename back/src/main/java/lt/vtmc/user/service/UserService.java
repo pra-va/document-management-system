@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.Status;
+import lt.vtmc.documents.dao.DocumentRepository;
+import lt.vtmc.documents.dto.DocumentDetailsDTO;
+import lt.vtmc.documents.model.Document;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.dto.UserDetailsDTO;
@@ -37,6 +41,8 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private DocumentRepository docRepo;
 	/**
 	 * Will return User object based user found by
 	 * {@link lt.vtmc.security.service.UserService.findUserByUsername(String)}.
@@ -163,6 +169,29 @@ public class UserService implements UserDetailsService {
 		}
 		String [] uniqueList = Arrays.stream(list).distinct().toArray(String[]::new);
 		return uniqueList;
+	}
+
+	public List<DocumentDetailsDTO> getUserDocumentsToBeSigned(String username) {
+		User tmpUser = userRepository.findUserByUsername(username);
+		List<Group> tmpGroupList = tmpUser.getGroupList();
+		
+		List<DocType> tmpList = new ArrayList<DocType>();
+		for (Group group : tmpGroupList) {
+			tmpList.addAll(group.getDocTypesToApprove());
+		}
+		
+		List<Document> tmpListDoc = new ArrayList<Document>();
+		for (DocType dType : tmpList) {
+			tmpListDoc.addAll(docRepo.findAllBydType(dType));
+		}
+		
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		for (Document document : tmpListDoc) {
+			if (document.getStatus() == Status.PATEIKTAS) {
+				listToReturn.add(new DocumentDetailsDTO(document));
+			}
+		}
+		return listToReturn;
 	}
 
 }

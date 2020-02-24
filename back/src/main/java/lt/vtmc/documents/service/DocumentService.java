@@ -39,8 +39,8 @@ public class DocumentService {
 	 * 
 	 * @return Document
 	 */
-	public Document findDocumentByName(String name) {
-		return docRepo.findDocumentByName(name);
+	public Document findDocumentByUID(String UID) {
+		return docRepo.findDocumentByUID(UID);
 	}
 	
 	/**
@@ -72,20 +72,20 @@ public class DocumentService {
 		docRepo.delete(document);
 	}
 	
-	public void setStatusPateiktas(String doc) {
-		Document tmp = findDocumentByName(doc);
+	public void setStatusPateiktas(String UID) {
+		Document tmp = findDocumentByUID(UID);
 		tmp.setStatus(Status.PATEIKTAS);
 		docRepo.save(tmp);
 	}
 	
-	public void setStatusPriimtas(String doc) {
-		Document tmp = findDocumentByName(doc);
+	public void setStatusPriimtas(String UID) {
+		Document tmp = findDocumentByUID(UID);
 		tmp.setStatus(Status.PRIIMTAS);
 		docRepo.save(tmp);
 	}
 	
-	public void setStatusAtmestas(String doc) {
-		Document tmp = findDocumentByName(doc);
+	public void setStatusAtmestas(String UID) {
+		Document tmp = findDocumentByUID(UID);
 		tmp.setStatus(Status.ATMESTAS);
 		docRepo.save(tmp);
 	}
@@ -101,9 +101,18 @@ public class DocumentService {
 		return UID.toString();
 	}
 	
-	public List<Document> findAllDocumentsByUsername(String username){
+	public List<DocumentDetailsDTO> returnAllDocumentsByUsername(String username){
+		List<Document>tmpList = findAllDocumentsByUsername(username);
+		List<DocumentDetailsDTO>listToReturn = new ArrayList<DocumentDetailsDTO>();
+		for (Document document : tmpList) {
+			listToReturn.add(new DocumentDetailsDTO(document));
+		}
+		return listToReturn;
+		
+	}
+
+	public List<Document> findAllDocumentsByUsername(String username) {
 		User tmpUser = userRepo.findUserByUsername(username);
 		return tmpUser.getCreatedDocuments();
-		
 	}
 }

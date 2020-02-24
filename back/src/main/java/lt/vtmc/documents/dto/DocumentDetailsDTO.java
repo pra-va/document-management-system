@@ -32,6 +32,8 @@ public class DocumentDetailsDTO {
 	
 	private Status status;
 	
+	private String uid;
+	
 	@JsonIgnore
 	private User handler;
 
@@ -39,6 +41,14 @@ public class DocumentDetailsDTO {
 	private List<File4DB> fileList;
 	
 	
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
 	public List<File4DB> getFileList() {
 		return fileList;
 	}
@@ -147,6 +157,7 @@ public class DocumentDetailsDTO {
 		this.handler = document.getHandler();
 		this.status = document.getStatus();
 		this.fileList = document.getFileList();
+		this.uid = document.getUID();
 	}
 	
 	
