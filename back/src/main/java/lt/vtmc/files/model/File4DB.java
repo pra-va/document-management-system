@@ -32,13 +32,26 @@ public class File4DB {
 	@Lob
 	private byte[] data;
 
+	@Column(name = "UID")
+	private String UID;
+	
 	public File4DB() {
 	}
 
-	public File4DB(String fileName, String fileType, byte[] data) {
+	public File4DB(String fileName, String fileType, byte[] data, String UID) {
 		this.fileType = fileType;
 		this.fileName = fileName;
 		this.data = data;
+		this.UID = UID;
+	}
+
+	
+	public String getUID() {
+		return UID;
+	}
+
+	public void setUID(String uID) {
+		UID = uID;
 	}
 
 	public Document getDocument() {

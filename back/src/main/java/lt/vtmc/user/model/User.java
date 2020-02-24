@@ -82,6 +82,18 @@ public class User {
 	public User() {
 	}
 
+	public List<Document> getCreatedDocuments() {
+		return createdDocuments;
+	}
+	public void setCreatedDocuments(List<Document> createdDocuments) {
+		this.createdDocuments = createdDocuments;
+	}
+	public List<Document> getProcessedDocuments() {
+		return processedDocuments;
+	}
+	public void setProcessedDocuments(List<Document> processedDocuments) {
+		this.processedDocuments = processedDocuments;
+	}
 	/**
 	 * 
 	 * @return password

@@ -1,5 +1,6 @@
 package lt.vtmc.documents.service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.dao.UserRepository;
+import lt.vtmc.user.model.User;
 /**
  * Document service for creating and managing documents.
  * 
@@ -48,7 +50,7 @@ public class DocumentService {
 	 */
 	@Transactional
 	public Document createDocument(String name, String authorUsername, String description, String dType, String currentTime) {
-		Document newDocument = new Document(currentTime, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, description);
+		Document newDocument = new Document(currentTime, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, description, generateUID());
 		newDocument.setFileList(new ArrayList<File4DB>());
 		return docRepo.save(newDocument);
 	}
@@ -86,5 +88,22 @@ public class DocumentService {
 		Document tmp = findDocumentByName(doc);
 		tmp.setStatus(Status.ATMESTAS);
 		docRepo.save(tmp);
+	}
+	
+	public String generateUID() {
+		String tmp = Instant.now().toString();
+		StringBuilder UID = new StringBuilder();
+		for (int i = 0; i < tmp.length(); i++) {
+			if (Character.isDigit(tmp.charAt(i)) == true) {
+				UID.append(tmp.charAt(i));
+			}
+		}
+		return UID.toString();
+	}
+	
+	public List<Document> findAllDocumentsByUsername(String username){
+		User tmpUser = userRepo.findUserByUsername(username);
+		return tmpUser.getCreatedDocuments();
+		
 	}
 }
