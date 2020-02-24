@@ -2,6 +2,7 @@ package lt.vtmc.documents.service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lt.vtmc.docTypes.dao.DocTypeRepository;
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.Status;
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.model.File4DB;
+import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 /**
@@ -117,5 +120,22 @@ public class DocumentService {
 	public List<Document> findAllDocumentsByUsername(String username) {
 		User tmpUser = userRepo.findUserByUsername(username);
 		return tmpUser.getCreatedDocuments();
+	}
+
+	public List<DocumentDetailsDTO> findAllDocumentsToSignByUsername(String username) {
+		User tmpUser = userRepo.findUserByUsername(username);
+		List<Document>tmpList = findAllDocumentsByUsername(username);
+		List<DocType>docTypeListToApprove = new ArrayList<DocType>();
+		List<Group> tmpGroups = tmpUser.getGroupList();
+		for (Group group : tmpGroups) {
+			docTypeListToApprove.addAll(group.getDocTypesToApprove());
+		}
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		for (Document doc : tmpList) {
+			if (docTypeListToApprove.contains(doc.getdType()) == true) {
+				listToReturn.add(new DocumentDetailsDTO(doc));
+			}
+		}
+		return listToReturn;
 	}
 }
