@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lt.vtmc.documents.dto.CreateDocumentCommand;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
+import lt.vtmc.documents.model.Document;
 import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.files.controller.FilesController;
 
@@ -47,14 +48,14 @@ public class DocumentController {
 																								// @RequestParam("Files")
 																								// MultipartFile[] files
 
-		docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
+		Document newDoc = docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
 				command.getDocType(), Instant.now().toString());
 //			if (files != null) {
 //				addFiles(command.getName(), files);
 //			}
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
-		return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+		return new ResponseEntity<String>(newDoc.getUID(), HttpStatus.CREATED);
 
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
