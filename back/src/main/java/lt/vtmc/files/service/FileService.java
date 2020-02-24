@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -68,7 +69,7 @@ public class FileService {
 		byte[] bytes = file.getBytes();
 		String fileName = file.getOriginalFilename();
 		String fileType = file.getContentType();
-		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID());
+		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID(Instant.now().toString()));
 		file4db.setDocument(doc);
 		List<File4DB> tmplist = doc.getFileList();
 		tmplist.add(file4db);
@@ -151,5 +152,7 @@ public class FileService {
 		}
 		return files;
 	}
+	
+	
 
 }

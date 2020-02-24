@@ -82,7 +82,6 @@ public class FilesController {
 	}
 
 	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
-	@ResponseBody
 	public byte[] downloadFiles(HttpServletResponse response, @RequestParam("username") String username)
 			throws IOException {
 		response.setContentType("application/zip");

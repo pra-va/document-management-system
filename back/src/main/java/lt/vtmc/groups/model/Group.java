@@ -40,11 +40,11 @@ public class Group {
 	@Column(name = "description", length = 500)
 	private String description;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "GROUPS_CREATING", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "doc_id"))
 	private List<DocType> docTypesToCreate;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "GROUPS_APPROVING", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "doc_id"))
 	private List<DocType> docTypesToApprove;
 
