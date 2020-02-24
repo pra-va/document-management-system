@@ -1,7 +1,6 @@
 package lt.vtmc.files.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -72,12 +71,12 @@ public class FilesController {
 		return fileService.downloadFileByUID(fileUID);
 	}
 
-	@GetMapping("/api/files/allfileinfo/{username}")
+	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
 		return fileService.findAllFileDetailsByUsername(username);
 	}
 
-	@GetMapping("/api/files/allfileinfo/{docname}")
+	@GetMapping("/api/files/info/docname/{docname}")
 	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
 		return fileService.findAllFileDetailsByDocument(docName);
 	}
@@ -89,12 +88,7 @@ public class FilesController {
 		response.setContentType("application/zip");
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
-
-		List<FileDetailsDTO> usersFiles = findAllFIleDetailsByUsername(username);
-		List<Files> files = new ArrayList<>();
-		if (usersFiles != null) {
-
-		}
+		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
 
 	}
 }

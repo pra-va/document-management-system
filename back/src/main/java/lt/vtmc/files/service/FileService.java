@@ -31,7 +31,6 @@ import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.controller.UserController;
 import lt.vtmc.user.dao.UserRepository;
-import lt.vtmc.user.model.User;
 
 /**
  * Service layer for uploading and downloading files. Note that files that are
@@ -107,7 +106,7 @@ public class FileService {
 		return returnList;
 	}
 
-	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID){
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID) {
 		Document tmpDoc = docService.findDocumentByUID(UID);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
 		listToReturn.addAll(tmpDoc.getFileList());
@@ -120,14 +119,14 @@ public class FileService {
 
 	public void generateCSV(String UID) throws IOException {
 		File4DB tmpFile = filesRepository.findFile4dbByUID(UID);
-		
+
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("File name: " + tmpFile.getFileName());
 		stringBuilder.append("File UID: " + tmpFile.getUID());
 		stringBuilder.append("File type: " + tmpFile.getFileType());
 		stringBuilder.append("Belongs to document: " + tmpFile.getDocument().getName());
 		stringBuilder.append("Document submitted on: " + tmpFile.getDocument().getDateSubmit());
-		
+
 		FileWriter writer = new FileWriter("~/test.csv");
 		writer.write(stringBuilder.toString());
 		writer.flush();
@@ -136,12 +135,13 @@ public class FileService {
 
 	public List<File> findAllFilesByUsername(String username) {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+		System.out.println(usersFilesDetails.toString());
 		List<File> files = new ArrayList<>();
 		if (usersFilesDetails != null) {
 			for (FileDetailsDTO fileDetails : usersFilesDetails) {
 				File file = new File("/tmp/" + fileDetails.getFileName());
 				try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-					String contents = filesRepository.findbyuid //TODO
+					String contents = new String(filesRepository.findFile4dbByUID(fileDetails.getUID()).getData()); // TODO
 					writer.write(contents);
 					files.add(file);
 				} catch (IOException e) {
@@ -149,6 +149,7 @@ public class FileService {
 				}
 			}
 		}
+		return files;
 	}
 
 }
