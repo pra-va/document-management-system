@@ -125,6 +125,7 @@ class CreateDocument extends Component {
   handleUpload = event => {
     event.preventDefault();
     const data = new FormData();
+    let uid = "";
     var attachedFiles = this.state.attachedFilesTableValues;
     if (attachedFiles.length !== 0) {
       for (let i = 0; i < attachedFiles.length; i++) {
@@ -145,8 +146,11 @@ class CreateDocument extends Component {
     axios
       .post(serverUrl + "doc/create", postData)
       .then(response => {
+        uid = response.data;
+        console.log(uid);
+        console.log(serverUrl + "doc/upload/" + uid);
         axios
-          .post(serverUrl + "doc/upload/" + this.state.name, data, this.config)
+          .post(serverUrl + "doc/upload/" + uid, data)
           .then(response => {
             this.props.history.push("/dvs/documents");
           })
