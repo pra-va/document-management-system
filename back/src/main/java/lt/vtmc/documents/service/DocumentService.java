@@ -132,7 +132,7 @@ public class DocumentService {
 		}
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		for (Document doc : tmpList) {
-			if (docTypeListToApprove.contains(doc.getdType()) == true) {
+			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.PATEIKTAS) {
 				listToReturn.add(new DocumentDetailsDTO(doc));
 			}
 		}
