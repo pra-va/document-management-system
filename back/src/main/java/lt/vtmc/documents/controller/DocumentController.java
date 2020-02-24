@@ -43,11 +43,11 @@ public class DocumentController {
 	 * @param document details
 	 */
 	@PostMapping(path = "/api/doc/create")
+
 	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) {
 		if (docService.findDocumentByName(command.getName()) == null) {
 			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
 					command.getDocType(), Instant.now().toString());
-
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
@@ -87,5 +87,23 @@ public class DocumentController {
 	public ResponseEntity<String> deleteDocument(@PathVariable("name") String name) {
 		docService.deleteDocument(docService.findDocumentByName(name));
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
+	}
+
+	@PostMapping(path = "/api/doc/submit/{name}")
+	public ResponseEntity<String> submitDocument(@PathVariable("name") String name) {
+		docService.setStatusPateiktas(name);
+		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
+	}
+
+	@PostMapping(path = "/api/doc/approve/{name}")
+	public ResponseEntity<String> approveDocument(@PathVariable("name") String name) {
+		docService.setStatusPriimtas(name);
+		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
+	}
+
+	@PostMapping(path = "/api/doc/reject/{name}")
+	public ResponseEntity<String> rejectDocument(@PathVariable("name") String name) {
+		docService.setStatusAtmestas(name);
+		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 }

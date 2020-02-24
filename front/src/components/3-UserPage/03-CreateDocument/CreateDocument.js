@@ -18,7 +18,8 @@ class CreateDocument extends Component {
       selectedDocType: "",
       files: [],
       loaded: 0,
-      attachedFilesTableValues: []
+      attachedFilesTableValues: [],
+      uploadProgress: 0
     };
   }
 
@@ -86,6 +87,16 @@ class CreateDocument extends Component {
       });
   };
 
+  config = {
+    onUploadProgress: progressEvent => {
+      var percentCompleted = Math.round(
+        (progressEvent.loaded * 100) / progressEvent.total
+      );
+      this.setState({ percentCompleted: percentCompleted + "%" });
+    },
+    headers: { "Content-Type": "multipart/form-data" }
+  };
+
   handleUpload = event => {
     event.preventDefault();
     const data = new FormData();
@@ -106,17 +117,13 @@ class CreateDocument extends Component {
       name: this.state.name
     };
 
-    console.log(serverUrl + "doc/create");
     axios
       .post(serverUrl + "doc/create", postData)
       .then(response => {
-        console.log(serverUrl + "doc/upload/" + this.state.name);
         axios
-          .post(serverUrl + "doc/upload/" + this.state.name, data, {
-            headers: { "Content-Type": "multipart/form-data" }
-          })
+          .post(serverUrl + "doc/upload/" + this.state.name, data, this.config)
           .then(response => {
-            console.log(response);
+            this.props.history.push("/dvs/documents");
           })
           .catch(function(error) {
             console.log(error);
@@ -148,6 +155,16 @@ class CreateDocument extends Component {
             <hr />
             <AttachFiles handleFileAdd={this.handleFileAdd} />
             <AttachedFiles values={this.state.attachedFilesTableValues} />
+            <div className="progress">
+              <div
+                className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                role="progressbar"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style={{ width: this.state.percentCompleted }}
+              ></div>
+            </div>
             <div className="form-group row d-flex justify-content-center m-0">
               <div className="modal-footer ">
                 <button

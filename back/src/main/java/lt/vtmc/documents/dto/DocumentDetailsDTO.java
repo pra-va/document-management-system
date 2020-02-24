@@ -3,6 +3,7 @@ package lt.vtmc.documents.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.Status;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.user.model.User;
 
@@ -26,8 +27,18 @@ public class DocumentDetailsDTO {
 	
 	private String reasonToReject;
 	
+	private Status status;
+	
 	@JsonIgnore
 	private User handler;
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
 	public String getName() {
 		return name;
@@ -112,6 +123,7 @@ public class DocumentDetailsDTO {
 		this.dateProcessed = document.getDateProcessed();
 		this.reasonToReject = document.getReasonToReject();
 		this.handler = document.getHandler();
+		this.status = document.getStatus();
 	}
 	
 	
