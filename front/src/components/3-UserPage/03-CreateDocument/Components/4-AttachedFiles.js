@@ -3,8 +3,8 @@ import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import "./Table.css";
 
 const AttachedFiles = props => {
-  const dataFields = ["fileName", "remove"];
-  const columnNames = ["File Name", ""];
+  const dataFields = ["fileName", "size", "remove"];
+  const columnNames = ["File Name", "Size, MB", ""];
 
   return (
     <Table

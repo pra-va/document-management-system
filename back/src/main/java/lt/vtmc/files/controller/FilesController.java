@@ -1,6 +1,5 @@
 package lt.vtmc.files.controller;
 
-
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,16 +42,13 @@ public class FilesController {
 	 * @return
 	 */
 	@PostMapping("/api/file")
-	public void uploadFiles(@RequestParam("files") MultipartFile[] files, Document doc) {
-		for (MultipartFile file : files) {
-			try {
-				LOG.info("File uploaded with file name: " + file.getOriginalFilename());
-				fileService.saveFile(file, doc);
-			} catch (Exception e) {
-				LOG.error("Error saving file", e);
-			}
+	public void uploadFiles(MultipartFile file, Document doc) {
+		try {
+			LOG.info("File uploaded with file name: " + file.getOriginalFilename());
+			fileService.saveFile(file, doc);
+		} catch (Exception e) {
+			LOG.error("Error saving file", e);
 		}
-		
 	}
 
 	/**
@@ -82,12 +77,12 @@ public class FilesController {
 	}
 
 	@GetMapping("/api/files/allfileinfo/{username}")
-	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username){
+	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
 		return fileService.findAllFileDetailsByUsername(username);
 	}
-	
+
 	@GetMapping("/api/files/allfileinfo/{docname}")
-	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName){
+	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
 		return fileService.findAllFileDetailsByDocument(docName);
 	}
 }
