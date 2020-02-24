@@ -50,7 +50,11 @@ public class DocumentService {
 	 */
 	@Transactional
 	public Document createDocument(String name, String authorUsername, String description, String dType, String currentTime) {
-		Document newDocument = new Document(currentTime, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, description, generateUID());
+		Document newDocument = new Document(currentTime, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, description, generateUID(currentTime));
+		List<Document>tmpList = userRepo.findUserByUsername(authorUsername).getCreatedDocuments();
+		tmpList.add(newDocument);
+		List<Document>tmpListDocuments = dTypeRepo.findDocTypeByName(dType).getDocumentList();
+		tmpListDocuments.add(newDocument);
 		newDocument.setFileList(new ArrayList<File4DB>());
 		return docRepo.save(newDocument);
 	}
@@ -90,12 +94,11 @@ public class DocumentService {
 		docRepo.save(tmp);
 	}
 	
-	public String generateUID() {
-		String tmp = Instant.now().toString();
+	public String generateUID(String time) {
 		StringBuilder UID = new StringBuilder();
-		for (int i = 0; i < tmp.length(); i++) {
-			if (Character.isDigit(tmp.charAt(i)) == true) {
-				UID.append(tmp.charAt(i));
+		for (int i = 0; i < time.length(); i++) {
+			if (Character.isDigit(time.charAt(i)) == true) {
+				UID.append(time.charAt(i));
 			}
 		}
 		return UID.toString();

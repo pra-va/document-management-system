@@ -56,10 +56,10 @@ public class User {
 	@JoinTable(name = "USERS_TO_GROUPS", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<Group> groupList;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Document> createdDocuments = new ArrayList<Document>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Document> processedDocuments = new ArrayList<Document>();
 	
 	/**
