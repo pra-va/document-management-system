@@ -1,5 +1,10 @@
 package lt.vtmc.files.service;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +31,6 @@ import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.controller.UserController;
 import lt.vtmc.user.dao.UserRepository;
-import lt.vtmc.user.model.User;
 
 /**
  * Service layer for uploading and downloading files. Note that files that are
@@ -45,12 +49,13 @@ public class FileService {
 
 	@Autowired
 	private DocumentRepository documentRepository;
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private DocumentService docService;
+
 	/**
 	 * This method saves single files to a database.
 	 * 
@@ -100,8 +105,8 @@ public class FileService {
 		}
 		return returnList;
 	}
-	
-	public List<FileDetailsDTO> findAllFileDetailsByDocument(String docName){
+
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String docName) {
 		Document tmpDoc = docService.findDocumentByName(docName);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
 		listToReturn.addAll(tmpDoc.getFileList());
@@ -111,4 +116,22 @@ public class FileService {
 		}
 		return returnList;
 	}
+
+	public List<File> findAllFilesByUsername(String username) {
+		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+		List<File> files = new ArrayList<>();
+		if (usersFilesDetails != null) {
+			for (FileDetailsDTO fileDetails : usersFilesDetails) {
+				File file = new File("/tmp/" + fileDetails.getFileName());
+				try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+					String contents = filesRepository.findbyuid //TODO
+					writer.write(contents);
+					files.add(file);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
 }
