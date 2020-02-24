@@ -103,8 +103,8 @@ public class FileService {
 		return returnList;
 	}
 	
-	public List<FileDetailsDTO> findAllFileDetailsByDocument(String docName){
-		Document tmpDoc = docService.findDocumentByName(docName);
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID){
+		Document tmpDoc = docService.findDocumentByUID(UID);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
 		listToReturn.addAll(tmpDoc.getFileList());
 		List<FileDetailsDTO> returnList = new ArrayList<FileDetailsDTO>();
