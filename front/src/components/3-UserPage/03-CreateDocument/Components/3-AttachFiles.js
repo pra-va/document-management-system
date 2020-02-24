@@ -1,4 +1,5 @@
 import React from "react";
+import "./AttachFiles.css";
 
 const UploadFile = props => {
   const handleFileUploaded = event => {
@@ -7,7 +8,7 @@ const UploadFile = props => {
 
   return (
     <div>
-      <h3 className="d-flex justify-content-start">2. Select document type.</h3>
+      <h3 className="d-flex justify-content-start">3. Attach files.</h3>
       <div className="input-group mb-3">
         <div className="custom-file">
           <input

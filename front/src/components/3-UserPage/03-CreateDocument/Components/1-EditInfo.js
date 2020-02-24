@@ -37,6 +37,7 @@ const EditInfo = props => {
         </label>
         <div className="col-sm-10">
           <textarea
+            required={true}
             className="form-control"
             id="inputDocDescription"
             maxLength="500"
@@ -45,9 +46,9 @@ const EditInfo = props => {
             value={props.description}
           ></textarea>
           <Validation
-            satisfied={true}
+            satisfied={props.description.length > 0 ? true : false}
             output={
-              "Document description can not be longer than 500 characters."
+              "Document description must be between 1 and 500 characters."
             }
           />
         </div>

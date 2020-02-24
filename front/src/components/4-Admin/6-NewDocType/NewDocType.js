@@ -92,7 +92,6 @@ class NewDocType extends Component {
   };
 
   handleCreateChangeStatus = (status, checkBoxOwnerName) => {
-    console.log("handleCreateChangeStatus " + status + " " + checkBoxOwnerName);
     let ableToCreate = this.state.canCreate;
     if (status) {
       ableToCreate.push(checkBoxOwnerName);
@@ -126,8 +125,6 @@ class NewDocType extends Component {
 
     for (let i = 0; i < data.length; i++) {
       const element = data[i].name;
-      console.log(this.state.canCreate);
-      console.log(this.state.canSign);
       if (
         this.state.canCreate.includes(element) ||
         this.state.canSign.includes(element)

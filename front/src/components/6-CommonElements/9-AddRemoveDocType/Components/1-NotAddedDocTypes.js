@@ -16,7 +16,6 @@ class AddDocumentTypes extends Component {
     axios
       .get(serverUrl + "doct/all")
       .then(response => {
-        console.log(response.data);
         this.props.fetchServerData(response.data);
       })
       .catch(error => {

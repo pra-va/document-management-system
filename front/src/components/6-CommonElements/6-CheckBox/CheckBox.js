@@ -23,9 +23,7 @@ class CheckBox extends Component {
     this.props.statusChange(false, this.state.owner);
   }
 
-  doNothing = event => {
-    console.log(event.target.checked);
-  };
+  doNothing = event => {};
 
   render() {
     return (

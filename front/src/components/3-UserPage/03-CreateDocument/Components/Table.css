@@ -3,18 +3,26 @@
 }
 
 #uploadedFilesTable th:nth-child(1) {
-  min-width: 80%;
+  min-width: 60%;
 }
 
 #uploadedFilesTable th:nth-child(2) {
   min-width: 20%;
 }
 
+#uploadedFilesTable th:nth-child(3) {
+  min-width: 20%;
+}
+
 #uploadedFilesTable td:nth-child(1) {
-  min-width: 80%;
+  min-width: 60%;
 }
 
 #uploadedFilesTable td:nth-child(2) {
+  min-width: 20%;
+}
+
+#uploadedFilesTable th:nth-child(3) {
   min-width: 20%;
 }
 

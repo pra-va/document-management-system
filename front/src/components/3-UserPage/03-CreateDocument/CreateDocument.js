@@ -18,12 +18,9 @@ class CreateDocument extends Component {
       selectedDocType: "",
       files: [],
       loaded: 0,
-      attachedFilesTableValues: []
+      attachedFilesTableValues: [],
+      uploadProgress: 0
     };
-  }
-
-  componentDidUpdate() {
-    console.log(this.state.attachedFilesTableValues);
   }
 
   componentDidMount() {
@@ -61,9 +58,18 @@ class CreateDocument extends Component {
 
     for (let i = 0; i < files.length; i++) {
       const element = files[i];
+      var size = "";
+      if (element.size < 1000) {
+        size = element.size + " B";
+      } else if (element.size >= 1000 && element.size < 1000000) {
+        size = element.size / 1000 + "kB";
+      } else {
+        size = element.size / 1000000;
+      }
       tmpFilesForTable.push({
         number: i + stateLength,
         fileName: element.name,
+        size: size, //TODO
         remove: (
           <button
             className="btn btn-secondary btn-sm"
@@ -90,48 +96,47 @@ class CreateDocument extends Component {
       });
   };
 
+  config = {
+    onUploadProgress: progressEvent => {
+      var percentCompleted = Math.round(
+        (progressEvent.loaded * 100) / progressEvent.total
+      );
+      this.setState({ percentCompleted: percentCompleted + "%" });
+    },
+    headers: { "Content-Type": "multipart/form-data" }
+  };
+
   handleUpload = event => {
     event.preventDefault();
     const data = new FormData();
-    const attachedFiles = this.state.attachedFilesTableValues;
-    for (let i = 0; i < attachedFiles.length; i++) {
-      const element = attachedFiles[i].file;
-      data.append("files", element);
+    var attachedFiles = this.state.attachedFilesTableValues;
+    if (attachedFiles.length !== 0) {
+      for (let i = 0; i < attachedFiles.length; i++) {
+        const element = attachedFiles[i].file;
+        data.append("files", element);
+      }
+    } else {
+      attachedFiles = null;
     }
-
-    let tmpFileToUpload = this.state.attachedFilesTableValues[0].file;
 
     const postData = {
       authorUsername: this.state.username,
       description: this.state.description,
       docType: this.state.selectedDocType,
-      name: this.state.name,
-      files: data
+      name: this.state.name
     };
 
-    // axios
-    //   .post(serverUrl + "doc/create", data, {
-    //     onUploadProgress: ProgressEvent => {
-    //       this.setState({
-    //         loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-    //       });
-    //     }
-    //   })
-    //   .then(function(response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
-
-    axios.post();
-
     axios
-      .post(serverUrl + "files", data, {
-        headers: { "Content-Type": "multipart/form-data" }
-      })
-      .then(function(response) {
-        console.log(response);
+      .post(serverUrl + "doc/create", postData)
+      .then(response => {
+        axios
+          .post(serverUrl + "doc/upload/" + this.state.name, data, this.config)
+          .then(response => {
+            this.props.history.push("/dvs/documents");
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       })
       .catch(function(error) {
         console.log(error);
@@ -143,8 +148,8 @@ class CreateDocument extends Component {
       <div>
         <Navigation />{" "}
         <div className="container" id="newDocument">
-          <form onSubmit={this.handleUpload}>
-            <h2>Create New Document Type</h2>
+          <form onSubmit={this.handleUpload} id="createDocumentForm">
+            <h2 className="mb-3">New Document</h2>
             <EditInfo
               handleNameChange={this.handleNameChange}
               handleDescriptionChange={this.handleDescriptionChange}
@@ -152,28 +157,39 @@ class CreateDocument extends Component {
               description={this.state.description}
             />
             <hr />
-            <SelectDocType handleDocTypeSelect={this.handleDocTypeSelect} />
+            <SelectDocType
+              handleDocTypeSelect={this.handleDocTypeSelect}
+              username={this.state.username}
+            />
             <hr />
             <AttachFiles handleFileAdd={this.handleFileAdd} />
             <AttachedFiles values={this.state.attachedFilesTableValues} />
-            <div className="form-group row d-flex justify-content-center">
-              <div className="modal-footer ">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark"
-                  onClick={this.props.hideNewGroup}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-dark"
-                  data-dismiss="modal"
-                  disabled={false}
-                >
-                  Create
-                </button>
-              </div>
+            <div className="progress mb-3">
+              <div
+                className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                role="progressbar"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style={{ width: this.state.percentCompleted }}
+              ></div>
+            </div>
+            <div className="form-group row d-flex justify-content-center m-0">
+              <button
+                type="button"
+                className="btn btn-outline-dark"
+                onClick={this.props.hideNewGroup}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn btn-dark"
+                data-dismiss="modal"
+                disabled={false}
+              >
+                Create
+              </button>
             </div>
           </form>
         </div>
