@@ -1,10 +1,13 @@
 package lt.vtmc.documents.dto;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.Status;
 import lt.vtmc.documents.model.Document;
+import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.model.User;
 
 public class DocumentDetailsDTO {
@@ -31,6 +34,18 @@ public class DocumentDetailsDTO {
 	
 	@JsonIgnore
 	private User handler;
+
+	@JsonIgnore
+	private List<File4DB> fileList;
+	
+	
+	public List<File4DB> getFileList() {
+		return fileList;
+	}
+
+	public void setFileList(List<File4DB> fileList) {
+		this.fileList = fileList;
+	}
 
 	public Status getStatus() {
 		return status;
@@ -62,6 +77,13 @@ public class DocumentDetailsDTO {
 
 	public void setdType(DocType dType) {
 		this.dType = dType;
+		
+//	public boolean checkDocument(@PathVariable("name") String name) {
+//		if (docService.findDocumentByName(name) != null) {
+//			return true;
+//		}
+//		return false;
+//	}
 	}
 
 	public String getDateCreate() {
@@ -124,6 +146,7 @@ public class DocumentDetailsDTO {
 		this.reasonToReject = document.getReasonToReject();
 		this.handler = document.getHandler();
 		this.status = document.getStatus();
+		this.fileList = document.getFileList();
 	}
 	
 	

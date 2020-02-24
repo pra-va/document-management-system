@@ -47,14 +47,8 @@ public class Document {
 	
 	private Status status;
 	
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
+	private String UID;
+	
 	@ManyToOne
 	private User handler = null;
 	
@@ -64,6 +58,25 @@ public class Document {
 	
 	public Document() {
 		
+	}
+
+
+	public String getUID() {
+		return UID;
+	}
+
+
+	public void setUID(String uID) {
+		UID = uID;
+	}
+
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 	public List<File4DB> getFileList() {
@@ -154,13 +167,14 @@ public class Document {
 		this.handler = handler;
 	}
 
-	public Document(String dateCreate, User author, DocType dType, String name, String description) {
+	public Document(String dateCreate, User author, DocType dType, String name, String description, String UID) {
 		super();
 		this.dateCreate = dateCreate;
 		this.author = author;
 		this.dType = dType;
 		this.name = name;
 		this.description = description;
+		this.UID = UID;
 	}
 
 	@Override
