@@ -1,6 +1,6 @@
 package lt.vtmc.files.controller;
 
-
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -53,7 +53,7 @@ public class FilesController {
 				LOG.error("Error saving file", e);
 			}
 		}
-		
+
 	}
 
 	/**
@@ -82,12 +82,17 @@ public class FilesController {
 	}
 
 	@GetMapping("/api/files/allfileinfo/{username}")
-	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username){
+	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
 		return fileService.findAllFileDetailsByUsername(username);
 	}
-	
+
 	@GetMapping("/api/files/allfileinfo/{docname}")
-	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName){
+	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
 		return fileService.findAllFileDetailsByDocument(docName);
+	}
+
+	@GetMapping("api/files/info/{UID}")
+	public void generateCSVforFile(@PathVariable("filename") String UID) throws IOException {
+		fileService.generateCSV(UID);
 	}
 }
