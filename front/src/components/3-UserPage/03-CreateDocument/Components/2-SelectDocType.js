@@ -23,7 +23,7 @@ class SelectType extends Component {
       axios
         .get(serverUrl + username + "/dtypescreate")
         .then(response => {
-          if (response.data !== undefined) {
+          if (response.data.length !== 0 && response.data !== undefined) {
             this.processData(response.data);
           }
         })

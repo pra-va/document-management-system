@@ -58,9 +58,18 @@ class CreateDocument extends Component {
 
     for (let i = 0; i < files.length; i++) {
       const element = files[i];
+      var size = "";
+      if (element.size < 1000) {
+        size = element.size + " B";
+      } else if (element.size >= 1000 && element.size < 1000000) {
+        size = element.size / 1000 + "kB";
+      } else {
+        size = element.size / 1000000;
+      }
       tmpFilesForTable.push({
         number: i + stateLength,
         fileName: element.name,
+        size: size, //TODO
         remove: (
           <button
             className="btn btn-secondary btn-sm"
@@ -155,7 +164,7 @@ class CreateDocument extends Component {
             <hr />
             <AttachFiles handleFileAdd={this.handleFileAdd} />
             <AttachedFiles values={this.state.attachedFilesTableValues} />
-            <div className="progress">
+            <div className="progress mb-3">
               <div
                 className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
                 role="progressbar"
@@ -166,23 +175,21 @@ class CreateDocument extends Component {
               ></div>
             </div>
             <div className="form-group row d-flex justify-content-center m-0">
-              <div className="modal-footer ">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark"
-                  onClick={this.props.hideNewGroup}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-dark"
-                  data-dismiss="modal"
-                  disabled={false}
-                >
-                  Create
-                </button>
-              </div>
+              <button
+                type="button"
+                className="btn btn-outline-dark"
+                onClick={this.props.hideNewGroup}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn btn-dark"
+                data-dismiss="modal"
+                disabled={false}
+              >
+                Create
+              </button>
             </div>
           </form>
         </div>

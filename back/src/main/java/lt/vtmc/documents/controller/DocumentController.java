@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,6 +34,7 @@ public class DocumentController {
 
 	@Autowired
 	private FilesController filesControl;
+
 	/**
 	 * Creates document with specified fields.
 	 * 
@@ -41,27 +43,32 @@ public class DocumentController {
 	 * @param document details
 	 */
 	@PostMapping(path = "/api/doc/create")
-	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) { // , @RequestParam("Files") MultipartFile[] files
+	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) { // ,
+																								// @RequestParam("Files")
+																								// MultipartFile[] files
 		if (docService.findDocumentByName(command.getName()) == null) {
-			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(), command.getDocType(), Instant.now().toString());
+			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
+					command.getDocType(), Instant.now().toString());
 //			if (files != null) {
 //				addFiles(command.getName(), files);
 //			}
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
-				return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
-			}
+			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+		}
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 		return new ResponseEntity<String>("Failed to create document", HttpStatus.CONFLICT);
 
 	}
 
-	@PostMapping
-	public void addFiles( String docName, MultipartFile[] files){ // @PathVariable("docName"), ,@RequestParam("Files") 
-		filesControl.uploadFiles(files, docService.findDocumentByName(docName));
+	@PostMapping("/api/doc/upload/{docName}")
+	public void addFiles(@PathVariable("docName") String docName, @RequestParam("files") MultipartFile[] files) {
+		for (MultipartFile multipartFile : files) {
+			filesControl.uploadFiles(multipartFile, docService.findDocumentByName(docName));
+		}
 	}
-	
+
 	@GetMapping(path = "/api/doc/all")
 	public List<DocumentDetailsDTO> findAllDocuments() {
 		return docService.findAll();
@@ -71,7 +78,7 @@ public class DocumentController {
 	public DocumentDetailsDTO findDocument(@PathVariable("name") String name) {
 		return new DocumentDetailsDTO(docService.findDocumentByName(name));
 	}
-	
+
 //	@GetMapping(path = "/api/doc/{name}/exists")
 //	public boolean checkDocument(@PathVariable("name") String name) {
 //		if (docService.findDocumentByName(name) != null) {
@@ -79,27 +86,27 @@ public class DocumentController {
 //		}
 //		return false;
 //	}
-	
+
 	@DeleteMapping(path = "/api/doc/delete/{name}")
-	public ResponseEntity<String> deleteDocument(@PathVariable ("name") String name){
+	public ResponseEntity<String> deleteDocument(@PathVariable("name") String name) {
 		docService.deleteDocument(docService.findDocumentByName(name));
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
-	
+
 	@PostMapping(path = "/api/doc/submit/{name}")
-	public ResponseEntity<String> submitDocument(@PathVariable ("name") String name){
+	public ResponseEntity<String> submitDocument(@PathVariable("name") String name) {
 		docService.setStatusPateiktas(name);
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
-	
+
 	@PostMapping(path = "/api/doc/approve/{name}")
-	public ResponseEntity<String> approveDocument(@PathVariable ("name") String name){
+	public ResponseEntity<String> approveDocument(@PathVariable("name") String name) {
 		docService.setStatusPriimtas(name);
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
-	
+
 	@PostMapping(path = "/api/doc/reject/{name}")
-	public ResponseEntity<String> rejectDocument(@PathVariable ("name") String name){
+	public ResponseEntity<String> rejectDocument(@PathVariable("name") String name) {
 		docService.setStatusAtmestas(name);
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
