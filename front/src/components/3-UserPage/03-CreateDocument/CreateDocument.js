@@ -19,7 +19,8 @@ class CreateDocument extends Component {
       files: [],
       loaded: 0,
       attachedFilesTableValues: [],
-      uploadProgress: 0
+      uploadProgress: 0,
+      filesSize: 0
     };
   }
 
@@ -50,6 +51,18 @@ class CreateDocument extends Component {
       }
     }
     this.setState({ attachedFilesTableValues: tmpValues });
+    console.log(tmpValues);
+    this.checkAttachedFilesSize(tmpValues);
+  };
+
+  checkAttachedFilesSize = files => {
+    console.log(files);
+    let sum = 0;
+    for (let i = 0; i < files.length; i++) {
+      const element = files[i].file.size;
+      sum += element;
+    }
+    this.setState({ filesSize: sum });
   };
 
   handleFileAdd = files => {
@@ -62,14 +75,14 @@ class CreateDocument extends Component {
       if (element.size < 1000) {
         size = element.size + " B";
       } else if (element.size >= 1000 && element.size < 1000000) {
-        size = element.size / 1000 + "kB";
+        size = Math.floor((element.size / 1000) * 100) / 100 + " kB";
       } else {
-        size = element.size / 1000000;
+        size = Math.floor((element.size / 1000000) * 100) / 100 + " MB";
       }
       tmpFilesForTable.push({
         number: i + stateLength,
         fileName: element.name,
-        size: size, //TODO
+        size: size,
         remove: (
           <button
             className="btn btn-secondary btn-sm"
@@ -82,7 +95,10 @@ class CreateDocument extends Component {
         file: files[i]
       });
     }
-    this.setState({ attachedFilesTableValues: tmpFilesForTable });
+    this.setState({
+      attachedFilesTableValues: tmpFilesForTable
+    });
+    this.checkAttachedFilesSize(tmpFilesForTable);
   };
 
   fetchUsername = () => {
@@ -163,7 +179,10 @@ class CreateDocument extends Component {
             />
             <hr />
             <AttachFiles handleFileAdd={this.handleFileAdd} />
-            <AttachedFiles values={this.state.attachedFilesTableValues} />
+            <AttachedFiles
+              values={this.state.attachedFilesTableValues}
+              size={this.state.filesSize}
+            />
             <div className="progress mb-3">
               <div
                 className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
@@ -177,14 +196,14 @@ class CreateDocument extends Component {
             <div className="form-group row d-flex justify-content-center m-0">
               <button
                 type="button"
-                className="btn btn-outline-dark"
+                className="btn btn-outline-dark mr-2"
                 onClick={this.props.hideNewGroup}
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="btn btn-dark"
+                className="btn btn-dark ml-2"
                 data-dismiss="modal"
                 disabled={false}
               >

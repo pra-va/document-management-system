@@ -1,10 +1,15 @@
 package lt.vtmc.files.service;
 
+<<<<<<< HEAD
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+=======
+import java.io.FileWriter;
+import java.io.IOException;
+>>>>>>> 0aceda4dde04bb5fdd17985347a19b2ae9facef1
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -105,9 +110,15 @@ public class FileService {
 		}
 		return returnList;
 	}
+<<<<<<< HEAD
 
-	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID) {
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String docName) {
+		Document tmpDoc = docService.findDocumentByName(docName);
+=======
+	
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID){
 		Document tmpDoc = docService.findDocumentByUID(UID);
+>>>>>>> 0aceda4dde04bb5fdd17985347a19b2ae9facef1
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
 		listToReturn.addAll(tmpDoc.getFileList());
 		List<FileDetailsDTO> returnList = new ArrayList<FileDetailsDTO>();
@@ -117,31 +128,15 @@ public class FileService {
 		return returnList;
 	}
 
-	public void generateCSV(String UID) throws IOException {
-		File4DB tmpFile = filesRepository.findFile4dbByUID(UID);
-
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("File name: " + tmpFile.getFileName());
-		stringBuilder.append("File UID: " + tmpFile.getUID());
-		stringBuilder.append("File type: " + tmpFile.getFileType());
-		stringBuilder.append("Belongs to document: " + tmpFile.getDocument().getName());
-		stringBuilder.append("Document submitted on: " + tmpFile.getDocument().getDateSubmit());
-
-		FileWriter writer = new FileWriter("~/test.csv");
-		writer.write(stringBuilder.toString());
-		writer.flush();
-		writer.close();
-	}
-
+<<<<<<< HEAD
 	public List<File> findAllFilesByUsername(String username) {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
-		System.out.println(usersFilesDetails.toString());
 		List<File> files = new ArrayList<>();
 		if (usersFilesDetails != null) {
 			for (FileDetailsDTO fileDetails : usersFilesDetails) {
 				File file = new File("/tmp/" + fileDetails.getFileName());
 				try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-					String contents = new String(filesRepository.findFile4dbByUID(fileDetails.getUID()).getData()); // TODO
+					String contents = filesRepository.findbyuid //TODO
 					writer.write(contents);
 					files.add(file);
 				} catch (IOException e) {
@@ -149,7 +144,23 @@ public class FileService {
 				}
 			}
 		}
-		return files;
 	}
 
+=======
+	public void generateCSV(String UID) throws IOException {
+		File4DB tmpFile = filesRepository.findFile4dbByUID(UID);
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("File name: " + tmpFile.getFileName());
+		stringBuilder.append("File UID: " + tmpFile.getUID());
+		stringBuilder.append("File type: " + tmpFile.getFileType());
+		stringBuilder.append("Belongs to document: " + tmpFile.getDocument().getName());
+		stringBuilder.append("Document submitted on: " + tmpFile.getDocument().getDateSubmit());
+		
+		FileWriter writer = new FileWriter("~/test.csv");
+		writer.write(stringBuilder.toString());
+		writer.flush();
+		writer.close();
+	}
+>>>>>>> 0aceda4dde04bb5fdd17985347a19b2ae9facef1
 }

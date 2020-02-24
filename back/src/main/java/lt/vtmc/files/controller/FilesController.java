@@ -1,6 +1,9 @@
 package lt.vtmc.files.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +14,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.service.FileService;
+import lt.vtmc.files.service.ZipService;
 import lt.vtmc.user.controller.UserController;
 
 /**
@@ -33,6 +39,9 @@ public class FilesController {
 
 	@Autowired
 	private FileService fileService;
+
+	@Autowired
+	private ZipService zipService;
 
 	/**
 	 * API method that accepts single multipart file and calls service layer method
@@ -52,20 +61,6 @@ public class FilesController {
 	}
 
 	/**
-	 * This method is responsible for accepting an array of multipart files and
-	 * saving them to database by calling uploadFile method for each single
-	 * multipart file.
-	 * 
-	 * @param files
-	 * @return
-	 */
-//	@PostMapping("/api/files")
-//	public List<String> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-//		System.out.println(Arrays.toString(files));
-//		return Arrays.asList(files).stream().map(file -> uploadFile(file)).collect(Collectors.toList());
-//	}
-
-	/**
 	 * This API method will return a downloadable file by file name.
 	 * 
 	 * @param fileName
@@ -76,13 +71,24 @@ public class FilesController {
 		return fileService.downloadFileByUID(fileUID);
 	}
 
-	@GetMapping("/api/files/allfileinfo/{username}")
+	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
 		return fileService.findAllFileDetailsByUsername(username);
 	}
 
-	@GetMapping("/api/files/allfileinfo/{docname}")
+	@GetMapping("/api/files/info/docname/{docname}")
 	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
 		return fileService.findAllFileDetailsByDocument(docName);
+	}
+
+	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
+	@ResponseBody
+	public byte[] downloadFiles(HttpServletResponse response, @RequestParam("username") String username)
+			throws IOException {
+		response.setContentType("application/zip");
+		response.setStatus(HttpServletResponse.SC_OK);
+		response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
+
 	}
 }

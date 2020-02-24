@@ -46,26 +46,25 @@ public class DocumentController {
 	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) { // ,
 																								// @RequestParam("Files")
 																								// MultipartFile[] files
-		if (docService.findDocumentByUID(command.getName()) == null) {
-			docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
-					command.getDocType(), Instant.now().toString());
+
+		docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
+				command.getDocType(), Instant.now().toString());
 //			if (files != null) {
 //				addFiles(command.getName(), files);
 //			}
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
-			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
-		}
+		return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
+
 //			LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT created #",
 //					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
-		return new ResponseEntity<String>("Failed to create document", HttpStatus.CONFLICT);
 
 	}
 
-	@PostMapping("/api/doc/upload/{docName}")
-	public void addFiles(@PathVariable("docName") String docName, @RequestParam("files") MultipartFile[] files) {
+	@PostMapping("/api/doc/upload/{UID}")
+	public void addFiles(@PathVariable("UID") String UID, @RequestParam("files") MultipartFile[] files) {
 		for (MultipartFile multipartFile : files) {
-			filesControl.uploadFiles(multipartFile, docService.findDocumentByUID(docName));
+			filesControl.uploadFiles(multipartFile, docService.findDocumentByUID(UID));
 		}
 	}
 
