@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.groups.service.GroupService;
@@ -208,7 +209,7 @@ public class UserController {
 	
 	@GetMapping(path = "/api/{username}/doctobesigned")
 	public List<DocumentDetailsDTO> getDocumentsToBeSigned(@PathVariable ("username") String username){
-		return userService.getUserDocumentsToBeSigned(username);
+		return docService.findAllDocumentsToSignByUsername(username);
 	}
 	
 	@GetMapping(path = "/api/{username}/alldocuments")
