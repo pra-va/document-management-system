@@ -28,24 +28,23 @@ public class File4DB {
 
 	@ManyToOne
 	private Document document;
-	
+
 	@Lob
 	private byte[] data;
 
 	@Column(name = "UID")
 	private String UID;
-	
+
 	public File4DB() {
 	}
 
 	public File4DB(String fileName, String fileType, byte[] data, String UID) {
 		this.fileType = fileType;
-		this.fileName = fileName;
+		this.fileName = UID + "-" + fileName;
 		this.data = data;
 		this.UID = UID;
 	}
 
-	
 	public String getUID() {
 		return UID;
 	}

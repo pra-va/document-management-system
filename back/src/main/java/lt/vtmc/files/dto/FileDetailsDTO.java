@@ -7,14 +7,14 @@ import lt.vtmc.files.model.File4DB;
 
 public class FileDetailsDTO {
 
-	private String fileName;
+	private String fileName; //
 
-	private String fileType;
+	private String fileType; //
 
 	@JsonIgnore
-	private Document document;
-	
-	private String UID;
+	private Document document; //
+
+	private String UID; //
 
 	public FileDetailsDTO(File4DB file) {
 		super();
@@ -55,7 +55,10 @@ public class FileDetailsDTO {
 	public void setUID(String uID) {
 		UID = uID;
 	}
-	
-	
-	
+
+	public String getCsvDetails() {
+		return UID + ", " + fileName.replace(UID, "") + ", " + document.getUID() + ", " + document.getName() + ", "
+				+ document.getDateCreate() + "\n";
+	}
+
 }

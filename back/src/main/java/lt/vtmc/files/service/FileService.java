@@ -93,6 +93,13 @@ public class FileService {
 				.body(new ByteArrayResource(file4db.getData()));
 	}
 
+	@Transactional
+	public ResponseEntity<Resource> downloadFileByUID(byte[] fileByteData, String fileName) {
+		return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+				.body(new ByteArrayResource(fileByteData));
+	}
+
 	public List<FileDetailsDTO> findAllFileDetailsByUsername(String username) {
 		List<Document> tmpList = docService.findAllDocumentsByUsername(username);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
@@ -118,20 +125,21 @@ public class FileService {
 		return returnList;
 	}
 
-	public void generateCSV(String UID) throws IOException {
-		File4DB tmpFile = filesRepository.findFile4dbByUID(UID);
-
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("File name: " + tmpFile.getFileName());
-		stringBuilder.append("File UID: " + tmpFile.getUID());
-		stringBuilder.append("File type: " + tmpFile.getFileType());
-		stringBuilder.append("Belongs to document: " + tmpFile.getDocument().getName());
-		stringBuilder.append("Document submitted on: " + tmpFile.getDocument().getDateSubmit());
-
-		FileWriter writer = new FileWriter("~/test.csv");
-		writer.write(stringBuilder.toString());
-		writer.flush();
-		writer.close();
+	/**
+	 * Returns Resource type ResponseEntity for users uploaded files and documents.
+	 * 
+	 * @param username
+	 * @return
+	 * @throws IOException
+	 */
+	public ResponseEntity<Resource> generateCSV(String username) throws IOException {
+		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+		StringBuilder builder = new StringBuilder();
+		builder.append("\"ID\", \"File Name\", \"Document ID\", \"Document Name\", \"Created\"\n");
+		for (FileDetailsDTO fileDetailsDTO : usersFilesDetails) {
+			builder.append(fileDetailsDTO.getCsvDetails());
+		}
+		return downloadFileByUID(builder.toString().getBytes(), "file.csv");
 	}
 
 	public List<File> findAllFilesByUsername(String username) {
@@ -152,7 +160,5 @@ public class FileService {
 		}
 		return files;
 	}
-	
-	
 
 }
