@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import EditDocument from "./../EditDocument/EditDocument";
+import ViewDocument from "./../ViewDocument/ViewDocument";
 
 const EditButton = props => {
   const [showModal, setShowModal] = useState(false);
@@ -12,9 +12,9 @@ const EditButton = props => {
         className="btn btn-secondary btn-sm btn-edit"
         onClick={handleShowModal}
       >
-        Edit/View
+        View
       </button>
-      <EditDocument
+      <ViewDocument
         show={showModal}
         hide={handleCloseModal}
         item={props.item}

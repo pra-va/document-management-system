@@ -83,19 +83,19 @@ public class DocumentService {
 
 	public void setStatusPateiktas(String UID) {
 		Document tmp = findDocumentByUID(UID);
-		tmp.setStatus(Status.PATEIKTAS);
+		tmp.setStatus(Status.SUBMITED);
 		docRepo.save(tmp);
 	}
 
 	public void setStatusPriimtas(String UID) {
 		Document tmp = findDocumentByUID(UID);
-		tmp.setStatus(Status.PRIIMTAS);
+		tmp.setStatus(Status.ACCEPTED);
 		docRepo.save(tmp);
 	}
 
 	public void setStatusAtmestas(String UID) {
 		Document tmp = findDocumentByUID(UID);
-		tmp.setStatus(Status.ATMESTAS);
+		tmp.setStatus(Status.REJECTED);
 		docRepo.save(tmp);
 	}
 
@@ -116,7 +116,6 @@ public class DocumentService {
 			listToReturn.add(new DocumentDetailsDTO(document));
 		}
 		return listToReturn;
-
 	}
 
 	public List<Document> findAllDocumentsByUsername(String username) {
@@ -134,7 +133,7 @@ public class DocumentService {
 		}
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		for (Document doc : tmpList) {
-			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.PATEIKTAS) {
+			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.SUBMITED) {
 				listToReturn.add(new DocumentDetailsDTO(doc));
 			}
 		}

@@ -29,47 +29,43 @@ public class Document {
 
 	@ManyToOne
 	private User author;
-	
+
 	@ManyToOne
 	private DocType dType;
-	
+
 	@NotEmpty
 	private String dateCreate;
-	
+
 	@NotEmpty
 	private String description;
-	
+
 	private String dateSubmit = null;
-	
+
 	private String dateProcessed = null;
-	
+
 	private String reasonToReject = null;
-	
+
 	private Status status;
-	
+
 	private String UID;
-	
+
 	@ManyToOne
 	private User handler = null;
-	
-	@OneToMany
-	private List<File4DB>fileList;
-	
-	
-	public Document() {
-		
-	}
 
+	@OneToMany
+	private List<File4DB> fileList;
+
+	public Document() {
+
+	}
 
 	public String getUID() {
 		return UID;
 	}
 
-
 	public void setUID(String uID) {
 		UID = uID;
 	}
-
 
 	public Status getStatus() {
 		return status;
@@ -175,6 +171,7 @@ public class Document {
 		this.name = name;
 		this.description = description;
 		this.UID = UID;
+		this.status = Status.CREATED;
 	}
 
 	@Override
@@ -252,6 +249,5 @@ public class Document {
 			return false;
 		return true;
 	}
-	
-	
+
 }
