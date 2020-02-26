@@ -98,6 +98,8 @@ public class UserService implements UserDetailsService {
 		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
+		newUser.setProcessedDocuments(new ArrayList<Document>());
+		newUser.setCreatedDocuments(new ArrayList<Document>());
 		userRepository.save(newUser);
 		return newUser;
 	}

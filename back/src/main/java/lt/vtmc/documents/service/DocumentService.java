@@ -1,5 +1,6 @@
 package lt.vtmc.documents.service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,19 +84,36 @@ public class DocumentService {
 
 	public void setStatusPateiktas(String UID) {
 		Document tmp = findDocumentByUID(UID);
+		tmp.setDateSubmit(Instant.now().toString());
 		tmp.setStatus(Status.SUBMITED);
 		docRepo.save(tmp);
 	}
 
-	public void setStatusPriimtas(String UID) {
+	public void setStatusPriimtas(String UID, String username) {
 		Document tmp = findDocumentByUID(UID);
+		tmp.setDateProcessed(Instant.now().toString());
+		User tmpUser = userRepo.findUserByUsername(username);
+		tmp.setHandler(tmpUser);
+		List<Document> tmpList = tmpUser.getProcessedDocuments();
+		System.out.println(tmpList.toString());
+		tmpList.add(tmp);
+		tmpUser.setProcessedDocuments(tmpList);
 		tmp.setStatus(Status.ACCEPTED);
+		userRepo.save(tmpUser);
 		docRepo.save(tmp);
 	}
 
-	public void setStatusAtmestas(String UID) {
+	public void setStatusAtmestas(String UID, String username, String reasonToReject) {
 		Document tmp = findDocumentByUID(UID);
+		tmp.setDateProcessed(Instant.now().toString());
+		tmp.setReasonToReject(reasonToReject);
+		User tmpUser = userRepo.findUserByUsername(username);
+		tmp.setHandler(tmpUser);
+		List<Document> tmpList = tmpUser.getProcessedDocuments();
+		tmpList.add(tmp);
+		tmpUser.setProcessedDocuments(tmpList);
 		tmp.setStatus(Status.REJECTED);
+		userRepo.save(tmpUser);
 		docRepo.save(tmp);
 	}
 

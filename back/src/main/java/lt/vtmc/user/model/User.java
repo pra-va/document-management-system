@@ -57,10 +57,10 @@ public class User {
 	private List<Group> groupList;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<Document> createdDocuments = new ArrayList<Document>();
+	private List<Document> createdDocuments = new ArrayList<Document>();;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<Document> processedDocuments = new ArrayList<Document>();
+	private List<Document> processedDocuments = new ArrayList<Document>();;
 	
 	/**
 	 * Constructor.

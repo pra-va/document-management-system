@@ -1,5 +1,6 @@
 package lt.vtmc.groups.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import lt.vtmc.groups.dto.UpdateGroupCommand;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.controller.UserController;
+import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
 
@@ -148,7 +150,12 @@ public class GroupController {
 	public ResponseEntity<String> deleteGroupByName(@PathVariable("groupname") String groupname) {
 		Group tmpGroup = groupService.findGroupByName(groupname);
 		if (tmpGroup != null) {
-
+			List<User> tmpList = tmpGroup.getUserList();
+			for (User user : tmpList) {
+				List<Group> tmpGroupList = user.getGroupList()	;
+				tmpGroupList.remove(tmpGroup);
+			}
+			tmpGroup.setUserList(null);
 			LOG.info("# LOG # Initiated by [{}]: User [{}] was deleted #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), tmpGroup);
 
