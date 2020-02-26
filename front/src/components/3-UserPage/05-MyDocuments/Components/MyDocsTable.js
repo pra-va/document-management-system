@@ -46,7 +46,6 @@ class MyDocsTable extends Component {
     axios
       .get(serverUrl + this.state.username + "/alldocuments")
       .then(response => {
-        console.log(response.data);
         this.processData(response.data);
       })
       .catch(error => {
@@ -91,11 +90,11 @@ class MyDocsTable extends Component {
   reduceItemsList = itemsList => {
     return itemsList.reduce((sum, item, index) => {
       if (index === 0) {
-        return item;
+        return (sum = item.fileName);
       } else {
-        return (sum += ", " + item);
+        return (sum += ", " + item.fileName);
       }
-    });
+    }, "");
   };
 
   render() {

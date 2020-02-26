@@ -88,6 +88,18 @@ public class FilesController {
 		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
 	}
 
+//	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
+//	public StreamingResponseBody downloadFiles(HttpServletResponse response, @PathVariable("username") String username)
+//			throws IOException {
+//		response.setContentType("application/zip");
+//		response.setHeader("Content-Disposition", "attachment; filename=\"demo.zip\"");
+//		response.setStatus(HttpServletResponse.SC_OK);
+//
+//		return outputStream -> {
+//			outputStream.write(zipService.zipFiles(fileService.findAllFilesByUsername(username)));
+//		};
+//	}
+
 	/**
 	 * Returns csv file of users files and documents.
 	 * 
