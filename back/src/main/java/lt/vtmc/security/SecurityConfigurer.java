@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +27,6 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 import lt.vtmc.user.service.UserService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Web security configurer responsible for Authentication and Authorization.
@@ -60,7 +59,6 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService);
-
 	}
 
 	/**
@@ -122,4 +120,5 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 				}).permitAll().and().csrf().disable().exceptionHandling().authenticationEntryPoint(securityEntryPoint)
 				.and().headers().frameOptions().disable();
 	}
+
 }

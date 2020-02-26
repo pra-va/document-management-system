@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [regressionTests]">
+  <test thread-count="5" name="loginTests(failed)">
+    <parameter name="userPassword" value="useruser"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="userUserName" value="user"/>
+    <parameter name="adminPasswrod" value="adminadmin"/>
+    <parameter name="passwordWrong" value="qwerty"/>
+    <parameter name="userNameWrong" value="qwerty"/>
+    <classes>
+      <class name="test.loginTests">
+        <methods>
+          <include name="beforeSuite"/>
+          <include name="after"/>
+          <include name="preconditions"/>
+          <include name="emptyLoginFieldsTest"/>
+          <include name="afterSuite"/>
+        </methods>
+      </class> <!-- test.loginTests -->
+    </classes>
+  </test> <!-- loginTests(failed) -->
+  <test thread-count="5" name="newGroupTests(failed)">
+    <parameter name="docTypeName" value="Resignation letter"/>
+    <parameter name="groupName" value="Project managers"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers."/>
+    <parameter name="adminPasswrod" value="adminadmin"/>
+    <classes>
+      <class name="test.NewGroupTests">
+        <methods>
+          <include name="afterTest"/>
+          <include name="beforeSuite"/>
+          <include name="preconitions"/>
+          <include name="navigateToNewGroupPage"/>
+          <include name="userInGroupTest" invocation-numbers="0"/>
+          <include name="afterSuite"/>
+        </methods>
+      </class> <!-- test.NewGroupTests -->
+    </classes>
+  </test> <!-- newGroupTests(failed) -->
+</suite> <!-- Failed suite [regressionTests] -->

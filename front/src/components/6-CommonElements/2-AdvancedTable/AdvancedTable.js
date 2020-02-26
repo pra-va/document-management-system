@@ -9,14 +9,14 @@ import "./AdvancedTable.css";
 import CustomSearchBar from "./CustomSearch";
 
 // Template for table data:
-// products = [{ id: "asd", ... }];
+// dataFields = [{ id: "asd", ... }];
 
-// columns = [
+// columnNames = [
 //   {
 //     dataField: "id",
 //     text: "Product ID"
 //   },
-//   ...
+//   ...selectedRow
 // ];
 
 // table rows keys should have number dataField name.
@@ -42,6 +42,12 @@ class Table extends Component {
       this.setState({ tableData: this.props.tableData });
     }
   }
+
+  handleRowSelect = (row, isSelect) => {
+    if (this.props.selectedRow) {
+      this.props.selectedRow(row);
+    }
+  };
 
   createColumns = () => {
     let columns = this.state.dataFields.map((item, index) => {
@@ -75,12 +81,16 @@ class Table extends Component {
       {
         text: "16",
         value: 16
-      },
-      {
-        text: "24",
-        value: 24
       }
     ]
+  };
+
+  selectRow = {
+    mode: "radio",
+    clickToSelect: true,
+    hideSelectColumn: true,
+    bgColor: this.props.select !== undefined ? "#000000" : "",
+    onSelect: this.handleRowSelect
   };
 
   render() {
@@ -90,7 +100,7 @@ class Table extends Component {
     };
 
     return (
-      <div>
+      <div id={this.props.id}>
         <ToolkitProvider
           keyField="number"
           data={this.state.tableData}
@@ -113,6 +123,7 @@ class Table extends Component {
                         {...paginationTableProps}
                         pagination={paginationFactory(this.options)}
                         classes="table-striped table-dark table-sm"
+                        selectRow={this.selectRow}
                         hover
                       />
                     </div>
@@ -124,6 +135,7 @@ class Table extends Component {
                   {...props.baseProps}
                   classes="table-striped table-dark table-sm"
                   hover
+                  selectRow={this.selectRow}
                 />
               )}
             </div>

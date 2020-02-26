@@ -7,15 +7,10 @@ import * as serviceWorker from "./serviceWorker";
 
 // Bootstrap imports
 import "bootstrap/dist/css/bootstrap.min.css";
-// Uncomment if needed for additional bootstrap functionallity.
-// import $ from "jquery";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 // Router imports
-// import { Switch, Route } from "react-router";
-// import { BrowserRouter } from "react-router-dom";
-
-import { HashRouter as Router, Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter } from "react-router-dom";
 import { Switch } from "react-router";
 
 //Table imports
@@ -28,28 +23,27 @@ import LoginForm from "./components/2-LoginForm/LoginForm";
 import HomePage from "./components/3-UserPage/01-MainWindow/HomePage";
 import ListOfUsers from "./components/4-Admin/3and4-UsersAndGroups/3-Users/ListOfUsers";
 import ListOfGroups from "./components/4-Admin/3and4-UsersAndGroups/4-Groups/ListOfGroups";
+import DocTypes from "./components/4-Admin/5-DocTypes/DocTypes";
+import NewDocument from "./components/3-UserPage/03-CreateDocument/CreateDocument";
+import MyDocuments from "./components/3-UserPage/05-MyDocuments/MyDocuments";
 
 ReactDOM.render(
-  // <BrowserRouter>
-  //   <App>
-  //     <Switch>
   <BrowserRouter>
-    <Router>
-      <App>
-        <Switch>
-          <Route exact path="/" component={LoginForm} />
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/users" component={ListOfUsers} />
-          <Route exact path="/groups" component={ListOfGroups} />
-          <Route path="*" component={PageNotFound} />
-          <Route component={PageNotFound} />
-        </Switch>
-      </App>
-    </Router>
+    <App>
+      <Switch>
+        <Route exact path="/dvs/" component={LoginForm} />
+        <Route exact path="/dvs/home" component={HomePage} />
+        <Route exact path="/dvs/users" component={ListOfUsers} />
+        <Route exact path="/dvs/groups" component={ListOfGroups} />
+        <Route exact path="/dvs/doctypes" component={DocTypes} />
+        <Route exact path="/dvs/notfound" component={PageNotFound} />
+        <Route exact path="/dvs/document" component={NewDocument} />
+        <Route exact path="/dvs/documents" component={MyDocuments} />
+        <Route path="/dvs/**" component={PageNotFound} />
+        <Route component={PageNotFound} />
+      </Switch>
+    </App>
   </BrowserRouter>,
-  //     </Switch>
-  //   </App>
-  // </BrowserRouter>,
   document.getElementById("root")
 );
 

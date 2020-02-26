@@ -2,10 +2,17 @@
 @media (min-width: 1200px) {
   .align-items-lg {
     position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+    top: 25%;
   }
+}
+
+.login-form {
+  background-color: #fff;
+}
+
+.login-form.border {
+  border: 3px solid #535353 !important;
+  border-radius: 1.3em !important;
 }
 
 .btn-black {
@@ -20,11 +27,5 @@
 }
 
 .width {
-  max-width: 22vh;
-  max-height: min-content;
-}
-
-#loginForm {
-  min-width: 22em;
-  margin: 0;
+  width: 22vh;
 }

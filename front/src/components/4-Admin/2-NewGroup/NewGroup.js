@@ -3,10 +3,10 @@ import Modal from "react-bootstrap/Modal";
 import GroupInformation from "./FormComponents/1-GroupInformation";
 import AddUsersToGroup from "./FormComponents/2-AddUsersToGroup";
 import GroupUsers from "./FormComponents/3-GroupUsers";
-import AddDocumentTypes from "./FormComponents/4-AddDocumentTypes";
-import SetRights from "./FormComponents/5-SetRights";
 import axios from "axios";
 import AddRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
+import serverUrl from "./../../7-properties/1-URL";
+import AddRemoveDocTypes from "./../../6-CommonElements/9-AddRemoveDocType/AddRemoveDocType";
 
 class NewGroup extends Component {
   constructor(props) {
@@ -16,15 +16,37 @@ class NewGroup extends Component {
       groupDescription: "",
       usersList: [],
       notAddedUsers: [],
-      addedUsers: []
+      addedUsers: [],
+      readyToSubmit: true,
+      canCreate: [],
+      canSign: []
     };
   }
 
-  handleNewGroupSubmit = () => {
+  componentDidUpdate() {}
+
+  setUpData = data => {
+    this.parseUsersData(data);
+  };
+
+  handleNewGroupSubmit = event => {
+    event.preventDefault();
+
+    const newGroup = {
+      description: this.state.groupDescription,
+      docTypesToCreate: this.state.canCreate,
+      docTypesToSign: this.state.canSign,
+      groupName: this.state.groupName,
+      userList: this.state.addedUsers.map(item => {
+        return item.username;
+      })
+    };
+
     axios
-      .post("http://localhost:8080/dvs/api/creategroup", {
-        description: this.state.groupDescription,
-        name: this.state.groupName
+      .post(serverUrl + "creategroup", newGroup)
+      .then(response => {
+        window.location.reload();
+        this.props.hideNewGroup();
       })
       .catch(error => console.log(error));
   };
@@ -37,40 +59,26 @@ class NewGroup extends Component {
     this.setState({ groupDescription: event.target.value });
   };
 
-  componentDidMount() {
-    this.connectForUsersData();
-  }
+  parseUsersData = data => {
+    let tmpUsersData = data.map((item, index) => {
+      return {
+        number: index + 1,
+        name: item.name,
+        surname: item.surname,
+        username: item.username,
+        role: item.role,
+        add: (
+          <AddRemoveButton
+            itemName={item.username}
+            added={false}
+            changeAddedStatus={this.changeAddedStatus}
+          />
+        ),
+        added: false
+      };
+    });
 
-  connectForUsersData = () => {
-    axios
-      .get("http://localhost:8080/dvs/api/users")
-      .then(response => {
-        let tmpUsersData = response.data.map((item, index) => {
-          return {
-            number: index + 1,
-            name: item.name,
-            surname: item.surname,
-            username: item.username,
-            role: item.role,
-            add: (
-              <AddRemoveButton
-                itemName={item.username}
-                added={false}
-                changeAddedStatus={this.changeAddedStatus}
-              />
-            ),
-            added: false
-          };
-        });
-
-        this.setState({
-          usersList: tmpUsersData,
-          notAddedUsers: tmpUsersData
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.filterAddedGroups(tmpUsersData);
   };
 
   changeAddedStatus = username => {
@@ -86,14 +94,13 @@ class NewGroup extends Component {
             changeAddedStatus={this.changeAddedStatus}
           />
         );
-        this.setState({ usersList: tmpUsers });
-        this.filterAddedGroups();
       }
     }
+    this.filterAddedGroups(tmpUsers);
   };
 
-  filterAddedGroups = () => {
-    let filterUsers = this.state.usersList;
+  filterAddedGroups = data => {
+    let filterUsers = data;
     let tmpNotAdded = [];
     let tmpAdded = [];
     for (let i = 0; i < filterUsers.length; i++) {
@@ -103,9 +110,24 @@ class NewGroup extends Component {
       } else {
         tmpNotAdded.push(element);
       }
-
-      this.setState({ notAddedUsers: tmpNotAdded, addedUsers: tmpAdded });
     }
+    this.setState({
+      usersList: data,
+      notAddedUsers: tmpNotAdded,
+      addedUsers: tmpAdded
+    });
+  };
+
+  readyToSubmit = readyToSubmit => {
+    this.setState({ readyToSubmit: readyToSubmit });
+  };
+
+  canCreate = data => {
+    this.setState({ canCreate: data });
+  };
+
+  canSign = data => {
+    this.setState({ canSign: data });
   };
 
   render() {
@@ -116,7 +138,7 @@ class NewGroup extends Component {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create New Group</Modal.Title>
+          <Modal.Title>New Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.handleNewGroupSubmit}>
@@ -127,13 +149,20 @@ class NewGroup extends Component {
               groupDescription={this.state.groupDescription}
             />
             <hr className="m-1" />
-            <AddUsersToGroup notAddedUsers={this.state.notAddedUsers} />
+            <AddUsersToGroup
+              setUpData={this.setUpData}
+              notAddedUsers={this.state.notAddedUsers}
+            />
             <hr className="m-1" />
             <GroupUsers addedUsers={this.state.addedUsers} />
             <hr className="m-1" />
-            <AddDocumentTypes />
-            <hr className="m-1" />
-            <SetRights />
+
+            <AddRemoveDocTypes
+              readyToSubmit={this.readyToSubmit}
+              canCreate={this.canCreate}
+              canSign={this.canSign}
+            />
+
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">
                 <button
@@ -147,6 +176,7 @@ class NewGroup extends Component {
                   type="submit"
                   className="btn btn-dark"
                   data-dismiss="modal"
+                  disabled={this.state.readyToSubmit ? false : true}
                 >
                   Create
                 </button>

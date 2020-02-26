@@ -1,0 +1,16 @@
+#createDocumentForm {
+  background-color: white;
+  padding: 1em;
+  margin: 0.8em 0;
+}
+
+@media (min-width: 1200px) {
+  #createDocumentForm {
+    background-color: white;
+    padding: 1em;
+    margin: 2em;
+  }
+  #newDocument {
+    width: 60%;
+  }
+}

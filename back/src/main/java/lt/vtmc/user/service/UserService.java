@@ -1,6 +1,7 @@
 package lt.vtmc.user.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.Status;
+import lt.vtmc.documents.dao.DocumentRepository;
+import lt.vtmc.documents.dto.DocumentDetailsDTO;
+import lt.vtmc.documents.model.Document;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.dto.UserDetailsDTO;
@@ -29,6 +35,10 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private DocumentRepository docRepo;
+
 	/**
 	 * Will return User object based user found by
 	 * {@link lt.vtmc.security.service.UserService.findUserByUsername(String)}.
@@ -91,6 +101,7 @@ public class UserService implements UserDetailsService {
 		userRepository.save(newUser);
 		return newUser;
 	}
+
 	/**
 	 * Method to return all system users.
 	 * 
@@ -103,6 +114,7 @@ public class UserService implements UserDetailsService {
 		}
 		return allUsers;
 	}
+
 	/**
 	 * Method to delete system users.
 	 * 
@@ -112,6 +124,7 @@ public class UserService implements UserDetailsService {
 	public void deleteUser(User user) {
 		userRepository.delete(user);
 	}
+
 	/**
 	 * Method to update system user details.
 	 * 
@@ -122,14 +135,59 @@ public class UserService implements UserDetailsService {
 	 * @return User
 	 */
 	@Transactional
-	public User updateUserDetails(String username, String name, String surname, String password,String role) {
+	public User updateUserDetails(String username, String name, String surname, String password, String role) {
 		User updatedUser = userRepository.findUserByUsername(username);
 		updatedUser.setName(name);
 		updatedUser.setSurname(surname);
-		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		updatedUser.setPassword(encoder.encode(password));
+		if (!password.equals("") && password.length() > 7 && password.length() < 21) {
+			PasswordEncoder encoder = new BCryptPasswordEncoder();
+			updatedUser.setPassword(encoder.encode(password));
+		}
 		updatedUser.setRole(role);
 		userRepository.save(updatedUser);
 		return updatedUser;
 	}
+
+	public String[] getUserDocTypesToCreate(String username) {
+		User tmpUser = userRepository.findUserByUsername(username);
+		List<Group> tmpGroupList = tmpUser.getGroupList();
+		List<DocType> tmpDocTypeList = new ArrayList<DocType>();
+		for (int i = 0; i < tmpGroupList.size(); i++) {
+			if (tmpGroupList.get(i).getDocTypesToCreate() != null) {
+				for (int j = 0; j < tmpGroupList.get(i).getDocTypesToCreate().size(); j++) {
+					tmpDocTypeList.add(tmpGroupList.get(i).getDocTypesToCreate().get(j));
+				}
+			}
+		}
+		String[] list = new String[tmpDocTypeList.size()];
+		for (int i = 0; i < tmpDocTypeList.size(); i++) {
+			list[i] = tmpDocTypeList.get(i).getName();
+		}
+		String[] uniqueList = Arrays.stream(list).distinct().toArray(String[]::new);
+		return uniqueList;
+	}
+
+	public List<DocumentDetailsDTO> getUserDocumentsToBeSigned(String username) {
+		User tmpUser = userRepository.findUserByUsername(username);
+		List<Group> tmpGroupList = tmpUser.getGroupList();
+
+		List<DocType> tmpList = new ArrayList<DocType>();
+		for (Group group : tmpGroupList) {
+			tmpList.addAll(group.getDocTypesToApprove());
+		}
+
+		List<Document> tmpListDoc = new ArrayList<Document>();
+		for (DocType dType : tmpList) {
+			tmpListDoc.addAll(docRepo.findAllBydType(dType));
+		}
+
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		for (Document document : tmpListDoc) {
+			if (document.getStatus() == Status.SUBMITED) {
+				listToReturn.add(new DocumentDetailsDTO(document));
+			}
+		}
+		return listToReturn;
+	}
+
 }

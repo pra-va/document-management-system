@@ -5,6 +5,7 @@ import Navigation from "../../3-UserPage/01-MainWindow/01-Navigation/Navigation"
 import "./UsersAndGroups.css";
 import { Link } from "react-router-dom";
 import EditButton from "./EditTableItemButton";
+import serverUrl from "./../../7-properties/1-URL";
 
 // forWhat={"users", "groups"}
 class ListOfUsers extends Component {
@@ -24,7 +25,7 @@ class ListOfUsers extends Component {
     "role",
     "edit"
   ];
-  usersTableNames = ["#", "Name", "Surname", "Username", "Role", ""];
+  usersTableNames = ["#", "First Name", "Last Name", "Username", "Role", ""];
 
   groupsTableDataFields = ["number", "name", "members", "edit"];
   groupsTableNames = ["#", "Group Name", "Members", ""];
@@ -43,7 +44,7 @@ class ListOfUsers extends Component {
 
   connectForUsersData = () => {
     axios
-      .get("http://localhost:8080/dvs/api/users")
+      .get(serverUrl + "users")
       .then(response => {
         let tmpUsersData = response.data.map((item, index) => {
           return {
@@ -65,7 +66,7 @@ class ListOfUsers extends Component {
 
   connectForGroupsData = () => {
     axios
-      .get("http://localhost:8080/dvs/api/groups")
+      .get(serverUrl + "groups")
       .then(response => {
         let tmpGroupsData = response.data.map((item, index) => {
           return {
@@ -90,30 +91,38 @@ class ListOfUsers extends Component {
         <div className="container ">
           <div className="row d-flex justify-content-center p-5">
             <Link
-              to="/users"
+              to="/dvs/users"
               className={
                 this.props.forWhat === "users"
-                  ? "btn btn-dark btn-lg m-3 disabled"
-                  : "btn btn-dark btn-lg m-3"
+                  ? "btn btn-secondary btn-lg m-3 darker"
+                  : "btn btn-secondary btn-lg m-3"
               }
               id="buttonUsers"
             >
               Users
             </Link>
             <Link
-              to="/groups"
+              to="/dvs/groups"
               className={
                 this.props.forWhat === "groups"
-                  ? "btn btn-dark btn-lg m-3 disabled"
-                  : "btn btn-dark btn-lg m-3"
+                  ? "btn btn-secondary btn-lg m-3 darker"
+                  : "btn btn-secondary btn-lg m-3"
               }
               id="buttonGroups"
             >
               Groups
             </Link>
+            <Link
+              to="/dvs/doctypes"
+              className={"btn btn-secondary btn-lg m-3"}
+              id="buttonGroups"
+            >
+              Document Types
+            </Link>
           </div>
-          <div className="row p-1" id="tableUsersGroups">
+          <div className="row p-1" id="tableuserGroups">
             <Table
+              id={"usersAndGroupsTable"}
               dataFields={
                 this.props.forWhat === "users"
                   ? this.usersTableDataFields

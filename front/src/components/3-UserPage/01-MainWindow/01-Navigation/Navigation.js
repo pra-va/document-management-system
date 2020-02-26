@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Navigation.css";
 import NavigationPresentation from "./NavigationPresentation";
 import { withRouter } from "react-router";
+import serverUrl from "./../../../7-properties/1-URL";
 
 class Navigation extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Navigation extends Component {
 
   handleLogout = event => {
     axios
-      .get("http://localhost:8080/dvs/api/logout")
+      .post(serverUrl + "logout")
       .then(response => {})
       .catch(error => {
         console.log(error);
@@ -24,7 +25,7 @@ class Navigation extends Component {
 
   isUserAdminChecker = () => {
     axios
-      .get("http://localhost:8080/dvs/api/administrator")
+      .get(serverUrl + "administrator")
       .then(response => {
         this.setState({ isUserAdmin: response.data });
       })
@@ -35,10 +36,10 @@ class Navigation extends Component {
 
   authenticationChecker = () => {
     axios
-      .get("http://localhost:8080/dvs/api/authenticated")
+      .get(serverUrl + "authenticated")
       .then(response => {
         if (response.data === false) {
-          this.props.history.push("/");
+          this.props.history.push("/dvs");
         } else {
           this.setState({ authenticated: "true" });
         }
@@ -54,7 +55,12 @@ class Navigation extends Component {
   }
 
   render() {
-    return <NavigationPresentation role={this.state.isUserAdmin} />;
+    return (
+      <NavigationPresentation
+        role={this.state.isUserAdmin}
+        handleLogout={this.handleLogout}
+      />
+    );
   }
 }
 

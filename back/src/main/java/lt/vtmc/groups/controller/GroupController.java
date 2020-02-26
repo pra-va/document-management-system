@@ -3,10 +3,13 @@ package lt.vtmc.groups.controller;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import lt.vtmc.groups.dto.CreateGroupCommand;
 import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.dto.UpdateGroupCommand;
+import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.controller.UserController;
+import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Controller for managing groups.
@@ -55,7 +57,7 @@ public class GroupController {
 		if (groupService.findGroupByName(command.getGroupName()) == null) {
 			groupService.createGroup(command.getGroupName(), command.getDescription());
 			groupService.addUsersToGroup(command.getGroupName(), command.getUserList());
-
+			groupService.addDocTypes(command.getGroupName(), command.getDocTypesToSign(), command.getDocTypesToCreate());
 			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 
@@ -112,9 +114,9 @@ public class GroupController {
 	public ResponseEntity<String> updateGroupByGroupName(@RequestBody UpdateGroupCommand command,
 			@PathVariable("groupname") String name) {
 		if (groupService.findGroupByName(name) != null) {
-			groupService.updateGroupDetails(name, command.getDescription(), command.getUserList(),
+			groupService.updateGroupDetails(command.getNewName(), name, command.getDescription(), command.getUserList(),
 					command.getDocTypesToApprove(), command.getDocTypesToCreate());
-
+			groupService.addDocTypes(command.getNewName(), command.getDocTypesToApprove(), command.getDocTypesToCreate());
 			LOG.info("# LOG # Initiated by [{}]: Group [{}] was updated #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), name);
 
@@ -127,4 +129,36 @@ public class GroupController {
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
 
+	/**
+	 * Checks if provided groupname exists.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	@GetMapping(path = "/api/group/{name}/exists")
+	public boolean groupNameExists(@PathVariable("name") String name) {
+		if (this.groupService.findGroupByName(name) != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@DeleteMapping("/api/group/{groupname}/delete")
+	public ResponseEntity<String> deleteGroupByName(@PathVariable("groupname") String groupname) {
+		Group tmpGroup = groupService.findGroupByName(groupname);
+		if (tmpGroup != null) {
+
+			LOG.info("# LOG # Initiated by [{}]: User [{}] was deleted #",
+					SecurityContextHolder.getContext().getAuthentication().getName(), tmpGroup);
+
+			groupService.deleteGroup(tmpGroup);
+			return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
+		}
+
+		LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT deleted - [{}] was NOT found #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), groupname, groupname);
+
+		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
+	}
 }

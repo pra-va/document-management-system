@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import InputLine from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 import axios from "axios";
+import serverUrl from "./../../../7-properties/1-URL";
 
 class UserInformation extends Component {
   constructor(props) {
@@ -27,9 +28,28 @@ class UserInformation extends Component {
   };
 
   handleUsernameChange = event => {
+    event.persist();
     this.setState({ username: event.target.value });
     this.props.handleUsernameChange(event.target.value);
-    this.checkIfUsernameExists();
+
+    if (event.target.value.length > 3) {
+      axios
+        .get(serverUrl + event.target.value + "/exists")
+        .then(response => {
+          this.setState({ usernameExists: response.data });
+          if (response.data) {
+            event.target.setCustomValidity("Username is taken.");
+          } else {
+            event.target.setCustomValidity("");
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      event.target.setCustomValidity("");
+      this.setState({ usernameExists: false });
+    }
   };
 
   handlePasswordChange = event => {
@@ -51,30 +71,6 @@ class UserInformation extends Component {
     this.props.handleRoleChange(event.target.value);
   };
 
-  checkIfUsernameExists = () => {
-    setTimeout(() => {
-      if (this.state.username.length > 0) {
-        axios
-          .get(
-            "http://localhost:8080/dvs/api/" + this.state.username + "/exists"
-          )
-          .then(response => {
-            this.setState({ usernameExists: response.data });
-            if (response.data) {
-              this.setState({ usernameExists: true });
-              this.props.handleUsernameExists(true);
-            } else {
-              this.setState({ usernameExists: false });
-              this.props.handleUsernameExists(false);
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }
-    }, 1000);
-  };
-
   render() {
     return (
       <div>
@@ -90,6 +86,7 @@ class UserInformation extends Component {
           placeholder={"John"}
           onChange={this.handleFirstNameChange}
           value={this.state.firstName}
+          pattern={2}
         />
 
         <InputLine
@@ -100,6 +97,7 @@ class UserInformation extends Component {
           placeholder={"Smith"}
           onChange={this.handleLastNameChange}
           value={this.state.lastName}
+          pattern={2}
         />
 
         <InputLine
@@ -110,6 +108,8 @@ class UserInformation extends Component {
           placeholder={"holyDiver"}
           onChange={this.handleUsernameChange}
           value={this.state.username}
+          pattern={3}
+          usernameExists={this.state.usernameExists}
         />
 
         <InputLine
@@ -120,24 +120,13 @@ class UserInformation extends Component {
           placeholder={"1234"}
           onChange={this.handlePasswordChange}
           value={this.state.password}
+          pattern={0}
         />
-
-        <div className="form-group row d-flex justify-content-center">
-          {this.state.username.length > 0 ? (
-            this.state.usernameExists ? (
-              <h5>Username {this.state.username} is taken.</h5>
-            ) : (
-              <div></div>
-            )
-          ) : (
-            <div></div>
-          )}
-        </div>
 
         <div className="form-group row">
           <div className="col-sm-2"></div>
           <div className="col-sm-10">
-            <div className="form-check d-flex justify-content-start">
+            <div className="form-check d-flex justify-content-start mt-3">
               <label
                 className="form-check-label"
                 htmlFor="checkBoxShowPassword"
@@ -166,6 +155,10 @@ class UserInformation extends Component {
                 id="radioAdmin"
                 value="ADMIN"
                 onChange={this.adminRadioChange}
+                onClick={() => {
+                  this.setState({ role: "ADMIN" });
+                }}
+                checked={this.state.role === "ADMIN" ? true : false}
               />
               <label className="form-check-label" htmlFor="inputRadioAdmin">
                 Yes
@@ -178,8 +171,11 @@ class UserInformation extends Component {
                 type="radio"
                 name="adminOrUser"
                 id="radioUser"
-                value="USER"
                 onChange={this.userRadioChange}
+                onClick={() => {
+                  this.setState({ role: "USER" });
+                }}
+                checked={this.state.role === "ADMIN" ? false : true}
               />
               <label className="form-check-label" htmlFor="inputRadioUser">
                 No

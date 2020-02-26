@@ -1,0 +1,41 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="regressionTests" preserve-order="true">
+	<test name="loginTests">
+		<parameter name="userNameWrong" value="qwerty" />
+		<parameter name="passwordWrong" value="qwerty" />
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
+		<parameter name="userUserName" value="user" />
+		<parameter name="userPassword" value="useruser" />
+		<classes>
+			<class name="test.loginTests"/>
+		</classes>
+	</test>
+	<test name="brokenLinks">
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
+		<classes>
+			<class name="test.BrokenLinksTest"/>
+		</classes>
+	</test>
+	<test name="newGroupTests">
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
+		<parameter name="groupName" value="Project managers" />
+		<parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers." />
+		<parameter name="docTypeName" value="Resignation letter" />
+		<classes>
+			<class name="test.NewGroupTests"/>
+		</classes>
+	</test>
+	<test name="newDocTypeTests">
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
+		<parameter name="docTypeName" value="Resignation letter" />
+		<parameter name="groupName" value="Project managers" />
+		<classes>
+			<class name="test.NewDocTypeTests"/>
+		</classes>
+	</test>
+</suite>

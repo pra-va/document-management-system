@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="HOME_LOG" value="./app.log" />
+	<property name="HOME_LOG" value="/tmp/illegalLog.log" />
 
 	<appender name="CONSOLE"
 		class="ch.qos.logback.core.ConsoleAppender">
