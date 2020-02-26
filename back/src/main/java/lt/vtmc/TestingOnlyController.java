@@ -13,7 +13,7 @@ public class TestingOnlyController {
 	@Autowired
 	private UserRepository userRepo;
 	
-	@DeleteMapping(path = "/api/testingonly/returnpass/{username}")
+	@GetMapping(path = "/api/testingonly/returnpass/{username}")
 	public String returnHashedPassword(@PathVariable ("username") String username) {
 		return userRepo.findUserByUsername(username).getPassword();
 	}
