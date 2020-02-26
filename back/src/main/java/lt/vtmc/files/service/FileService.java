@@ -31,7 +31,6 @@ import lt.vtmc.files.dao.FilesRepository;
 import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.controller.UserController;
-import lt.vtmc.user.dao.UserRepository;
 
 /**
  * Service layer for uploading and downloading files. Note that files that are
@@ -52,9 +51,6 @@ public class FileService {
 	private DocumentRepository documentRepository;
 
 	@Autowired
-	private UserRepository userRepo;
-
-	@Autowired
 	private DocumentService docService;
 
 	/**
@@ -69,7 +65,9 @@ public class FileService {
 		byte[] bytes = file.getBytes();
 		String fileName = file.getOriginalFilename();
 		String fileType = file.getContentType();
-		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID(Instant.now().toString()));
+		long fileSize = file.getSize();
+		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID(Instant.now().toString()),
+				fileSize);
 		file4db.setDocument(doc);
 		List<File4DB> tmplist = doc.getFileList();
 		tmplist.add(file4db);

@@ -37,7 +37,7 @@ public class DocumentDetailsDTO {
 
 	private String uid;
 
-	private List<String> filesAttached;
+	private List<File4DocDTO> filesAttached;
 
 	@JsonIgnore
 	private User handler;
@@ -100,11 +100,11 @@ public class DocumentDetailsDTO {
 //	}
 	}
 
-	public List<String> getFilesAttached() {
+	public List<File4DocDTO> getFilesAttached() {
 		return filesAttached;
 	}
 
-	public void setFilesAttached(List<String> filesAttached) {
+	public void setFilesAttached(List<File4DocDTO> filesAttached) {
 		this.filesAttached = filesAttached;
 	}
 
@@ -182,10 +182,10 @@ public class DocumentDetailsDTO {
 		this.filesAttached = getFileNames(document.getFileList());
 	}
 
-	private List<String> getFileNames(List<File4DB> files) {
-		List<String> fileNamesAttached = new ArrayList<String>();
+	private List<File4DocDTO> getFileNames(List<File4DB> files) {
+		List<File4DocDTO> fileNamesAttached = new ArrayList<>();
 		for (File4DB file : files) {
-			fileNamesAttached.add(file.getFileName().substring(18));
+			fileNamesAttached.add(new File4DocDTO(file.getFileName().substring(18), file.getUID(), file.getFileSize()));
 		}
 		return fileNamesAttached;
 	}
