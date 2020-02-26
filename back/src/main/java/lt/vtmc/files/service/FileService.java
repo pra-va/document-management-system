@@ -167,4 +167,15 @@ public class FileService {
 		return filesAsBytes;
 	}
 
+	@Transactional
+	public boolean deleteFileByUID(String UID) {
+		try {
+			filesRepository.deleteFileByUID(UID);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

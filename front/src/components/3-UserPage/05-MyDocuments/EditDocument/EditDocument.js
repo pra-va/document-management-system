@@ -22,20 +22,21 @@ class EditDocument extends Component {
       uploadProgress: 0,
       filesSize: 0,
       submitDisabled: true,
-      submitInProgres: false
+      submitInProgres: false,
+      filesAttachedInServer: []
     };
   }
 
   componentDidUpdate() {
-    console.log(this.state.attachedFilesTableValues);
-    console.log((this.state.filesSize * 100) / 20000000);
     const { name, description, selectedDocType, filesSize } = this.state;
+    console.log(this.state.attachedFilesTableValues);
 
     if (
       (name.length > 0) &
       (description.length > 0) &
       (selectedDocType.length > 0) &
-      (filesSize < 20000000)
+      (filesSize < 20000000) &
+      (filesSize !== 0)
     ) {
       if (this.state.submitDisabled) {
         this.setState({ submitDisabled: false });
@@ -52,20 +53,22 @@ class EditDocument extends Component {
     const data = this.props.item;
     this.fetchUsername();
     this.setState({
+      filesAttachedInServer: this.props.item.filesAttached,
       name: data.name,
       description: data.description,
       selectedDocType: data.type,
-      files: [],
+      files: [...this.props.item.filesAttached],
       attachedFilesTableValues: data.filesAttached.map((item, index) => {
         return {
           number: index + 1,
           fileName: item.fileName,
-          size: 0, //TODO from BACKEND
+          size: this.processFileSizeString(item.fileSize),
+          fileSize: item.fileSize,
           remove: (
             <button
               className="btn btn-secondary btn-sm"
               onClick={this.handleRemove}
-              id={index + item.fileName}
+              id={index + 1}
             >
               Remove
             </button>
@@ -73,6 +76,9 @@ class EditDocument extends Component {
         };
       })
     });
+    this.checkAttachedFilesSize(
+      this.props.item.filesAttached.map(item => item.fileSize)
+    );
   }
 
   handleNameChange = nameData => {
@@ -92,49 +98,55 @@ class EditDocument extends Component {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
+      console.log(
+        "iterator: " + event.target.id + "; element: " + element.number
+      );
       if (Number(event.target.id) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
       }
     }
     this.setState({ attachedFilesTableValues: tmpValues });
+
     console.log(tmpValues);
-    this.checkAttachedFilesSize(tmpValues);
+
+    this.checkAttachedFilesSize(tmpValues.map(item => item.fileSize));
   };
 
-  checkAttachedFilesSize = files => {
-    console.log(files);
+  checkAttachedFilesSize = (...files) => {
     let sum = 0;
-    for (let i = 0; i < files.length; i++) {
-      const element = files[i].file.size;
-      sum += element;
-    }
+
+    files.forEach(element => {
+      for (let i = 0; i < element.length; i++) {
+        const item = element[i];
+        sum += item;
+      }
+    });
     this.setState({ filesSize: sum });
+    console.log(sum);
+    return sum;
   };
 
   handleFileAdd = files => {
     let tmpFilesForTable = [...this.state.attachedFilesTableValues];
-    let stateLength = this.state.attachedFilesTableValues.length;
+    let stateLength = tmpFilesForTable.length;
 
     for (let i = 0; i < files.length; i++) {
       const element = files[i];
-      var size = "";
-      if (element.size < 1000) {
-        size = element.size + " B";
-      } else if (element.size >= 1000 && element.size < 1000000) {
-        size = Math.floor((element.size / 1000) * 100) / 100 + " kB";
-      } else {
-        size = Math.floor((element.size / 1000000) * 100) / 100 + " MB";
-      }
+      var size = this.processFileSizeString(element.size);
+
+      console.log(stateLength);
+
       tmpFilesForTable.push({
-        number: i + stateLength,
+        number: i + stateLength + 1,
         fileName: element.name,
         size: size,
+        fileSize: element.size,
         remove: (
           <button
             className="btn btn-secondary btn-sm"
             onClick={this.handleRemove}
-            id={i + stateLength}
+            id={i + stateLength + 1}
           >
             Remove
           </button>
@@ -145,7 +157,17 @@ class EditDocument extends Component {
     this.setState({
       attachedFilesTableValues: tmpFilesForTable
     });
-    this.checkAttachedFilesSize(tmpFilesForTable);
+    this.checkAttachedFilesSize(tmpFilesForTable.map(item => item.fileSize));
+  };
+
+  processFileSizeString = sizeInB => {
+    if (sizeInB < 1000) {
+      return sizeInB + " B";
+    } else if (sizeInB >= 1000 && sizeInB < 1000000) {
+      return Math.floor((sizeInB / 1000) * 100) / 100 + " kB";
+    } else {
+      return Math.floor((sizeInB / 1000000) * 100) / 100 + " MB";
+    }
   };
 
   fetchUsername = () => {
@@ -168,6 +190,7 @@ class EditDocument extends Component {
     },
     headers: { "Content-Type": "multipart/form-data" }
   };
+
   handleUpload = event => {
     event.preventDefault();
     this.setState({ submitInProgres: true });
@@ -194,7 +217,6 @@ class EditDocument extends Component {
       .post(serverUrl + "doc/create", postData)
       .then(response => {
         uid = response.data;
-        console.log(uid);
         axios
           .post(serverUrl + "doc/upload/" + uid, data)
           .then(response => {
@@ -253,7 +275,7 @@ class EditDocument extends Component {
                 <button
                   type="button"
                   className="btn btn-outline-dark mr-2"
-                  onClick={this.props.hideNewGroup}
+                  onClick={this.props.hide}
                 >
                   Cancel
                 </button>

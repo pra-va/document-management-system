@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,18 +90,6 @@ public class FilesController {
 		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
 	}
 
-//	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
-//	public StreamingResponseBody downloadFiles(HttpServletResponse response, @PathVariable("username") String username)
-//			throws IOException {
-//		response.setContentType("application/zip");
-//		response.setHeader("Content-Disposition", "attachment; filename=\"demo.zip\"");
-//		response.setStatus(HttpServletResponse.SC_OK);
-//
-//		return outputStream -> {
-//			outputStream.write(zipService.zipFiles(fileService.findAllFilesByUsername(username)));
-//		};
-//	}
-
 	/**
 	 * Returns csv file of users files and documents.
 	 * 
@@ -113,6 +103,21 @@ public class FilesController {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	/**
+	 * Removes file from data base by UID.
+	 * 
+	 * @param UID
+	 * @return
+	 */
+	@DeleteMapping(value = "/api/files/delete/{UID}")
+	public ResponseEntity<String> deleteFileByUID(@PathVariable String UID) {
+		if (fileService.deleteFileByUID(UID)) {
+			return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("No such file exists.", HttpStatus.NOT_FOUND);
 		}
 	}
 }

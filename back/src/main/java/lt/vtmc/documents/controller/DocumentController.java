@@ -49,8 +49,8 @@ public class DocumentController {
 																								// @RequestParam("Files")
 																								// MultipartFile[] files
 
-		Document newDoc = docService.createDocument(command.getName(), command.getAuthorUsername(), command.getDescription(),
-				command.getDocType(), Instant.now().toString());
+		Document newDoc = docService.createDocument(command.getName(), command.getAuthorUsername(),
+				command.getDescription(), command.getDocType(), Instant.now().toString());
 //			if (files != null) {
 //				addFiles(command.getName(), files);
 //			}
@@ -107,7 +107,8 @@ public class DocumentController {
 	}
 
 	@PostMapping(path = "/api/doc/reject/{UID}")
-	public ResponseEntity<String> rejectDocument(@PathVariable("UID") String UID, @RequestBody DocumentRejection reject) {
+	public ResponseEntity<String> rejectDocument(@PathVariable("UID") String UID,
+			@RequestBody DocumentRejection reject) {
 		docService.setStatusAtmestas(UID, reject.getUsername(), reject.getReasonToReject());
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
