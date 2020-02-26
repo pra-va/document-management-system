@@ -105,19 +105,11 @@ public class FilesController {
 			return null;
 		}
 	}
-
-	/**
-	 * Removes file from data base by UID.
-	 * 
-	 * @param UID
-	 * @return
-	 */
-	@DeleteMapping(value = "/api/files/delete/{UID}")
-	public ResponseEntity<String> deleteFileByUID(@PathVariable String UID) {
-		if (fileService.deleteFileByUID(UID)) {
-			return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>("No such file exists.", HttpStatus.NOT_FOUND);
-		}
+	
+	@DeleteMapping(path = "/api/files/delete/{UID}")
+	public ResponseEntity<String> deleteFileByUID(@PathVariable ("UID") String UID) throws IOException{
+		fileService.deleteFileByUID(UID);
+		return new ResponseEntity<String>("Deleted", HttpStatus.OK);
 	}
+	
 }

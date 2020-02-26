@@ -167,15 +167,11 @@ public class FileService {
 		return filesAsBytes;
 	}
 
-	@Transactional
-	public boolean deleteFileByUID(String UID) {
-		try {
-			filesRepository.deleteFileByUID(UID);
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
+	public void deleteFileByUID(String uID) {
+		File4DB tmpFile = filesRepository.findFile4dbByUID(uID);
+		List<File4DB> tmpList = tmpFile.getDocument().getFileList();
+		tmpList.remove(tmpFile);
+		filesRepository.delete(tmpFile);
 	}
 
 }
