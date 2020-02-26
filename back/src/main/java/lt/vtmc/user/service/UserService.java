@@ -2,9 +2,7 @@ package lt.vtmc.user.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -15,8 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.Status;
@@ -27,7 +23,6 @@ import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.dto.UserDetailsDTO;
 import lt.vtmc.user.model.User;
-import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
 
 /**
  * User service class to create and manipulate user instaces.
@@ -43,6 +38,7 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private DocumentRepository docRepo;
+
 	/**
 	 * Will return User object based user found by
 	 * {@link lt.vtmc.security.service.UserService.findUserByUsername(String)}.
@@ -167,27 +163,27 @@ public class UserService implements UserDetailsService {
 		for (int i = 0; i < tmpDocTypeList.size(); i++) {
 			list[i] = tmpDocTypeList.get(i).getName();
 		}
-		String [] uniqueList = Arrays.stream(list).distinct().toArray(String[]::new);
+		String[] uniqueList = Arrays.stream(list).distinct().toArray(String[]::new);
 		return uniqueList;
 	}
 
 	public List<DocumentDetailsDTO> getUserDocumentsToBeSigned(String username) {
 		User tmpUser = userRepository.findUserByUsername(username);
 		List<Group> tmpGroupList = tmpUser.getGroupList();
-		
+
 		List<DocType> tmpList = new ArrayList<DocType>();
 		for (Group group : tmpGroupList) {
 			tmpList.addAll(group.getDocTypesToApprove());
 		}
-		
+
 		List<Document> tmpListDoc = new ArrayList<Document>();
 		for (DocType dType : tmpList) {
 			tmpListDoc.addAll(docRepo.findAllBydType(dType));
 		}
-		
+
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		for (Document document : tmpListDoc) {
-			if (document.getStatus() == Status.PATEIKTAS) {
+			if (document.getStatus() == Status.SUBMITED) {
 				listToReturn.add(new DocumentDetailsDTO(document));
 			}
 		}

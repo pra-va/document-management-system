@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,12 +80,27 @@ public class FilesController {
 	}
 
 	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
-	public byte[] downloadFiles(HttpServletResponse response, @RequestParam("username") String username)
+	public byte[] downloadFiles(HttpServletResponse response, @PathVariable("username") String username)
 			throws IOException {
 		response.setContentType("application/zip");
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
 		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
+	}
 
+	/**
+	 * Returns csv file of users files and documents.
+	 * 
+	 * @param username
+	 * @return
+	 */
+	@GetMapping(value = "/api/files/csv/{username}")
+	public ResponseEntity<Resource> downloadCSV(@PathVariable String username) {
+		try {
+			return fileService.generateCSV(username);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

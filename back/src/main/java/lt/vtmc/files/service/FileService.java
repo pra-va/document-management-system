@@ -31,7 +31,6 @@ import lt.vtmc.files.dao.FilesRepository;
 import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.controller.UserController;
-import lt.vtmc.user.dao.UserRepository;
 
 /**
  * Service layer for uploading and downloading files. Note that files that are
@@ -52,9 +51,6 @@ public class FileService {
 	private DocumentRepository documentRepository;
 
 	@Autowired
-	private UserRepository userRepo;
-
-	@Autowired
 	private DocumentService docService;
 
 	/**
@@ -69,7 +65,9 @@ public class FileService {
 		byte[] bytes = file.getBytes();
 		String fileName = file.getOriginalFilename();
 		String fileType = file.getContentType();
-		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID(Instant.now().toString()));
+		long fileSize = file.getSize();
+		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID(Instant.now().toString()),
+				fileSize);
 		file4db.setDocument(doc);
 		List<File4DB> tmplist = doc.getFileList();
 		tmplist.add(file4db);
@@ -91,6 +89,13 @@ public class FileService {
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(file4db.getFileType()))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file4db.getFileName() + "\"")
 				.body(new ByteArrayResource(file4db.getData()));
+	}
+
+	@Transactional
+	public ResponseEntity<Resource> downloadFileByUID(byte[] fileByteData, String fileName) {
+		return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+				.body(new ByteArrayResource(fileByteData));
 	}
 
 	public List<FileDetailsDTO> findAllFileDetailsByUsername(String username) {
@@ -118,20 +123,21 @@ public class FileService {
 		return returnList;
 	}
 
-	public void generateCSV(String UID) throws IOException {
-		File4DB tmpFile = filesRepository.findFile4dbByUID(UID);
-
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("File name: " + tmpFile.getFileName());
-		stringBuilder.append("File UID: " + tmpFile.getUID());
-		stringBuilder.append("File type: " + tmpFile.getFileType());
-		stringBuilder.append("Belongs to document: " + tmpFile.getDocument().getName());
-		stringBuilder.append("Document submitted on: " + tmpFile.getDocument().getDateSubmit());
-
-		FileWriter writer = new FileWriter("~/test.csv");
-		writer.write(stringBuilder.toString());
-		writer.flush();
-		writer.close();
+	/**
+	 * Returns Resource type ResponseEntity for users uploaded files and documents.
+	 * 
+	 * @param username
+	 * @return
+	 * @throws IOException
+	 */
+	public ResponseEntity<Resource> generateCSV(String username) throws IOException {
+		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+		StringBuilder builder = new StringBuilder();
+		builder.append("\"ID\", \"File Name\", \"Document ID\", \"Document Name\", \"Created\"\n");
+		for (FileDetailsDTO fileDetailsDTO : usersFilesDetails) {
+			builder.append(fileDetailsDTO.getCsvDetails());
+		}
+		return downloadFileByUID(builder.toString().getBytes(), "file.csv");
 	}
 
 	public List<File> findAllFilesByUsername(String username) {
@@ -152,7 +158,5 @@ public class FileService {
 		}
 		return files;
 	}
-	
-	
 
 }

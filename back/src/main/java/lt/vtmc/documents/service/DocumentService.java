@@ -1,8 +1,6 @@
 package lt.vtmc.documents.service;
 
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import lt.vtmc.files.model.File4DB;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
+
 /**
  * Document service for creating and managing documents.
  * 
@@ -27,15 +26,16 @@ import lt.vtmc.user.model.User;
  */
 @Service
 public class DocumentService {
-	
+
 	@Autowired
 	private DocumentRepository docRepo;
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private DocTypeRepository dTypeRepo;
+
 	/**
 	 * 
 	 * This method finds a document from group repository by name.
@@ -45,18 +45,20 @@ public class DocumentService {
 	public Document findDocumentByUID(String UID) {
 		return docRepo.findDocumentByUID(UID);
 	}
-	
+
 	/**
 	 * Method to create new document.
 	 * 
 	 * @return Document
 	 */
 	@Transactional
-	public Document createDocument(String name, String authorUsername, String description, String dType, String currentTime) {
-		Document newDocument = new Document(currentTime, userRepo.findUserByUsername(authorUsername), dTypeRepo.findDocTypeByName(dType), name, description, generateUID(currentTime));
-		List<Document>tmpList = userRepo.findUserByUsername(authorUsername).getCreatedDocuments();
+	public Document createDocument(String name, String authorUsername, String description, String dType,
+			String currentTime) {
+		Document newDocument = new Document(currentTime, userRepo.findUserByUsername(authorUsername),
+				dTypeRepo.findDocTypeByName(dType), name, description, String.valueOf(System.currentTimeMillis()));
+		List<Document> tmpList = userRepo.findUserByUsername(authorUsername).getCreatedDocuments();
 		tmpList.add(newDocument);
-		List<Document>tmpListDocuments = dTypeRepo.findDocTypeByName(dType).getDocumentList();
+		List<Document> tmpListDocuments = dTypeRepo.findDocTypeByName(dType).getDocumentList();
 		tmpListDocuments.add(newDocument);
 		newDocument.setFileList(new ArrayList<File4DB>());
 		return docRepo.save(newDocument);
@@ -64,7 +66,7 @@ public class DocumentService {
 
 	public List<DocumentDetailsDTO> findAll() {
 		List<Document> tmpList = docRepo.findAll();
-		List<DocumentDetailsDTO>list = new ArrayList<DocumentDetailsDTO>();
+		List<DocumentDetailsDTO> list = new ArrayList<DocumentDetailsDTO>();
 		for (int i = 0; i < tmpList.size(); i++) {
 			list.add(new DocumentDetailsDTO(tmpList.get(i)));
 		}
@@ -78,25 +80,25 @@ public class DocumentService {
 		document.setdType(null);
 		docRepo.delete(document);
 	}
-	
+
 	public void setStatusPateiktas(String UID) {
 		Document tmp = findDocumentByUID(UID);
-		tmp.setStatus(Status.PATEIKTAS);
+		tmp.setStatus(Status.SUBMITED);
 		docRepo.save(tmp);
 	}
-	
+
 	public void setStatusPriimtas(String UID) {
 		Document tmp = findDocumentByUID(UID);
-		tmp.setStatus(Status.PRIIMTAS);
+		tmp.setStatus(Status.ACCEPTED);
 		docRepo.save(tmp);
 	}
-	
+
 	public void setStatusAtmestas(String UID) {
 		Document tmp = findDocumentByUID(UID);
-		tmp.setStatus(Status.ATMESTAS);
+		tmp.setStatus(Status.REJECTED);
 		docRepo.save(tmp);
 	}
-	
+
 	public String generateUID(String time) {
 		StringBuilder UID = new StringBuilder();
 		for (int i = 0; i < time.length(); i++) {
@@ -106,15 +108,14 @@ public class DocumentService {
 		}
 		return UID.toString();
 	}
-	
-	public List<DocumentDetailsDTO> returnAllDocumentsByUsername(String username){
-		List<Document>tmpList = findAllDocumentsByUsername(username);
-		List<DocumentDetailsDTO>listToReturn = new ArrayList<DocumentDetailsDTO>();
+
+	public List<DocumentDetailsDTO> returnAllDocumentsByUsername(String username) {
+		List<Document> tmpList = findAllDocumentsByUsername(username);
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		for (Document document : tmpList) {
 			listToReturn.add(new DocumentDetailsDTO(document));
 		}
 		return listToReturn;
-		
 	}
 
 	public List<Document> findAllDocumentsByUsername(String username) {
@@ -124,15 +125,15 @@ public class DocumentService {
 
 	public List<DocumentDetailsDTO> findAllDocumentsToSignByUsername(String username) {
 		User tmpUser = userRepo.findUserByUsername(username);
-		List<Document>tmpList = findAllDocumentsByUsername(username);
-		List<DocType>docTypeListToApprove = new ArrayList<DocType>();
+		List<Document> tmpList = findAllDocumentsByUsername(username);
+		List<DocType> docTypeListToApprove = new ArrayList<DocType>();
 		List<Group> tmpGroups = tmpUser.getGroupList();
 		for (Group group : tmpGroups) {
 			docTypeListToApprove.addAll(group.getDocTypesToApprove());
 		}
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		for (Document doc : tmpList) {
-			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.PATEIKTAS) {
+			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.SUBMITED) {
 				listToReturn.add(new DocumentDetailsDTO(doc));
 			}
 		}

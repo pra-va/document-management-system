@@ -1,5 +1,6 @@
 package lt.vtmc.documents.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,36 +12,39 @@ import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.model.User;
 
 public class DocumentDetailsDTO {
-	
+
 	private String name;
 
 	@JsonIgnore
 	private User author;
-	
+
 	@JsonIgnore
 	private DocType dType;
-	
+
+	private String type;
+
 	private String dateCreate;
-	
+
 	private String description;
-	
+
 	private String dateSubmit;
-	
+
 	private String dateProcessed;
-	
+
 	private String reasonToReject;
-	
+
 	private Status status;
-	
+
 	private String uid;
-	
+
+	private List<File4DocDTO> filesAttached;
+
 	@JsonIgnore
 	private User handler;
 
 	@JsonIgnore
 	private List<File4DB> fileList;
-	
-	
+
 	public String getUid() {
 		return uid;
 	}
@@ -87,13 +91,21 @@ public class DocumentDetailsDTO {
 
 	public void setdType(DocType dType) {
 		this.dType = dType;
-		
+
 //	public boolean checkDocument(@PathVariable("name") String name) {
 //		if (docService.findDocumentByName(name) != null) {
 //			return true;
 //		}
 //		return false;
 //	}
+	}
+
+	public List<File4DocDTO> getFilesAttached() {
+		return filesAttached;
+	}
+
+	public void setFilesAttached(List<File4DocDTO> filesAttached) {
+		this.filesAttached = filesAttached;
 	}
 
 	public String getDateCreate() {
@@ -144,6 +156,14 @@ public class DocumentDetailsDTO {
 		this.handler = handler;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public DocumentDetailsDTO(Document document) {
 		super();
 		this.name = document.getName();
@@ -158,7 +178,16 @@ public class DocumentDetailsDTO {
 		this.status = document.getStatus();
 		this.fileList = document.getFileList();
 		this.uid = document.getUID();
+		this.type = document.getdType().getName();
+		this.filesAttached = getFileNames(document.getFileList());
 	}
-	
-	
+
+	private List<File4DocDTO> getFileNames(List<File4DB> files) {
+		List<File4DocDTO> fileNamesAttached = new ArrayList<>();
+		for (File4DB file : files) {
+			fileNamesAttached.add(new File4DocDTO(file.getFileName().substring(18), file.getUID(), file.getFileSize()));
+		}
+		return fileNamesAttached;
+	}
+
 }

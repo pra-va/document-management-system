@@ -20,8 +20,30 @@ class CreateDocument extends Component {
       loaded: 0,
       attachedFilesTableValues: [],
       uploadProgress: 0,
-      filesSize: 0
+      filesSize: 0,
+      submitDisabled: true,
+      submitInProgres: false
     };
+  }
+
+  componentDidUpdate() {
+    console.log((this.state.filesSize * 100) / 20000000);
+    const { name, description, selectedDocType, filesSize } = this.state;
+
+    if (
+      (name.length > 0) &
+      (description.length > 0) &
+      (selectedDocType.length > 0) &
+      (filesSize < 20000000)
+    ) {
+      if (this.state.submitDisabled) {
+        this.setState({ submitDisabled: false });
+      }
+    } else {
+      if (!this.state.submitDisabled) {
+        this.setState({ submitDisabled: true });
+      }
+    }
   }
 
   componentDidMount() {
@@ -124,6 +146,7 @@ class CreateDocument extends Component {
 
   handleUpload = event => {
     event.preventDefault();
+    this.setState({ submitInProgres: true });
     const data = new FormData();
     let uid = "";
     var attachedFiles = this.state.attachedFilesTableValues;
@@ -148,7 +171,6 @@ class CreateDocument extends Component {
       .then(response => {
         uid = response.data;
         console.log(uid);
-        console.log(serverUrl + "doc/upload/" + uid);
         axios
           .post(serverUrl + "doc/upload/" + uid, data)
           .then(response => {
@@ -187,14 +209,18 @@ class CreateDocument extends Component {
               values={this.state.attachedFilesTableValues}
               size={this.state.filesSize}
             />
-            <div className="progress mb-3">
+            <div className="progress my-3">
               <div
                 className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
                 role="progressbar"
                 aria-valuenow="100"
                 aria-valuemin="0"
                 aria-valuemax="100"
-                style={{ width: this.state.percentCompleted }}
+                style={
+                  this.state.submitInProgres
+                    ? { width: this.state.percentCompleted }
+                    : { width: (this.state.filesSize * 100) / 20000000 + "%" }
+                }
               ></div>
             </div>
             <div className="form-group row d-flex justify-content-center m-0">
@@ -209,7 +235,7 @@ class CreateDocument extends Component {
                 type="submit"
                 className="btn btn-dark ml-2"
                 data-dismiss="modal"
-                disabled={false}
+                disabled={this.state.submitDisabled}
               >
                 Create
               </button>

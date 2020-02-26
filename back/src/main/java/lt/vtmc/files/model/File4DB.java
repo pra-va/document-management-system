@@ -26,26 +26,36 @@ public class File4DB {
 
 	private String fileType;
 
+	private long fileSize;
+
 	@ManyToOne
 	private Document document;
-	
+
 	@Lob
 	private byte[] data;
 
 	@Column(name = "UID")
 	private String UID;
-	
+
 	public File4DB() {
 	}
 
-	public File4DB(String fileName, String fileType, byte[] data, String UID) {
+	public File4DB(String fileName, String fileType, byte[] data, String UID, long fileSize) {
 		this.fileType = fileType;
-		this.fileName = fileName;
+		this.fileName = UID + "-" + fileName;
 		this.data = data;
 		this.UID = UID;
+		this.fileSize = fileSize;
 	}
 
-	
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+
 	public String getUID() {
 		return UID;
 	}
