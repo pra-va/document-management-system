@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import lt.vtmc.documents.dto.CreateDocumentCommand;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
+import lt.vtmc.documents.dto.DocumentRejection;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.files.controller.FilesController;
@@ -100,14 +101,14 @@ public class DocumentController {
 	}
 
 	@PostMapping(path = "/api/doc/approve/{UID}")
-	public ResponseEntity<String> approveDocument(@PathVariable("UID") String UID) {
-		docService.setStatusPriimtas(UID);
+	public ResponseEntity<String> approveDocument(@PathVariable("UID") String UID, @RequestBody String username) {
+		docService.setStatusPriimtas(UID, username);
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 
 	@PostMapping(path = "/api/doc/reject/{UID}")
-	public ResponseEntity<String> rejectDocument(@PathVariable("UID") String UID) {
-		docService.setStatusAtmestas(UID);
+	public ResponseEntity<String> rejectDocument(@PathVariable("UID") String UID, @RequestBody DocumentRejection reject) {
+		docService.setStatusAtmestas(UID, reject.getUsername(), reject.getReasonToReject());
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 }

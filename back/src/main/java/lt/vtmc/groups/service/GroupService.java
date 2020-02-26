@@ -187,21 +187,13 @@ public class GroupService {
 			String[] docTypesToCreate) {
 		Group groupToUpdate = groupRepository.findGroupByName(name);
 		List<User> currentUserList = new ArrayList<User>();
-		groupToUpdate.setUserList(currentUserList);
 		groupToUpdate.setDescription(description);
-		groupRepository.save(groupToUpdate);
 		groupToUpdate.setName(newName);
-		for (int i = 0; i < newUserList.length; i++) {
-			User userToAdd = userRepository.findUserByUsername(newUserList[i]);
-			List<User> tmpUserList = groupToUpdate.getUserList();
-			List<Group> tmpGroupList = userToAdd.getGroupList();
-			if (tmpUserList.contains(userToAdd) == false && tmpGroupList.contains(groupToUpdate) == false) {
-				tmpGroupList.add(groupToUpdate);
-				userToAdd.setGroupList(tmpGroupList);
-				tmpUserList.add(userToAdd);
-				groupToUpdate.setUserList(tmpUserList);
-			}
+		for (String username : newUserList) {
+			currentUserList.add(userRepository.findUserByUsername(username));
+			userRepository.findUserByUsername(username).getGroupList().add(groupToUpdate);
 		}
+		groupToUpdate.setUserList(currentUserList);
 		groupRepository.save(groupToUpdate);
 	}
 	
