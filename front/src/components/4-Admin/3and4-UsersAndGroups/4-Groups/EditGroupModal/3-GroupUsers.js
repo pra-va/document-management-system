@@ -1,31 +1,57 @@
-import React from "react";
+import React, { Component } from "react";
 import Table from "./../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 
-var AddUsersToGroup = props => {
-  const usersTableDataFields = [
+class groupUsers extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      groupUsers: []
+    };
+  }
+
+  usersTableDataFields = [
     "number",
     "name",
     "surname",
     "username",
     "role",
-    "add"
+    "addOrRemove"
   ];
-  const usersTableNames = ["#", "Name", "Surname", "Username", "Role", ""];
+  usersTableNames = ["#", "Name", "Surname", "Username", "Role", ""];
 
-  return (
-    <div>
-      <h3 className="d-flex justify-content-start">
-        3. Users added to a group.
-      </h3>
-      <Table
-        id={"newUserAddedGroups"}
-        dataFields={usersTableDataFields}
-        columnNames={usersTableNames}
-        tableData={props.addedUsers}
-        searchBarId={"createGroupAddedUsersSearchBar"}
-      />
-    </div>
-  );
-};
+  componentDidMount() {
+    if (this.props.groupUsers) {
+      if (this.props.groupUsers.length !== this.state.groupUsers.length) {
+        this.setState({ groupUsers: this.props.groupUsers });
+      }
+    }
+  }
 
-export default AddUsersToGroup;
+  componentDidUpdate() {
+    if (this.props.groupUsers) {
+      if (this.props.groupUsers.length !== this.state.groupUsers.length) {
+        this.setState({ groupUsers: this.props.groupUsers });
+      }
+    }
+  }
+
+  render() {
+    console.log(this.state.groupUsers)
+    return (
+      <div>
+        <h3 className="d-flex justify-content-start">
+          3. Users added to a group.
+        </h3>
+        <Table
+          id={"editGroupUsers"}
+          dataFields={this.usersTableDataFields}
+          columnNames={this.usersTableNames}
+          tableData={this.state.groupUsers}
+          searchBarId={"editGroupAddedUsersSearchBar"}
+        />
+      </div>
+    );
+  }
+}
+
+export default groupUsers;

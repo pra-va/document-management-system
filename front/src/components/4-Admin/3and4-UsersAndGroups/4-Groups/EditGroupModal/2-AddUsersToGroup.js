@@ -21,7 +21,7 @@ class AddUsersToGroup extends Component {
     "surname",
     "username",
     "role",
-    "add"
+    "addOrRemove"
   ];
   usersTableNames = ["#", "Name", "Surname", "Username", "Role", ""];
 
@@ -35,41 +35,15 @@ class AddUsersToGroup extends Component {
     }
   }
 
-  // getGroupData = () => {
-  //   axios
-  //     .get(serverUrl + "groups/" + this.props.ownerName)
-  //     .then(response => {
-  //       // this.setState({
-  //       //   groupName: response.data.name,
-  //       //   groupDescription: response.data.description,
-  //       //   role: response.data.role,
-  //       //   usersList: response.data.userList,
-  //       //   canCreate: response.data.docTypesToCreateNames,
-  //       //   canSign: response.data.docTypesToApproveNames
-  //       // });
-  //       this.props.initalDataTransfer({
-  //         groupName: response.data.name,
-  //         groupDescription: response.data.description,
-  //         role: response.data.role,
-  //         usersList: response.data.userList,
-  //         canCreate: response.data.docTypesToCreateNames,
-  //         canSign: response.data.docTypesToApproveNames
-  //       });
-  //       this.props.setGroupUsers(response.data.groupList);
-  //       console.log("LODING DATA----");
-  //     })
-  //     .catch(error => console.log(error));
-  // };
-
   changeAddedStatus = name => {
     let tmpGroups = this.state.allUsers;
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];
-      if (element.name === name) {
+      if (element.username === name) {
         tmpGroups[i].added = !tmpGroups[i].added;
         tmpGroups[i].addOrRemove = (
           <AddOrRemoveButton
-            itemName={element.name}
+            itemName={element.username}
             changeAddedStatus={this.changeAddedStatus}
             added={element.added}
           />
@@ -81,11 +55,11 @@ class AddUsersToGroup extends Component {
   };
 
   filterAddedUsers = () => {
-    let filterGroups = this.state.allUsers;
+    let filterUsers = this.state.allUsers;
     let notAdded = [];
     let added = [];
-    for (let i = 0; i < filterGroups.length; i++) {
-      const element = filterGroups[i];
+    for (let i = 0; i < filterUsers.length; i++) {
+      const element = filterUsers[i];
       if (element.added) {
         added.push(element);
       } else {
@@ -94,19 +68,51 @@ class AddUsersToGroup extends Component {
     }
     this.setState({ notAddedUsers: notAdded });
     this.setState({ addedUsers: added });
-    this.props.setAddeduserGroups(added);
+    this.props.setAddedUsers(added);
   };
-//tobe changed acording user edit
+
   fetchUsersData = () => {
     axios
       .get(serverUrl + "users")
       .then(response => {
-        this.props.setUpData(response.data);
+        //this.props.setUpData(response.data);
+        let tempData = response.data.map((item, index) => {
+          let isItemAdded = this.isUserAddedToGroup(item.username);
+          return {
+            number: index + 1,
+            name: item.name,
+            surname: item.surname,
+            username: item.username,
+            role: item.role,
+            addOrRemove: (
+              <AddOrRemoveButton
+                itemName={item.username}
+                changeAddedStatus={this.changeAddedStatus}
+                added={isItemAdded}
+              />
+            ),
+            added: isItemAdded
+          };
+        });
+        this.setState({
+          allUsers: tempData
+        });
+        this.filterAddedUsers();
       })
       .catch(error => {
         console.log(error);
       });
   };
+
+  isUserAddedToGroup = userName => {
+    for (let i = 0; i < this.state.groupUsers.length; i++) {
+      const element = this.state.groupUsers[i];
+      if (element === userName) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   render() {
     return (
@@ -118,7 +124,7 @@ class AddUsersToGroup extends Component {
           id={"newGroupUsers"}
           dataFields={this.usersTableDataFields}
           columnNames={this.usersTableNames}
-          tableData={this.props.notAddedUsers}
+          tableData={this.state.notAddedUsers}
           searchBarId={"createGroupUsersSearchBar"}
         />
       </div>

@@ -14,7 +14,7 @@ class EditGroup extends Component {
     this.state = {
       groupName: "",
       groupDescription: "",
-      usersList: [],
+      groupUsers: [],
       notAddedUsers: [],
       addedUsers: [],
       readyToSubmit: true,
@@ -30,34 +30,13 @@ class EditGroup extends Component {
   setUpData = data => {
     this.parseUsersData(data);
   };
-  handleSubmit = event => {
-    event.preventDefault();
 
-    const editedGroup = {
-      description: this.state.groupDescription,
-      docTypesToCreate: this.state.canCreate,
-      docTypesToSign: this.state.canSign,
-      groupName: this.state.groupName,
-      userList: this.state.addedUsers.map(item => {
-        return item.username;
-      })
-    };
-
-    axios
-      .post(serverUrl + "groups/update/" + this.props.ownerName, editedGroup)
-      .then(response => {
-        window.location.reload();
-        this.props.onHide();
-      })
-      .catch(error => console.log(error));
+  handleGroupNameChange = value => {
+    this.setState({ groupName: value });
   };
 
-  handleGroupNameChange = event => {
-    this.setState({ groupName: event.target.value });
-  };
-
-  handleGroupDescriptionChange = event => {
-    this.setState({ groupDescription: event.target.value });
+  handleGroupDescriptionChange = value => {
+    this.setState({ groupDescription: value });
   };
 
   parseUsersData = data => {
@@ -81,9 +60,9 @@ class EditGroup extends Component {
 
     this.filterAddedGroups(tmpUsersData);
   };
-
+  
   changeAddedStatus = username => {
-    let tmpUsers = this.state.usersList;
+    let tmpUsers = this.state.groupUsers;
     for (let i = 0; i < tmpUsers.length; i++) {
       const element = tmpUsers[i];
       if (element.username === username) {
@@ -101,7 +80,11 @@ class EditGroup extends Component {
   };
 
   setGroupUsers = groupUsers => {
-    this.setState({ usersList: groupUsers });
+    this.setState({ groupUsers: groupUsers });
+  };
+
+  setAddedUsers = addedUsers => {
+    this.setState({ addedUsers: addedUsers });
   };
 
   filterAddedGroups = data => {
@@ -117,7 +100,7 @@ class EditGroup extends Component {
       }
     }
     this.setState({
-      usersList: data,
+      groupUsers: data,
       notAddedUsers: tmpNotAdded,
       addedUsers: tmpAdded
     });
@@ -139,6 +122,30 @@ class EditGroup extends Component {
     this.setState({ ...data });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const editedGroup = {
+      description: this.state.groupDescription,
+      docTypesToCreate: this.state.canCreate,
+      docTypesToApprove: this.state.canSign,
+      newName: this.state.groupName,
+      userList: this.state.addedUsers.map(item => {
+        return item.username;
+      })
+    };
+    console.log("SUBMITING");
+    console.log(editedGroup);
+    axios
+      .post(serverUrl + "groups/update/" + this.props.ownerName, editedGroup)
+      .then(response => {
+        console.log(response);
+        /*window.location.reload();
+        this.props.onHide();*/
+      })
+      .catch(error => console.log(error));
+  };
+
   render() {
     return (
       <Modal
@@ -153,9 +160,10 @@ class EditGroup extends Component {
         <Modal.Body>
           <form onSubmit={this.handleSubmit}>
             <GroupInformation
-              handleGroupNameChange={this.handleGroupNameChange}
               ownerName={this.props.ownerName}
+              handleGroupNameChange={this.handleGroupNameChange}
               handleGroupDescriptionChange={this.handleGroupDescriptionChange}
+              groupName={this.state.groupName}
               groupDescription={this.state.groupDescription}
               setGroupUsers={this.setGroupUsers}
               setCanCreate={this.canCreate}
@@ -164,11 +172,13 @@ class EditGroup extends Component {
             />
             <hr className="m-1" />
             <AddUsersToGroup
-              setUpData={this.setUpData}
+              groupUsers={this.state.groupUsers}
+              setAddedUsers={this.setAddedUsers}
+              //setUpData={this.setUpData}
               notAddedUsers={this.state.notAddedUsers}
             />
             <hr className="m-1" />
-            <GroupUsers addedUsers={this.state.addedUsers} />
+            <GroupUsers groupUsers={this.state.addedUsers} />
             <hr className="m-1" />
 
             <AddRemoveDocTypes

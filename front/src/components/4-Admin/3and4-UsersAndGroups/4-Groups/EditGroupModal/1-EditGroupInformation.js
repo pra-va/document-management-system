@@ -19,34 +19,31 @@ class GroupInformation extends Component {
   }
 
   componentDidMount() {
-    console.log("component mounted");
     this.getGroupData();
   }
 
-  componentDidUpdate() {
-    console.log(this.props.ownerName);
-  }
+  componentDidUpdate() {}
 
   getGroupData = () => {
-    console.log(serverUrl + "groups/" + this.props.ownerName);
     axios
       .get(serverUrl + "groups/" + this.props.ownerName)
       .then(response => {
+        console.log(response.data);
         this.setState({
           groupName: response.data.name,
           description: response.data.description,
-          userList: response.data.userList,
+          groupUsers: response.data.userList,
           canCreate: response.data.docTypesToCreateNames,
           canSign: response.data.docTypesToApproveNames
         });
         this.props.initalDataTransfer({
           groupName: response.data.name,
-          description: response.data.description,
-          userList: response.data.userList,
+          groupDescription: response.data.description,
+          groupUsers: response.data.userList,
           canCreate: response.data.docTypesToCreateNames,
           canSign: response.data.docTypesToApproveNames
         });
-        this.props.setGroupUsers(response.data.groupList);
+        this.props.setGroupUsers(response.data.userList);
         this.props.setCanCreate(response.data.docTypesToCreateNames);
         this.props.setCanCreate(response.data.docTypesToApproveNames);
       })
@@ -54,27 +51,35 @@ class GroupInformation extends Component {
   };
 
   handleGroupNameChange = event => {
-    this.props.handleGroupNameChange(event);
+    event.persist();
+    this.props.handleGroupNameChange(event.target.value);
     if (event.target.value.length > 0) {
-      axios
-        .get(serverUrl + "group/" + event.target.value + "/exists")
-        .then(response => {
-          this.setSate({ groupNameExists: response.data });
-          if (response.data && event.target.value !== this.props.ownerName) {
-            event.target.setCustomValidity("Group name is taken.");
-          } else {
-            event.target.setCustomValidity("");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      let tmpValue = this.isGroupNameTaken(event.target.value);
+      this.setState({ groupNameExists: tmpValue });
+      if (tmpValue && event.target.value !== this.props.ownerName) {
+        event.target.setCustomValidity("Group name is taken.");
+      } else {
+        event.target.setCustomValidity("");
+      }
+      this.props.handleGroupNameChange(event.target.value);
     }
   };
 
+  isGroupNameTaken = title => {
+    axios
+      .get(serverUrl + "group/" + title + "/exists")
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   handleGroupDescriptionChange = event => {
-    this.props.handleGroupDescriptionChange(event);
+    this.setState({ description: event.target.value });
     this.handleDescriptionValidation(event.target.value.length);
+    this.props.handleGroupDescriptionChange(event.target.value);
   };
 
   handleDescriptionValidation = descriptionLength => {
@@ -99,7 +104,7 @@ class GroupInformation extends Component {
           type={"text"}
           placeholder={"Enter new name of this Group"}
           onChange={this.handleGroupNameChange}
-          value={this.state.groupName}
+          value={this.props.groupName}
           pattern={4}
           groupNameExists={this.state.groupNameExists}
         />
