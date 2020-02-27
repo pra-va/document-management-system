@@ -150,7 +150,8 @@ public class DocumentService {
 
 	public List<DocumentDetailsDTO> findAllDocumentsToSignByUsername(String username) {
 		User tmpUser = userRepo.findUserByUsername(username);
-		List<Document> tmpList = findAllDocumentsByUsername(username);
+//		List<Document> tmpList = findAllDocumentsByUsername(username);
+		List<Document> tmpList = docRepo.findAll();
 		List<DocType> docTypeListToApprove = new ArrayList<DocType>();
 		List<Group> tmpGroups = tmpUser.getGroupList();
 		for (Group group : tmpGroups) {
