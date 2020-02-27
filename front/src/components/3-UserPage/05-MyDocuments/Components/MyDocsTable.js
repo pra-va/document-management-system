@@ -46,7 +46,6 @@ class MyDocsTable extends Component {
     axios
       .get(serverUrl + this.state.username + "/alldocuments")
       .then(response => {
-        console.log(response.data);
         this.processData(response.data);
       })
       .catch(error => {
@@ -56,6 +55,7 @@ class MyDocsTable extends Component {
 
   processData = data => {
     const tableData = data.map((item, index) => {
+      console.log(item);
       return {
         number: index + 1,
         name: item.name,
@@ -81,32 +81,71 @@ class MyDocsTable extends Component {
           ) : (
             <ViewButton item={item} />
           ),
-        uid: item.uid
+        uid: item.uid,
+        submit: (
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={() => {
+              this.submitDocument(item.uid);
+            }}
+            disabled={this.checkDisabled(item)}
+            id={item.uid}
+          >
+            Submit
+          </button>
+        )
       };
     });
 
     this.setState({ tableData: tableData });
   };
 
+  submitDocument = uid => {
+    axios
+      .post(serverUrl + "doc/submit/" + uid, {})
+      .then(respones => {
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  checkDisabled = item => {
+    if (
+      (item.name.length > 0) &
+      (item.type.length > 0) &
+      (item.description.length > 0) &
+      (item.status === "CREATED") &
+      (item.filesAttached.length > 0)
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   reduceItemsList = itemsList => {
     return itemsList.reduce((sum, item, index) => {
       if (index === 0) {
-        return item;
+        return (sum = item.fileName);
       } else {
-        return (sum += ", " + item);
+        return (sum += ", " + item.fileName);
       }
-    });
+    }, "");
   };
 
   render() {
     return (
-      <Table
-        id={"myDocsTable"}
-        dataFields={this.dataFields}
-        columnNames={this.columnNames}
-        tableData={this.state.tableData}
-        searchBarId={"createGroupUsersSearchBar"}
-      />
+      <div id="myDocsTable">
+        <Table
+          id={"myDocsTableSearch"}
+          dataFields={this.dataFields}
+          columnNames={this.columnNames}
+          tableData={this.state.tableData}
+          searchBarId={"createGroupUsersSearchBar"}
+        />
+      </div>
     );
   }
 }
