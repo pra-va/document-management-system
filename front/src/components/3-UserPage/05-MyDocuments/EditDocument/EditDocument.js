@@ -8,6 +8,7 @@ import AttachFiles from "./Components/3-AttachFiles";
 import AttachedFiles from "./Components/4-AttachedFiles";
 import "./EditDocument.css";
 import { withRouter } from "react-router-dom";
+import Download from "./../../../../resources/download.svg";
 
 class EditDocument extends Component {
   constructor(props) {
@@ -62,6 +63,16 @@ class EditDocument extends Component {
           fileName: item.fileName,
           size: this.processFileSizeString(item.fileSize),
           fileSize: item.fileSize,
+          download: (
+            <img
+              src={Download}
+              alt={"download"}
+              className="invert m-0 p-0 img-download"
+              onClick={event => {
+                this.downloadFile(event, item.uid, item.fileName);
+              }}
+            />
+          ),
           remove: (
             <button
               className="btn btn-secondary btn-sm"
@@ -78,6 +89,25 @@ class EditDocument extends Component {
       this.props.item.filesAttached.map(item => item.fileSize)
     );
   }
+
+  downloadFile = (event, uid, fileName) => {
+    event.preventDefault();
+    axios
+      .request({
+        url: serverUrl + "files/" + uid,
+        method: "GET",
+        responseType: "blob"
+      })
+      .then(({ data }) => {
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      });
+  };
 
   handleNameChange = nameData => {
     this.setState({ name: nameData });
@@ -96,9 +126,6 @@ class EditDocument extends Component {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
-      console.log(
-        "iterator: " + event.target.id + "; element: " + element.number
-      );
       if (Number(event.target.id) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
@@ -264,6 +291,7 @@ class EditDocument extends Component {
               <AttachedFiles
                 values={this.state.attachedFilesTableValues}
                 size={this.state.filesSize}
+                attachedFilesTableValues={this.state.attachedFilesTableValues}
               />
               <div className="progress my-3">
                 <div
@@ -296,7 +324,7 @@ class EditDocument extends Component {
                   data-dismiss="modal"
                   disabled={this.state.submitDisabled}
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </form>

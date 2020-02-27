@@ -7,6 +7,7 @@ import AttachedFiles from "./Components/4-AttachedFiles";
 import serverUrl from "./../../7-properties/1-URL";
 import "./CreateDocument.css";
 import axios from "axios";
+import ContentWrapper from "./../../6-CommonElements/10-TopContentWrapper/ContentWrapper";
 
 class CreateDocument extends Component {
   constructor(props) {
@@ -185,58 +186,60 @@ class CreateDocument extends Component {
     return (
       <div>
         <Navigation />{" "}
-        <div className="container" id="newDocument">
-          <form onSubmit={this.handleUpload} id="createDocumentForm">
-            <h2 className="mb-3">New Document</h2>
-            <EditInfo
-              handleNameChange={this.handleNameChange}
-              handleDescriptionChange={this.handleDescriptionChange}
-              name={this.state.name}
-              description={this.state.description}
-            />
-            <hr />
-            <SelectDocType
-              handleDocTypeSelect={this.handleDocTypeSelect}
-              username={this.state.username}
-            />
-            <hr />
-            <AttachFiles handleFileAdd={this.handleFileAdd} />
-            <AttachedFiles
-              values={this.state.attachedFilesTableValues}
-              size={this.state.filesSize}
-            />
-            <div className="progress my-3">
-              <div
-                className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                role="progressbar"
-                aria-valuenow="100"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style={
-                  this.state.submitInProgres
-                    ? { width: this.state.percentCompleted }
-                    : { width: (this.state.filesSize * 100) / 20000000 + "%" }
-                }
-              ></div>
-            </div>
-            <div className="form-group row d-flex justify-content-center m-0">
-              <button
-                type="button"
-                className="btn btn-outline-dark mr-2"
-                onClick={this.props.hideNewGroup}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="btn btn-dark ml-2"
-                data-dismiss="modal"
-                disabled={this.state.submitDisabled}
-              >
-                Create
-              </button>
-            </div>
-          </form>
+        <div className="container">
+          <ContentWrapper content={<h3>New Document</h3>} />
+          <div className="container" id="newDocument">
+            <form onSubmit={this.handleUpload} id="createDocumentForm">
+              <EditInfo
+                handleNameChange={this.handleNameChange}
+                handleDescriptionChange={this.handleDescriptionChange}
+                name={this.state.name}
+                description={this.state.description}
+              />
+              <hr />
+              <SelectDocType
+                handleDocTypeSelect={this.handleDocTypeSelect}
+                username={this.state.username}
+              />
+              <hr />
+              <AttachFiles handleFileAdd={this.handleFileAdd} />
+              <AttachedFiles
+                values={this.state.attachedFilesTableValues}
+                size={this.state.filesSize}
+              />
+              <div className="progress my-3">
+                <div
+                  className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                  role="progressbar"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style={
+                    this.state.submitInProgres
+                      ? { width: this.state.percentCompleted }
+                      : { width: (this.state.filesSize * 100) / 20000000 + "%" }
+                  }
+                ></div>
+              </div>
+              <div className="form-group row d-flex justify-content-center m-0">
+                <button
+                  type="button"
+                  className="btn btn-outline-dark mr-2"
+                  onClick={this.props.hideNewGroup}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-dark ml-2"
+                  data-dismiss="modal"
+                  disabled={this.state.submitDisabled}
+                >
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );

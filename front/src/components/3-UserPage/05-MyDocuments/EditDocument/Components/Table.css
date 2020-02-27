@@ -3,27 +3,35 @@
 }
 
 #editUploadedFilesTable th:nth-child(1) {
-  min-width: 60%;
+  min-width: 55%;
 }
 
 #editUploadedFilesTable th:nth-child(2) {
-  min-width: 20%;
+  min-width: 15%;
 }
 
 #editUploadedFilesTable th:nth-child(3) {
-  min-width: 20%;
+  min-width: 15%;
+}
+
+#editUploadedFilesTable th:nth-child(4) {
+  min-width: 15%;
 }
 
 #editUploadedFilesTable td:nth-child(1) {
-  min-width: 60%;
+  min-width: 55%;
 }
 
 #editUploadedFilesTable td:nth-child(2) {
-  min-width: 20%;
+  min-width: 15%;
 }
 
 #editUploadedFilesTable td:nth-child(3) {
-  min-width: 20%;
+  min-width: 15%;
+}
+
+#editUploadedFilesTable td:nth-child(4) {
+  min-width: 15%;
 }
 
 .btn-sm {

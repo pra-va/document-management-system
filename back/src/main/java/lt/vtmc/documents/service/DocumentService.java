@@ -40,6 +40,7 @@ public class DocumentService {
 
 	@Autowired
 	private FileService fileService;
+
 	/**
 	 * 
 	 * This method finds a document from group repository by name.
@@ -76,7 +77,7 @@ public class DocumentService {
 		}
 		return list;
 	}
-	
+
 	@Transactional
 	public void deleteDocument(Document document) {
 		document.setFileList(null);
@@ -90,7 +91,7 @@ public class DocumentService {
 	public void setStatusPateiktas(String UID) {
 		Document tmp = findDocumentByUID(UID);
 		tmp.setDateSubmit(Instant.now().toString());
-		tmp.setStatus(Status.SUBMITED);
+		tmp.setStatus(Status.SUBMITTED);
 		docRepo.save(tmp);
 	}
 
@@ -159,7 +160,7 @@ public class DocumentService {
 		}
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		for (Document doc : tmpList) {
-			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.SUBMITED) {
+			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.SUBMITTED) {
 				listToReturn.add(new DocumentDetailsDTO(doc));
 			}
 		}
@@ -167,7 +168,8 @@ public class DocumentService {
 	}
 
 	@Transactional
-	public void updateDocument(String docUID, String newName, String newDescription, String newDocType, String[] filesToRemove) {
+	public void updateDocument(String docUID, String newName, String newDescription, String newDocType,
+			String[] filesToRemove) {
 		Document documentToUpdate = findDocumentByUID(docUID);
 		documentToUpdate.setName(newName);
 		documentToUpdate.setDescription(newDescription);
@@ -176,11 +178,11 @@ public class DocumentService {
 		List<Document> listToAddTo = dTypeRepo.findDocTypeByName(newDocType).getDocumentList();
 		listToAddTo.add(documentToUpdate);
 		documentToUpdate.setdType(dTypeRepo.findDocTypeByName(newDocType));
-		
+
 		for (String file : filesToRemove) {
 			fileService.deleteFileByUID(file);
 		}
-		
+
 		docRepo.save(documentToUpdate);
 	}
 
@@ -188,13 +190,13 @@ public class DocumentService {
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		List<Document> tmpList = findAllDocumentsByUsername(username);
 		for (Document document : tmpList) {
-			if (document.getStatus() == Status.SUBMITED) {
+			if (document.getStatus() == Status.SUBMITTED) {
 				listToReturn.add(new DocumentDetailsDTO(document));
 			}
 		}
 		return listToReturn;
 	}
-	
+
 	public List<DocumentDetailsDTO> returnAccepted(String username) {
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		List<Document> tmpList = findAllDocumentsByUsername(username);
@@ -205,7 +207,7 @@ public class DocumentService {
 		}
 		return listToReturn;
 	}
-	
+
 	public List<DocumentDetailsDTO> returnRejected(String username) {
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		List<Document> tmpList = findAllDocumentsByUsername(username);
@@ -216,7 +218,7 @@ public class DocumentService {
 		}
 		return listToReturn;
 	}
-	
+
 	public List<DocumentDetailsDTO> returnCreated(String username) {
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		List<Document> tmpList = findAllDocumentsByUsername(username);

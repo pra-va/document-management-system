@@ -14,10 +14,6 @@ class AcceptOrReject extends Component {
     this.getUsername();
   }
 
-  componentDidUpdate() {
-    console.log(this.props.item);
-  }
-
   getUsername = () => {
     axios
       .get(serverUrl + "loggedin")
