@@ -27,7 +27,6 @@ class CreateDocument extends Component {
   }
 
   componentDidUpdate() {
-    console.log((this.state.filesSize * 100) / 20000000);
     const { name, description, selectedDocType, filesSize } = this.state;
 
     if (
@@ -73,12 +72,10 @@ class CreateDocument extends Component {
       }
     }
     this.setState({ attachedFilesTableValues: tmpValues });
-    console.log(tmpValues);
     this.checkAttachedFilesSize(tmpValues);
   };
 
   checkAttachedFilesSize = files => {
-    console.log(files);
     let sum = 0;
     for (let i = 0; i < files.length; i++) {
       const element = files[i].file.size;
@@ -170,7 +167,6 @@ class CreateDocument extends Component {
       .post(serverUrl + "doc/create", postData)
       .then(response => {
         uid = response.data;
-        console.log(uid);
         axios
           .post(serverUrl + "doc/upload/" + uid, data)
           .then(response => {

@@ -22,7 +22,7 @@ public class MainController {
 	}
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	@RequestMapping(value = { "/home" })
+	@RequestMapping(value = { "/home", "/document", "/documents", "sign" })
 	public ModelAndView homePageView(ModelMap model) {
 		return new ModelAndView("forward:/", model);
 	}

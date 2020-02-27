@@ -30,12 +30,12 @@ class ViewDocument extends Component {
           key={index}
           className="row p-1 d-flex justify-content-center info-div"
         >
-          <a
-            href="#!"
+          <button
+            className="btn btn-outline-dark"
             onClick={() => this.downloadFile(item.uid, item.fileName)}
           >
             {item.fileName}
-          </a>
+          </button>
         </div>
       );
     });

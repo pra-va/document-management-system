@@ -7,6 +7,7 @@ import SelectDocType from "./Components/2-SelectDocType";
 import AttachFiles from "./Components/3-AttachFiles";
 import AttachedFiles from "./Components/4-AttachedFiles";
 import "./EditDocument.css";
+import { withRouter } from "react-router-dom";
 
 class EditDocument extends Component {
   constructor(props) {
@@ -29,14 +30,12 @@ class EditDocument extends Component {
 
   componentDidUpdate() {
     const { name, description, selectedDocType, filesSize } = this.state;
-    console.log(this.state.attachedFilesTableValues);
 
     if (
       (name.length > 0) &
       (description.length > 0) &
       (selectedDocType.length > 0) &
-      (filesSize < 20000000) &
-      (filesSize !== 0)
+      (filesSize < 20000000)
     ) {
       if (this.state.submitDisabled) {
         this.setState({ submitDisabled: false });
@@ -49,7 +48,6 @@ class EditDocument extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.item);
     const data = this.props.item;
     this.fetchUsername();
     this.setState({
@@ -60,7 +58,7 @@ class EditDocument extends Component {
       files: [...this.props.item.filesAttached],
       attachedFilesTableValues: data.filesAttached.map((item, index) => {
         return {
-          number: index + 1,
+          number: item.uid,
           fileName: item.fileName,
           size: this.processFileSizeString(item.fileSize),
           fileSize: item.fileSize,
@@ -68,7 +66,7 @@ class EditDocument extends Component {
             <button
               className="btn btn-secondary btn-sm"
               onClick={this.handleRemove}
-              id={index + 1}
+              id={item.uid}
             >
               Remove
             </button>
@@ -108,8 +106,6 @@ class EditDocument extends Component {
     }
     this.setState({ attachedFilesTableValues: tmpValues });
 
-    console.log(tmpValues);
-
     this.checkAttachedFilesSize(tmpValues.map(item => item.fileSize));
   };
 
@@ -123,7 +119,6 @@ class EditDocument extends Component {
       }
     });
     this.setState({ filesSize: sum });
-    console.log(sum);
     return sum;
   };
 
@@ -134,8 +129,6 @@ class EditDocument extends Component {
     for (let i = 0; i < files.length; i++) {
       const element = files[i];
       var size = this.processFileSizeString(element.size);
-
-      console.log(stateLength);
 
       tmpFilesForTable.push({
         number: i + stateLength + 1,
@@ -193,34 +186,48 @@ class EditDocument extends Component {
 
   handleUpload = event => {
     event.preventDefault();
+    this.props.hide();
     this.setState({ submitInProgres: true });
     const data = new FormData();
-    let uid = "";
+    var filesInDb = [];
+    var filesToRemove = [];
+    let uid = this.props.item.uid;
     var attachedFiles = this.state.attachedFilesTableValues;
-    if (attachedFiles.length !== 0) {
-      for (let i = 0; i < attachedFiles.length; i++) {
-        const element = attachedFiles[i].file;
-        data.append("files", element);
+
+    for (let i = 0; i < attachedFiles.length; i++) {
+      const element = attachedFiles[i];
+      if (element.file) {
+        data.append("files", element.file);
+      } else {
+        filesInDb.push(element.number);
       }
-    } else {
-      attachedFiles = null;
+    }
+
+    for (let j = 0; j < this.state.filesAttachedInServer.length; j++) {
+      const element = this.state.filesAttachedInServer[j].uid;
+      if (filesInDb.includes(element)) {
+        continue;
+      } else {
+        filesToRemove.push(element);
+      }
     }
 
     const postData = {
-      authorUsername: this.state.username,
       description: this.state.description,
       docType: this.state.selectedDocType,
-      name: this.state.name
+      newName: this.state.name,
+      filesToRemoveUID: filesToRemove
     };
 
     axios
-      .post(serverUrl + "doc/create", postData)
+      .post(serverUrl + "doc/update" + uid, postData)
       .then(response => {
-        uid = response.data;
         axios
           .post(serverUrl + "doc/upload/" + uid, data)
           .then(response => {
             this.props.history.push("/dvs/documents");
+            this.props.hide();
+            window.location.reload();
           })
           .catch(function(error) {
             console.log(error);
@@ -230,6 +237,7 @@ class EditDocument extends Component {
         console.log(error);
       });
   };
+
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.hide} size="lg">
@@ -237,9 +245,8 @@ class EditDocument extends Component {
           <Modal.Title>Edit Document</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="container">
+          <div>
             <form onSubmit={this.handleUpload} id="editDocumentForm">
-              <h2 className="mb-3">New Document</h2>
               <EditInfo
                 handleNameChange={this.handleNameChange}
                 handleDescriptionChange={this.handleDescriptionChange}
@@ -250,6 +257,7 @@ class EditDocument extends Component {
               <SelectDocType
                 handleDocTypeSelect={this.handleDocTypeSelect}
                 username={this.state.username}
+                selected={this.state.selectedDocType}
               />
               <hr />
               <AttachFiles handleFileAdd={this.handleFileAdd} />
@@ -271,7 +279,10 @@ class EditDocument extends Component {
                   }
                 ></div>
               </div>
-              <div className="form-group row d-flex justify-content-center m-0">
+              <div
+                className="form-group row d-flex justify-content-center m-0"
+                id="updateDocumentFooter"
+              >
                 <button
                   type="button"
                   className="btn btn-outline-dark mr-2"
@@ -285,7 +296,7 @@ class EditDocument extends Component {
                   data-dismiss="modal"
                   disabled={this.state.submitDisabled}
                 >
-                  Create
+                  Submit
                 </button>
               </div>
             </form>
@@ -296,4 +307,4 @@ class EditDocument extends Component {
   }
 }
 
-export default EditDocument;
+export default withRouter(EditDocument);

@@ -1,19 +1,20 @@
 import React, { Component } from "react";
-import Table from "./../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
 import serverUrl from "./../../../../7-properties/1-URL";
 
 class SelectType extends Component {
   constructor(props) {
     super(props);
-    this.state = { tableData: [] };
+    this.state = { tableData: [], selectedRow: [2] };
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     if (this.props.username !== "" && this.state.tableData.length === 0) {
       this.fetchUserDocTypes(this.props.username);
     }
   }
+
+  componentDidUpdate() {}
 
   dataFields = ["number", "type", "select"];
   columnNames = ["#", "Type", ""];
@@ -53,29 +54,25 @@ class SelectType extends Component {
   };
 
   selectedRow = row => {
-    this.props.handleDocTypeSelect(row.type);
+    this.props.handleDocTypeSelect(row.number);
   };
 
-  tmpValues = [
-    {
-      number: 1,
-      type: "Vocation",
-      select: (
-        <button className="btn btn-secondary btn-sm" onClick={this.doNothing}>
-          Select
-        </button>
-      )
-    },
-    {
-      number: 2,
-      type: "Rise",
-      select: (
-        <button className="btn btn-secondary btn-sm" onClick={this.doNothing}>
-          Select
-        </button>
-      )
+  options = () => {
+    const { tableData } = this.state;
+    if (tableData.length > 0) {
+      return tableData.map((item, index) => {
+        return (
+          <option value={item.type} key={index}>
+            {item.type}
+          </option>
+        );
+      });
     }
-  ];
+  };
+
+  handleSelectChange = event => {
+    this.props.handleDocTypeSelect(event.target.value);
+  };
 
   render() {
     return (
@@ -83,15 +80,15 @@ class SelectType extends Component {
         <h3 className="d-flex justify-content-start">
           2. Select document type.
         </h3>
-        <Table
-          select={true}
-          id={"usersDocTypes"}
-          dataFields={this.dataFields}
-          columnNames={this.columnNames}
-          tableData={this.state.tableData}
-          searchBarId={"createGroupUsersSearchBar"}
-          selectedRow={this.selectedRow}
-        />
+        <select
+          value={this.props.selected}
+          id="selectDocType"
+          name="selectDocType"
+          onChange={this.handleSelectChange}
+          className="form-control"
+        >
+          {this.options()}
+        </select>
       </div>
     );
   }
