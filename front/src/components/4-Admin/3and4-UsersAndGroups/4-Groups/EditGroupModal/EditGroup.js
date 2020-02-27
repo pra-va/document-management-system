@@ -6,7 +6,7 @@ import GroupUsers from "./3-GroupUsers";
 import axios from "axios";
 import AddRemoveButton from "./../../../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import serverUrl from "./../../../../7-properties/1-URL";
-import AddRemoveDocTypes from "./../../../../6-CommonElements/9-AddRemoveDocType/AddRemoveDocType";
+import AddRemoveDocTypes from "./4-AddRemoveDocType";
 
 class EditGroup extends Component {
   constructor(props) {
@@ -60,7 +60,7 @@ class EditGroup extends Component {
 
     this.filterAddedGroups(tmpUsersData);
   };
-  
+
   changeAddedStatus = username => {
     let tmpUsers = this.state.groupUsers;
     for (let i = 0; i < tmpUsers.length; i++) {

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Table from "./../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 
 class groupUsers extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       groupUsers: []
@@ -36,7 +36,6 @@ class groupUsers extends Component {
   }
 
   render() {
-    console.log(this.state.groupUsers)
     return (
       <div>
         <h3 className="d-flex justify-content-start">
