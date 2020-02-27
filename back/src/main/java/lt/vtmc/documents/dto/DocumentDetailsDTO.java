@@ -49,14 +49,14 @@ public class DocumentDetailsDTO {
 	public DocumentDetailsDTO(Document document) {
 		super();
 		this.name = document.getName();
-		this.author = document.getAuthor().getName();
+		this.author = document.getAuthor().getName() + " " + document.getAuthor().getSurname();
 		this.dType = document.getdType();
 		this.dateCreate = document.getDateCreate();
 		this.description = document.getDescription();
 		this.dateSubmit = document.getDateSubmit();
 		this.dateProcessed = document.getDateProcessed();
 		this.reasonToReject = document.getReasonToReject();
-		this.processedBy = document.getHandler().getName();
+		this.processedBy = document.getHandler().getName() + " " + document.getHandler().getSurname();
 		this.status = document.getStatus();
 		this.fileList = document.getFileList();
 		this.uid = document.getUID();
