@@ -26,6 +26,7 @@ import ListOfGroups from "./components/4-Admin/3and4-UsersAndGroups/4-Groups/Lis
 import DocTypes from "./components/4-Admin/5-DocTypes/DocTypes";
 import NewDocument from "./components/3-UserPage/03-CreateDocument/CreateDocument";
 import MyDocuments from "./components/3-UserPage/05-MyDocuments/MyDocuments";
+import SignDocuments from "./components/3-UserPage/04-SignDocument/SignDocuments";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -36,9 +37,10 @@ ReactDOM.render(
         <Route exact path="/dvs/users" component={ListOfUsers} />
         <Route exact path="/dvs/groups" component={ListOfGroups} />
         <Route exact path="/dvs/doctypes" component={DocTypes} />
-        <Route exact path="/dvs/notfound" component={PageNotFound} />
         <Route exact path="/dvs/document" component={NewDocument} />
         <Route exact path="/dvs/documents" component={MyDocuments} />
+        <Route exact path="/dvs/sign" component={SignDocuments} />
+        <Route exact path="/dvs/notfound" component={PageNotFound} />
         <Route path="/dvs/**" component={PageNotFound} />
         <Route component={PageNotFound} />
       </Switch>

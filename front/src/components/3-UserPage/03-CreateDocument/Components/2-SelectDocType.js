@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
 import serverUrl from "./../../../7-properties/1-URL";
+import Validation from "./../../../6-CommonElements/5-FormInputValidationLine/Validation";
 
 class SelectType extends Component {
   constructor(props) {
     super(props);
-    this.state = { tableData: [] };
+    this.state = { tableData: [], isRowSelected: false };
   }
 
   componentDidUpdate() {
@@ -54,28 +55,8 @@ class SelectType extends Component {
 
   selectedRow = row => {
     this.props.handleDocTypeSelect(row.type);
+    this.setState({ isRowSelected: true });
   };
-
-  tmpValues = [
-    {
-      number: 1,
-      type: "Vocation",
-      select: (
-        <button className="btn btn-secondary btn-sm" onClick={this.doNothing}>
-          Select
-        </button>
-      )
-    },
-    {
-      number: 2,
-      type: "Rise",
-      select: (
-        <button className="btn btn-secondary btn-sm" onClick={this.doNothing}>
-          Select
-        </button>
-      )
-    }
-  ];
 
   render() {
     return (
@@ -91,6 +72,10 @@ class SelectType extends Component {
           tableData={this.state.tableData}
           searchBarId={"createGroupUsersSearchBar"}
           selectedRow={this.selectedRow}
+        />
+        <Validation
+          output="Document type must be selected."
+          satisfied={this.state.isRowSelected}
         />
       </div>
     );
