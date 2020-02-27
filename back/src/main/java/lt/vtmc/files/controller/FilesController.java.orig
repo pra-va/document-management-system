@@ -1,7 +1,6 @@
 package lt.vtmc.files.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -10,13 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -72,33 +71,64 @@ public class FilesController {
 		return fileService.downloadFileByUID(fileUID);
 	}
 
-	@GetMapping("/api/files/allfileinfo/{username}")
+	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
 		return fileService.findAllFileDetailsByUsername(username);
 	}
 
-	@GetMapping("/api/files/allfileinfo/{docname}")
+	@GetMapping("/api/files/info/docname/{docname}")
 	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
 		return fileService.findAllFileDetailsByDocument(docName);
 	}
-<<<<<<< HEAD
 
 	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
-	@ResponseBody
-	public byte[] downloadFiles(HttpServletResponse response, @RequestParam("username") String username)
+	public byte[] downloadFiles(HttpServletResponse response, @PathVariable("username") String username)
 			throws IOException {
 		response.setContentType("application/zip");
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
+	}
 
-		List<FileDetailsDTO> usersFiles = findAllFIleDetailsByUsername(username);
-		List<Files> files = new ArrayList<>();
-		if (usersFiles != null) {
-
+	/**
+	 * Returns csv file of users files and documents.
+	 * 
+	 * @param username
+	 * @return
+	 */
+	@GetMapping(value = "/api/files/csv/{username}")
+	public ResponseEntity<Resource> downloadCSV(@PathVariable String username) {
+		try {
+			return fileService.generateCSV(username);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
+	}
+<<<<<<< HEAD
 
+	/**
+	 * Removes file from data base by UID.
+	 * 
+	 * @param UID
+	 * @return
+	 */
+	@DeleteMapping(value = "/api/files/delete/{UID}")
+	public ResponseEntity<String> deleteFileByUID(@PathVariable String UID) {
+		if (fileService.deleteFileByUID(UID)) {
+			return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("No such file exists.", HttpStatus.NOT_FOUND);
+		}
 	}
 }
 =======
+	
+	@DeleteMapping(path = "/api/files/delete/{UID}")
+	public ResponseEntity<String> deleteFileByUID(@PathVariable ("UID") String UID) throws IOException{
+		fileService.deleteFileByUID(UID);
+		return new ResponseEntity<String>("Deleted", HttpStatus.OK);
+	}
+	
 }
->>>>>>> 0aceda4dde04bb5fdd17985347a19b2ae9facef1
+>>>>>>> 1dc3f35c08876375ba4daab289b9f5995934145d

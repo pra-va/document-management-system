@@ -22,7 +22,7 @@
   min-width: 20%;
 }
 
-#uploadedFilesTable th:nth-child(3) {
+#uploadedFilesTable td:nth-child(3) {
   min-width: 20%;
 }
 

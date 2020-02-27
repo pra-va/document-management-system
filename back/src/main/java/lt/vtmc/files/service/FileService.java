@@ -1,14 +1,12 @@
 package lt.vtmc.files.service;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -140,23 +138,33 @@ public class FileService {
 		return downloadFileByUID(builder.toString().getBytes(), "file.csv");
 	}
 
-	public List<File> findAllFilesByUsername(String username) {
+//	public List<File> findAllFilesByUsername(String username) {
+//		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+//		System.out.println(usersFilesDetails.toString());
+//		List<File> files = new ArrayList<>();
+//		if (usersFilesDetails != null) {
+//			for (FileDetailsDTO fileDetails : usersFilesDetails) {
+//				File file = new File("/tmp/" + fileDetails.getFileName());
+//				try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+//					String contents = new String(filesRepository.findFile4dbByUID(fileDetails.getUID()).getData()); // TODO
+//					writer.write(contents);
+//					files.add(file);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return files;
+//	}
+
+	public Map<String, ByteArrayResource> findAllFilesByUsername(String username) {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
-		System.out.println(usersFilesDetails.toString());
-		List<File> files = new ArrayList<>();
-		if (usersFilesDetails != null) {
-			for (FileDetailsDTO fileDetails : usersFilesDetails) {
-				File file = new File("/tmp/" + fileDetails.getFileName());
-				try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-					String contents = new String(filesRepository.findFile4dbByUID(fileDetails.getUID()).getData()); // TODO
-					writer.write(contents);
-					files.add(file);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+		Map<String, ByteArrayResource> filesAsBytes = new HashMap<>();
+		for (FileDetailsDTO file : usersFilesDetails) {
+			filesAsBytes.put(file.getFileName(),
+					new ByteArrayResource(filesRepository.findFile4dbByUID(file.getUID()).getData()));
 		}
-		return files;
+		return filesAsBytes;
 	}
 
 	public void deleteFileByUID(String uID) {
