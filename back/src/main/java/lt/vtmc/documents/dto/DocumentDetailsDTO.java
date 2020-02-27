@@ -18,7 +18,7 @@ public class DocumentDetailsDTO {
 	private String author;
 
 	private String processedBy;
-	
+
 	@JsonIgnore
 	private DocType dType;
 
@@ -40,12 +40,9 @@ public class DocumentDetailsDTO {
 
 	private List<File4DocDTO> filesAttached;
 
-	
-
 	@JsonIgnore
 	private List<File4DB> fileList;
 
-	
 	public DocumentDetailsDTO(Document document) {
 		super();
 		this.name = document.getName();
@@ -56,15 +53,19 @@ public class DocumentDetailsDTO {
 		this.dateSubmit = document.getDateSubmit();
 		this.dateProcessed = document.getDateProcessed();
 		this.reasonToReject = document.getReasonToReject();
-		this.processedBy = document.getHandler().getName() + " " + document.getHandler().getSurname();
+		if (document.getHandler() != null) {
+			this.processedBy = document.getHandler().getName() + " " + document.getHandler().getSurname();
+		}
+		else {
+			this.processedBy = null;
+		}
 		this.status = document.getStatus();
 		this.fileList = document.getFileList();
 		this.uid = document.getUID();
 		this.type = document.getdType().getName();
 		this.filesAttached = getFileNames(document.getFileList());
 	}
-	
-	
+
 	public String getUid() {
 		return uid;
 	}
@@ -183,8 +184,6 @@ public class DocumentDetailsDTO {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	
 
 	private List<File4DocDTO> getFileNames(List<File4DB> files) {
 		List<File4DocDTO> fileNamesAttached = new ArrayList<>();

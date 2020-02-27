@@ -52,9 +52,7 @@ public class DocumentController {
 	 * @param document details
 	 */
 	@PostMapping(path = "/api/doc/create")
-	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) { // ,
-																								// @RequestParam("Files")
-																								// MultipartFile[] files
+	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) { 
 
 		Document newDoc = docService.createDocument(command.getName(), command.getAuthorUsername(),
 				command.getDescription(), command.getDocType(), Instant.now().toString());
@@ -83,15 +81,7 @@ public class DocumentController {
 				SecurityContextHolder.getContext().getAuthentication().getName(), UID);
 		return new DocumentDetailsDTO(docService.findDocumentByUID(UID));
 	}
-
-//	@GetMapping(path = "/api/doc/{name}/exists")
-//	public boolean checkDocument(@PathVariable("name") String name) {
-//		if (docService.findDocumentByName(name) != null) {
-//			return true;
-//		}
-//		return false;
-//	}
-
+	
 	@DeleteMapping(path = "/api/doc/delete/{UID}")
 	public ResponseEntity<String> deleteDocument(@PathVariable("name") String UID) {
 		docService.deleteDocument(docService.findDocumentByUID(UID));
@@ -131,5 +121,33 @@ public class DocumentController {
 		LOG.info("# LOG # Initiated by [{}]: Updated document with UID: [{}] #",
 				SecurityContextHolder.getContext().getAuthentication().getName(), UID);
 		return new ResponseEntity<String>("Updated", HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "/api/doc/allsubmitted/{username}")
+	public List<DocumentDetailsDTO> returnAllSubmittedDocuments(@PathVariable ("username") String username){
+		LOG.info("# LOG # Initiated by [{}]: Requested a list of all submitted documents#",
+				SecurityContextHolder.getContext().getAuthentication().getName());
+		return docService.returnSubmitted(username);
+	}
+	
+	@GetMapping(path = "/api/doc/allcreated/{username}")
+	public List<DocumentDetailsDTO> returnAllCreatedDocuments(@PathVariable ("username") String username){
+		LOG.info("# LOG # Initiated by [{}]: Requested a list of all created documents#",
+				SecurityContextHolder.getContext().getAuthentication().getName());
+		return docService.returnCreated(username);
+	}
+	
+	@GetMapping(path = "/api/doc/allaccepted/{username}")
+	public List<DocumentDetailsDTO> returnAllAcceptedDocuments(@PathVariable ("username") String username){
+		LOG.info("# LOG # Initiated by [{}]: Requested a list of all accepted documents#",
+				SecurityContextHolder.getContext().getAuthentication().getName());
+		return docService.returnAccepted(username);
+	}
+	
+	@GetMapping(path = "/api/doc/allrejected/{username}")
+	public List<DocumentDetailsDTO> returnAllRejectedDocuments(@PathVariable ("username") String username){
+		LOG.info("# LOG # Initiated by [{}]: Requested a list of all rejected documents#",
+				SecurityContextHolder.getContext().getAuthentication().getName());
+		return docService.returnRejected(username);
 	}
 }
