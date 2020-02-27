@@ -6,7 +6,7 @@ import serverUrl from "./../../../../7-properties/1-URL";
 class SelectType extends Component {
   constructor(props) {
     super(props);
-    this.state = { tableData: [] };
+    this.state = { tableData: [], selectedRow: [2] };
   }
 
   componentDidMount() {
@@ -14,6 +14,8 @@ class SelectType extends Component {
       this.fetchUserDocTypes(this.props.username);
     }
   }
+
+  componentDidUpdate() {}
 
   dataFields = ["number", "type", "select"];
   columnNames = ["#", "Type", ""];
@@ -53,29 +55,8 @@ class SelectType extends Component {
   };
 
   selectedRow = row => {
-    this.props.handleDocTypeSelect(row.type);
+    this.props.handleDocTypeSelect(row.number);
   };
-
-  tmpValues = [
-    {
-      number: 1,
-      type: "Vocation",
-      select: (
-        <button className="btn btn-secondary btn-sm" onClick={this.doNothing}>
-          Select
-        </button>
-      )
-    },
-    {
-      number: 2,
-      type: "Rise",
-      select: (
-        <button className="btn btn-secondary btn-sm" onClick={this.doNothing}>
-          Select
-        </button>
-      )
-    }
-  ];
 
   render() {
     return (
@@ -91,6 +72,7 @@ class SelectType extends Component {
           tableData={this.state.tableData}
           searchBarId={"createGroupUsersSearchBar"}
           selectedRow={this.selectedRow}
+          selected={this.state.selectedRow}
         />
       </div>
     );

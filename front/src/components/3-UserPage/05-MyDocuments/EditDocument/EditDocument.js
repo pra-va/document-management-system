@@ -7,6 +7,7 @@ import SelectDocType from "./Components/2-SelectDocType";
 import AttachFiles from "./Components/3-AttachFiles";
 import AttachedFiles from "./Components/4-AttachedFiles";
 import "./EditDocument.css";
+import { withRouter } from "react-router-dom";
 
 class EditDocument extends Component {
   constructor(props) {
@@ -29,7 +30,6 @@ class EditDocument extends Component {
 
   componentDidUpdate() {
     const { name, description, selectedDocType, filesSize } = this.state;
-    console.log(this.state.attachedFilesTableValues);
 
     if (
       (name.length > 0) &
@@ -112,15 +112,6 @@ class EditDocument extends Component {
     this.checkAttachedFilesSize(tmpValues.map(item => item.fileSize));
   };
 
-  removeFileFromDB = uid => {
-    axios
-      .delete(serverUrl + "files/delete/" + uid)
-      .then(response => {})
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   checkAttachedFilesSize = (...files) => {
     let sum = 0;
 
@@ -201,10 +192,12 @@ class EditDocument extends Component {
 
   handleUpload = event => {
     event.preventDefault();
+    this.props.hide();
     this.setState({ submitInProgres: true });
     const data = new FormData();
     var filesInDb = [];
-    let uid = "";
+    var filesToRemove = [];
+    let uid = this.props.item.uid;
     var attachedFiles = this.state.attachedFilesTableValues;
 
     for (let i = 0; i < attachedFiles.length; i++) {
@@ -222,33 +215,34 @@ class EditDocument extends Component {
       if (filesInDb.includes(element)) {
         continue;
       } else {
-        this.removeFileFromDB(element);
+        filesToRemove.push(element);
       }
     }
 
-    // const postData = {
-    //   authorUsername: this.state.username,
-    //   description: this.state.description,
-    //   docType: this.state.selectedDocType,
-    //   name: this.state.name
-    // };
+    const postData = {
+      description: this.state.description,
+      docType: this.state.selectedDocType,
+      newName: this.state.name,
+      filesToRemoveUID: filesToRemove
+    };
 
-    // axios
-    //   .post(serverUrl + "doc/create", postData)
-    //   .then(response => {
-    //     uid = response.data;
-    //     axios
-    //       .post(serverUrl + "doc/upload/" + uid, data)
-    //       .then(response => {
-    //         this.props.history.push("/dvs/documents");
-    //       })
-    //       .catch(function(error) {
-    //         console.log(error);
-    //       });
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    console.log(postData);
+
+    axios
+      .post(serverUrl + "doc/update" + uid, postData)
+      .then(response => {
+        axios
+          .post(serverUrl + "doc/upload/" + uid, data)
+          .then(response => {
+            this.props.history.push("/dvs/documents");
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   render() {
@@ -270,6 +264,7 @@ class EditDocument extends Component {
               <SelectDocType
                 handleDocTypeSelect={this.handleDocTypeSelect}
                 username={this.state.username}
+                selected={this.state.selected}
               />
               <hr />
               <AttachFiles handleFileAdd={this.handleFileAdd} />
@@ -291,29 +286,34 @@ class EditDocument extends Component {
                   }
                 ></div>
               </div>
-              <div className="form-group row d-flex justify-content-center m-0">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark mr-2"
-                  onClick={this.props.hide}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-dark ml-2"
-                  data-dismiss="modal"
-                  disabled={this.state.submitDisabled}
-                >
-                  Create
-                </button>
-              </div>
             </form>
           </div>
         </Modal.Body>
+        <Modal.Footer>
+          <div
+            className="form-group row d-flex justify-content-center m-0"
+            id="updateDocumentFooter"
+          >
+            <button
+              type="button"
+              className="btn btn-outline-dark mr-2"
+              onClick={this.props.hide}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="btn btn-dark ml-2"
+              data-dismiss="modal"
+              disabled={this.state.submitDisabled}
+            >
+              Create
+            </button>
+          </div>
+        </Modal.Footer>
       </Modal>
     );
   }
 }
 
-export default EditDocument;
+export default withRouter(EditDocument);
