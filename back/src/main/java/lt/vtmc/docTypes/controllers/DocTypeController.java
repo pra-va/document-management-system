@@ -19,6 +19,7 @@ import lt.vtmc.docTypes.dto.CreateDocTypeCommand;
 import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
 import lt.vtmc.docTypes.dto.UpdateDocTypeCommand;
 import lt.vtmc.docTypes.services.DocTypeService;
+import lt.vtmc.user.controller.UserController;
 /**
  * Controller for managing Document Types.
  * 
@@ -29,6 +30,8 @@ import lt.vtmc.docTypes.services.DocTypeService;
 @RestController
 public class DocTypeController {
 
+	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
+	
 	@Autowired
 	private DocTypeService docTypeService;
 	
@@ -45,6 +48,8 @@ public class DocTypeController {
 	public ResponseEntity<String> createDocType(@RequestBody CreateDocTypeCommand command){
 		if (docTypeService.findDocTypeByName(command.getName()) == null) {
 			docTypeService.createDocType(command.getName(), command.getCreating(), command.getApproving());
+			LOG.info("# LOG # Initiated by [{}]: Created document type: [{}] #",
+					SecurityContextHolder.getContext().getAuthentication().getName(), command.getName());
 			return new ResponseEntity<String>("Saved succesfully", HttpStatus.CREATED);
 		}
 		
@@ -64,6 +69,8 @@ public class DocTypeController {
 	@DeleteMapping(path = "/api/doct/delete/{name}")
 	public ResponseEntity<String> deleteDocType(@PathVariable ("name") String name){
 		docTypeService.deleteDocType(docTypeService.findDocTypeByName(name));
+		LOG.info("# LOG # Initiated by [{}]: Deleted document type: [{}] #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), name);
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
 	
@@ -91,9 +98,9 @@ public class DocTypeController {
 		if (docTypeService.findDocTypeByName(name) != null) {
 			docTypeService.updateDocTypeDetails(command.getNewName(), name, command.getGroupsApproving(), command.getGroupsCreating());
 			
-//			LOG.info("# LOG # Initiated by [{}]: Group [{}] was updated #",
-//					SecurityContextHolder.getContext().getAuthentication().getName(), name);
-
+			LOG.info("# LOG # Initiated by [{}]: Updated document type: [{}] #",
+					SecurityContextHolder.getContext().getAuthentication().getName(), name);
+			
 			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
 		}
 

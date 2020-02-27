@@ -182,4 +182,48 @@ public class DocumentService {
 		
 		docRepo.save(documentToUpdate);
 	}
+
+	public List<DocumentDetailsDTO> returnSubmitted(String username) {
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		List<Document> tmpList = findAllDocumentsByUsername(username);
+		for (Document document : tmpList) {
+			if (document.getStatus() == Status.SUBMITED) {
+				listToReturn.add(new DocumentDetailsDTO(document));
+			}
+		}
+		return listToReturn;
+	}
+	
+	public List<DocumentDetailsDTO> returnAccepted(String username) {
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		List<Document> tmpList = findAllDocumentsByUsername(username);
+		for (Document document : tmpList) {
+			if (document.getStatus() == Status.ACCEPTED) {
+				listToReturn.add(new DocumentDetailsDTO(document));
+			}
+		}
+		return listToReturn;
+	}
+	
+	public List<DocumentDetailsDTO> returnRejected(String username) {
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		List<Document> tmpList = findAllDocumentsByUsername(username);
+		for (Document document : tmpList) {
+			if (document.getStatus() == Status.REJECTED) {
+				listToReturn.add(new DocumentDetailsDTO(document));
+			}
+		}
+		return listToReturn;
+	}
+	
+	public List<DocumentDetailsDTO> returnCreated(String username) {
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		List<Document> tmpList = findAllDocumentsByUsername(username);
+		for (Document document : tmpList) {
+			if (document.getStatus() == Status.CREATED) {
+				listToReturn.add(new DocumentDetailsDTO(document));
+			}
+		}
+		return listToReturn;
+	}
 }
