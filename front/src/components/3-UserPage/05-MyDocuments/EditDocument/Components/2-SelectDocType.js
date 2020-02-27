@@ -9,7 +9,7 @@ class SelectType extends Component {
     this.state = { tableData: [] };
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     if (this.props.username !== "" && this.state.tableData.length === 0) {
       this.fetchUserDocTypes(this.props.username);
     }

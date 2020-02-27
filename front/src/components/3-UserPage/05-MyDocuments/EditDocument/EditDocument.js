@@ -49,7 +49,6 @@ class EditDocument extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.item);
     const data = this.props.item;
     this.fetchUsername();
     this.setState({
@@ -60,7 +59,7 @@ class EditDocument extends Component {
       files: [...this.props.item.filesAttached],
       attachedFilesTableValues: data.filesAttached.map((item, index) => {
         return {
-          number: index + 1,
+          number: item.uid,
           fileName: item.fileName,
           size: this.processFileSizeString(item.fileSize),
           fileSize: item.fileSize,
@@ -68,7 +67,7 @@ class EditDocument extends Component {
             <button
               className="btn btn-secondary btn-sm"
               onClick={this.handleRemove}
-              id={index + 1}
+              id={item.uid}
             >
               Remove
             </button>
@@ -111,6 +110,15 @@ class EditDocument extends Component {
     console.log(tmpValues);
 
     this.checkAttachedFilesSize(tmpValues.map(item => item.fileSize));
+  };
+
+  removeFileFromDB = uid => {
+    axios
+      .delete(serverUrl + "files/delete/" + uid)
+      .then(response => {})
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   checkAttachedFilesSize = (...files) => {
@@ -195,41 +203,54 @@ class EditDocument extends Component {
     event.preventDefault();
     this.setState({ submitInProgres: true });
     const data = new FormData();
+    var filesInDb = [];
     let uid = "";
     var attachedFiles = this.state.attachedFilesTableValues;
-    if (attachedFiles.length !== 0) {
-      for (let i = 0; i < attachedFiles.length; i++) {
-        const element = attachedFiles[i].file;
-        data.append("files", element);
+
+    for (let i = 0; i < attachedFiles.length; i++) {
+      const element = attachedFiles[i];
+      if (element.file) {
+        data.append("files", element.file);
+      } else {
+        filesInDb.push(element.number);
       }
-    } else {
-      attachedFiles = null;
     }
 
-    const postData = {
-      authorUsername: this.state.username,
-      description: this.state.description,
-      docType: this.state.selectedDocType,
-      name: this.state.name
-    };
+    for (let j = 0; j < this.state.filesAttachedInServer.length; j++) {
+      const element = this.state.filesAttachedInServer[j].uid;
+      console.log(element);
+      if (filesInDb.includes(element)) {
+        continue;
+      } else {
+        this.removeFileFromDB(element);
+      }
+    }
 
-    axios
-      .post(serverUrl + "doc/create", postData)
-      .then(response => {
-        uid = response.data;
-        axios
-          .post(serverUrl + "doc/upload/" + uid, data)
-          .then(response => {
-            this.props.history.push("/dvs/documents");
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    // const postData = {
+    //   authorUsername: this.state.username,
+    //   description: this.state.description,
+    //   docType: this.state.selectedDocType,
+    //   name: this.state.name
+    // };
+
+    // axios
+    //   .post(serverUrl + "doc/create", postData)
+    //   .then(response => {
+    //     uid = response.data;
+    //     axios
+    //       .post(serverUrl + "doc/upload/" + uid, data)
+    //       .then(response => {
+    //         this.props.history.push("/dvs/documents");
+    //       })
+    //       .catch(function(error) {
+    //         console.log(error);
+    //       });
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
   };
+
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.hide} size="lg">
@@ -239,7 +260,6 @@ class EditDocument extends Component {
         <Modal.Body>
           <div className="container">
             <form onSubmit={this.handleUpload} id="editDocumentForm">
-              <h2 className="mb-3">New Document</h2>
               <EditInfo
                 handleNameChange={this.handleNameChange}
                 handleDescriptionChange={this.handleDescriptionChange}

@@ -64,7 +64,7 @@ var NavigationPresentation = props => {
           </li>
 
           <li className="nav-item active">
-            <Link className="nav-link link-text-format" to="/dvs/merch">
+            <Link className="nav-link link-text-format" to="/dvs/sign">
               Sign Document <span className="sr-only">(current)</span>
             </Link>
           </li>
