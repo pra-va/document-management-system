@@ -114,6 +114,12 @@ var InputLine = props => {
     }
   };
 
+  var checkPropsValue = () => {
+    if (props.value.length !==undefined) {
+      
+    }
+  }
+
   var usernameExists = () => {
     if (props.labelName.toLowerCase().includes("username")) {
       return (
