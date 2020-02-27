@@ -15,6 +15,7 @@ import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.model.File4DB;
+import lt.vtmc.files.service.FileService;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
@@ -37,6 +38,8 @@ public class DocumentService {
 	@Autowired
 	private DocTypeRepository dTypeRepo;
 
+	@Autowired
+	private FileService fileService;
 	/**
 	 * 
 	 * This method finds a document from group repository by name.
@@ -73,7 +76,8 @@ public class DocumentService {
 		}
 		return list;
 	}
-
+	
+	@Transactional
 	public void deleteDocument(Document document) {
 		document.setFileList(null);
 		document.setHandler(null);
@@ -82,6 +86,7 @@ public class DocumentService {
 		docRepo.delete(document);
 	}
 
+	@Transactional
 	public void setStatusPateiktas(String UID) {
 		Document tmp = findDocumentByUID(UID);
 		tmp.setDateSubmit(Instant.now().toString());
@@ -89,6 +94,7 @@ public class DocumentService {
 		docRepo.save(tmp);
 	}
 
+	@Transactional
 	public void setStatusPriimtas(String UID, String username) {
 		Document tmp = findDocumentByUID(UID);
 		tmp.setDateProcessed(Instant.now().toString());
@@ -103,6 +109,7 @@ public class DocumentService {
 		docRepo.save(tmp);
 	}
 
+	@Transactional
 	public void setStatusAtmestas(String UID, String username, String reasonToReject) {
 		Document tmp = findDocumentByUID(UID);
 		tmp.setDateProcessed(Instant.now().toString());
@@ -156,5 +163,23 @@ public class DocumentService {
 			}
 		}
 		return listToReturn;
+	}
+
+	@Transactional
+	public void updateDocument(String docUID, String newName, String newDescription, String newDocType, String[] filesToRemove) {
+		Document documentToUpdate = findDocumentByUID(docUID);
+		documentToUpdate.setName(newName);
+		documentToUpdate.setDescription(newDescription);
+		List<Document> listToRemoveFrom = documentToUpdate.getdType().getDocumentList();
+		listToRemoveFrom.remove(documentToUpdate);
+		List<Document> listToAddTo = dTypeRepo.findDocTypeByName(newDocType).getDocumentList();
+		listToAddTo.add(documentToUpdate);
+		documentToUpdate.setdType(dTypeRepo.findDocTypeByName(newDocType));
+		
+		for (String file : filesToRemove) {
+			fileService.deleteFileByUID(file);
+		}
+		
+		docRepo.save(documentToUpdate);
 	}
 }
