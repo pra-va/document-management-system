@@ -37,7 +37,6 @@ export default class SignDocuments extends Component {
       .then(response => {
         this.setState({ serverData: response.data });
         this.processData(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -60,7 +59,7 @@ export default class SignDocuments extends Component {
             popOverContent={this.reduceFilesAttached(item.filesAttached)}
           />
         ),
-        process: <SignOrRejectButton />
+        process: <SignOrRejectButton item={item} />
       };
     });
 

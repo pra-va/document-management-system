@@ -85,8 +85,8 @@ class MyDocsTable extends Component {
         submit: (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={() => {
-              this.submitDocument(item.uid);
+            onClick={event => {
+              this.submitDocument(item.uid, event);
             }}
             disabled={this.checkDisabled(item)}
             id={item.uid}
@@ -100,7 +100,8 @@ class MyDocsTable extends Component {
     this.setState({ tableData: tableData });
   };
 
-  submitDocument = uid => {
+  submitDocument = (uid, event) => {
+    event.preventDefault();
     axios
       .post(serverUrl + "doc/submit/" + uid, {})
       .then(respones => {
