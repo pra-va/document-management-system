@@ -33,8 +33,6 @@ class LoginForm extends Component {
     let isUserAdmin = false;
     userData.append("username", this.state.username);
     userData.append("password", this.state.password);
-    console.log(this.state.username);
-    console.log(this.state.password)
     axios
       .post(serverUrl + "login", userData, {
         headers: { "Content-type": "application/x-www-form-urlencoded" }

@@ -134,8 +134,6 @@ class EditGroup extends Component {
         return item.username;
       })
     };
-    console.log("SUBMITING");
-    console.log(editedGroup);
     axios
       .post(serverUrl + "groups/update/" + this.props.ownerName, editedGroup)
       .then(response => {

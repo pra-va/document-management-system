@@ -14,7 +14,11 @@ const SignOrReject = props => {
       >
         Edit/View
       </button>
-      <AcceptOrReject show={showModal} hide={handleCloseModal} />
+      <AcceptOrReject
+        show={showModal}
+        hide={handleCloseModal}
+        item={props.item}
+      />
     </div>
   );
 };

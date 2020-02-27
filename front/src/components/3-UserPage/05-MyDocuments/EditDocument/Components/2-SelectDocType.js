@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Table from "./../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
 import serverUrl from "./../../../../7-properties/1-URL";
 
@@ -58,22 +57,38 @@ class SelectType extends Component {
     this.props.handleDocTypeSelect(row.number);
   };
 
+  options = () => {
+    const { tableData } = this.state;
+    if (tableData.length > 0) {
+      return tableData.map((item, index) => {
+        return (
+          <option value={item.type} key={index}>
+            {item.type}
+          </option>
+        );
+      });
+    }
+  };
+
+  handleSelectChange = event => {
+    this.props.handleDocTypeSelect(event.target.value);
+  };
+
   render() {
     return (
       <div>
         <h3 className="d-flex justify-content-start">
           2. Select document type.
         </h3>
-        <Table
-          select={true}
-          id={"usersDocTypes"}
-          dataFields={this.dataFields}
-          columnNames={this.columnNames}
-          tableData={this.state.tableData}
-          searchBarId={"createGroupUsersSearchBar"}
-          selectedRow={this.selectedRow}
-          selected={this.state.selectedRow}
-        />
+        <select
+          value={this.props.selected}
+          id="selectDocType"
+          name="selectDocType"
+          onChange={this.handleSelectChange}
+          className="form-control"
+        >
+          {this.options()}
+        </select>
       </div>
     );
   }

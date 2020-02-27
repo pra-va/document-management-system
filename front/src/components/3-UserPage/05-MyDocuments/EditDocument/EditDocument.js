@@ -35,8 +35,7 @@ class EditDocument extends Component {
       (name.length > 0) &
       (description.length > 0) &
       (selectedDocType.length > 0) &
-      (filesSize < 20000000) &
-      (filesSize !== 0)
+      (filesSize < 20000000)
     ) {
       if (this.state.submitDisabled) {
         this.setState({ submitDisabled: false });
@@ -107,8 +106,6 @@ class EditDocument extends Component {
     }
     this.setState({ attachedFilesTableValues: tmpValues });
 
-    console.log(tmpValues);
-
     this.checkAttachedFilesSize(tmpValues.map(item => item.fileSize));
   };
 
@@ -122,7 +119,6 @@ class EditDocument extends Component {
       }
     });
     this.setState({ filesSize: sum });
-    console.log(sum);
     return sum;
   };
 
@@ -133,8 +129,6 @@ class EditDocument extends Component {
     for (let i = 0; i < files.length; i++) {
       const element = files[i];
       var size = this.processFileSizeString(element.size);
-
-      console.log(stateLength);
 
       tmpFilesForTable.push({
         number: i + stateLength + 1,
@@ -211,7 +205,6 @@ class EditDocument extends Component {
 
     for (let j = 0; j < this.state.filesAttachedInServer.length; j++) {
       const element = this.state.filesAttachedInServer[j].uid;
-      console.log(element);
       if (filesInDb.includes(element)) {
         continue;
       } else {
@@ -226,8 +219,6 @@ class EditDocument extends Component {
       filesToRemoveUID: filesToRemove
     };
 
-    console.log(postData);
-
     axios
       .post(serverUrl + "doc/update" + uid, postData)
       .then(response => {
@@ -235,6 +226,8 @@ class EditDocument extends Component {
           .post(serverUrl + "doc/upload/" + uid, data)
           .then(response => {
             this.props.history.push("/dvs/documents");
+            this.props.hide();
+            window.location.reload();
           })
           .catch(function(error) {
             console.log(error);
@@ -252,7 +245,7 @@ class EditDocument extends Component {
           <Modal.Title>Edit Document</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="container">
+          <div>
             <form onSubmit={this.handleUpload} id="editDocumentForm">
               <EditInfo
                 handleNameChange={this.handleNameChange}
@@ -264,7 +257,7 @@ class EditDocument extends Component {
               <SelectDocType
                 handleDocTypeSelect={this.handleDocTypeSelect}
                 username={this.state.username}
-                selected={this.state.selected}
+                selected={this.state.selectedDocType}
               />
               <hr />
               <AttachFiles handleFileAdd={this.handleFileAdd} />
@@ -286,31 +279,29 @@ class EditDocument extends Component {
                   }
                 ></div>
               </div>
+              <div
+                className="form-group row d-flex justify-content-center m-0"
+                id="updateDocumentFooter"
+              >
+                <button
+                  type="button"
+                  className="btn btn-outline-dark mr-2"
+                  onClick={this.props.hide}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-dark ml-2"
+                  data-dismiss="modal"
+                  disabled={this.state.submitDisabled}
+                >
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <div
-            className="form-group row d-flex justify-content-center m-0"
-            id="updateDocumentFooter"
-          >
-            <button
-              type="button"
-              className="btn btn-outline-dark mr-2"
-              onClick={this.props.hide}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="btn btn-dark ml-2"
-              data-dismiss="modal"
-              disabled={this.state.submitDisabled}
-            >
-              Create
-            </button>
-          </div>
-        </Modal.Footer>
       </Modal>
     );
   }
