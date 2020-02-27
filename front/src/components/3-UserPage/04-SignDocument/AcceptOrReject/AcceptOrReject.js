@@ -29,7 +29,8 @@ class AcceptOrReject extends Component {
       });
   };
 
-  downloadFile = (uid, fileName) => {
+  downloadFile = (event, uid, fileName) => {
+    event.preventDefault();
     axios
       .request({
         url: serverUrl + "files/" + uid,
@@ -56,7 +57,7 @@ class AcceptOrReject extends Component {
         >
           <button
             className="btn btn-outline-dark"
-            onClick={() => this.downloadFile(item.uid, item.fileName)}
+            onClick={event => this.downloadFile(event, item.uid, item.fileName)}
           >
             {item.fileName}
           </button>
@@ -70,7 +71,6 @@ class AcceptOrReject extends Component {
   };
 
   handleApprove = event => {
-    console.log(serverUrl + "doc/approve/" + this.props.item.uid);
     event.preventDefault();
     axios
       .post(serverUrl + "doc/approve/" + this.props.item.uid, {
@@ -78,8 +78,8 @@ class AcceptOrReject extends Component {
       })
       .then(response => {
         console.log("accepted");
-        // this.props.hide();
-        // window.location.reload();
+        this.props.hide();
+        window.location.reload();
       })
       .catch(error => {
         console.log(error);
@@ -87,17 +87,19 @@ class AcceptOrReject extends Component {
   };
 
   handleDecline = event => {
-    console.log(serverUrl + "doc/approve/" + this.props.item.uid);
     event.preventDefault();
+
+    const postData = {
+      reasonToReject: this.state.comment,
+      username: this.state.username
+    };
+
     axios
-      .post(
-        serverUrl + "doc/approve/" + this.props.item.uid,
-        this.state.comment
-      )
+      .post(serverUrl + "doc/reject/" + this.props.item.uid, postData)
       .then(response => {
         console.log("accepted");
-        // this.props.hide();
-        // window.location.reload();
+        this.props.hide();
+        window.location.reload();
       })
       .catch(error => {
         console.log(error);
@@ -107,7 +109,6 @@ class AcceptOrReject extends Component {
   render() {
     return (
       <div>
-        {" "}
         <Modal
           show={this.props.show}
           onHide={this.props.hide}
@@ -137,7 +138,7 @@ class AcceptOrReject extends Component {
                 <div className="col-9">{this.props.item.description}</div>
               </div>
               <div className="row p-3">
-                <div className="col-3">Submited:</div>
+                <div className="col-3">Submitted:</div>
                 <div className="col-9">
                   {this.props.item.dateSubmit
                     ? this.props.item.dateSubmit.substring(0, 10)

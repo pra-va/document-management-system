@@ -68,7 +68,7 @@ class MyDocs extends Component {
       <div>
         <Navigation />
         <div className="container">
-          <h3>My Documents</h3>
+          <h3 className="mt-5">My Documents</h3>
           <DataTable />
           <div className="row d-flex justify-content-center p-5">
             <button

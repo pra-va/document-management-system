@@ -242,7 +242,7 @@ class EditDocument extends Component {
     return (
       <Modal show={this.props.show} onHide={this.props.hide} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Edit Document</Modal.Title>
+          <Modal.Title>Edit Document ID {this.props.item.uid}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div>

@@ -44,14 +44,15 @@ export default class SignDocuments extends Component {
   };
 
   processData = data => {
+    console.log(data);
     const tableDataTmp = data.map((item, index) => {
       return {
         uid: item.uid,
-        number: index + 1,
+        number: item.uid,
         name: item.name,
         type: item.type,
         submited: item.dateSubmit.substring(0, 10),
-        createdBy: "TODO",
+        createdBy: item.author,
         files: (
           <PopOver
             popOverApparance={<img className="invert" src={Files} alt="..." />}
@@ -81,7 +82,7 @@ export default class SignDocuments extends Component {
       <div>
         <Navigation />
         <div className="container">
-          <h3>Sign Documents</h3>
+          <h3 className="mt-5">Sign Documents</h3>
           <SignTable values={this.state.tableData} />
         </div>
       </div>
