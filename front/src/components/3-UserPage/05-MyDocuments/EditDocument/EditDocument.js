@@ -213,7 +213,6 @@ class EditDocument extends Component {
 
   handleUpload = event => {
     event.preventDefault();
-    this.props.hide();
     this.setState({ submitInProgres: true });
     const data = new FormData();
     var filesInDb = [];
@@ -223,7 +222,7 @@ class EditDocument extends Component {
 
     for (let i = 0; i < attachedFiles.length; i++) {
       const element = attachedFiles[i];
-      if (element.file) {
+      if (element.file !== undefined) {
         data.append("files", element.file);
       } else {
         filesInDb.push(element.number);
@@ -245,6 +244,7 @@ class EditDocument extends Component {
       newName: this.state.name,
       filesToRemoveUID: filesToRemove
     };
+    console.log("aaaaaaaaaaaaaaaaa" + data);
 
     axios
       .post(serverUrl + "doc/update" + uid, postData)
@@ -272,63 +272,61 @@ class EditDocument extends Component {
           <Modal.Title>Edit Document ID {this.props.item.uid}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>
-            <form onSubmit={this.handleUpload} id="editDocumentForm">
-              <EditInfo
-                handleNameChange={this.handleNameChange}
-                handleDescriptionChange={this.handleDescriptionChange}
-                name={this.state.name}
-                description={this.state.description}
-              />
-              <hr />
-              <SelectDocType
-                handleDocTypeSelect={this.handleDocTypeSelect}
-                username={this.state.username}
-                selected={this.state.selectedDocType}
-              />
-              <hr />
-              <AttachFiles handleFileAdd={this.handleFileAdd} />
-              <AttachedFiles
-                values={this.state.attachedFilesTableValues}
-                size={this.state.filesSize}
-                attachedFilesTableValues={this.state.attachedFilesTableValues}
-              />
-              <div className="progress my-3">
-                <div
-                  className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                  role="progressbar"
-                  aria-valuenow="100"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  style={
-                    this.state.submitInProgres
-                      ? { width: this.state.percentCompleted }
-                      : { width: (this.state.filesSize * 100) / 20000000 + "%" }
-                  }
-                ></div>
-              </div>
+          <form onSubmit={this.handleUpload} id="editDocumentForm">
+            <EditInfo
+              handleNameChange={this.handleNameChange}
+              handleDescriptionChange={this.handleDescriptionChange}
+              name={this.state.name}
+              description={this.state.description}
+            />
+            <hr />
+            <SelectDocType
+              handleDocTypeSelect={this.handleDocTypeSelect}
+              username={this.state.username}
+              selected={this.state.selectedDocType}
+            />
+            <hr />
+            <AttachFiles handleFileAdd={this.handleFileAdd} />
+            <AttachedFiles
+              values={this.state.attachedFilesTableValues}
+              size={this.state.filesSize}
+              attachedFilesTableValues={this.state.attachedFilesTableValues}
+            />
+            <div className="progress my-3">
               <div
-                className="form-group row d-flex justify-content-center m-0"
-                id="updateDocumentFooter"
+                className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                role="progressbar"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style={
+                  this.state.submitInProgres
+                    ? { width: this.state.percentCompleted }
+                    : { width: (this.state.filesSize * 100) / 20000000 + "%" }
+                }
+              ></div>
+            </div>
+            <div
+              className="form-group row d-flex justify-content-center m-0"
+              id="updateDocumentFooter"
+            >
+              <button
+                type="button"
+                className="btn btn-outline-dark mr-2"
+                onClick={this.props.hide}
               >
-                <button
-                  type="button"
-                  className="btn btn-outline-dark mr-2"
-                  onClick={this.props.hide}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-dark ml-2"
-                  data-dismiss="modal"
-                  disabled={this.state.submitDisabled}
-                >
-                  Update
-                </button>
-              </div>
-            </form>
-          </div>
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn btn-dark ml-2"
+                data-dismiss="modal"
+                disabled={this.state.submitDisabled}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </Modal.Body>
       </Modal>
     );
