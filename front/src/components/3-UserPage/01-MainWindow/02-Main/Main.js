@@ -49,7 +49,10 @@ class Main extends Component {
             </Link>
           </div>
           <div className="col-6 col-md-3 my-4 card-width">
-            <div className="card text-white bg-dark card-heigth">
+            <Link
+              className="card text-white bg-dark card-heigth"
+              to={"/dvs/sign"}
+            >
               <img
                 src={SignDocument}
                 className="card-img-top p-3 invert"
@@ -58,7 +61,7 @@ class Main extends Component {
               <div className="card-body">
                 <h5 className="card-title card-label-text">Sign Document</h5>
               </div>
-            </div>
+            </Link>
           </div>
           <div className="col-6 col-md-3 my-4 card-width">
             <Link

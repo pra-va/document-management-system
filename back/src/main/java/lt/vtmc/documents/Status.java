@@ -1,9 +1,5 @@
 package lt.vtmc.documents;
 
 public enum Status {
-	CREATED, SUBMITED, ACCEPTED, REJECTED
+	CREATED, SUBMITTED, ACCEPTED, REJECTED
 }
-
-//	PATEIKTAS,
-//    PRIIMTAS,
-//    ATMESTAS

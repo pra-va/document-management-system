@@ -185,7 +185,7 @@ public class UserService implements UserDetailsService {
 
 		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
 		for (Document document : tmpListDoc) {
-			if (document.getStatus() == Status.SUBMITED) {
+			if (document.getStatus() == Status.SUBMITTED) {
 				listToReturn.add(new DocumentDetailsDTO(document));
 			}
 		}

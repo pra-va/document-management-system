@@ -49,6 +49,7 @@ class Groups extends Component {
   };
 
   componentDidMount() {
+    console.log("mount");
     this.fetchDocTypeData();
     this.fetchGroupsData();
     this.props.cleanUpCreateAndSignLists();

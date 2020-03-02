@@ -13,7 +13,7 @@ const SignTable = props => {
   ];
 
   const columnNames = [
-    "#",
+    "ID",
     "Name",
     "Type",
     "Submitted",

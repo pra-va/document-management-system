@@ -6,6 +6,7 @@ import serverUrl from "./../../7-properties/1-URL";
 import Files from "./../../../resources/doc.svg";
 import PopOver from "../../6-CommonElements/8-PopOver/PopOver";
 import SignOrRejectButton from "./SignOrRejectButton";
+import ContentWrapper from "./../../6-CommonElements/10-TopContentWrapper/ContentWrapper";
 
 export default class SignDocuments extends Component {
   constructor(props) {
@@ -37,7 +38,6 @@ export default class SignDocuments extends Component {
       .then(response => {
         this.setState({ serverData: response.data });
         this.processData(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -45,14 +45,15 @@ export default class SignDocuments extends Component {
   };
 
   processData = data => {
+    console.log(data);
     const tableDataTmp = data.map((item, index) => {
       return {
         uid: item.uid,
-        number: index + 1,
+        number: item.uid,
         name: item.name,
         type: item.type,
         submited: item.dateSubmit.substring(0, 10),
-        createdBy: "TODO",
+        createdBy: item.author,
         files: (
           <PopOver
             popOverApparance={<img className="invert" src={Files} alt="..." />}
@@ -60,7 +61,7 @@ export default class SignDocuments extends Component {
             popOverContent={this.reduceFilesAttached(item.filesAttached)}
           />
         ),
-        process: <SignOrRejectButton />
+        process: <SignOrRejectButton item={item} />
       };
     });
 
@@ -82,7 +83,7 @@ export default class SignDocuments extends Component {
       <div>
         <Navigation />
         <div className="container">
-          <h3>Sign Documents</h3>
+          <ContentWrapper content={<h3>Sign Documents</h3>} />
           <SignTable values={this.state.tableData} />
         </div>
       </div>

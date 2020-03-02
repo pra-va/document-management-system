@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,7 +54,8 @@ public class FilesController {
 	@PostMapping("/api/file")
 	public void uploadFiles(MultipartFile file, Document doc) {
 		try {
-			LOG.info("File uploaded with file name: " + file.getOriginalFilename());
+			LOG.info("# LOG # Initiated by [{}]: User uploaded file with filename: [{}]#",
+					SecurityContextHolder.getContext().getAuthentication().getName(), file.getOriginalFilename());
 			fileService.saveFile(file, doc);
 		} catch (Exception e) {
 			LOG.error("Error saving file", e);
@@ -68,11 +70,14 @@ public class FilesController {
 	 */
 	@GetMapping("/api/files/{fileUID}")
 	public ResponseEntity<Resource> downloadFileByFileName(@PathVariable("fileUID") String fileUID) {
+		LOG.info("# LOG # Initiated by [{}]: User downloaded file with file UID: [{}]#",
+				SecurityContextHolder.getContext().getAuthentication().getName(), fileUID);
 		return fileService.downloadFileByUID(fileUID);
 	}
 
 	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
+		
 		return fileService.findAllFileDetailsByUsername(username);
 	}
 
@@ -87,6 +92,8 @@ public class FilesController {
 		response.setContentType("application/zip");
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+		LOG.info("# LOG # Initiated by [{}]: User downloaded archive with all files created#",
+				SecurityContextHolder.getContext().getAuthentication().getName());
 		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
 	}
 
@@ -99,6 +106,8 @@ public class FilesController {
 	@GetMapping(value = "/api/files/csv/{username}")
 	public ResponseEntity<Resource> downloadCSV(@PathVariable String username) {
 		try {
+			LOG.info("# LOG # Initiated by [{}]: User generated and downloaded CSV file for all his files#",
+					SecurityContextHolder.getContext().getAuthentication().getName());
 			return fileService.generateCSV(username);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -109,6 +118,8 @@ public class FilesController {
 	@DeleteMapping(path = "/api/files/delete/{UID}")
 	public ResponseEntity<String> deleteFileByUID(@PathVariable ("UID") String UID) throws IOException{
 		fileService.deleteFileByUID(UID);
+		LOG.info("# LOG # Initiated by [{}]: User deleted file with file UID: [{}]#",
+				SecurityContextHolder.getContext().getAuthentication().getName(), UID);
 		return new ResponseEntity<String>("Deleted", HttpStatus.OK);
 	}
 	

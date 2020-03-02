@@ -30,12 +30,12 @@ class ViewDocument extends Component {
           key={index}
           className="row p-1 d-flex justify-content-center info-div"
         >
-          <a
-            href="#!"
+          <button
+            className="btn btn-outline-dark"
             onClick={() => this.downloadFile(item.uid, item.fileName)}
           >
             {item.fileName}
-          </a>
+          </button>
         </div>
       );
     });
@@ -45,7 +45,7 @@ class ViewDocument extends Component {
     return (
       <Modal show={this.props.show} onHide={this.props.hide}>
         <Modal.Header closeButton>
-          <Modal.Title>View Document</Modal.Title>
+          <Modal.Title>ID {this.props.item.uid} Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row p-3">
@@ -73,11 +73,11 @@ class ViewDocument extends Component {
             </div>
           </div>
           <div className="row p-3">
-            <div className="col-3">Submited:</div>
+            <div className="col-3">Submitted:</div>
             <div className="col-9">
               {this.props.item.dateSubmit
                 ? this.props.item.dateSubmit.substring(0, 10)
-                : "NOT SUBMITED"}
+                : "NOT SUBMITTED"}
             </div>
           </div>
           <div className="row p-3">
@@ -94,7 +94,7 @@ class ViewDocument extends Component {
           </div>
           <div className="row p-3">
             <div className="col-3">Validator:</div>
-            <div className="col-9">TODO VALIDATOR NAME</div>
+            <div className="col-9">{this.props.item.processedBy}</div>
           </div>
           <div className="row p-3">
             <div className="col-3">Attached files:</div>

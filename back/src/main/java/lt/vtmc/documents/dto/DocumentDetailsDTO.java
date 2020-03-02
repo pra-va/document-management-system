@@ -15,8 +15,9 @@ public class DocumentDetailsDTO {
 
 	private String name;
 
-	@JsonIgnore
-	private User author;
+	private String author;
+
+	private String processedBy;
 
 	@JsonIgnore
 	private DocType dType;
@@ -40,10 +41,30 @@ public class DocumentDetailsDTO {
 	private List<File4DocDTO> filesAttached;
 
 	@JsonIgnore
-	private User handler;
-
-	@JsonIgnore
 	private List<File4DB> fileList;
+
+	public DocumentDetailsDTO(Document document) {
+		super();
+		this.name = document.getName();
+		this.author = document.getAuthor().getName() + " " + document.getAuthor().getSurname();
+		this.dType = document.getdType();
+		this.dateCreate = document.getDateCreate();
+		this.description = document.getDescription();
+		this.dateSubmit = document.getDateSubmit();
+		this.dateProcessed = document.getDateProcessed();
+		this.reasonToReject = document.getReasonToReject();
+		if (document.getHandler() != null) {
+			this.processedBy = document.getHandler().getName() + " " + document.getHandler().getSurname();
+		}
+		else {
+			this.processedBy = null;
+		}
+		this.status = document.getStatus();
+		this.fileList = document.getFileList();
+		this.uid = document.getUID();
+		this.type = document.getdType().getName();
+		this.filesAttached = getFileNames(document.getFileList());
+	}
 
 	public String getUid() {
 		return uid;
@@ -77,11 +98,11 @@ public class DocumentDetailsDTO {
 		this.name = name;
 	}
 
-	public User getAuthor() {
+	public String getAuthor() {
 		return author;
 	}
 
-	public void setAuthor(User author) {
+	public void setAuthor(String author) {
 		this.author = author;
 	}
 
@@ -148,12 +169,12 @@ public class DocumentDetailsDTO {
 		this.reasonToReject = reasonToReject;
 	}
 
-	public User getHandler() {
-		return handler;
+	public String getProcessedBy() {
+		return processedBy;
 	}
 
-	public void setHandler(User handler) {
-		this.handler = handler;
+	public void ProcessedBy(String processedBy) {
+		this.processedBy = processedBy;
 	}
 
 	public String getType() {
@@ -162,24 +183,6 @@ public class DocumentDetailsDTO {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public DocumentDetailsDTO(Document document) {
-		super();
-		this.name = document.getName();
-		this.author = document.getAuthor();
-		this.dType = document.getdType();
-		this.dateCreate = document.getDateCreate();
-		this.description = document.getDescription();
-		this.dateSubmit = document.getDateSubmit();
-		this.dateProcessed = document.getDateProcessed();
-		this.reasonToReject = document.getReasonToReject();
-		this.handler = document.getHandler();
-		this.status = document.getStatus();
-		this.fileList = document.getFileList();
-		this.uid = document.getUID();
-		this.type = document.getdType().getName();
-		this.filesAttached = getFileNames(document.getFileList());
 	}
 
 	private List<File4DocDTO> getFileNames(List<File4DB> files) {

@@ -23,7 +23,7 @@ class MyDocsTable extends Component {
     "edit",
     "submit"
   ];
-  columnNames = ["#", "Name", "Type", "Status", "Created", "Files", "", ""];
+  columnNames = ["ID", "Name", "Type", "Status", "Created", "Files", "", ""];
   tableData = [];
 
   componentDidMount() {
@@ -55,9 +55,8 @@ class MyDocsTable extends Component {
 
   processData = data => {
     const tableData = data.map((item, index) => {
-      console.log(item);
       return {
-        number: index + 1,
+        number: item.uid,
         name: item.name,
         type: item.type,
         status: item.status,
@@ -85,8 +84,8 @@ class MyDocsTable extends Component {
         submit: (
           <button
             className="btn btn-secondary btn-sm"
-            onClick={() => {
-              this.submitDocument(item.uid);
+            onClick={event => {
+              this.submitDocument(item.uid, event);
             }}
             disabled={this.checkDisabled(item)}
             id={item.uid}
@@ -100,7 +99,8 @@ class MyDocsTable extends Component {
     this.setState({ tableData: tableData });
   };
 
-  submitDocument = uid => {
+  submitDocument = (uid, event) => {
+    event.preventDefault();
     axios
       .post(serverUrl + "doc/submit/" + uid, {})
       .then(respones => {
@@ -135,9 +135,85 @@ class MyDocsTable extends Component {
     }, "");
   };
 
+  fetchCustomData = url => {
+    axios
+      .get(serverUrl + url)
+      .then(response => {
+        this.processData(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   render() {
     return (
       <div id="myDocsTable">
+        <div className="row d-flex justify-content-center ">
+          <div className="btn-group btn-group-toggle" data-toggle="buttons">
+            <label className="btn btn-secondary active">
+              <input
+                type="radio"
+                name="options"
+                id="all"
+                checked
+                onChange={() => {}}
+                onClick={this.fetchData}
+              />{" "}
+              All
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="created"
+                onClick={() => {
+                  this.fetchCustomData("doc/allcreated/" + this.state.username);
+                }}
+              />{" "}
+              Created
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="submitted"
+                onClick={() => {
+                  this.fetchCustomData(
+                    "doc/allsubmitted/" + this.state.username
+                  );
+                }}
+              />{" "}
+              Submitted
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="rejected"
+                onClick={() => {
+                  this.fetchCustomData(
+                    "doc/allrejected/" + this.state.username
+                  );
+                }}
+              />{" "}
+              Rejected
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="accepted"
+                onClick={() => {
+                  this.fetchCustomData(
+                    "doc/allaccepted/" + this.state.username
+                  );
+                }}
+              />{" "}
+              Accepted
+            </label>
+          </div>
+        </div>
         <Table
           id={"myDocsTableSearch"}
           dataFields={this.dataFields}

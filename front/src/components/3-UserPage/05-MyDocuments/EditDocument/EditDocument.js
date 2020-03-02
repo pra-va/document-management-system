@@ -7,6 +7,8 @@ import SelectDocType from "./Components/2-SelectDocType";
 import AttachFiles from "./Components/3-AttachFiles";
 import AttachedFiles from "./Components/4-AttachedFiles";
 import "./EditDocument.css";
+import { withRouter } from "react-router-dom";
+import Download from "./../../../../resources/download.svg";
 
 class EditDocument extends Component {
   constructor(props) {
@@ -29,14 +31,12 @@ class EditDocument extends Component {
 
   componentDidUpdate() {
     const { name, description, selectedDocType, filesSize } = this.state;
-    console.log(this.state.attachedFilesTableValues);
 
     if (
       (name.length > 0) &
       (description.length > 0) &
       (selectedDocType.length > 0) &
-      (filesSize < 20000000) &
-      (filesSize !== 0)
+      (filesSize < 20000000)
     ) {
       if (this.state.submitDisabled) {
         this.setState({ submitDisabled: false });
@@ -63,6 +63,16 @@ class EditDocument extends Component {
           fileName: item.fileName,
           size: this.processFileSizeString(item.fileSize),
           fileSize: item.fileSize,
+          download: (
+            <img
+              src={Download}
+              alt={"download"}
+              className="invert m-0 p-0 img-download"
+              onClick={event => {
+                this.downloadFile(event, item.uid, item.fileName);
+              }}
+            />
+          ),
           remove: (
             <button
               className="btn btn-secondary btn-sm"
@@ -79,6 +89,25 @@ class EditDocument extends Component {
       this.props.item.filesAttached.map(item => item.fileSize)
     );
   }
+
+  downloadFile = (event, uid, fileName) => {
+    event.preventDefault();
+    axios
+      .request({
+        url: serverUrl + "files/" + uid,
+        method: "GET",
+        responseType: "blob"
+      })
+      .then(({ data }) => {
+        const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      });
+  };
 
   handleNameChange = nameData => {
     this.setState({ name: nameData });
@@ -97,9 +126,6 @@ class EditDocument extends Component {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
-      console.log(
-        "iterator: " + event.target.id + "; element: " + element.number
-      );
       if (Number(event.target.id) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
@@ -107,18 +133,7 @@ class EditDocument extends Component {
     }
     this.setState({ attachedFilesTableValues: tmpValues });
 
-    console.log(tmpValues);
-
     this.checkAttachedFilesSize(tmpValues.map(item => item.fileSize));
-  };
-
-  removeFileFromDB = uid => {
-    axios
-      .delete(serverUrl + "files/delete/" + uid)
-      .then(response => {})
-      .catch(error => {
-        console.log(error);
-      });
   };
 
   checkAttachedFilesSize = (...files) => {
@@ -131,7 +146,6 @@ class EditDocument extends Component {
       }
     });
     this.setState({ filesSize: sum });
-    console.log(sum);
     return sum;
   };
 
@@ -142,8 +156,6 @@ class EditDocument extends Component {
     for (let i = 0; i < files.length; i++) {
       const element = files[i];
       var size = this.processFileSizeString(element.size);
-
-      console.log(stateLength);
 
       tmpFilesForTable.push({
         number: i + stateLength + 1,
@@ -204,12 +216,13 @@ class EditDocument extends Component {
     this.setState({ submitInProgres: true });
     const data = new FormData();
     var filesInDb = [];
-    let uid = "";
+    var filesToRemove = [];
+    let uid = this.props.item.uid;
     var attachedFiles = this.state.attachedFilesTableValues;
 
     for (let i = 0; i < attachedFiles.length; i++) {
       const element = attachedFiles[i];
-      if (element.file) {
+      if (element.file !== undefined) {
         data.append("files", element.file);
       } else {
         filesInDb.push(element.number);
@@ -218,102 +231,106 @@ class EditDocument extends Component {
 
     for (let j = 0; j < this.state.filesAttachedInServer.length; j++) {
       const element = this.state.filesAttachedInServer[j].uid;
-      console.log(element);
       if (filesInDb.includes(element)) {
         continue;
       } else {
-        this.removeFileFromDB(element);
+        filesToRemove.push(element);
       }
     }
 
-    // const postData = {
-    //   authorUsername: this.state.username,
-    //   description: this.state.description,
-    //   docType: this.state.selectedDocType,
-    //   name: this.state.name
-    // };
+    const postData = {
+      description: this.state.description,
+      docType: this.state.selectedDocType,
+      newName: this.state.name,
+      filesToRemoveUID: filesToRemove
+    };
+    console.log("aaaaaaaaaaaaaaaaa" + data);
 
-    // axios
-    //   .post(serverUrl + "doc/create", postData)
-    //   .then(response => {
-    //     uid = response.data;
-    //     axios
-    //       .post(serverUrl + "doc/upload/" + uid, data)
-    //       .then(response => {
-    //         this.props.history.push("/dvs/documents");
-    //       })
-    //       .catch(function(error) {
-    //         console.log(error);
-    //       });
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    axios
+      .post(serverUrl + "doc/update" + uid, postData)
+      .then(response => {
+        axios
+          .post(serverUrl + "doc/upload/" + uid, data)
+          .then(response => {
+            this.props.history.push("/dvs/documents");
+            this.props.hide();
+            window.location.reload();
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
 
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.hide} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>Edit Document</Modal.Title>
+          <Modal.Title>Edit Document ID {this.props.item.uid}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="container">
-            <form onSubmit={this.handleUpload} id="editDocumentForm">
-              <EditInfo
-                handleNameChange={this.handleNameChange}
-                handleDescriptionChange={this.handleDescriptionChange}
-                name={this.state.name}
-                description={this.state.description}
-              />
-              <hr />
-              <SelectDocType
-                handleDocTypeSelect={this.handleDocTypeSelect}
-                username={this.state.username}
-              />
-              <hr />
-              <AttachFiles handleFileAdd={this.handleFileAdd} />
-              <AttachedFiles
-                values={this.state.attachedFilesTableValues}
-                size={this.state.filesSize}
-              />
-              <div className="progress my-3">
-                <div
-                  className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                  role="progressbar"
-                  aria-valuenow="100"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                  style={
-                    this.state.submitInProgres
-                      ? { width: this.state.percentCompleted }
-                      : { width: (this.state.filesSize * 100) / 20000000 + "%" }
-                  }
-                ></div>
-              </div>
-              <div className="form-group row d-flex justify-content-center m-0">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark mr-2"
-                  onClick={this.props.hide}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-dark ml-2"
-                  data-dismiss="modal"
-                  disabled={this.state.submitDisabled}
-                >
-                  Create
-                </button>
-              </div>
-            </form>
-          </div>
+          <form onSubmit={this.handleUpload} id="editDocumentForm">
+            <EditInfo
+              handleNameChange={this.handleNameChange}
+              handleDescriptionChange={this.handleDescriptionChange}
+              name={this.state.name}
+              description={this.state.description}
+            />
+            <hr />
+            <SelectDocType
+              handleDocTypeSelect={this.handleDocTypeSelect}
+              username={this.state.username}
+              selected={this.state.selectedDocType}
+            />
+            <hr />
+            <AttachFiles handleFileAdd={this.handleFileAdd} />
+            <AttachedFiles
+              values={this.state.attachedFilesTableValues}
+              size={this.state.filesSize}
+              attachedFilesTableValues={this.state.attachedFilesTableValues}
+            />
+            <div className="progress my-3">
+              <div
+                className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                role="progressbar"
+                aria-valuenow="100"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                style={
+                  this.state.submitInProgres
+                    ? { width: this.state.percentCompleted }
+                    : { width: (this.state.filesSize * 100) / 20000000 + "%" }
+                }
+              ></div>
+            </div>
+            <div
+              className="form-group row d-flex justify-content-center m-0"
+              id="updateDocumentFooter"
+            >
+              <button
+                type="button"
+                className="btn btn-outline-dark mr-2"
+                onClick={this.props.hide}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn btn-dark ml-2"
+                data-dismiss="modal"
+                disabled={this.state.submitDisabled}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </Modal.Body>
       </Modal>
     );
   }
 }
 
-export default EditDocument;
+export default withRouter(EditDocument);

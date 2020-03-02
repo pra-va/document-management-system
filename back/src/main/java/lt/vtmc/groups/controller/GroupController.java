@@ -128,7 +128,7 @@ public class GroupController {
 		LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT updated - [{}] was NOT found #",
 				SecurityContextHolder.getContext().getAuthentication().getName(), name, name);
 
-		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<String>("No group found", HttpStatus.NOT_FOUND);
 	}
 
 	/**
@@ -156,14 +156,14 @@ public class GroupController {
 				tmpGroupList.remove(tmpGroup);
 			}
 			tmpGroup.setUserList(null);
-			LOG.info("# LOG # Initiated by [{}]: User [{}] was deleted #",
+			LOG.info("# LOG # Initiated by [{}]: Group [{}] was deleted #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), tmpGroup);
 
 			groupService.deleteGroup(tmpGroup);
 			return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 		}
 
-		LOG.info("# LOG # Initiated by [{}]: User [{}] was NOT deleted - [{}] was NOT found #",
+		LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT deleted - [{}] was NOT found #",
 				SecurityContextHolder.getContext().getAuthentication().getName(), groupname, groupname);
 
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);

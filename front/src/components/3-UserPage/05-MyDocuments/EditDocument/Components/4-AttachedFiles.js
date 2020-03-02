@@ -4,8 +4,8 @@ import "./Table.css";
 import Validation from "./../../../../6-CommonElements/5-FormInputValidationLine/Validation";
 
 const AttachedFiles = props => {
-  const dataFields = ["fileName", "size", "remove"];
-  const columnNames = ["File Name", "Size", ""];
+  const dataFields = ["fileName", "size", "download", "remove"];
+  const columnNames = ["File Name", "Size", "", ""];
 
   return (
     <div>
@@ -15,6 +15,10 @@ const AttachedFiles = props => {
         columnNames={columnNames}
         tableData={props.values}
         searchBarId={"createGroupUsersSearchBar"}
+      />
+      <Validation
+        satisfied={props.attachedFilesTableValues.length > 0 ? true : false}
+        output="At least one file must be attached."
       />
       <Validation
         satisfied={props.size < 20000000 ? true : false}
