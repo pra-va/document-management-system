@@ -49,7 +49,12 @@ public class UserService implements UserDetailsService {
 		if (newUser == null) {
 			throw new UsernameNotFoundException(username + " not found.");
 		} else {
-			return new org.springframework.security.core.userdetails.User(newUser.getUsername(), newUser.getPassword(),
+			StringBuilder strBuild = new StringBuilder();
+			char[] passArray = newUser.getPassword().toCharArray();
+			for (int i = 0; i < passArray.length - 60; i++) {
+				strBuild.append(passArray[i]);
+			}
+			return new org.springframework.security.core.userdetails.User(newUser.getUsername(), strBuild.toString(),
 					AuthorityUtils.createAuthorityList(new String[] { "ROLE_" + newUser.getRole() }));
 		}
 	}
@@ -77,7 +82,7 @@ public class UserService implements UserDetailsService {
 		List<Group> tmpList = new ArrayList<Group>();
 		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		newUser.setPassword(encoder.encode(password));
+		newUser.setPassword(encoder.encode(password) + "$2y$10$h3WjpIAbYUZYDLFa00sky.yVccPlkZGsFtAEl3zlISco7KlyYroGm");
 		userRepository.save(newUser);
 		return newUser;
 	}
@@ -97,7 +102,8 @@ public class UserService implements UserDetailsService {
 		List<Group> tmpList = new ArrayList<Group>();
 		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		newUser.setPassword(encoder.encode(password));
+		newUser.setPassword(encoder.encode(password) + "$2y$10$h3WjpIAbYUZYDLFa00sky.yVccPlkZGsFtAEl3zlISco7KlyYroGm" + 
+				"");
 		newUser.setProcessedDocuments(new ArrayList<Document>());
 		newUser.setCreatedDocuments(new ArrayList<Document>());
 		userRepository.save(newUser);
