@@ -5,7 +5,6 @@ import paginationFactory, {
   PaginationProvider
 } from "react-bootstrap-table2-paginator";
 import "./AdvancedTable.css";
-
 import CustomSearchBar from "./CustomSearch";
 
 // Template for table data:
@@ -21,13 +20,22 @@ import CustomSearchBar from "./CustomSearch";
 
 // table rows keys should have number dataField name.
 
+// dataLength - table data length
+// requestNewData(page, sizePerPage) - method to call for new data from server
 class Table extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataFields: this.props.dataFields,
       columnNames: this.props.columnNames,
-      tableData: []
+      tableData: [],
+      page: 1,
+      sizePerPage: 8,
+      sortField: undefined,
+      sortOrder: undefined,
+      tableSelectType: "checkbox",
+      searchValue: "",
+      selectedItems: []
     };
   }
 
@@ -39,22 +47,50 @@ class Table extends Component {
 
   componentDidUpdate() {
     if (this.state.tableData !== this.props.tableData) {
-      this.setState({ tableData: this.props.tableData });
+      console.log("componentDidUpdate");
+      this.setState({
+        tableData: this.props.tableData,
+        selectedItems: this.props.setSelectedItems()
+      });
     }
   }
 
+  setSearchValue = newValue => {
+    this.setState({ searchValue: newValue });
+  };
+
   handleRowSelect = (row, isSelect) => {
-    if (this.props.selectedRow) {
-      this.props.selectedRow(row);
-    }
+    console.log(row);
+    console.log(isSelect);
+    this.props.handleRowSelect(row, isSelect);
+  };
+
+  handleTableChange = (type, { page, sizePerPage, sortField, sortOrder }) => {
+    this.props.requestNewData(
+      page - 1,
+      sizePerPage,
+      sortField,
+      sortOrder,
+      this.state.searchValue
+    );
+    this.setState(() => ({
+      page,
+      sizePerPage,
+      sortField,
+      sortOrder
+    }));
   };
 
   createColumns = () => {
+    if (this.props.columns !== undefined) {
+      return this.props.columns;
+    }
+
     let columns = this.state.dataFields.map((item, index) => {
       return {
         dataField: item,
         text: this.state.columnNames[index],
-        sort: true
+        sort: item === "number" ? false : true
       };
     });
     return columns;
@@ -85,15 +121,28 @@ class Table extends Component {
     ]
   };
 
-  selectRow = {
-    mode: "radio",
-    clickToSelect: true,
-    hideSelectColumn: true,
-    bgColor: this.props.select !== undefined ? "#000000" : "",
-    onSelect: this.handleRowSelect
+  isTableWithPagination = () => {
+    if (this.props.pagingData !== undefined) {
+      if (this.props.pagingData.totalItems > 8) {
+        return true;
+      }
+    }
+    return false;
   };
 
   render() {
+    const selectRow = {
+      mode:
+        this.props.selectType !== undefined
+          ? this.props.selectType
+          : "checkbox",
+      clickToSelect: true,
+      hideSelectColumn: true,
+      bgColor: this.props.select !== undefined ? "#262626" : "",
+      onSelect: this.handleRowSelect,
+      selected: this.state !== undefined ? this.state.selectedItems : []
+    };
+
     const paginationOption = {
       custom: true,
       totalSize: this.props.tableData.length
@@ -109,21 +158,50 @@ class Table extends Component {
         >
           {props => (
             <div>
-              <CustomSearchBar {...props.searchProps} id={props.searchBarId} />
+              <CustomSearchBar
+                {...props.searchProps}
+                id={props.searchBarId}
+                setSearchValue={this.setSearchValue}
+              />
 
-              {this.state.tableData.length > 8 ? (
+              {this.isTableWithPagination() ? (
                 <PaginationProvider
                   pagination={paginationFactory(paginationOption)}
                 >
                   {({ paginationProps, paginationTableProps }) => (
                     <div>
                       <BootstrapTable
+                        remote={{ pagination: true, sort: true, search: true }}
                         keyField="id"
                         {...props.baseProps}
                         {...paginationTableProps}
-                        pagination={paginationFactory(this.options)}
                         classes="table-striped table-dark table-sm"
-                        selectRow={this.selectRow}
+                        selectRow={selectRow}
+                        pagination={paginationFactory({
+                          page:
+                            this.props.pagingData !== undefined
+                              ? this.props.pagingData.currentPage + 1
+                              : 0,
+                          sizePerPage:
+                            this.props.pagingData !== undefined
+                              ? this.props.pagingData.pageSize
+                              : 8,
+                          totalSize:
+                            this.props.pagingData !== undefined
+                              ? this.props.pagingData.totalItems
+                              : 0,
+                          sizePerPageList: [
+                            {
+                              text: "8",
+                              value: 8
+                            },
+                            {
+                              text: "16",
+                              value: 16
+                            }
+                          ]
+                        })}
+                        onTableChange={this.handleTableChange}
                         hover
                       />
                     </div>
@@ -131,11 +209,13 @@ class Table extends Component {
                 </PaginationProvider>
               ) : (
                 <BootstrapTable
+                  remote={{ pagination: true, sort: true, search: true }}
                   keyField="id"
                   {...props.baseProps}
                   classes="table-striped table-dark table-sm"
+                  onTableChange={this.handleTableChange}
                   hover
-                  selectRow={this.selectRow}
+                  selectRow={selectRow}
                 />
               )}
             </div>

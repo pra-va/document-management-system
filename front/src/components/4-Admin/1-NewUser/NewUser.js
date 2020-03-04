@@ -35,7 +35,6 @@ class NewModal extends Component {
       return {
         number: index + 1,
         name: item.name,
-
         addOrRemove: (
           <AddOrRemoveButton
             itemName={item.name}
