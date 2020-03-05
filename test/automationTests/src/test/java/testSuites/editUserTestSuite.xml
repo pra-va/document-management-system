@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="editUserTests" preserve-order="true">
+	<test name="editUserTests">
+		<parameter name="" value="" />
+		<parameter name="" value="" />
+		<parameter name="" value="" />
+		<parameter name="" value="" />
+		<classes>
+			<class name="test.???"/>
+		</classes>
+	</test>
+</suite>

@@ -1,0 +1,7 @@
+{
+  "groupList": "[]",  
+  "name": "{{firstName}}",
+  "password": "{{password}}",
+  "surname": "{{lastName}}",
+  "username": "{{userName}}"
+}

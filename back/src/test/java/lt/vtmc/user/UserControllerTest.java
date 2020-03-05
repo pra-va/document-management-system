@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.security.SecurityEntryPoint;
 import lt.vtmc.user.controller.UserController;
@@ -41,6 +42,9 @@ public class UserControllerTest {
 	
 	@MockBean
 	private GroupService groupService;
+	
+	@MockBean
+	private DocumentService docService;
 
 	@Test
 	public void testCreateUser() throws Exception {

@@ -1,1 +1,0 @@
-Juniors testers that test applications developed by junior developers.

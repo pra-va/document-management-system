@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.dto.DocumentDetailsDTO;
+import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.groups.service.GroupService;
 import lt.vtmc.user.dto.CreateUserCommand;
 import lt.vtmc.user.dto.UpdateUserCommand;
@@ -42,6 +45,8 @@ public class UserController {
 	@Autowired
 	private GroupService groupService;
 
+	@Autowired
+	private DocumentService docService;
 	/**
 	 * Creates user with ADMIN role. Only system administrator should be able to
 	 * access this method.
@@ -200,5 +205,15 @@ public class UserController {
 	@GetMapping(path = "/api/{username}/dtypescreate")
 	public String[]	getUserDocTypesCreate(@PathVariable ("username") String username) {
 		return userService.getUserDocTypesToCreate(username);
+	}
+	
+	@GetMapping(path = "/api/{username}/doctobesigned")
+	public List<DocumentDetailsDTO> getDocumentsToBeSigned(@PathVariable ("username") String username){
+		return docService.findAllDocumentsToSignByUsername(username);
+	}
+	
+	@GetMapping(path = "/api/{username}/alldocuments")
+	public List<DocumentDetailsDTO> getAllDocumentsByUsername(@PathVariable ("username") String username){
+		return docService.returnAllDocumentsByUsername(username);
 	}
 }

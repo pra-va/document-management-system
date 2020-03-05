@@ -32,13 +32,13 @@ public class DocType {
 	
 	private String name;
 	
-	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Group> groupsApproving = new ArrayList<Group>();
 	
-	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private List<Group> groupsCreating = new ArrayList<Group>();
 	
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
 	private List<Document> documentList;
 	
 	/**
@@ -46,6 +46,15 @@ public class DocType {
 	 */
 	public DocType() {
 	}
+	
+	public List<Document> getDocumentList() {
+		return documentList;
+	}
+
+	public void setDocumentList(List<Document> documentList) {
+		this.documentList = documentList;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -8,7 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import lt.vtmc.documents.model.Document;
 
 @Entity
 @Table(name = "files")
@@ -23,16 +26,50 @@ public class File4DB {
 
 	private String fileType;
 
+	private long fileSize;
+
+	@ManyToOne
+	private Document document;
+
 	@Lob
 	private byte[] data;
+
+	@Column(name = "UID")
+	private String UID;
 
 	public File4DB() {
 	}
 
-	public File4DB(String fileName, String fileType, byte[] data) {
+	public File4DB(String fileName, String fileType, byte[] data, String UID, long fileSize) {
 		this.fileType = fileType;
-		this.fileName = fileName;
+		this.fileName = UID + "-" + fileName;
 		this.data = data;
+		this.UID = UID;
+		this.fileSize = fileSize;
+	}
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public String getUID() {
+		return UID;
+	}
+
+	public void setUID(String uID) {
+		UID = uID;
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 
 	public int getId() {
