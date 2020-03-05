@@ -2,6 +2,7 @@ package lt.vtmc.documents.controller;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,7 @@ import lt.vtmc.documents.dto.UpdateDocumentCommand;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.files.controller.FilesController;
+import lt.vtmc.paging.PagingData;
 import lt.vtmc.user.controller.UserController;
 
 /**
@@ -71,9 +73,9 @@ public class DocumentController {
 		}
 	}
 
-	@GetMapping(path = "/api/doc/all")
-	public List<DocumentDetailsDTO> findAllDocuments() {
-		return docService.findAll();
+	@PostMapping(path = "/api/doc/all")
+	public Map<String, Object> findAllDocuments(@RequestBody PagingData pagingData) {
+		return docService.retrieveAllDocuments(pagingData);
 	}
 
 	@GetMapping(path = "/api/doc/{UID}")
