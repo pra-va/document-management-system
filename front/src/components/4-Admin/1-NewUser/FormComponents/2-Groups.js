@@ -8,7 +8,7 @@ class Groups extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableData: props.tableData,
+      tableData: [],
       groupsData: [],
       selectedGroupNames: [],
       selectedItemsAsNumbers: []
@@ -19,9 +19,6 @@ class Groups extends Component {
     { dataField: "name", text: "Name", sort: true },
     { dataField: "addOrRemove", text: "", sort: false }
   ];
-
-  dataFields = ["name", "addOrRemove"];
-  columnNames = ["Name", ""];
 
   componentDidMount() {
     this.fetchGroupsData(0, 8, null, null, "");
@@ -97,11 +94,8 @@ class Groups extends Component {
 
         <Table
           id={"newUserGroups"}
-          dataFields={this.dataFields}
-          columnNames={this.columnNames}
           tableData={this.state.tableData}
           searchBarId={"currentGroupsSearchBar"}
-          dataLength={this.state.tableLengthData}
           requestNewData={this.fetchGroupsData}
           pagingData={this.state.pagingData}
           columns={this.columns}

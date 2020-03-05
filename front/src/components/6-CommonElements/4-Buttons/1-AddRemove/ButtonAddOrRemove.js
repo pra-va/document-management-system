@@ -3,17 +3,25 @@ import React, { Component } from "react";
 class AddButton extends Component {
   constructor(props) {
     super(props);
-    this.state = { added: false, name: "" };
+    this.state = { added: false };
   }
 
   handleAdd = event => {
     event.preventDefault();
-    this.setState({ added: !this.state.added });
-    this.props.changeAddedStatus(this.state.name, this.state.added);
+    console.log("button press: " + this.props.added);
+    this.setState({ added: this.props.added });
   };
 
   componentDidMount() {
-    this.setState({ added: this.props.added, name: this.props.itemName });
+    this.setState({ added: this.props.added });
+  }
+
+  componentDidUpdate() {
+    console.log("button status changed to: " + this.props.added);
+    console.log(this.props);
+    if (this.state.added !== this.props.added) {
+      this.setState({ added: this.props.added });
+    }
   }
 
   render() {
