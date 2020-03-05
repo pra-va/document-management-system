@@ -79,10 +79,31 @@ public class DocumentService {
 	
 	@Transactional
 	public void deleteDocument(Document document) {
+		List<File4DB> tmpList = document.getFileList();
+		for (File4DB file4db : tmpList) {
+			fileService.deleteFileByUID(file4db.getUID());
+		}
+		
 		document.setFileList(null);
-		document.setHandler(null);
-		document.setAuthor(null);
+		User author = document.getAuthor();
+		User handler = document.getHandler();
+		
+		if (author != null) {
+			List<Document> tmpListAuth = author.getCreatedDocuments();
+			tmpListAuth.remove(document);
+			document.setAuthor(null);
+		}
+		
+		if (handler != null) {
+			List<Document> tmpListHand = handler.getCreatedDocuments();
+			tmpListHand.remove(document);
+			document.setHandler(null);
+		}
+		
+		List<Document> tmpListDocType = document.getdType().getDocumentList();
+		tmpListDocType.remove(document);
 		document.setdType(null);
+		
 		docRepo.delete(document);
 	}
 
