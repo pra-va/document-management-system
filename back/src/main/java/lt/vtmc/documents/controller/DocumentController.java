@@ -84,7 +84,7 @@ public class DocumentController {
 	}
 
 	@DeleteMapping(path = "/api/doc/delete/{UID}")
-	public ResponseEntity<String> deleteDocument(@PathVariable("name") String UID) {
+	public ResponseEntity<String> deleteDocument(@PathVariable("UID") String UID) {
 		docService.deleteDocument(docService.findDocumentByUID(UID));
 		LOG.info("# LOG # Initiated by [{}]: Deleted document with UID: [{}] #",
 				SecurityContextHolder.getContext().getAuthentication().getName(), UID);
