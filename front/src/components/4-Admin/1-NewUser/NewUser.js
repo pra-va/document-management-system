@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import "./NewUser.css";
 import UserInformation from "./FormComponents/1-UserInformation";
 import Groups from "./FormComponents/2-Groups";
-import UserGroups from "./FormComponents/3-UsersGroups";
 import axios from "axios";
 import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import serverUrl from "./../../7-properties/1-URL";
@@ -18,10 +17,13 @@ class NewModal extends Component {
       password: "",
       role: "USER",
       allGroups: [],
-      notAddedGroups: [],
       addedGroups: [],
       usernameExists: false
     };
+  }
+
+  componentDidUpdate() {
+    console.log("update");
   }
 
   setUpGroups = data => {
@@ -35,7 +37,6 @@ class NewModal extends Component {
       return {
         number: index + 1,
         name: item.name,
-
         addOrRemove: (
           <AddOrRemoveButton
             itemName={item.name}
@@ -47,11 +48,11 @@ class NewModal extends Component {
         description: item.description
       };
     });
-
-    this.filterAddedGroups(tempData);
+    this.setState({ allGroups: tempData });
   };
 
   changeAddedStatus = name => {
+    console.log("changing status");
     let tmpGroups = this.state.allGroups;
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];
@@ -64,30 +65,9 @@ class NewModal extends Component {
             added={element.added}
           />
         );
-        this.setState({ allGroups: tmpGroups });
-        this.filterAddedGroups(tmpGroups);
       }
     }
-  };
-
-  filterAddedGroups = groupData => {
-    let filterGroups = groupData;
-    let notAdded = [];
-    let added = [];
-    for (let i = 0; i < filterGroups.length; i++) {
-      const element = filterGroups[i];
-      if (element.added) {
-        added.push(element);
-      } else {
-        notAdded.push(element);
-      }
-    }
-
-    this.setState({
-      allGroups: groupData,
-      notAddedGroups: notAdded,
-      addedGroups: added
-    });
+    this.setState({ allGroups: tmpGroups });
   };
 
   handleFirstNameChange = value => {
@@ -108,6 +88,10 @@ class NewModal extends Component {
 
   handleRoleChange = value => {
     this.setState({ role: value });
+  };
+
+  setAddedGroups = groupList => {
+    this.setState({ addedGroups: groupList });
   };
 
   handleNewUserSubmit = event => {
@@ -172,13 +156,10 @@ class NewModal extends Component {
             <hr className="m-1" />
 
             <Groups
-              tableData={this.state.notAddedGroups}
+              tableData={this.state.allGroups}
               setUpGroups={this.setUpGroups}
+              setAddedGroups={this.setAddedGroups}
             />
-
-            <hr className="m-1" />
-
-            <UserGroups userGroups={this.state.addedGroups} />
 
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">

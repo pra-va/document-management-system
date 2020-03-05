@@ -9,33 +9,82 @@ class Groups extends Component {
     super(props);
     this.state = {
       tableData: props.tableData,
-      groupsData: []
+      groupsData: [],
+      selectedGroupNames: [],
+      selectedItemsAsNumbers: []
     };
   }
 
-  dataFields = ["number", "name", "addOrRemove"];
-  columnNames = ["#", "Name", ""];
+  columns = [
+    { dataField: "name", text: "Name", sort: true },
+    { dataField: "addOrRemove", text: "", sort: false }
+  ];
+
+  dataFields = ["name", "addOrRemove"];
+  columnNames = ["Name", ""];
+
+  componentDidMount() {
+    this.fetchGroupsData(0, 8, null, null, "");
+  }
 
   componentDidUpdate() {
-    if (this.props.tableData.length !== this.state.tableData.length) {
+    if (this.props.tableData !== this.state.tableData) {
       this.setState({ tableData: this.props.tableData });
     }
   }
 
-  fetchGroupsData = () => {
+  fetchGroupsData = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: sortField,
+      searchValueString: searchValueString
+    };
+
     axios
-      .get(serverUrl + "groups")
+      .post(serverUrl + "groups", pageData)
       .then(response => {
-        this.props.setUpGroups(response.data);
+        this.props.setUpGroups(response.data.groupList);
+        this.setState({ pagingData: response.data.pagingData });
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  componentDidMount() {
-    this.fetchGroupsData();
-  }
+  handleRowSelect = (row, isSelect) => {
+    const selectedGroupNames = this.state.selectedGroupNames;
+    if (isSelect) {
+      if (!selectedGroupNames.includes(row.name)) {
+        selectedGroupNames.push(row.name);
+      }
+    } else {
+      if (selectedGroupNames.includes(row.name)) {
+        selectedGroupNames.splice(selectedGroupNames.indexOf(row.name), 1);
+      }
+    }
+    this.setState({ selectedGroupNames: selectedGroupNames });
+    this.props.setAddedGroups(selectedGroupNames);
+  };
+
+  setSelectedItems = () => {
+    const { tableData, selectedGroupNames } = this.state;
+    let selectedItemNumbersForTable = [];
+    for (let index = 0; index < tableData.length; index++) {
+      const element = tableData[index].name;
+      if (selectedGroupNames.includes(element)) {
+        selectedItemNumbersForTable.push(index + 1);
+      }
+    }
+    return selectedItemNumbersForTable;
+  };
 
   render() {
     return (
@@ -52,6 +101,14 @@ class Groups extends Component {
           columnNames={this.columnNames}
           tableData={this.state.tableData}
           searchBarId={"currentGroupsSearchBar"}
+          dataLength={this.state.tableLengthData}
+          requestNewData={this.fetchGroupsData}
+          pagingData={this.state.pagingData}
+          columns={this.columns}
+          selectType={"checkbox"}
+          select={"true"}
+          handleRowSelect={this.handleRowSelect}
+          setSelectedItems={this.setSelectedItems}
         />
       </div>
     );

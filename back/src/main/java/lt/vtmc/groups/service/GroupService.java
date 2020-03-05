@@ -1,9 +1,14 @@
 package lt.vtmc.groups.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +17,8 @@ import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.model.Group;
+import lt.vtmc.paging.PagingData;
+import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 
@@ -29,9 +36,12 @@ public class GroupService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private DocTypeRepository docTypesRepo;
+
+	@Autowired
+	PagingData pagingData;
 
 	/**
 	 * 
@@ -141,13 +151,18 @@ public class GroupService {
 		}
 	}
 
-	public List<GroupDetailsDTO> retrieveAllGroups() {
-		List<Group> grouplist = groupRepository.findAll();
-		List<GroupDetailsDTO> allGroupss = new ArrayList<GroupDetailsDTO>();
-		for (int i = 0; i < grouplist.size(); i++) {
-			allGroupss.add(new GroupDetailsDTO(grouplist.get(i)));
-		}
-		return allGroupss;
+//	.getSize(); // returns size of page
+//	.getTotalElements(); // returns number of total elements
+//	.getNumber(); // returns current page number
+	public Map<String, Object> retrieveAllGroups(PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<Group> grouplist = groupRepository.findLike(pagingData.getSearchValueString(), firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("pagingData",
+				new PagingResponse(grouplist.getNumber(), grouplist.getTotalElements(), grouplist.getSize()));
+		responseMap.put("groupList", grouplist.getContent().stream().map(groupItem -> new GroupDetailsDTO(groupItem))
+				.collect(Collectors.toList()));
+		return responseMap;
 	}
 
 	public void compareGroups(String[] newGroupList, String username) {
@@ -182,9 +197,10 @@ public class GroupService {
 //		addUserToGroupByUsername(groupsToAddString, username);
 //		removeUserFromGroupByUsername(groupsToRemove, username);
 	}
+
 	@Transactional
-	public void updateGroupDetails(String newName, String name, String description, String[] newUserList, String[] docTypesToApprove,
-			String[] docTypesToCreate) {
+	public void updateGroupDetails(String newName, String name, String description, String[] newUserList,
+			String[] docTypesToApprove, String[] docTypesToCreate) {
 		Group groupToUpdate = groupRepository.findGroupByName(name);
 		groupToUpdate.setDescription(description);
 		groupToUpdate.setName(newName);
@@ -193,7 +209,7 @@ public class GroupService {
 		for (String username : newUserList) {
 			newList.add(userRepository.findUserByUsername(username));
 		}
-		
+
 		for (User user : currentUserList) {
 			if (!newList.contains(user)) {
 				List<Group> tmpUserGroupList = user.getGroupList();
@@ -209,10 +225,9 @@ public class GroupService {
 		}
 		groupRepository.save(groupToUpdate);
 	}
-	
+
 	@Transactional
-	public void addDocTypes(String name, String[] docTypesToApprove,
-			String[] docTypesToCreate) {
+	public void addDocTypes(String name, String[] docTypesToApprove, String[] docTypesToCreate) {
 		Group groupToAddTo = groupRepository.findGroupByName(name);
 		List<DocType> docTypesToCreateList = new ArrayList<DocType>();
 		for (int i = 0; i < docTypesToCreate.length; i++) {
@@ -229,6 +244,6 @@ public class GroupService {
 
 	public void deleteGroup(Group tmpGroup) {
 		groupRepository.delete(tmpGroup);
-		}
-		
+	}
+
 }

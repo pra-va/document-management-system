@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import "./../../../1-NewUser/NewUser.css";
 import UserInformation from "./1-EditUserInformation";
 import Groups from "./2-Groups";
-import UserGroups from "./../../../1-NewUser/FormComponents/3-UsersGroups";
 import axios from "axios";
 import serverUrl from "./../../../../7-properties/1-URL";
 
@@ -123,10 +122,6 @@ class NewModal extends Component {
               userGroups={this.state.userGroups}
               setAddeduserGroups={this.setAddeduserGroups}
             />
-
-            <hr className="m-1" />
-
-            <UserGroups userGroups={this.state.addedGroups} />
 
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">
