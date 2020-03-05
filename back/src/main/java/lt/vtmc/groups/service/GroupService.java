@@ -165,10 +165,6 @@ public class GroupService {
 		return responseMap;
 	}
 
-	public int getGroupsLength() {
-		return groupRepository.findAll().size();
-	}
-
 	public void compareGroups(String[] newGroupList, String username) {
 		List<Group> currentGroupList = new ArrayList<Group>();
 		for (int i = 0; i < newGroupList.length; i++) {

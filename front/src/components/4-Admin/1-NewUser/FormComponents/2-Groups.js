@@ -60,7 +60,7 @@ class Groups extends Component {
   };
 
   handleRowSelect = (row, isSelect) => {
-    const { selectedGroupNames } = this.state;
+    const selectedGroupNames = this.state.selectedGroupNames;
     if (isSelect) {
       if (!selectedGroupNames.includes(row.name)) {
         selectedGroupNames.push(row.name);
@@ -70,23 +70,19 @@ class Groups extends Component {
         selectedGroupNames.splice(selectedGroupNames.indexOf(row.name), 1);
       }
     }
-    console.log(this.state.selectedGroupNames);
+    this.setState({ selectedGroupNames: selectedGroupNames });
+    this.props.setAddedGroups(selectedGroupNames);
   };
 
   setSelectedItems = () => {
-    console.log("setting selected items");
     const { tableData, selectedGroupNames } = this.state;
     let selectedItemNumbersForTable = [];
     for (let index = 0; index < tableData.length; index++) {
       const element = tableData[index].name;
-      console.log(element);
-      console.log(selectedGroupNames);
-      console.log(selectedGroupNames.includes(element));
       if (selectedGroupNames.includes(element)) {
         selectedItemNumbersForTable.push(index + 1);
       }
     }
-    console.log(selectedItemNumbersForTable);
     return selectedItemNumbersForTable;
   };
 

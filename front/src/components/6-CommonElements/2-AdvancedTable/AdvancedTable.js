@@ -40,18 +40,27 @@ class Table extends Component {
   }
 
   componentDidMount() {
+    console.log("mount");
     if (this.state.tableData !== this.props.tableData) {
       this.setState({ tableData: this.props.tableData });
     }
   }
 
   componentDidUpdate() {
-    if (this.state.tableData !== this.props.tableData) {
-      console.log("componentDidUpdate");
-      this.setState({
-        tableData: this.props.tableData,
-        selectedItems: this.props.setSelectedItems()
-      });
+    const { tableData, selectedItems } = this.state;
+    const tableDataProp = this.props.tableData;
+    const selectedItemsProp = this.props.setSelectedItems;
+
+    if (tableDataProp & selectedItemsProp) {
+      console.log("askfdhudsaf");
+      console.log(selectedItemsProp());
+      if (tableData !== tableDataProp || selectedItems !== selectedItemsProp) {
+        console.log("inside");
+        this.setState({
+          tableData: this.props.tableData,
+          selectedItems: this.props.setSelectedItems()
+        });
+      }
     }
   }
 
@@ -60,8 +69,6 @@ class Table extends Component {
   };
 
   handleRowSelect = (row, isSelect) => {
-    console.log(row);
-    console.log(isSelect);
     this.props.handleRowSelect(row, isSelect);
   };
 

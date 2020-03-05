@@ -72,11 +72,6 @@ public class GroupController {
 		return new ResponseEntity<String>("Failed to create group", HttpStatus.CONFLICT);
 	}
 
-	@GetMapping("/api/groups/length")
-	public int getGroupsLength() {
-		return groupService.getGroupsLength();
-	}
-
 	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
 	public Map<String, Object> listAllGroups(@RequestBody PagingData pagingData) {
 
