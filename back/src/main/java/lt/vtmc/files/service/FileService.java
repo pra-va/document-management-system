@@ -1,5 +1,14 @@
 package lt.vtmc.files.service;
 
+import java.io.IOException;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -13,7 +22,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import lt.vtmc.documents.dao.DocumentRepository;
+import lt.vtmc.documents.model.Document;
+import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.files.dao.FilesRepository;
+import lt.vtmc.files.dto.FileDetailsDTO;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.user.controller.UserController;
 
@@ -32,6 +45,12 @@ public class FileService {
 	@Autowired
 	private FilesRepository filesRepository;
 
+	@Autowired
+	private DocumentRepository documentRepository;
+
+	@Autowired
+	private DocumentService docService;
+
 	/**
 	 * This method saves single files to a database.
 	 * 
@@ -39,13 +58,20 @@ public class FileService {
 	 * @throws Exception
 	 */
 	@Transactional
-	public void saveFile(MultipartFile file) throws Exception {
+	public void saveFile(MultipartFile file, Document doc) throws Exception {
 		LOG.info("saving file to db");
 		byte[] bytes = file.getBytes();
 		String fileName = file.getOriginalFilename();
 		String fileType = file.getContentType();
-		File4DB file4db = new File4DB(fileName, fileType, bytes);
+		long fileSize = file.getSize();
+		File4DB file4db = new File4DB(fileName, fileType, bytes, docService.generateUID(Instant.now().toString()),
+				fileSize);
+		file4db.setDocument(doc);
+		List<File4DB> tmplist = doc.getFileList();
+		tmplist.add(file4db);
+		doc.setFileList(tmplist);
 		filesRepository.save(file4db);
+		documentRepository.save(doc);
 	}
 
 	/**
@@ -56,11 +82,96 @@ public class FileService {
 	 * @return
 	 */
 	@Transactional
-	public ResponseEntity<Resource> downloadFileByName(String fileName) {
-		File4DB file4db = filesRepository.findFile4dbByFileName(fileName);
+	public ResponseEntity<Resource> downloadFileByUID(String fileUID) {
+		File4DB file4db = filesRepository.findFile4dbByUID(fileUID);
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(file4db.getFileType()))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file4db.getFileName() + "\"")
 				.body(new ByteArrayResource(file4db.getData()));
+	}
+
+	@Transactional
+	public ResponseEntity<Resource> downloadFileByUID(byte[] fileByteData, String fileName) {
+		return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN)
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+				.body(new ByteArrayResource(fileByteData));
+	}
+
+	public List<FileDetailsDTO> findAllFileDetailsByUsername(String username) {
+		List<Document> tmpList = docService.findAllDocumentsByUsername(username);
+		Set<File4DB> listToReturn = new HashSet<File4DB>();
+		for (Document document : tmpList) {
+			List<File4DB> tmp = document.getFileList();
+			listToReturn.addAll(tmp);
+		}
+		List<FileDetailsDTO> returnList = new ArrayList<FileDetailsDTO>();
+		for (File4DB file4db : listToReturn) {
+			returnList.add(new FileDetailsDTO(file4db));
+		}
+		return returnList;
+	}
+
+	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID) {
+		Document tmpDoc = docService.findDocumentByUID(UID);
+		Set<File4DB> listToReturn = new HashSet<File4DB>();
+		listToReturn.addAll(tmpDoc.getFileList());
+		List<FileDetailsDTO> returnList = new ArrayList<FileDetailsDTO>();
+		for (File4DB file4db : listToReturn) {
+			returnList.add(new FileDetailsDTO(file4db));
+		}
+		return returnList;
+	}
+
+	/**
+	 * Returns Resource type ResponseEntity for users uploaded files and documents.
+	 * 
+	 * @param username
+	 * @return
+	 * @throws IOException
+	 */
+	public ResponseEntity<Resource> generateCSV(String username) throws IOException {
+		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+		StringBuilder builder = new StringBuilder();
+		builder.append("\"ID\", \"File Name\", \"Document ID\", \"Document Name\", \"Created\"\n");
+		for (FileDetailsDTO fileDetailsDTO : usersFilesDetails) {
+			builder.append(fileDetailsDTO.getCsvDetails());
+		}
+		return downloadFileByUID(builder.toString().getBytes(), "file.csv");
+	}
+
+//	public List<File> findAllFilesByUsername(String username) {
+//		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+//		System.out.println(usersFilesDetails.toString());
+//		List<File> files = new ArrayList<>();
+//		if (usersFilesDetails != null) {
+//			for (FileDetailsDTO fileDetails : usersFilesDetails) {
+//				File file = new File("/tmp/" + fileDetails.getFileName());
+//				try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+//					String contents = new String(filesRepository.findFile4dbByUID(fileDetails.getUID()).getData()); // TODO
+//					writer.write(contents);
+//					files.add(file);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return files;
+//	}
+
+	public Map<String, ByteArrayResource> findAllFilesByUsername(String username) {
+		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
+		Map<String, ByteArrayResource> filesAsBytes = new HashMap<>();
+		for (FileDetailsDTO file : usersFilesDetails) {
+			filesAsBytes.put(file.getFileName(),
+					new ByteArrayResource(filesRepository.findFile4dbByUID(file.getUID()).getData()));
+		}
+		return filesAsBytes;
+	}
+
+	public void deleteFileByUID(String uID) {
+		File4DB tmpFile = filesRepository.findFile4dbByUID(uID);
+		List<File4DB> tmpList = tmpFile.getDocument().getFileList();
+		tmpList.remove(tmpFile);
+		filesRepository.delete(tmpFile);
 	}
 
 }

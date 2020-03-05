@@ -5,13 +5,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AdminNewGroupPage extends AbstractPage {
 
 	public AdminNewGroupPage(WebDriver driver) {
 		super(driver);
 	}
-
 
 	/* FIELDS */
 
@@ -42,6 +43,22 @@ public class AdminNewGroupPage extends AbstractPage {
 		this.buttonCreate.click();
 	}
 
+	public void clickAddSpecificDocTypeButton(String docType) {
+		driver.findElement(By.xpath("//div[@id='docTypes']//td[contains(text(),'" + docType + "')]//..//td[5]//button"))
+				.click();
+	}
+
+	public void clickCreateDocRigthsCheckBox(String sameAsDocType) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//input[@id='createRightsFor:" + sameAsDocType + "']")));
+		driver.findElement(By.xpath("//input[@id='createRightsFor:" + sameAsDocType + "']")).click();
+	}
+
+	public void clickSignDocRigthsCheckBox(String sameAsDocType) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//input[@id='signRightsFor:" + sameAsDocType + "']")));
+		driver.findElement(By.xpath("//input[@id='signRightsFor:" + sameAsDocType + "']")).click();
+	}
 
 	public void clickAddSpecificUserButton(String user) {
 		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[6]//button")).click();
@@ -68,5 +85,11 @@ public class AdminNewGroupPage extends AbstractPage {
 
 	public void sendKeysSearchUserToRemove(String groupName) {
 		searchFields.get(1).sendKeys(groupName);
+	}
+
+	/* OTHER METHODS */
+
+	public void waitForcancelButton() {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(this.buttonCancel));
 	}
 }

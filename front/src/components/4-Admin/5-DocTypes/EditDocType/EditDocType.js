@@ -16,7 +16,6 @@ class NewDocType extends Component {
       docTypeName: "",
       notAddedGroups: [],
       allGroups: [],
-      addedGroupNames: [],
       addedGroups: [],
       canCreate: [],
       canSign: [],
@@ -142,7 +141,9 @@ class NewDocType extends Component {
 
     for (let i = 0; i < addedGroups.length; i++) {
       const element = addedGroups[i].name;
-
+      console.log(this.state.canCreate.includes(element));
+      console.log(this.state.canSign.includes(element));
+      console.log(this.state.canCreate);
       if (
         this.state.canCreate.includes(element) ||
         this.state.canSign.includes(element)
@@ -156,9 +157,13 @@ class NewDocType extends Component {
     }
   };
 
+  componentDidUpdate() {
+    console.log(this.state.addedGroups);
+  }
+
   changeAddedStatus = name => {
-    let tmpGroups = this.state.allGroups;
-    let tmpCreate = this.state.canCreate;
+    let tmpGroups = [...this.state.allGroups];
+    let tmpCreate = [...this.state.canCreate];
     let tmpSign = this.state.canSign;
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];

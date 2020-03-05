@@ -2,11 +2,14 @@ package lt.vtmc.user.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,15 +18,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.Status;
+import lt.vtmc.documents.dao.DocumentRepository;
+import lt.vtmc.documents.dto.DocumentDetailsDTO;
+import lt.vtmc.documents.model.Document;
+import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.model.Group;
+import lt.vtmc.paging.PagingData;
+import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.dto.UserDetailsDTO;
 import lt.vtmc.user.model.User;
-import net.bytebuddy.dynamic.scaffold.MethodRegistry.Handler.ForAbstractMethod;
 
 /**
  * User service class to create and manipulate user instaces.
@@ -36,6 +43,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private DocumentRepository docRepo;
 
 	/**
 	 * Will return User object based user found by
@@ -96,6 +106,8 @@ public class UserService implements UserDetailsService {
 		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		newUser.setPassword(encoder.encode(password));
+		newUser.setProcessedDocuments(new ArrayList<Document>());
+		newUser.setCreatedDocuments(new ArrayList<Document>());
 		userRepository.save(newUser);
 		return newUser;
 	}
@@ -104,15 +116,25 @@ public class UserService implements UserDetailsService {
 	 * Method to return all system users.
 	 * 
 	 */
-	public List<UserDetailsDTO> retrieveAllUsers() {
-		List<User> tmpList = userRepository.findAll();
-		List<UserDetailsDTO> allUsers = new ArrayList<UserDetailsDTO>();
-		for (int i = 0; i < tmpList.size(); i++) {
-			allUsers.add(new UserDetailsDTO(tmpList.get(i)));
-		}
-		return allUsers;
+//	public List<UserDetailsDTO> retrieveAllUsers() {
+//		List<User> tmpList = userRepository.findAll();
+//		List<UserDetailsDTO> allUsers = new ArrayList<UserDetailsDTO>();
+//		for (int i = 0; i < tmpList.size(); i++) {
+//			allUsers.add(new UserDetailsDTO(tmpList.get(i)));
+//		}
+//		return allUsers;
+//	}
+//	
+	public Map<String, Object> retrieveAllUsers(PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<User> userlist = userRepository.findLike(pagingData.getSearchValueString(), firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("pagingData",
+				new PagingResponse(userlist.getNumber(), userlist.getTotalElements(), userlist.getSize()));
+		responseMap.put("userList", userlist.getContent().stream().map(user -> new UserDetailsDTO(user))
+				.collect(Collectors.toList()));
+		return responseMap;
 	}
-
 	/**
 	 * Method to delete system users.
 	 * 
@@ -161,8 +183,31 @@ public class UserService implements UserDetailsService {
 		for (int i = 0; i < tmpDocTypeList.size(); i++) {
 			list[i] = tmpDocTypeList.get(i).getName();
 		}
-		String [] uniqueList = Arrays.stream(list).distinct().toArray(String[]::new);
+		String[] uniqueList = Arrays.stream(list).distinct().toArray(String[]::new);
 		return uniqueList;
+	}
+
+	public List<DocumentDetailsDTO> getUserDocumentsToBeSigned(String username) {
+		User tmpUser = userRepository.findUserByUsername(username);
+		List<Group> tmpGroupList = tmpUser.getGroupList();
+
+		List<DocType> tmpList = new ArrayList<DocType>();
+		for (Group group : tmpGroupList) {
+			tmpList.addAll(group.getDocTypesToApprove());
+		}
+
+		List<Document> tmpListDoc = new ArrayList<Document>();
+		for (DocType dType : tmpList) {
+			tmpListDoc.addAll(docRepo.findAllBydType(dType));
+		}
+
+		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
+		for (Document document : tmpListDoc) {
+			if (document.getStatus() == Status.SUBMITTED) {
+				listToReturn.add(new DocumentDetailsDTO(document));
+			}
+		}
+		return listToReturn;
 	}
 
 }

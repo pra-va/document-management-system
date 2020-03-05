@@ -56,11 +56,11 @@ public class User {
 	@JoinTable(name = "USERS_TO_GROUPS", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<Group> groupList;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<Document> createdDocuments = new ArrayList<Document>();
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Document> createdDocuments = new ArrayList<Document>();;
 	
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<Document> processedDocuments = new ArrayList<Document>();
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Document> processedDocuments = new ArrayList<Document>();;
 	
 	/**
 	 * Constructor.
@@ -82,6 +82,18 @@ public class User {
 	public User() {
 	}
 
+	public List<Document> getCreatedDocuments() {
+		return createdDocuments;
+	}
+	public void setCreatedDocuments(List<Document> createdDocuments) {
+		this.createdDocuments = createdDocuments;
+	}
+	public List<Document> getProcessedDocuments() {
+		return processedDocuments;
+	}
+	public void setProcessedDocuments(List<Document> processedDocuments) {
+		this.processedDocuments = processedDocuments;
+	}
 	/**
 	 * 
 	 * @return password

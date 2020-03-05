@@ -1,0 +1,39 @@
+.myDocsImg {
+  min-width: 1.8em;
+}
+
+.btn-edit {
+  min-width: 5em;
+}
+
+#myDocsTable th:nth-child(1) {
+  width: 5%;
+}
+
+#myDocsTable th:nth-child(2) {
+  width: 10%;
+}
+
+#myDocsTable th:nth-child(3) {
+  width: 10%;
+}
+
+#myDocsTable th:nth-child(4) {
+  width: 4%;
+}
+
+#myDocsTable th:nth-child(5) {
+  width: 4%;
+}
+
+#myDocsTable th:nth-child(6) {
+  width: 3%;
+}
+
+#myDocsTable th:nth-child(7) {
+  width: 3%;
+}
+
+#myDocsTable th:nth-child(8) {
+  width: 3%;
+}
