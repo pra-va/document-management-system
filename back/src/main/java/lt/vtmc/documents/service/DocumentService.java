@@ -2,9 +2,14 @@ package lt.vtmc.documents.service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +22,8 @@ import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.files.service.FileService;
 import lt.vtmc.groups.model.Group;
+import lt.vtmc.paging.PagingData;
+import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 
@@ -69,6 +76,17 @@ public class DocumentService {
 		return docRepo.save(newDocument);
 	}
 
+	public Map<String, Object> retrieveAllDocuments(PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<Document> documentlist = docRepo.findLike(pagingData.getSearchValueString(), firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("pagingData",
+				new PagingResponse(documentlist.getNumber(), documentlist.getTotalElements(), documentlist.getSize()));
+		responseMap.put("documentList", documentlist.getContent().stream().map(user -> new DocumentDetailsDTO(user))
+				.collect(Collectors.toList()));
+		return responseMap;
+	}
+	
 	public List<DocumentDetailsDTO> findAll() {
 		List<Document> tmpList = docRepo.findAll();
 		List<DocumentDetailsDTO> list = new ArrayList<DocumentDetailsDTO>();
@@ -84,7 +102,7 @@ public class DocumentService {
 		for (File4DB file4db : tmpList) {
 			fileService.deleteFileByUID(file4db.getUID());
 		}
-		
+
 		document.setFileList(null);
 		User author = document.getAuthor();
 		User handler = document.getHandler();
