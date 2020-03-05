@@ -2,9 +2,14 @@ package lt.vtmc.user.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +24,10 @@ import lt.vtmc.documents.Status;
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
+import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.model.Group;
+import lt.vtmc.paging.PagingData;
+import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.dto.UserDetailsDTO;
 import lt.vtmc.user.model.User;
@@ -108,15 +116,25 @@ public class UserService implements UserDetailsService {
 	 * Method to return all system users.
 	 * 
 	 */
-	public List<UserDetailsDTO> retrieveAllUsers() {
-		List<User> tmpList = userRepository.findAll();
-		List<UserDetailsDTO> allUsers = new ArrayList<UserDetailsDTO>();
-		for (int i = 0; i < tmpList.size(); i++) {
-			allUsers.add(new UserDetailsDTO(tmpList.get(i)));
-		}
-		return allUsers;
+//	public List<UserDetailsDTO> retrieveAllUsers() {
+//		List<User> tmpList = userRepository.findAll();
+//		List<UserDetailsDTO> allUsers = new ArrayList<UserDetailsDTO>();
+//		for (int i = 0; i < tmpList.size(); i++) {
+//			allUsers.add(new UserDetailsDTO(tmpList.get(i)));
+//		}
+//		return allUsers;
+//	}
+//	
+	public Map<String, Object> retrieveAllUsers(PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<User> userlist = userRepository.findLike(pagingData.getSearchValueString(), firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("pagingData",
+				new PagingResponse(userlist.getNumber(), userlist.getTotalElements(), userlist.getSize()));
+		responseMap.put("userList", userlist.getContent().stream().map(user -> new UserDetailsDTO(user))
+				.collect(Collectors.toList()));
+		return responseMap;
 	}
-
 	/**
 	 * Method to delete system users.
 	 * 

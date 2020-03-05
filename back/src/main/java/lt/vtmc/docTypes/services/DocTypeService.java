@@ -1,19 +1,28 @@
 package lt.vtmc.docTypes.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import lt.vtmc.docTypes.dao.DocTypeRepository;
 import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
 import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.dto.DocumentDetailsDTO;
+import lt.vtmc.documents.model.Document;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
+import lt.vtmc.paging.PagingData;
+import lt.vtmc.paging.PagingResponse;
 
 /**
  * DocType service for creating and managing Document types.
@@ -76,15 +85,26 @@ public class DocTypeService {
 		return newDoc;
 	}
 
-	public List<DocTypeDetailsDTO> getAllDocTypes() {
-		List<DocType> tmpList = docTypeRepo.findAll();
-		List<DocTypeDetailsDTO> list = new ArrayList<DocTypeDetailsDTO>();
-		for (int i = 0; i < tmpList.size(); i++) {
-			list.add(new DocTypeDetailsDTO(tmpList.get(i)));
-		}
-		return list;
-	}
+//	public List<DocTypeDetailsDTO> getAllDocTypes() {
+//		List<DocType> tmpList = docTypeRepo.findAll();
+//		List<DocTypeDetailsDTO> list = new ArrayList<DocTypeDetailsDTO>();
+//		for (int i = 0; i < tmpList.size(); i++) {
+//			list.add(new DocTypeDetailsDTO(tmpList.get(i)));
+//		}
+//		return list;
+//	}
 
+	public Map<String, Object> retrieveAllDocTypes(PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<DocType> doctypelist = docTypeRepo.findLike(pagingData.getSearchValueString(), firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("pagingData",
+				new PagingResponse(doctypelist.getNumber(), doctypelist.getTotalElements(), doctypelist.getSize()));
+		responseMap.put("documentList", doctypelist.getContent().stream().map(doctype -> new DocTypeDetailsDTO(doctype))
+				.collect(Collectors.toList()));
+		return responseMap;
+	}
+	
 	@Transactional
 	public void deleteDocType(DocType dType) {
 		for (int i = 0; i < dType.getGroupsApproving().size(); i++) {
