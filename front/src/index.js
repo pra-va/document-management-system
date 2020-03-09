@@ -27,11 +27,13 @@ import DocTypes from "./components/4-Admin/5-DocTypes/DocTypes";
 import NewDocument from "./components/3-UserPage/03-CreateDocument/CreateDocument";
 import MyDocuments from "./components/3-UserPage/05-MyDocuments/MyDocuments";
 import SignDocuments from "./components/3-UserPage/04-SignDocument/SignDocuments";
+import AdminScreen from "./components/4-Admin/AdminScreen";
 
 ReactDOM.render(
   <BrowserRouter>
     <App>
       <Switch>
+        <Route exact path="/dvs/admin" component={AdminScreen} />
         <Route exact path="/dvs/" component={LoginForm} />
         <Route exact path="/dvs/home" component={HomePage} />
         <Route exact path="/dvs/users" component={ListOfUsers} />
