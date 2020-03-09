@@ -151,9 +151,6 @@ public class GroupService {
 		}
 	}
 
-//	.getSize(); // returns size of page
-//	.getTotalElements(); // returns number of total elements
-//	.getNumber(); // returns current page number
 	public Map<String, Object> retrieveAllGroups(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<Group> grouplist = groupRepository.findLike(pagingData.getSearchValueString(), firstPageable);
@@ -173,29 +170,6 @@ public class GroupService {
 		User tmpUser = userRepository.findUserByUsername(username);
 		tmpUser.setGroupList(currentGroupList);
 		userRepository.save(tmpUser);
-
-//		***work in progress***
-//		List<Group> currentGroupList = userRepository.findUserByUsername(username).getGroupList();
-//		List<String> groupsToAdd = new ArrayList<String>();
-//		for (int j = 0; j < newGroupList.length; j++) {
-//			if (!currentGroupList.contains(groupRepository.findGroupByName(newGroupList[j]))){
-//				groupsToAdd.add(newGroupList[j]);
-//			};
-//			if (currentGroupList.contains(groupRepository.findGroupByName(newGroupList[j]))){
-//				currentGroupList.remove((groupRepository.findGroupByName(newGroupList[j])));
-//		
-//		groupRepository.save(groupToUpdate);	};
-//		}
-//		String[]groupsToRemove = new String[currentGroupList.size()];
-//		for (int i = 0; i < currentGroupList.size(); i++) {
-//			groupsToRemove[i] = currentGroupList.get(i).getName();
-//		}
-//		String[]groupsToAddString = new String[groupsToAdd.size()];
-//		for (int i = 0; i < groupsToAdd.size(); i++) {
-//			groupsToAddString[i] = groupsToAdd.get(i).toString();
-//		}
-//		addUserToGroupByUsername(groupsToAddString, username);
-//		removeUserFromGroupByUsername(groupsToRemove, username);
 	}
 
 	@Transactional
