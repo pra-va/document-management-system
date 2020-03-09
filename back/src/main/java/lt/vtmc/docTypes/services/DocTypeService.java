@@ -65,7 +65,7 @@ public class DocTypeService {
 
 	@Transactional
 	public DocType addDocTypeToGroupsApprove(String[] groupListApprove, DocType newDoc) {
-		if (groupListApprove[0].equals("")) {
+		if (groupListApprove.length == 0) {
 			newDoc.setDocumentList(new ArrayList<Document>());
 		} else {
 			for (int i = 0; i < groupListApprove.length; i++) {
@@ -80,7 +80,7 @@ public class DocTypeService {
 
 	@Transactional
 	public DocType addDocTypeToGroupsCreate(String[] groupListCreate, DocType newDoc) {
-		if (groupListCreate[0].equals("")) {
+		if (groupListCreate.length == 0 ) {
 			newDoc.setDocumentList(new ArrayList<Document>());
 		} else {
 			for (int i = 0; i < groupListCreate.length; i++) {
