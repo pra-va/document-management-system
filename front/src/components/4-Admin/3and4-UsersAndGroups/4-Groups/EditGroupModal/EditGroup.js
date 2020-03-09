@@ -19,6 +19,10 @@ class NewGroup extends Component {
     };
   }
 
+  componentDidUpdate() {
+    console.log(this.state);
+  }
+
   handleNewGroupSubmit = event => {
     event.preventDefault();
     const newGroup = {
@@ -58,13 +62,13 @@ class NewGroup extends Component {
     this.setState({ canSign: canSign });
   };
 
+  setUpGroupData = data => {
+    this.setState({ ...data });
+  };
+
   render() {
     return (
-      <Modal
-        show={this.props.showNewGroup}
-        onHide={this.props.hideNewGroup}
-        size="lg"
-      >
+      <Modal show={this.props.show} onHide={this.props.onHide} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>New Group</Modal.Title>
         </Modal.Header>
@@ -81,6 +85,8 @@ class NewGroup extends Component {
               setUpData={this.setUpData}
               notAddedUsers={this.state.notAddedUsers}
               setAddedUsers={this.setAddedUsers}
+              ownerName={this.props.ownerName}
+              setUpGroupData={this.setUpGroupData}
             />
             <hr className="m-1" />
 
@@ -96,7 +102,7 @@ class NewGroup extends Component {
                 <button
                   type="button"
                   className="btn btn-outline-dark"
-                  onClick={this.props.hideNewGroup}
+                  onClick={this.props.onHide}
                 >
                   Cancel
                 </button>

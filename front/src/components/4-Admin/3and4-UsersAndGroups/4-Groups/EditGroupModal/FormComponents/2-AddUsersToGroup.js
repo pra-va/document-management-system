@@ -19,8 +19,32 @@ class AddUsersToGroup extends Component {
   ];
 
   componentDidMount() {
+    this.getGroupData();
     this.fetchUsersData(0, 8, null, null, "");
   }
+
+  getGroupData = () => {
+    axios
+      .get(serverUrl + "groups/" + this.props.ownerName)
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          groupName: response.data.name,
+          description: response.data.description,
+          groupUsers: response.data.userList,
+          canCreate: response.data.docTypesToCreateNames,
+          canSign: response.data.docTypesToApproveNames
+        });
+        this.props.setUpGroupData({
+          groupName: response.data.name,
+          groupDescription: response.data.description,
+          usersList: response.data.userList,
+          canCreate: response.data.docTypesToCreateNames,
+          canSign: response.data.docTypesToApproveNames
+        });
+      })
+      .catch(error => console.log(error));
+  };
 
   fetchUsersData = (page, sizePerPage, sortField, order, searchValueString) => {
     const pageData = {

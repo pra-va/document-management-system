@@ -19,18 +19,16 @@ class NewGroup extends Component {
     event.preventDefault();
 
     const editedDocType = {
-      newName: this.state.docTypeName,
+      newName: this.state.name,
       groupsCreating: this.state.canCreate,
       groupsApproving: this.state.canSign
     };
 
-    console.log(serverUrl + "doct/update/" + this.props.owner);
-
     axios
       .post(serverUrl + "doct/update/" + this.props.owner, editedDocType)
       .then(response => {
-        window.location.reload();
-        this.props.hideNewDocType();
+        // window.location.reload();
+        // this.props.hideNewDocType();
       })
       .catch(error => {
         console.log(error);
