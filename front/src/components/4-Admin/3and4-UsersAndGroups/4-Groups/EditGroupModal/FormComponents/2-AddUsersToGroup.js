@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
+import Table from "./../../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
-import serverUrl from "./../../../7-properties/1-URL";
+import serverUrl from "./../../../../../7-properties/1-URL";
 
 class AddUsersToGroup extends Component {
   constructor(props) {

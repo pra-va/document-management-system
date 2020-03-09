@@ -1,188 +1,94 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
-import GroupInformation from "./1-EditGroupInformation";
-import AddUsersToGroup from "./2-AddUsersToGroup";
-import GroupUsers from "./3-GroupUsers";
+import GroupInformation from "./FormComponents/1-GroupInformation";
+import AddUsersToGroup from "./FormComponents/2-AddUsersToGroup";
+import AddDocTypes from "./FormComponents/3-AddDocTypes";
 import axios from "axios";
-import AddRemoveButton from "./../../../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import serverUrl from "./../../../../7-properties/1-URL";
-import AddRemoveDocTypes from "./4-AddRemoveDocType";
 
-class EditGroup extends Component {
+class NewGroup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       groupName: "",
       groupDescription: "",
-      groupUsers: [],
-      notAddedUsers: [],
-      addedUsers: [],
+      usersList: [],
       readyToSubmit: true,
       canCreate: [],
       canSign: []
     };
   }
 
-  componentDidMount() {}
-
-  componentDidUpdate() {}
-
-  setUpData = data => {
-    this.parseUsersData(data);
-  };
-
-  handleGroupNameChange = value => {
-    this.setState({ groupName: value });
-  };
-
-  handleGroupDescriptionChange = value => {
-    this.setState({ groupDescription: value });
-  };
-
-  parseUsersData = data => {
-    let tmpUsersData = data.map((item, index) => {
-      return {
-        number: index + 1,
-        name: item.name,
-        surname: item.surname,
-        username: item.username,
-        role: item.role,
-        add: (
-          <AddRemoveButton
-            itemName={item.username}
-            added={false}
-            changeAddedStatus={this.changeAddedStatus}
-          />
-        ),
-        added: false
-      };
-    });
-
-    this.filterAddedGroups(tmpUsersData);
-  };
-
-  changeAddedStatus = username => {
-    let tmpUsers = this.state.groupUsers;
-    for (let i = 0; i < tmpUsers.length; i++) {
-      const element = tmpUsers[i];
-      if (element.username === username) {
-        tmpUsers[i].added = !tmpUsers[i].added;
-        tmpUsers[i].add = (
-          <AddRemoveButton
-            itemName={element.username}
-            added={element.added}
-            changeAddedStatus={this.changeAddedStatus}
-          />
-        );
-      }
-    }
-    this.filterAddedGroups(tmpUsers);
-  };
-
-  setGroupUsers = groupUsers => {
-    this.setState({ groupUsers: groupUsers });
-  };
-
-  setAddedUsers = addedUsers => {
-    this.setState({ addedUsers: addedUsers });
-  };
-
-  filterAddedGroups = data => {
-    let filterUsers = data;
-    let tmpNotAdded = [];
-    let tmpAdded = [];
-    for (let i = 0; i < filterUsers.length; i++) {
-      const element = filterUsers[i];
-      if (element.added) {
-        tmpAdded.push(element);
-      } else {
-        tmpNotAdded.push(element);
-      }
-    }
-    this.setState({
-      groupUsers: data,
-      notAddedUsers: tmpNotAdded,
-      addedUsers: tmpAdded
-    });
-  };
-
-  readyToSubmit = readyToSubmit => {
-    this.setState({ readyToSubmit: readyToSubmit });
-  };
-
-  canCreate = data => {
-    this.setState({ canCreate: data });
-  };
-
-  canSign = data => {
-    this.setState({ canSign: data });
-  };
-
-  initalDataTransfer = data => {
-    this.setState({ ...data });
-  };
-
-  handleSubmit = event => {
+  handleNewGroupSubmit = event => {
     event.preventDefault();
-
-    const editedGroup = {
+    const newGroup = {
       description: this.state.groupDescription,
       docTypesToCreate: this.state.canCreate,
-      docTypesToApprove: this.state.canSign,
-      newName: this.state.groupName,
-      userList: this.state.addedUsers.map(item => {
-        return item.username;
-      })
+      docTypesToSign: this.state.canSign,
+      groupName: this.state.groupName,
+      userList: this.state.usersList
     };
+
     axios
-      .post(serverUrl + "groups/update/" + this.props.ownerName, editedGroup)
+      .post(serverUrl + "creategroup", newGroup)
       .then(response => {
-        console.log(response);
-        /*window.location.reload();
-        this.props.onHide();*/
+        window.location.reload();
+        this.props.hideNewGroup();
       })
       .catch(error => console.log(error));
+  };
+
+  handleGroupNameChange = event => {
+    this.setState({ groupName: event.target.value });
+  };
+
+  handleGroupDescriptionChange = event => {
+    this.setState({ groupDescription: event.target.value });
+  };
+
+  setAddedUsers = users => {
+    this.setState({ usersList: users });
+  };
+
+  setCanCreate = canCreate => {
+    this.setState({ canCreate: canCreate });
+  };
+
+  setCanSign = canSign => {
+    this.setState({ canSign: canSign });
   };
 
   render() {
     return (
       <Modal
-        show={this.props.show}
-        onHide={this.props.onHide}
-        size={"lg"}
-        id="editGroupModal"
+        show={this.props.showNewGroup}
+        onHide={this.props.hideNewGroup}
+        size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Group</Modal.Title>
+          <Modal.Title>New Group</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleNewGroupSubmit}>
             <GroupInformation
-              ownerName={this.props.ownerName}
               handleGroupNameChange={this.handleGroupNameChange}
-              handleGroupDescriptionChange={this.handleGroupDescriptionChange}
               groupName={this.state.groupName}
+              handleGroupDescriptionChange={this.handleGroupDescriptionChange}
               groupDescription={this.state.groupDescription}
-              setGroupUsers={this.setGroupUsers}
-              setCanCreate={this.canCreate}
-              setCanSign={this.canSign}
-              initalDataTransfer={this.initalDataTransfer}
             />
             <hr className="m-1" />
             <AddUsersToGroup
-              groupUsers={this.state.groupUsers}
-              setAddedUsers={this.setAddedUsers}
-              //setUpData={this.setUpData}
+              setUpData={this.setUpData}
               notAddedUsers={this.state.notAddedUsers}
+              setAddedUsers={this.setAddedUsers}
             />
             <hr className="m-1" />
-            <GroupUsers groupUsers={this.state.addedUsers} />
-            <hr className="m-1" />
 
-            <AddRemoveDocTypes
+            <AddDocTypes
               readyToSubmit={this.readyToSubmit}
-              canCreate={this.canCreate}
-              canSign={this.canSign}
+              setCanCreate={this.setCanCreate}
+              setCanSign={this.setCanSign}
+              setAddedDocTypes={this.setAddedDocTypes}
             />
 
             <div className="form-group row d-flex justify-content-center">
@@ -190,7 +96,7 @@ class EditGroup extends Component {
                 <button
                   type="button"
                   className="btn btn-outline-dark"
-                  onClick={this.props.onHide}
+                  onClick={this.props.hideNewGroup}
                 >
                   Cancel
                 </button>
@@ -200,7 +106,7 @@ class EditGroup extends Component {
                   data-dismiss="modal"
                   disabled={this.state.readyToSubmit ? false : true}
                 >
-                  Save
+                  Create
                 </button>
               </div>
             </div>
@@ -211,4 +117,4 @@ class EditGroup extends Component {
   }
 }
 
-export default EditGroup;
+export default NewGroup;

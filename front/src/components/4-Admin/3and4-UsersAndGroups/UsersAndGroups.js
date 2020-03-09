@@ -12,23 +12,30 @@ class ListOfUsers extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dbData: [],
-      tableData: []
+      tableData: [],
+      pagingData: []
     };
   }
 
-  usersTableDataFields = [
-    "number",
-    "name",
-    "surname",
-    "username",
-    "role",
-    "edit"
-  ];
-  usersTableNames = ["#", "First Name", "Last Name", "Username", "Role", ""];
-
   groupsTableDataFields = ["number", "name", "members", "edit"];
+
   groupsTableNames = ["#", "Group Name", "Members", ""];
+
+  columnsUsers = [
+    // { dataField: "number", text: "#", sort: false },
+    { dataField: "name", text: "First Name", sort: true },
+    { dataField: "surname", text: "Last Name", sort: true },
+    { dataField: "username", text: "Username", sort: true },
+    { dataField: "role", text: "Role", sort: true },
+    { dataField: "edit", text: "", sort: false }
+  ];
+
+  columnsGroups = [
+    // { dataField: "number", text: "#", sort: false },
+    { dataField: "name", text: "Group Name", sort: true },
+    { dataField: "members", text: "Members", sort: false },
+    { dataField: "edit", text: "", sort: false }
+  ];
 
   componentDidMount() {
     this.getData();
@@ -36,17 +43,31 @@ class ListOfUsers extends Component {
 
   getData = () => {
     if (this.props.forWhat === "users") {
-      this.connectForUsersData();
+      this.connectForUsersData(0, 8, null, null, "");
     } else {
-      this.connectForGroupsData();
+      this.connectForGroupsData(0, 8, null, null, "");
     }
   };
 
-  connectForUsersData = () => {
+  connectForUsersData = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: sortField,
+      searchValueString: searchValueString
+    };
+
     axios
-      .get(serverUrl + "users")
+      .post(serverUrl + "users", pageData)
       .then(response => {
-        let tmpUsersData = response.data.map((item, index) => {
+        let tmpUsersData = response.data.userList.map((item, index) => {
           return {
             number: index + 1,
             name: item.name,
@@ -56,19 +77,33 @@ class ListOfUsers extends Component {
             edit: <EditButton ownerName={item.username} ownerType={"user"} />
           };
         });
-
         this.setState({ tableData: tmpUsersData });
+        this.setState({ pagingData: response.data.pagingData });
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  connectForGroupsData = () => {
+  connectForGroupsData = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: sortField,
+      searchValueString: searchValueString
+    };
+
     axios
-      .get(serverUrl + "groups")
+      .post(serverUrl + "groups", pageData)
       .then(response => {
-        let tmpGroupsData = response.data.map((item, index) => {
+        let tmpGroupsData = response.data.groupList.map((item, index) => {
           return {
             number: index + 1,
             name: item.name,
@@ -78,6 +113,7 @@ class ListOfUsers extends Component {
         });
 
         this.setState({ tableData: tmpGroupsData });
+        this.setState({ pagingData: response.data.pagingData });
       })
       .catch(error => {
         console.log(error);
@@ -121,21 +157,31 @@ class ListOfUsers extends Component {
             </Link>
           </div>
           <div className="row p-1" id="tableuserGroups">
-            <Table
-              id={"usersAndGroupsTable"}
-              dataFields={
-                this.props.forWhat === "users"
-                  ? this.usersTableDataFields
-                  : this.groupsTableDataFields
-              }
-              columnNames={
-                this.props.forWhat === "users"
-                  ? this.usersTableNames
-                  : this.groupsTableNames
-              }
-              tableData={this.state.tableData}
-              searchBarId={"addedGroupsSearchBar"}
-            />
+            {this.props.forWhat === "users" ? (
+              <Table
+                id={"listOfUsers"}
+                tableData={this.state.tableData}
+                searchBarId={"usersSearchBar"}
+                requestNewData={this.connectForUsersData}
+                pagingData={this.state.pagingData}
+                columns={this.columnsUsers}
+                selectType={"checkbox"}
+                handleRowSelect={() => {}}
+                setSelectedItems={() => {}}
+              />
+            ) : (
+              <Table
+                id={"listOfGroups"}
+                tableData={this.state.tableData}
+                searchBarId={"groupsSearchBar"}
+                requestNewData={this.connectForGroupsData}
+                pagingData={this.state.pagingData}
+                columns={this.columnsGroups}
+                selectType={"checkbox"}
+                handleRowSelect={() => {}}
+                setSelectedItems={() => {}}
+              />
+            )}
           </div>
         </div>
       </div>

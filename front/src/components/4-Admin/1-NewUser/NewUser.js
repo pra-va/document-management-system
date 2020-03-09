@@ -21,7 +21,29 @@ class NewModal extends Component {
     };
   }
 
-  componentDidUpdate() {}
+  componentDidMount() {
+    if (this.props.mode === "edit") {
+      this.setState({ username: this.props.ownerName });
+      this.fetchEditUserData();
+    }
+  }
+
+  componentDidUpdate() {
+    if (!this.props.show) {
+      if (this.state.addedGroups.length > 0) {
+        this.setState({
+          firstName: "",
+          lastName: "",
+          username: "",
+          password: "",
+          role: "USER",
+          allGroups: [],
+          addedGroups: [],
+          usernameExists: false
+        });
+      }
+    }
+  }
 
   setUpGroups = data => {
     if (data.length >= 0) {
@@ -30,6 +52,7 @@ class NewModal extends Component {
   };
 
   parseData = data => {
+    this.setState({ allGroups: [] });
     let tempData = data.map((item, index) => {
       return {
         number: index + 1,
@@ -85,11 +108,11 @@ class NewModal extends Component {
 
   loadingTable = () => {
     let loadingData = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < this.state.allGroups; i++) {
       loadingData.push({
         number: i,
         name: this.state.allGroups[i].name,
-        addOrRemove: <button className="btn btn-secondary btn-sm">Add</button>
+        addOrRemove: this.state.allGroups[i].addOrRemove
       });
     }
     return loadingData;

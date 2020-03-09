@@ -66,7 +66,6 @@ class Table extends Component {
   };
 
   handleTableChange = (type, { page, sizePerPage, sortField, sortOrder }) => {
-    console.log("table change");
     this.props.requestNewData(
       page - 1,
       sizePerPage,
@@ -146,7 +145,7 @@ class Table extends Component {
 
     const paginationOption = {
       custom: true,
-      totalSize: this.props.tableData.length
+      totalSize: 0
     };
 
     return (
