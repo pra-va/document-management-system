@@ -14,8 +14,8 @@ class NewGroup extends Component {
       groupDescription: "",
       usersList: [],
       readyToSubmit: true,
-      canCreate: null,
-      canSign: null
+      canCreate: [],
+      canSign: []
     };
   }
 
@@ -110,7 +110,7 @@ class NewGroup extends Component {
                   data-dismiss="modal"
                   disabled={this.state.readyToSubmit ? false : true}
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </div>

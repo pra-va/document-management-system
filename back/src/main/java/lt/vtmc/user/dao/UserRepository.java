@@ -23,13 +23,11 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("select d.name from DocType d inner join d.groupsCreating g inner join g.userList u where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
 	Page<String> docTypesUserCreatesByUsername(String username, String searchPhrase, Pageable pageable);
 
-	@Query("select d from Document d inner join d.dType dt inner join dt.groupsApproving g inner join g.userList u "
-			+ "where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) " + "and d.status = 1")
+	@Query("select distinct d from Document d inner join d.dType dt inner join dt.groupsApproving g inner join g.userList u "
+			+ "where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = 1")
 	Page<Document> docsToSignByUsername(String username, String searchPhrase, Pageable pageable);
 
 	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
 	Page<Document> docsByUsername(String username, String searchPhrase, Pageable pageable);
 
-//	@Query<>
-//	Page<String> allDocuments(String username, Pageable pageable);
 }

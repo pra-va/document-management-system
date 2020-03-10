@@ -125,6 +125,7 @@ class NewModal extends Component {
     const { firstName, lastName, password, addedGroups, role } = this.state;
 
     let url = serverUrl + "user/update/" + this.props.ownerName;
+    console.log(url);
 
     axios
       .post(url, {

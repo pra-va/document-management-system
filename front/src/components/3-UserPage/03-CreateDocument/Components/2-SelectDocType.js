@@ -16,14 +16,12 @@ class SelectType extends Component {
     };
   }
 
-  componentDidMount() {}
-
   componentDidUpdate() {
     const { username } = this.props;
     let { tableData, initialDataFetched } = this.state;
     if (username !== "" && tableData.length === 0 && !initialDataFetched) {
       this.fetchUserDocTypes(0, 8, null, null, "");
-      initialDataFetched = true;
+      this.setState({ initialDataFetched: true });
     }
   }
 
