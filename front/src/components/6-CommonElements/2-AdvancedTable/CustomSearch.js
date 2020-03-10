@@ -10,7 +10,7 @@ const CustomSearchBar = props => {
   };
 
   return (
-    <div className="row p-3">
+    <div className="row p-3 m-0">
       <div className="input-group md-form form-sm form-1 pl-0">
         <div className="input-group-prepend">
           <span

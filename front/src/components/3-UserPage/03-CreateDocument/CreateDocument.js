@@ -199,7 +199,7 @@ class CreateDocument extends Component {
                     <hr />
                   </div>
                   <AttachFiles handleFileAdd={this.handleFileAdd} />
-                  <div className="overflow-auto" style={{ height: "20em" }}>
+                  <div className="overflow-auto" style={{ maxHeight: "20em" }}>
                     <AttachedFiles
                       values={this.state.attachedFilesTableValues}
                       size={this.state.filesSize}

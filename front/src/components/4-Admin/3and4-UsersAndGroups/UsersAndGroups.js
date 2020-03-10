@@ -184,7 +184,7 @@ class ListOfUsers extends Component {
               Document Types
             </Link>
           </div>
-          <div className="row p-1" id="tableuserGroups">
+          <div className="p-1" id="tableuserGroups">
             {this.props.forWhat === "users" ? (
               <Table
                 id={"listOfUsers"}

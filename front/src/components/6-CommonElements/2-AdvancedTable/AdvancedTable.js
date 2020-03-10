@@ -177,7 +177,7 @@ class Table extends Component {
                         keyField="id"
                         {...props.baseProps}
                         {...paginationTableProps}
-                        classes="table-striped table-dark table-sm"
+                        classes="table-striped table-dark table-sm overflow-auto"
                         selectRow={selectRow}
                         pagination={paginationFactory({
                           page:
@@ -204,6 +204,7 @@ class Table extends Component {
                           ]
                         })}
                         onTableChange={this.handleTableChange}
+                        wrapperClasses="table-responsive"
                         hover
                       />
                     </div>
@@ -214,8 +215,9 @@ class Table extends Component {
                   remote={{ pagination: true, sort: true, search: true }}
                   keyField="id"
                   {...props.baseProps}
-                  classes="table-striped table-dark table-sm"
+                  classes="table-striped table-dark table-sm overflow-auto "
                   onTableChange={this.handleTableChange}
+                  wrapperClasses="table-responsive"
                   hover
                   selectRow={selectRow}
                 />

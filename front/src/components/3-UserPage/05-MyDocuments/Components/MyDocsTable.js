@@ -11,7 +11,13 @@ import serverUrl from "./../../../7-properties/1-URL";
 class MyDocsTable extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", tableData: [], pagingData: {} };
+    this.state = {
+      username: "",
+      tableData: [],
+      pagingData: {},
+      dataUrl: "",
+      initialDataTransferHappend: false
+    };
   }
 
   columns = [
@@ -33,23 +39,21 @@ class MyDocsTable extends Component {
     date: "d.dateCreate"
   };
 
-  tableData = [];
-
-  componentDidMount() {
-    this.getUsername();
-  }
-
-  getUsername = () => {
-    axios
-      .get(serverUrl + "loggedin")
-      .then(response => {
-        this.setState({ username: response.data });
-        this.fetchData(0, 8, null, null, "");
-      })
-      .catch(error => {
-        console.log(error);
+  componentDidUpdate() {
+    if (this.props.username !== this.state.username) {
+      this.setState({
+        username: this.props.username,
+        dataUrl: this.props.username + "/alldocuments"
       });
-  };
+    }
+    if (
+      !this.state.initialDataTransferHappend &&
+      this.state.dataUrl.length > 0
+    ) {
+      this.fetchData(0, 8, null, null, "");
+      this.setState({ initialDataTransferHappend: true });
+    }
+  }
 
   fetchData = (page, sizePerPage, sortField, order, searchValueString) => {
     var modifiedSortField = null;
@@ -66,7 +70,7 @@ class MyDocsTable extends Component {
     };
 
     axios
-      .post(serverUrl + this.state.username + "/alldocuments", pageData)
+      .post(serverUrl + this.state.dataUrl, pageData)
       .then(response => {
         this.setState({ pagingData: response.data.pagingData });
         this.processData(response.data.documents);
@@ -160,14 +164,7 @@ class MyDocsTable extends Component {
   };
 
   fetchCustomData = url => {
-    axios
-      .get(serverUrl + url)
-      .then(response => {
-        this.processData(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.setState({ dataUrl: url, initialDataTransferHappend: false });
   };
 
   render() {
@@ -182,7 +179,9 @@ class MyDocsTable extends Component {
                 id="all"
                 checked
                 onChange={() => {}}
-                onClick={this.fetchData}
+                onClick={() => {
+                  this.fetchCustomData(this.props.username + "/alldocuments");
+                }}
               />{" "}
               All
             </label>
@@ -192,7 +191,7 @@ class MyDocsTable extends Component {
                 name="options"
                 id="created"
                 onClick={() => {
-                  this.fetchCustomData("doc/allcreated/" + this.state.username);
+                  this.fetchCustomData("doc/allcreated/" + this.props.username);
                 }}
               />{" "}
               Created
