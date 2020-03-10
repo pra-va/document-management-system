@@ -86,6 +86,8 @@ class Table extends Component {
       return this.props.columns;
     }
 
+    console.log(this.props);
+
     let columns = this.state.dataFields.map((item, index) => {
       return {
         dataField: item,

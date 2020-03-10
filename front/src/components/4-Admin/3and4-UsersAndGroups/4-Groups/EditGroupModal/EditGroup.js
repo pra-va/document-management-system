@@ -14,30 +14,26 @@ class NewGroup extends Component {
       groupDescription: "",
       usersList: [],
       readyToSubmit: true,
-      canCreate: [],
-      canSign: []
+      canCreate: null,
+      canSign: null
     };
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
-  handleNewGroupSubmit = event => {
+  handleSubmit = event => {
     event.preventDefault();
-    const newGroup = {
+
+    const editedGroup = {
       description: this.state.groupDescription,
       docTypesToCreate: this.state.canCreate,
-      docTypesToSign: this.state.canSign,
-      groupName: this.state.groupName,
+      docTypesToApprove: this.state.canSign,
+      newName: this.state.groupName,
       userList: this.state.usersList
     };
 
     axios
-      .post(serverUrl + "creategroup", newGroup)
+      .post(serverUrl + "groups/update/" + this.props.ownerName, editedGroup)
       .then(response => {
         window.location.reload();
-        this.props.hideNewGroup();
       })
       .catch(error => console.log(error));
   };
@@ -70,10 +66,10 @@ class NewGroup extends Component {
     return (
       <Modal show={this.props.show} onHide={this.props.onHide} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>New Group</Modal.Title>
+          <Modal.Title>Edit Group {this.props.ownerName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleNewGroupSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <GroupInformation
               handleGroupNameChange={this.handleGroupNameChange}
               groupName={this.state.groupName}
@@ -95,6 +91,8 @@ class NewGroup extends Component {
               setCanCreate={this.setCanCreate}
               setCanSign={this.setCanSign}
               setAddedDocTypes={this.setAddedDocTypes}
+              canCreate={this.state.canCreate}
+              canSign={this.state.canSign}
             />
 
             <div className="form-group row d-flex justify-content-center">
@@ -112,7 +110,7 @@ class NewGroup extends Component {
                   data-dismiss="modal"
                   disabled={this.state.readyToSubmit ? false : true}
                 >
-                  Create
+                  Submit
                 </button>
               </div>
             </div>

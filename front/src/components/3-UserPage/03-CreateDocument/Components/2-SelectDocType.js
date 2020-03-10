@@ -7,25 +7,53 @@ import Validation from "./../../../6-CommonElements/5-FormInputValidationLine/Va
 class SelectType extends Component {
   constructor(props) {
     super(props);
-    this.state = { tableData: [], isRowSelected: false };
+    this.state = {
+      tableData: [],
+      isRowSelected: false,
+      pagingData: {},
+      selectedValue: "",
+      initialDataFetched: false
+    };
   }
 
+  componentDidMount() {}
+
   componentDidUpdate() {
-    if (this.props.username !== "" && this.state.tableData.length === 0) {
-      this.fetchUserDocTypes(this.props.username);
+    const { username } = this.props;
+    let { tableData, initialDataFetched } = this.state;
+    if (username !== "" && tableData.length === 0 && !initialDataFetched) {
+      this.fetchUserDocTypes(0, 8, null, null, "");
+      initialDataFetched = true;
     }
   }
 
-  dataFields = ["number", "type", "select"];
-  columnNames = ["#", "Type", ""];
+  columns = [
+    // { dataField: "number", text: "#", sort: false },
+    { dataField: "name", text: "Type", sort: true }
+  ];
 
-  fetchUserDocTypes = username => {
-    if (this.props.username !== "") {
+  fetchUserDocTypes = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const { username } = this.props;
+    const pagingData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: sortField,
+      searchValueString: searchValueString
+    };
+    if (username !== "") {
       axios
-        .get(serverUrl + username + "/dtypescreate")
+        .post(serverUrl + username + "/dtypescreate", pagingData)
         .then(response => {
           if (response.data.length !== 0 && response.data !== undefined) {
-            this.processData(response.data);
+            this.processData(response.data.docTypes);
+            this.setState({ pagingData: response.data.pagingData });
           }
         })
         .catch(error => {
@@ -38,7 +66,7 @@ class SelectType extends Component {
     var tableData = data.map((item, index) => {
       return {
         number: index + 1,
-        type: item,
+        name: item,
         select: (
           <button className="btn btn-secondary btn-sm" onClick={this.doNothing}>
             Select
@@ -54,8 +82,18 @@ class SelectType extends Component {
   };
 
   selectedRow = row => {
-    this.props.handleDocTypeSelect(row.type);
-    this.setState({ isRowSelected: true });
+    this.props.handleDocTypeSelect(row.name);
+    this.setState({ isRowSelected: true, selectedValue: row.name });
+  };
+
+  setSelectedItems = () => {
+    const { tableData, selectedValue } = this.state;
+    for (let index = 0; index < tableData.length; index++) {
+      const element = tableData[index].name;
+      if (selectedValue === element) {
+        return [index + 1];
+      }
+    }
   };
 
   render() {
@@ -64,14 +102,18 @@ class SelectType extends Component {
         <h3 className="d-flex justify-content-start">
           2. Select document type.
         </h3>
+
         <Table
-          select={true}
           id={"usersDocTypes"}
-          dataFields={this.dataFields}
-          columnNames={this.columnNames}
           tableData={this.state.tableData}
-          searchBarId={"createGroupUsersSearchBar"}
-          selectedRow={this.selectedRow}
+          searchBarId={"searchDocType"}
+          requestNewData={this.fetchUserDocTypes}
+          pagingData={this.state.pagingData}
+          columns={this.columns}
+          selectType={"radio"}
+          select={true}
+          handleRowSelect={this.selectedRow}
+          setSelectedItems={this.setSelectedItems}
         />
         <Validation
           output="Document type must be selected."

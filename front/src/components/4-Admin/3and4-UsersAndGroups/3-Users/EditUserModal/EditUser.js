@@ -26,23 +26,6 @@ class NewModal extends Component {
     }
   }
 
-  componentDidUpdate() {
-    if (!this.props.show) {
-      if (this.state.addedGroups.length > 0) {
-        this.setState({
-          firstName: "",
-          lastName: "",
-
-          password: "",
-          role: "USER",
-          allGroups: [],
-          addedGroups: [],
-          usernameExists: false
-        });
-      }
-    }
-  }
-
   setUpGroups = data => {
     if (data.length >= 0) {
       this.parseData(data);

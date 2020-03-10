@@ -6,6 +6,8 @@ import "./UsersAndGroups.css";
 import { Link } from "react-router-dom";
 import EditButton from "./EditTableItemButton";
 import serverUrl from "./../../7-properties/1-URL";
+import PopOver from "./../../6-CommonElements/8-PopOver/PopOver";
+import GroupLogo from "./../../../resources/team.svg";
 
 // forWhat={"users", "groups"}
 class ListOfUsers extends Component {
@@ -107,7 +109,23 @@ class ListOfUsers extends Component {
           return {
             number: index + 1,
             name: item.name,
-            members: item.userList.length,
+            members: (
+              <PopOver
+                popOverApparance={
+                  <img
+                    src={GroupLogo}
+                    alt="unable to load"
+                    className="invert"
+                  />
+                }
+                popOverTitle={"Members list:"}
+                popOverContent={
+                  item.userList.length > 0
+                    ? this.reduceList(item.userList)
+                    : "None"
+                }
+              />
+            ),
             edit: <EditButton ownerName={item.name} ownerType={"group"} />
           };
         });
@@ -118,6 +136,16 @@ class ListOfUsers extends Component {
       .catch(error => {
         console.log(error);
       });
+  };
+
+  reduceList = data => {
+    return data.reduce((sum, item, index) => {
+      if (index === 0) {
+        return (sum = item);
+      } else {
+        return (sum += ", " + item);
+      }
+    }, "");
   };
 
   render() {

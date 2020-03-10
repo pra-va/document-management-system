@@ -27,13 +27,8 @@ class AddUsersToGroup extends Component {
     axios
       .get(serverUrl + "groups/" + this.props.ownerName)
       .then(response => {
-        console.log(response.data);
         this.setState({
-          groupName: response.data.name,
-          description: response.data.description,
-          groupUsers: response.data.userList,
-          canCreate: response.data.docTypesToCreateNames,
-          canSign: response.data.docTypesToApproveNames
+          selectedUsers: response.data.userList
         });
         this.props.setUpGroupData({
           groupName: response.data.name,

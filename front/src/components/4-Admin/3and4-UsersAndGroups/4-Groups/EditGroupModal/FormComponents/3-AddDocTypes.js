@@ -11,8 +11,8 @@ class AddUsersToGroup extends Component {
       pagingData: {},
       selectedDocTypes: [],
       tableData: [],
-      canCreate: [],
-      canSign: [],
+      canCreate: null,
+      canSign: null,
       dataFromServer: []
     };
   }
@@ -28,7 +28,12 @@ class AddUsersToGroup extends Component {
     this.fetchDocTypeData(0, 8, null, null, "");
   }
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    const { canCreate, canSign } = this.props;
+    if (this.state.canCreate === null || this.state.canSign === null) {
+      this.setState({ canCreate: canCreate, canSign: canSign });
+    }
+  }
 
   fetchDocTypeData = (
     page,
@@ -50,8 +55,8 @@ class AddUsersToGroup extends Component {
       .then(response => {
         this.processData(
           response.data.documentList,
-          this.state.canCreate,
-          this.state.canSign
+          this.props.canCreate,
+          this.props.canSign
         );
         this.setState({
           pagingData: response.data.pagingData,

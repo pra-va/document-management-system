@@ -27,8 +27,7 @@ class NewGroup extends Component {
     axios
       .post(serverUrl + "doct/update/" + this.props.owner, editedDocType)
       .then(response => {
-        // window.location.reload();
-        // this.props.hideNewDocType();
+        window.location.reload();
       })
       .catch(error => {
         console.log(error);

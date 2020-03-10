@@ -14,14 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lt.vtmc.docTypes.dao.DocTypeRepository;
-import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.Status;
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.files.service.FileService;
-import lt.vtmc.groups.model.Group;
 import lt.vtmc.paging.PagingData;
 import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.user.dao.UserRepository;
@@ -86,7 +84,7 @@ public class DocumentService {
 				.collect(Collectors.toList()));
 		return responseMap;
 	}
-	
+
 	public List<DocumentDetailsDTO> findAll() {
 		List<Document> tmpList = docRepo.findAll();
 		List<DocumentDetailsDTO> list = new ArrayList<DocumentDetailsDTO>();
@@ -106,23 +104,23 @@ public class DocumentService {
 		document.setFileList(null);
 		User author = document.getAuthor();
 		User handler = document.getHandler();
-		
+
 		if (author != null) {
 			List<Document> tmpListAuth = author.getCreatedDocuments();
 			tmpListAuth.remove(document);
 			document.setAuthor(null);
 		}
-		
+
 		if (handler != null) {
 			List<Document> tmpListHand = handler.getCreatedDocuments();
 			tmpListHand.remove(document);
 			document.setHandler(null);
 		}
-		
+
 		List<Document> tmpListDocType = document.getdType().getDocumentList();
 		tmpListDocType.remove(document);
 		document.setdType(null);
-		
+
 		docRepo.delete(document);
 	}
 
@@ -174,13 +172,15 @@ public class DocumentService {
 		return UID.toString();
 	}
 
-	public List<DocumentDetailsDTO> returnAllDocumentsByUsername(String username) {
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		for (Document document : tmpList) {
-			listToReturn.add(new DocumentDetailsDTO(document));
-		}
-		return listToReturn;
+	public Map<String, Object> returnAllDocumentsByUsername(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsername(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 
 	public List<Document> findAllDocumentsByUsername(String username) {
@@ -188,22 +188,15 @@ public class DocumentService {
 		return tmpUser.getCreatedDocuments();
 	}
 
-	public List<DocumentDetailsDTO> findAllDocumentsToSignByUsername(String username) {
-		User tmpUser = userRepo.findUserByUsername(username);
-//		List<Document> tmpList = findAllDocumentsByUsername(username);
-		List<Document> tmpList = docRepo.findAll();
-		List<DocType> docTypeListToApprove = new ArrayList<DocType>();
-		List<Group> tmpGroups = tmpUser.getGroupList();
-		for (Group group : tmpGroups) {
-			docTypeListToApprove.addAll(group.getDocTypesToApprove());
-		}
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		for (Document doc : tmpList) {
-			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.SUBMITTED) {
-				listToReturn.add(new DocumentDetailsDTO(doc));
-			}
-		}
-		return listToReturn;
+	public Map<String, Object> findAllDocumentsToSignByUsername(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsToSignByUsername(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 
 	@Transactional
