@@ -218,47 +218,47 @@ public class DocumentService {
 		docRepo.save(documentToUpdate);
 	}
 
-	public List<DocumentDetailsDTO> returnSubmitted(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.SUBMITTED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+	public Map<String, Object> returnSubmitted(String username, PagingData pagingData) {
+			Pageable pageable = pagingData.getPageable();
+			Page<Document> documents = userRepo.docsByUsernameSubmitted(username, pagingData.getSearchValueString(), pageable);
+			Map<String, Object> responseMap = new HashMap<>();
+			responseMap.put("pagingData",
+					new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+			responseMap.put("documents",
+					documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+			return responseMap;
 	}
 
-	public List<DocumentDetailsDTO> returnAccepted(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.ACCEPTED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+	public Map<String, Object> returnAccepted(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsernameAccepted(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 
-	public List<DocumentDetailsDTO> returnRejected(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.REJECTED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+	public Map<String, Object> returnRejected(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsernameRejected(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 
-	public List<DocumentDetailsDTO> returnCreated(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.CREATED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+	public Map<String, Object> returnCreated(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsernameCreated(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 }
