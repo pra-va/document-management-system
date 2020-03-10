@@ -72,15 +72,6 @@ class EditDocument extends Component {
                 this.downloadFile(event, item.uid, item.fileName);
               }}
             />
-          ),
-          remove: (
-            <button
-              className="btn btn-secondary btn-sm"
-              onClick={this.handleRemove}
-              id={item.uid}
-            >
-              Remove
-            </button>
           )
         };
       })
@@ -121,12 +112,11 @@ class EditDocument extends Component {
     this.setState({ selectedDocType: selectedDocTypeName });
   };
 
-  handleRemove = event => {
-    event.preventDefault();
+  handleRemove = number => {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
-      if (Number(event.target.id) === Number(element.number)) {
+      if (Number(number) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
       }
@@ -162,15 +152,6 @@ class EditDocument extends Component {
         fileName: element.name,
         size: size,
         fileSize: element.size,
-        remove: (
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={this.handleRemove}
-            id={i + stateLength + 1}
-          >
-            Remove
-          </button>
-        ),
         file: files[i]
       });
     }
@@ -291,6 +272,7 @@ class EditDocument extends Component {
               values={this.state.attachedFilesTableValues}
               size={this.state.filesSize}
               attachedFilesTableValues={this.state.attachedFilesTableValues}
+              handleRemove={this.handleRemove}
             />
             <div className="progress my-3">
               <div

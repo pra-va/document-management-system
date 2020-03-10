@@ -1,7 +1,6 @@
 package lt.vtmc.user.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,6 @@ import lt.vtmc.documents.Status;
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
-import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.paging.PagingData;
 import lt.vtmc.paging.PagingResponse;
@@ -110,8 +108,8 @@ public class UserService implements UserDetailsService {
 		List<Group> tmpList = new ArrayList<Group>();
 		newUser.setGroupList(tmpList);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
-		newUser.setPassword(encoder.encode(password) + "$2y$10$h3WjpIAbYUZYDLFa00sky.yVccPlkZGsFtAEl3zlISco7KlyYroGm" + 
-				"");
+		newUser.setPassword(
+				encoder.encode(password) + "$2y$10$h3WjpIAbYUZYDLFa00sky.yVccPlkZGsFtAEl3zlISco7KlyYroGm" + "");
 		newUser.setProcessedDocuments(new ArrayList<Document>());
 		newUser.setCreatedDocuments(new ArrayList<Document>());
 		userRepository.save(newUser);
@@ -137,10 +135,11 @@ public class UserService implements UserDetailsService {
 		Map<String, Object> responseMap = new HashMap<String, Object>();
 		responseMap.put("pagingData",
 				new PagingResponse(userlist.getNumber(), userlist.getTotalElements(), userlist.getSize()));
-		responseMap.put("userList", userlist.getContent().stream().map(user -> new UserDetailsDTO(user))
-				.collect(Collectors.toList()));
+		responseMap.put("userList",
+				userlist.getContent().stream().map(user -> new UserDetailsDTO(user)).collect(Collectors.toList()));
 		return responseMap;
 	}
+
 	/**
 	 * Method to delete system users.
 	 * 
@@ -174,23 +173,15 @@ public class UserService implements UserDetailsService {
 		return updatedUser;
 	}
 
-	public String[] getUserDocTypesToCreate(String username) {
-		User tmpUser = userRepository.findUserByUsername(username);
-		List<Group> tmpGroupList = tmpUser.getGroupList();
-		List<DocType> tmpDocTypeList = new ArrayList<DocType>();
-		for (int i = 0; i < tmpGroupList.size(); i++) {
-			if (tmpGroupList.get(i).getDocTypesToCreate() != null) {
-				for (int j = 0; j < tmpGroupList.get(i).getDocTypesToCreate().size(); j++) {
-					tmpDocTypeList.add(tmpGroupList.get(i).getDocTypesToCreate().get(j));
-				}
-			}
-		}
-		String[] list = new String[tmpDocTypeList.size()];
-		for (int i = 0; i < tmpDocTypeList.size(); i++) {
-			list[i] = tmpDocTypeList.get(i).getName();
-		}
-		String[] uniqueList = Arrays.stream(list).distinct().toArray(String[]::new);
-		return uniqueList;
+	public Map<String, Object> getUserDocTypesToCreate(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<String> docTypeNames = userRepository.docTypesUserCreatesByUsername(username,
+				pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(docTypeNames.getNumber(), docTypeNames.getTotalElements(), docTypeNames.getSize()));
+		responseMap.put("docTypes", docTypeNames.getContent());
+		return responseMap;
 	}
 
 	public List<DocumentDetailsDTO> getUserDocumentsToBeSigned(String username) {

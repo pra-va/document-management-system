@@ -4,7 +4,6 @@ import "./NewUser.css";
 import UserInformation from "./FormComponents/1-UserInformation";
 import Groups from "./FormComponents/2-Groups";
 import axios from "axios";
-import AddOrRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import serverUrl from "./../../7-properties/1-URL";
 
 class NewModal extends Component {
@@ -22,27 +21,55 @@ class NewModal extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.mode === "edit") {
+      this.setState({ username: this.props.ownerName });
+      this.fetchEditUserData();
+    }
+  }
+
   componentDidUpdate() {
-    console.log("update");
+    if (!this.props.show) {
+      if (this.state.addedGroups.length > 0) {
+        this.setState({
+          firstName: "",
+          lastName: "",
+          username: "",
+          password: "",
+          role: "USER",
+          allGroups: [],
+          addedGroups: [],
+          usernameExists: false
+        });
+      }
+    }
   }
 
   setUpGroups = data => {
-    if (data.length > 0) {
+    if (data.length >= 0) {
       this.parseData(data);
     }
   };
 
   parseData = data => {
+    this.setState({ allGroups: [] });
     let tempData = data.map((item, index) => {
       return {
         number: index + 1,
         name: item.name,
         addOrRemove: (
-          <AddOrRemoveButton
-            itemName={item.name}
-            changeAddedStatus={this.changeAddedStatus}
-            added={false}
-          />
+          <button
+            onClick={event => {
+              event.preventDefault();
+            }}
+            className={
+              this.state.addedGroups.includes(item.name)
+                ? "btn btn-danger btn-sm"
+                : "btn btn-secondary btn-sm"
+            }
+          >
+            {this.state.addedGroups.includes(item.name) ? "Remove" : "Add"}
+          </button>
         ),
         added: false,
         description: item.description
@@ -51,23 +78,44 @@ class NewModal extends Component {
     this.setState({ allGroups: tempData });
   };
 
-  changeAddedStatus = name => {
-    console.log("changing status");
-    let tmpGroups = this.state.allGroups;
+  processTableData = addedGroupList => {
+    console.log("processing data");
+    let tmpGroups = [...this.state.allGroups];
     for (let i = 0; i < tmpGroups.length; i++) {
       const element = tmpGroups[i];
-      if (element.name === name) {
-        tmpGroups[i].added = !tmpGroups[i].added;
-        tmpGroups[i].addOrRemove = (
-          <AddOrRemoveButton
-            itemName={element.name}
-            changeAddedStatus={this.changeAddedStatus}
-            added={element.added}
-          />
-        );
-      }
+      tmpGroups[i].added = addedGroupList.includes(element.name);
+      tmpGroups[i].addOrRemove = (
+        <button
+          onClick={event => {
+            event.preventDefault();
+          }}
+          className={
+            addedGroupList.includes(element.name)
+              ? "btn btn-danger btn-sm"
+              : "btn btn-secondary btn-sm"
+          }
+        >
+          {addedGroupList.includes(element.name) ? "Remove" : "Add"}
+        </button>
+      );
     }
-    this.setState({ allGroups: tmpGroups });
+
+    this.setState({ allGroups: this.loadingTable() });
+    setTimeout(() => {
+      this.setState({ allGroups: tmpGroups });
+    }, 1);
+  };
+
+  loadingTable = () => {
+    let loadingData = [];
+    for (let i = 0; i < this.state.allGroups; i++) {
+      loadingData.push({
+        number: i,
+        name: this.state.allGroups[i].name,
+        addOrRemove: this.state.allGroups[i].addOrRemove
+      });
+    }
+    return loadingData;
   };
 
   handleFirstNameChange = value => {
@@ -92,10 +140,12 @@ class NewModal extends Component {
 
   setAddedGroups = groupList => {
     this.setState({ addedGroups: groupList });
+    this.processTableData(groupList);
   };
 
   handleNewUserSubmit = event => {
     event.preventDefault();
+    const { addedGroups, firstName, lastName, password, username } = this.state;
     let url = serverUrl;
     if (this.state.role === "ADMIN") {
       url += "createadmin/";
@@ -103,20 +153,13 @@ class NewModal extends Component {
       url += "createuser/";
     }
 
-    let userGroups = [];
-
-    for (let i = 0; i < this.state.addedGroups.length; i++) {
-      const element = this.state.addedGroups[i];
-      userGroups.push(element.name);
-    }
-
     axios
       .post(url, {
-        groupList: userGroups,
-        name: this.state.firstName,
-        password: this.state.password,
-        surname: this.state.lastName,
-        username: this.state.username
+        groupList: addedGroups,
+        name: firstName,
+        password: password,
+        surname: lastName,
+        username: username
       })
       .then(response => {
         this.props.onHide();

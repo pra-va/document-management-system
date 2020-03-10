@@ -62,12 +62,11 @@ class CreateDocument extends Component {
     this.setState({ selectedDocType: selectedDocTypeName });
   };
 
-  handleRemove = event => {
-    event.preventDefault();
+  handleRemove = number => {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
-      if (Number(event.target.id) === Number(element.number)) {
+      if (Number(number) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
       }
@@ -103,15 +102,6 @@ class CreateDocument extends Component {
         number: i + stateLength,
         fileName: element.name,
         size: size,
-        remove: (
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={this.handleRemove}
-            id={i + stateLength}
-          >
-            Remove
-          </button>
-        ),
         file: files[i]
       });
     }
@@ -197,16 +187,30 @@ class CreateDocument extends Component {
                 description={this.state.description}
               />
               <hr />
-              <SelectDocType
-                handleDocTypeSelect={this.handleDocTypeSelect}
-                username={this.state.username}
-              />
+              <div className="row">
+                <div className="col-12 col-lg-6">
+                  <SelectDocType
+                    handleDocTypeSelect={this.handleDocTypeSelect}
+                    username={this.state.username}
+                  />
+                </div>
+                <div className="col-12 col-lg-6">
+                  <div className="d-block d-lg-none d-xl-none">
+                    <hr />
+                  </div>
+                  <AttachFiles handleFileAdd={this.handleFileAdd} />
+                  <div className="overflow-auto" style={{ height: "20em" }}>
+                    <AttachedFiles
+                      values={this.state.attachedFilesTableValues}
+                      size={this.state.filesSize}
+                      handleRemove={this.handleRemove}
+                    />
+                  </div>
+                </div>
+              </div>
+
               <hr />
-              <AttachFiles handleFileAdd={this.handleFileAdd} />
-              <AttachedFiles
-                values={this.state.attachedFilesTableValues}
-                size={this.state.filesSize}
-              />
+
               <div className="progress my-3">
                 <div
                   className="progress-bar progress-bar-striped progress-bar-animated bg-dark"

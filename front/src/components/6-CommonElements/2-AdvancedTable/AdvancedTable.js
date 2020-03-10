@@ -39,23 +39,16 @@ class Table extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log("mount");
-    if (this.state.tableData !== this.props.tableData) {
-      this.setState({ tableData: this.props.tableData });
-    }
-  }
-
   componentDidUpdate() {
-    const { tableData, selectedItems } = this.state;
-    const tableDataProp = this.props.tableData;
-    const selectedItemsProp = this.props.setSelectedItems;
+    if (this.props.setSelectedItems !== undefined) {
+      const { tableData, selectedItems } = this.state;
+      const tableDataProp = this.props.tableData;
+      const selectedItemsProp = this.props.setSelectedItems();
 
-    if (tableDataProp & selectedItemsProp) {
-      console.log("askfdhudsaf");
-      console.log(selectedItemsProp());
-      if (tableData !== tableDataProp || selectedItems !== selectedItemsProp) {
-        console.log("inside");
+      if (
+        tableData !== tableDataProp ||
+        JSON.stringify(selectedItems) !== JSON.stringify(selectedItemsProp)
+      ) {
         this.setState({
           tableData: this.props.tableData,
           selectedItems: this.props.setSelectedItems()
@@ -92,6 +85,8 @@ class Table extends Component {
     if (this.props.columns !== undefined) {
       return this.props.columns;
     }
+
+    console.log(this.props);
 
     let columns = this.state.dataFields.map((item, index) => {
       return {
@@ -152,7 +147,7 @@ class Table extends Component {
 
     const paginationOption = {
       custom: true,
-      totalSize: this.props.tableData.length
+      totalSize: 0
     };
 
     return (

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
+import Table from "./../../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
-import serverUrl from "./../../../7-properties/1-URL";
+import serverUrl from "./../../../../../7-properties/1-URL";
 
 class AddUsersToGroup extends Component {
   constructor(props) {
@@ -19,8 +19,27 @@ class AddUsersToGroup extends Component {
   ];
 
   componentDidMount() {
+    this.getGroupData();
     this.fetchUsersData(0, 8, null, null, "");
   }
+
+  getGroupData = () => {
+    axios
+      .get(serverUrl + "groups/" + this.props.ownerName)
+      .then(response => {
+        this.setState({
+          selectedUsers: response.data.userList
+        });
+        this.props.setUpGroupData({
+          groupName: response.data.name,
+          groupDescription: response.data.description,
+          usersList: response.data.userList,
+          canCreate: response.data.docTypesToCreateNames,
+          canSign: response.data.docTypesToApproveNames
+        });
+      })
+      .catch(error => console.log(error));
+  };
 
   fetchUsersData = (page, sizePerPage, sortField, order, searchValueString) => {
     const pageData = {

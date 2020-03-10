@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import "./2-Groups.css";
-import Table from "./../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
+import Table from "./../../../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
-import serverUrl from "./../../../7-properties/1-URL";
+import serverUrl from "./../../../../../7-properties/1-URL";
 
 class Groups extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tableData: [],
-      groupsData: [],
       selectedGroupNames: [],
-      selectedItemsAsNumbers: []
+      initialSetupHappend: false
     };
   }
 
@@ -27,6 +26,12 @@ class Groups extends Component {
   componentDidUpdate() {
     if (this.props.tableData !== this.state.tableData) {
       this.setState({ tableData: this.props.tableData });
+    }
+    if (!this.state.initialSetupHappend && this.props.addedGroups !== null) {
+      this.setState({
+        selectedGroupNames: this.props.addedGroups,
+        initialSetupHappend: true
+      });
     }
   }
 
