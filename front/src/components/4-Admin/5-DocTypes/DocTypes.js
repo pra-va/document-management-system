@@ -15,28 +15,53 @@ class DocTypes extends Component {
     this.state = {
       docTypesData: [],
       serverData: [],
-      tableData: []
+      tableData: [],
+      pagingData: []
     };
   }
 
   componentDidMount() {
-    this.fetchServerData();
+    this.fetchServerData(0, 8, null, null, "");
   }
 
   dataFields = ["number", "name", "canCreate", "canSign", "edit"];
   columnNames = ["#", "Name", "Creating Groups", "Signing Groups", ""];
 
-  fetchServerData = () => {
+  columns = [
+    // { dataField: "number", text: "#", sort: false },
+    { dataField: "name", text: "Type", sort: true },
+    { dataField: "canCreate", text: "Creating Groups", sort: false },
+    { dataField: "canSign", text: "Signing Groups", sort: false },
+    { dataField: "edit", text: "", sort: false }
+  ];
+
+  fetchServerData = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: sortField,
+      searchValueString: searchValueString
+    };
+
     axios
-      .get(serverUrl + "doct/all")
+      .post(serverUrl + "doct/all", pageData)
       .then(response => {
-        this.parseData(response.data);
+        this.parseData(response.data.documentList);
+        this.setState({ pagingData: response.data.pagingData });
       })
       .catch(error => {
         console.log(error);
       });
   };
 
+  //
   parseData = data => {
     if (data) {
       const tableData = data.map((item, index) => {
@@ -118,12 +143,17 @@ class DocTypes extends Component {
               Document Types
             </Link>
           </div>
+
           <Table
             id={"docTypes"}
-            dataFields={this.dataFields}
-            columnNames={this.columnNames}
             tableData={this.state.tableData}
-            searchBarId={"docTypeSearchBar"}
+            searchBarId={"docTypesSearchBar"}
+            requestNewData={this.fetchServerData}
+            pagingData={this.state.pagingData}
+            columns={this.columns}
+            selectType={"checkbox"}
+            handleRowSelect={() => {}}
+            setSelectedItems={() => {}}
           />
         </div>
       </div>

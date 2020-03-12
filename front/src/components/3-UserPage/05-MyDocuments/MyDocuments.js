@@ -5,6 +5,7 @@ import "./MyDocuments.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import serverUrl from "./../../7-properties/1-URL";
+import ContentWrapper from "./../../6-CommonElements/10-TopContentWrapper/ContentWrapper";
 
 class MyDocs extends Component {
   constructor(props) {
@@ -68,8 +69,8 @@ class MyDocs extends Component {
       <div>
         <Navigation />
         <div className="container">
-          <h3>My Documents</h3>
-          <DataTable />
+          <ContentWrapper content={<h3>My Documents</h3>} />
+          <DataTable username={this.state.username} />
           <div className="row d-flex justify-content-center p-5">
             <button
               className="btn btn-secondary btn-lg btn-myDocs m-3"

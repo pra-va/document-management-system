@@ -1,27 +1,24 @@
 import React, { Component } from "react";
+import "./CheckBox.css";
 
-// FIX ID
 // checkedStatus={function ()}
 // id={id}
 // ownerName={""}
 class CheckBox extends Component {
   constructor(props) {
     super(props);
-    this.state = { checked: props.checked, owner: this.props.ownerName };
+    this.state = { checked: props.checkedStatus, owner: props.ownerName };
+  }
+
+  componentDidUpdate() {
+    if (this.state.checked !== this.props.checkedStatus) {
+      this.setState({ checked: this.props.checkedStatus });
+    }
   }
 
   handleChangeCheckedState = event => {
-    this.setState({ checked: event.target.checked });
     this.props.statusChange(event.target.checked, this.state.owner);
   };
-
-  returnCheckedStatus = () => {
-    this.props.checkedStatus(this.state.checked);
-  };
-
-  componentWillUnmount() {
-    this.props.statusChange(false, this.state.owner);
-  }
 
   doNothing = event => {};
 
@@ -29,6 +26,7 @@ class CheckBox extends Component {
     return (
       <div>
         <input
+          className="big-checkbox"
           autoComplete="on"
           type="checkbox"
           id={this.props.id}

@@ -4,7 +4,10 @@ import EditDocument from "./../EditDocument/EditDocument";
 const EditButton = props => {
   const [showModal, setShowModal] = useState(false);
   const handleShowModal = () => setShowModal(true);
-  const handleCloseModal = () => setShowModal(false);
+  const handleCloseModal = () => {
+    setShowModal(false);
+    window.location.reload();
+  };
 
   return (
     <div>

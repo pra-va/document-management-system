@@ -6,10 +6,11 @@ const CustomSearchBar = props => {
 
   const handleSearch = () => {
     props.onSearch(input.value);
+    props.setSearchValue(input.value);
   };
 
   return (
-    <div className="row p-3">
+    <div className="row p-3 m-0">
       <div className="input-group md-form form-sm form-1 pl-0">
         <div className="input-group-prepend">
           <span
@@ -26,7 +27,7 @@ const CustomSearchBar = props => {
           <input
             id={props.id}
             type="text"
-            placeholder="Search"
+            placeholder="Find by Name"
             aria-label="Search"
             className="form-control"
             style={{ backgroundColor: "#343a40", color: "#fff" }}

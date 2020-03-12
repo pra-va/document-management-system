@@ -43,6 +43,11 @@ public class GroupDetailsDTO {
 		this.docTypesToApprove = group.getDocTypesToApprove();
 	}
 
+	public void setUserListArray(List<User> userListArray) {
+		this.userListArray = userListArray;
+	}
+
+
 	public String getName() {
 		return name;
 	}

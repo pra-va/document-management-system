@@ -107,18 +107,16 @@ var InputLine = props => {
         <Validation
           output={"Field must be between 1 and 50 characters long."}
           satisfied={
-            props.value.length > 0 && props.value.length < 51 ? true : false
+            props.value !== undefined
+              ? props.value.length > 0 && props.value.length < 51
+                ? true
+                : false
+              : false
           }
         />
       );
     }
   };
-
-  var checkPropsValue = () => {
-    if (props.value.length !==undefined) {
-      
-    }
-  }
 
   var usernameExists = () => {
     if (props.labelName.toLowerCase().includes("username")) {

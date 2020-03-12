@@ -7,6 +7,7 @@ import AttachedFiles from "./Components/4-AttachedFiles";
 import serverUrl from "./../../7-properties/1-URL";
 import "./CreateDocument.css";
 import axios from "axios";
+import ContentWrapper from "./../../6-CommonElements/10-TopContentWrapper/ContentWrapper";
 
 class CreateDocument extends Component {
   constructor(props) {
@@ -61,12 +62,11 @@ class CreateDocument extends Component {
     this.setState({ selectedDocType: selectedDocTypeName });
   };
 
-  handleRemove = event => {
-    event.preventDefault();
+  handleRemove = number => {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
-      if (Number(event.target.id) === Number(element.number)) {
+      if (Number(number) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
       }
@@ -102,15 +102,6 @@ class CreateDocument extends Component {
         number: i + stateLength,
         fileName: element.name,
         size: size,
-        remove: (
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={this.handleRemove}
-            id={i + stateLength}
-          >
-            Remove
-          </button>
-        ),
         file: files[i]
       });
     }
@@ -185,58 +176,74 @@ class CreateDocument extends Component {
     return (
       <div>
         <Navigation />{" "}
-        <div className="container" id="newDocument">
-          <form onSubmit={this.handleUpload} id="createDocumentForm">
-            <h2 className="mb-3">New Document</h2>
-            <EditInfo
-              handleNameChange={this.handleNameChange}
-              handleDescriptionChange={this.handleDescriptionChange}
-              name={this.state.name}
-              description={this.state.description}
-            />
-            <hr />
-            <SelectDocType
-              handleDocTypeSelect={this.handleDocTypeSelect}
-              username={this.state.username}
-            />
-            <hr />
-            <AttachFiles handleFileAdd={this.handleFileAdd} />
-            <AttachedFiles
-              values={this.state.attachedFilesTableValues}
-              size={this.state.filesSize}
-            />
-            <div className="progress my-3">
-              <div
-                className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
-                role="progressbar"
-                aria-valuenow="100"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style={
-                  this.state.submitInProgres
-                    ? { width: this.state.percentCompleted }
-                    : { width: (this.state.filesSize * 100) / 20000000 + "%" }
-                }
-              ></div>
-            </div>
-            <div className="form-group row d-flex justify-content-center m-0">
-              <button
-                type="button"
-                className="btn btn-outline-dark mr-2"
-                onClick={this.props.hideNewGroup}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="btn btn-dark ml-2"
-                data-dismiss="modal"
-                disabled={this.state.submitDisabled}
-              >
-                Create
-              </button>
-            </div>
-          </form>
+        <div className="container">
+          <ContentWrapper content={<h3>New Document</h3>} />
+          <div className="container" id="newDocument">
+            <form onSubmit={this.handleUpload} id="createDocumentForm">
+              <EditInfo
+                handleNameChange={this.handleNameChange}
+                handleDescriptionChange={this.handleDescriptionChange}
+                name={this.state.name}
+                description={this.state.description}
+              />
+              <hr />
+              <div className="row">
+                <div className="col-12 col-lg-6">
+                  <SelectDocType
+                    handleDocTypeSelect={this.handleDocTypeSelect}
+                    username={this.state.username}
+                  />
+                </div>
+                <div className="col-12 col-lg-6">
+                  <div className="d-block d-lg-none d-xl-none">
+                    <hr />
+                  </div>
+                  <AttachFiles handleFileAdd={this.handleFileAdd} />
+                  <div className="overflow-auto" style={{ maxHeight: "20em" }}>
+                    <AttachedFiles
+                      values={this.state.attachedFilesTableValues}
+                      size={this.state.filesSize}
+                      handleRemove={this.handleRemove}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+
+              <div className="progress my-3">
+                <div
+                  className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
+                  role="progressbar"
+                  aria-valuenow="100"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  style={
+                    this.state.submitInProgres
+                      ? { width: this.state.percentCompleted }
+                      : { width: (this.state.filesSize * 100) / 20000000 + "%" }
+                  }
+                ></div>
+              </div>
+              <div className="form-group row d-flex justify-content-center m-0">
+                <button
+                  type="button"
+                  className="btn btn-outline-dark mr-2"
+                  onClick={this.props.hideNewGroup}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-dark ml-2"
+                  data-dismiss="modal"
+                  disabled={this.state.submitDisabled}
+                >
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );

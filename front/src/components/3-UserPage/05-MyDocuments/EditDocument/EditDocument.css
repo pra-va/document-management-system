@@ -7,3 +7,8 @@
 .modal-footer {
   justify-content: center;
 }
+
+.img-download {
+  min-width: 1.7em;
+  padding: 0;
+}

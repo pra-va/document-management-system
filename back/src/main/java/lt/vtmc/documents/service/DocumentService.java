@@ -2,21 +2,26 @@ package lt.vtmc.documents.service;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lt.vtmc.docTypes.dao.DocTypeRepository;
-import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.Status;
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.model.File4DB;
 import lt.vtmc.files.service.FileService;
-import lt.vtmc.groups.model.Group;
+import lt.vtmc.paging.PagingData;
+import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 
@@ -40,6 +45,7 @@ public class DocumentService {
 
 	@Autowired
 	private FileService fileService;
+
 	/**
 	 * 
 	 * This method finds a document from group repository by name.
@@ -68,6 +74,17 @@ public class DocumentService {
 		return docRepo.save(newDocument);
 	}
 
+	public Map<String, Object> retrieveAllDocuments(PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<Document> documentlist = docRepo.findLike(pagingData.getSearchValueString(), firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("pagingData",
+				new PagingResponse(documentlist.getNumber(), documentlist.getTotalElements(), documentlist.getSize()));
+		responseMap.put("documentList", documentlist.getContent().stream().map(user -> new DocumentDetailsDTO(user))
+				.collect(Collectors.toList()));
+		return responseMap;
+	}
+
 	public List<DocumentDetailsDTO> findAll() {
 		List<Document> tmpList = docRepo.findAll();
 		List<DocumentDetailsDTO> list = new ArrayList<DocumentDetailsDTO>();
@@ -76,34 +93,34 @@ public class DocumentService {
 		}
 		return list;
 	}
-	
+
 	@Transactional
 	public void deleteDocument(Document document) {
 		List<File4DB> tmpList = document.getFileList();
 		for (File4DB file4db : tmpList) {
 			fileService.deleteFileByUID(file4db.getUID());
 		}
-		
+
 		document.setFileList(null);
 		User author = document.getAuthor();
 		User handler = document.getHandler();
-		
+
 		if (author != null) {
 			List<Document> tmpListAuth = author.getCreatedDocuments();
 			tmpListAuth.remove(document);
 			document.setAuthor(null);
 		}
-		
+
 		if (handler != null) {
 			List<Document> tmpListHand = handler.getCreatedDocuments();
 			tmpListHand.remove(document);
 			document.setHandler(null);
 		}
-		
+
 		List<Document> tmpListDocType = document.getdType().getDocumentList();
 		tmpListDocType.remove(document);
 		document.setdType(null);
-		
+
 		docRepo.delete(document);
 	}
 
@@ -111,7 +128,7 @@ public class DocumentService {
 	public void setStatusPateiktas(String UID) {
 		Document tmp = findDocumentByUID(UID);
 		tmp.setDateSubmit(Instant.now().toString());
-		tmp.setStatus(Status.SUBMITED);
+		tmp.setStatus(Status.SUBMITTED);
 		docRepo.save(tmp);
 	}
 
@@ -155,13 +172,15 @@ public class DocumentService {
 		return UID.toString();
 	}
 
-	public List<DocumentDetailsDTO> returnAllDocumentsByUsername(String username) {
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		for (Document document : tmpList) {
-			listToReturn.add(new DocumentDetailsDTO(document));
-		}
-		return listToReturn;
+	public Map<String, Object> returnAllDocumentsByUsername(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsername(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 
 	public List<Document> findAllDocumentsByUsername(String username) {
@@ -169,26 +188,20 @@ public class DocumentService {
 		return tmpUser.getCreatedDocuments();
 	}
 
-	public List<DocumentDetailsDTO> findAllDocumentsToSignByUsername(String username) {
-		User tmpUser = userRepo.findUserByUsername(username);
-//		List<Document> tmpList = findAllDocumentsByUsername(username);
-		List<Document> tmpList = docRepo.findAll();
-		List<DocType> docTypeListToApprove = new ArrayList<DocType>();
-		List<Group> tmpGroups = tmpUser.getGroupList();
-		for (Group group : tmpGroups) {
-			docTypeListToApprove.addAll(group.getDocTypesToApprove());
-		}
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		for (Document doc : tmpList) {
-			if (docTypeListToApprove.contains(doc.getdType()) == true & doc.getStatus() == Status.SUBMITED) {
-				listToReturn.add(new DocumentDetailsDTO(doc));
-			}
-		}
-		return listToReturn;
+	public Map<String, Object> findAllDocumentsToSignByUsername(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsToSignByUsername(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 
 	@Transactional
-	public void updateDocument(String docUID, String newName, String newDescription, String newDocType, String[] filesToRemove) {
+	public void updateDocument(String docUID, String newName, String newDescription, String newDocType,
+			String[] filesToRemove) {
 		Document documentToUpdate = findDocumentByUID(docUID);
 		documentToUpdate.setName(newName);
 		documentToUpdate.setDescription(newDescription);
@@ -197,55 +210,55 @@ public class DocumentService {
 		List<Document> listToAddTo = dTypeRepo.findDocTypeByName(newDocType).getDocumentList();
 		listToAddTo.add(documentToUpdate);
 		documentToUpdate.setdType(dTypeRepo.findDocTypeByName(newDocType));
-		
+
 		for (String file : filesToRemove) {
 			fileService.deleteFileByUID(file);
 		}
-		
+
 		docRepo.save(documentToUpdate);
 	}
 
-	public List<DocumentDetailsDTO> returnSubmitted(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.SUBMITED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+	public Map<String, Object> returnSubmitted(String username, PagingData pagingData) {
+			Pageable pageable = pagingData.getPageable();
+			Page<Document> documents = userRepo.docsByUsernameSubmitted(username, pagingData.getSearchValueString(), pageable);
+			Map<String, Object> responseMap = new HashMap<>();
+			responseMap.put("pagingData",
+					new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+			responseMap.put("documents",
+					documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+			return responseMap;
 	}
-	
-	public List<DocumentDetailsDTO> returnAccepted(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.ACCEPTED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+
+	public Map<String, Object> returnAccepted(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsernameAccepted(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
-	
-	public List<DocumentDetailsDTO> returnRejected(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.REJECTED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+
+	public Map<String, Object> returnRejected(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsernameRejected(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
-	
-	public List<DocumentDetailsDTO> returnCreated(String username) {
-		List<DocumentDetailsDTO> listToReturn = new ArrayList<DocumentDetailsDTO>();
-		List<Document> tmpList = findAllDocumentsByUsername(username);
-		for (Document document : tmpList) {
-			if (document.getStatus() == Status.CREATED) {
-				listToReturn.add(new DocumentDetailsDTO(document));
-			}
-		}
-		return listToReturn;
+
+	public Map<String, Object> returnCreated(String username, PagingData pagingData) {
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsernameCreated(username, pagingData.getSearchValueString(), pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 }

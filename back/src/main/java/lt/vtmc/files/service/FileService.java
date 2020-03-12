@@ -128,34 +128,25 @@ public class FileService {
 	 * @return
 	 * @throws IOException
 	 */
-	public ResponseEntity<Resource> generateCSV(String username) throws IOException {
+	public ResponseEntity<Resource> generateCSV(String username) {
+		String csv = null;
+		try {
+			csv = getCsv(username);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return downloadFileByUID(csv.getBytes(), "file.csv");
+	}
+
+	public String getCsv(String username) throws Exception {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
 		StringBuilder builder = new StringBuilder();
 		builder.append("\"ID\", \"File Name\", \"Document ID\", \"Document Name\", \"Created\"\n");
 		for (FileDetailsDTO fileDetailsDTO : usersFilesDetails) {
 			builder.append(fileDetailsDTO.getCsvDetails());
 		}
-		return downloadFileByUID(builder.toString().getBytes(), "file.csv");
+		return builder.toString();
 	}
-
-//	public List<File> findAllFilesByUsername(String username) {
-//		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
-//		System.out.println(usersFilesDetails.toString());
-//		List<File> files = new ArrayList<>();
-//		if (usersFilesDetails != null) {
-//			for (FileDetailsDTO fileDetails : usersFilesDetails) {
-//				File file = new File("/tmp/" + fileDetails.getFileName());
-//				try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-//					String contents = new String(filesRepository.findFile4dbByUID(fileDetails.getUID()).getData()); // TODO
-//					writer.write(contents);
-//					files.add(file);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return files;
-//	}
 
 	public Map<String, ByteArrayResource> findAllFilesByUsername(String username) {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);

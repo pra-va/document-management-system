@@ -2,11 +2,9 @@ import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
 import GroupInformation from "./FormComponents/1-GroupInformation";
 import AddUsersToGroup from "./FormComponents/2-AddUsersToGroup";
-import GroupUsers from "./FormComponents/3-GroupUsers";
+import AddDocTypes from "./FormComponents/3-AddDocTypes";
 import axios from "axios";
-import AddRemoveButton from "./../../6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove";
 import serverUrl from "./../../7-properties/1-URL";
-import AddRemoveDocTypes from "./../../6-CommonElements/9-AddRemoveDocType/AddRemoveDocType";
 
 class NewGroup extends Component {
   constructor(props) {
@@ -15,31 +13,41 @@ class NewGroup extends Component {
       groupName: "",
       groupDescription: "",
       usersList: [],
-      notAddedUsers: [],
-      addedUsers: [],
       readyToSubmit: true,
       canCreate: [],
       canSign: []
     };
   }
 
-  componentDidUpdate() {}
-
-  setUpData = data => {
-    this.parseUsersData(data);
-  };
+  componentDidUpdate() {
+    if (!this.props.showNewGroup) {
+      if (
+        this.state.groupName.length > 0 ||
+        this.state.groupDescription.length > 0 ||
+        this.state.usersList.length > 0 ||
+        this.state.canCreate > 0 ||
+        this.state.canSign.length > 0
+      ) {
+        this.setState({
+          groupName: "",
+          groupDescription: "",
+          usersList: [],
+          readyToSubmit: true,
+          canCreate: [],
+          canSign: []
+        });
+      }
+    }
+  }
 
   handleNewGroupSubmit = event => {
     event.preventDefault();
-
     const newGroup = {
       description: this.state.groupDescription,
       docTypesToCreate: this.state.canCreate,
       docTypesToSign: this.state.canSign,
       groupName: this.state.groupName,
-      userList: this.state.addedUsers.map(item => {
-        return item.username;
-      })
+      userList: this.state.usersList
     };
 
     axios
@@ -59,75 +67,16 @@ class NewGroup extends Component {
     this.setState({ groupDescription: event.target.value });
   };
 
-  parseUsersData = data => {
-    let tmpUsersData = data.map((item, index) => {
-      return {
-        number: index + 1,
-        name: item.name,
-        surname: item.surname,
-        username: item.username,
-        role: item.role,
-        add: (
-          <AddRemoveButton
-            itemName={item.username}
-            added={false}
-            changeAddedStatus={this.changeAddedStatus}
-          />
-        ),
-        added: false
-      };
-    });
-
-    this.filterAddedGroups(tmpUsersData);
+  setAddedUsers = users => {
+    this.setState({ usersList: users });
   };
 
-  changeAddedStatus = username => {
-    let tmpUsers = this.state.usersList;
-    for (let i = 0; i < tmpUsers.length; i++) {
-      const element = tmpUsers[i];
-      if (element.username === username) {
-        tmpUsers[i].added = !tmpUsers[i].added;
-        tmpUsers[i].add = (
-          <AddRemoveButton
-            itemName={element.username}
-            added={element.added}
-            changeAddedStatus={this.changeAddedStatus}
-          />
-        );
-      }
-    }
-    this.filterAddedGroups(tmpUsers);
+  setCanCreate = canCreate => {
+    this.setState({ canCreate: canCreate });
   };
 
-  filterAddedGroups = data => {
-    let filterUsers = data;
-    let tmpNotAdded = [];
-    let tmpAdded = [];
-    for (let i = 0; i < filterUsers.length; i++) {
-      const element = filterUsers[i];
-      if (element.added) {
-        tmpAdded.push(element);
-      } else {
-        tmpNotAdded.push(element);
-      }
-    }
-    this.setState({
-      usersList: data,
-      notAddedUsers: tmpNotAdded,
-      addedUsers: tmpAdded
-    });
-  };
-
-  readyToSubmit = readyToSubmit => {
-    this.setState({ readyToSubmit: readyToSubmit });
-  };
-
-  canCreate = data => {
-    this.setState({ canCreate: data });
-  };
-
-  canSign = data => {
-    this.setState({ canSign: data });
+  setCanSign = canSign => {
+    this.setState({ canSign: canSign });
   };
 
   render() {
@@ -152,15 +101,15 @@ class NewGroup extends Component {
             <AddUsersToGroup
               setUpData={this.setUpData}
               notAddedUsers={this.state.notAddedUsers}
+              setAddedUsers={this.setAddedUsers}
             />
             <hr className="m-1" />
-            <GroupUsers addedUsers={this.state.addedUsers} />
-            <hr className="m-1" />
 
-            <AddRemoveDocTypes
+            <AddDocTypes
               readyToSubmit={this.readyToSubmit}
-              canCreate={this.canCreate}
-              canSign={this.canSign}
+              setCanCreate={this.setCanCreate}
+              setCanSign={this.setCanSign}
+              setAddedDocTypes={this.setAddedDocTypes}
             />
 
             <div className="form-group row d-flex justify-content-center">

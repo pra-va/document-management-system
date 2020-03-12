@@ -11,42 +11,69 @@ import serverUrl from "./../../../7-properties/1-URL";
 class MyDocsTable extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", tableData: [] };
+    this.state = {
+      username: "",
+      tableData: [],
+      pagingData: {},
+      dataUrl: "",
+      initialDataTransferHappend: false
+    };
   }
-  dataFields = [
-    "number",
-    "name",
-    "type",
-    "status",
-    "date",
-    "files",
-    "edit",
-    "submit"
+
+  columns = [
+    { dataField: "id", text: "ID", sort: true },
+    { dataField: "name", text: "Name", sort: true },
+    { dataField: "type", text: "Type", sort: true },
+    { dataField: "status", text: "Status", sort: true },
+    { dataField: "date", text: "Created", sort: true },
+    { dataField: "files", text: "Files", sort: false },
+    { dataField: "edit", text: "", sort: false },
+    { dataField: "submit", text: "", sort: false }
   ];
-  columnNames = ["#", "Name", "Type", "Status", "Created", "Files", "", ""];
-  tableData = [];
 
-  componentDidMount() {
-    this.getUsername();
-  }
-
-  getUsername = () => {
-    axios
-      .get(serverUrl + "loggedin")
-      .then(response => {
-        this.setState({ username: response.data });
-        this.fetchData(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  sortValues = {
+    id: "d.id",
+    name: "d.name",
+    type: "dt.name",
+    status: "d.status",
+    date: "d.dateCreate"
   };
 
-  fetchData = () => {
+  componentDidUpdate() {
+    if (this.props.username !== this.state.username) {
+      this.setState({
+        username: this.props.username,
+        dataUrl: this.props.username + "/alldocuments"
+      });
+    }
+    if (
+      !this.state.initialDataTransferHappend &&
+      this.state.dataUrl.length > 0
+    ) {
+      this.fetchData(0, 8, null, null, "");
+      this.setState({ initialDataTransferHappend: true });
+    }
+  }
+
+  fetchData = (page, sizePerPage, sortField, order, searchValueString) => {
+    var modifiedSortField = null;
+    if (sortField !== null) {
+      modifiedSortField = this.sortValues[sortField];
+    }
+
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: modifiedSortField,
+      searchValueString: searchValueString
+    };
+
     axios
-      .get(serverUrl + this.state.username + "/alldocuments")
+      .post(serverUrl + this.state.dataUrl, pageData)
       .then(response => {
-        this.processData(response.data);
+        this.setState({ pagingData: response.data.pagingData });
+        this.processData(response.data.documents);
       })
       .catch(error => {
         console.log(error);
@@ -55,9 +82,9 @@ class MyDocsTable extends Component {
 
   processData = data => {
     const tableData = data.map((item, index) => {
-      console.log(item);
       return {
-        number: index + 1,
+        number: index,
+        id: item.uid,
         name: item.name,
         type: item.type,
         status: item.status,
@@ -136,15 +163,91 @@ class MyDocsTable extends Component {
     }, "");
   };
 
+  fetchCustomData = url => {
+    this.setState({ dataUrl: url, initialDataTransferHappend: false });
+  };
+
   render() {
     return (
       <div id="myDocsTable">
+        <div className="row d-flex justify-content-center ">
+          <div className="btn-group btn-group-toggle" data-toggle="buttons">
+            <label className="btn btn-secondary active">
+              <input
+                type="radio"
+                name="options"
+                id="all"
+                checked
+                onChange={() => {}}
+                onClick={() => {
+                  this.fetchCustomData(this.props.username + "/alldocuments");
+                }}
+              />{" "}
+              All
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="created"
+                onClick={() => {
+                  this.fetchCustomData("doc/allcreated/" + this.props.username);
+                }}
+              />{" "}
+              Created
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="submitted"
+                onClick={() => {
+                  this.fetchCustomData(
+                    "doc/allsubmitted/" + this.state.username
+                  );
+                }}
+              />{" "}
+              Submitted
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="rejected"
+                onClick={() => {
+                  this.fetchCustomData(
+                    "doc/allrejected/" + this.state.username
+                  );
+                }}
+              />{" "}
+              Rejected
+            </label>
+            <label className="btn btn-secondary">
+              <input
+                type="radio"
+                name="options"
+                id="accepted"
+                onClick={() => {
+                  this.fetchCustomData(
+                    "doc/allaccepted/" + this.state.username
+                  );
+                }}
+              />{" "}
+              Accepted
+            </label>
+          </div>
+        </div>
+
         <Table
           id={"myDocsTableSearch"}
-          dataFields={this.dataFields}
-          columnNames={this.columnNames}
           tableData={this.state.tableData}
-          searchBarId={"createGroupUsersSearchBar"}
+          searchBarId={"myDocsSearch"}
+          requestNewData={this.fetchData}
+          pagingData={this.state.pagingData}
+          columns={this.columns}
+          selectType={"checkbox"}
+          handleRowSelect={() => {}}
+          setSelectedItems={() => {}}
         />
       </div>
     );

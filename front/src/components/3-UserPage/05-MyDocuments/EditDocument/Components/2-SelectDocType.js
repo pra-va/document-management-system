@@ -5,12 +5,12 @@ import serverUrl from "./../../../../7-properties/1-URL";
 class SelectType extends Component {
   constructor(props) {
     super(props);
-    this.state = { tableData: [], selectedRow: [2] };
+    this.state = { tableData: [], selectedRow: undefined };
   }
 
   componentDidMount() {
     if (this.props.username !== "" && this.state.tableData.length === 0) {
-      this.fetchUserDocTypes(this.props.username);
+      this.fetchUserDocTypes(0, 99999999, "name", "asc", "");
     }
   }
 
@@ -19,13 +19,26 @@ class SelectType extends Component {
   dataFields = ["number", "type", "select"];
   columnNames = ["#", "Type", ""];
 
-  fetchUserDocTypes = username => {
+  fetchUserDocTypes = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
     if (this.props.username !== "") {
+      const pagingData = {
+        limit: sizePerPage,
+        order: order,
+        page: page,
+        sortBy: sortField,
+        searchValueString: searchValueString
+      };
       axios
-        .get(serverUrl + username + "/dtypescreate")
+        .post(serverUrl + this.props.username + "/dtypescreate", pagingData)
         .then(response => {
           if (response.data.length !== 0 && response.data !== undefined) {
-            this.processData(response.data);
+            this.processData(response.data.docTypes);
           }
         })
         .catch(error => {
