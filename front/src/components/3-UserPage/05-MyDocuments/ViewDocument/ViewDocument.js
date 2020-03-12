@@ -43,7 +43,7 @@ class ViewDocument extends Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onHide={this.props.hide}>
+      <Modal show={this.props.show} onHide={this.props.hide} size={"lg"}>
         <Modal.Header closeButton>
           <Modal.Title>ID {this.props.item.uid} Info</Modal.Title>
         </Modal.Header>

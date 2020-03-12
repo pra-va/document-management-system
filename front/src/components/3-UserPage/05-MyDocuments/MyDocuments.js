@@ -70,7 +70,7 @@ class MyDocs extends Component {
         <Navigation />
         <div className="container">
           <ContentWrapper content={<h3>My Documents</h3>} />
-          <DataTable />
+          <DataTable username={this.state.username} />
           <div className="row d-flex justify-content-center p-5">
             <button
               className="btn btn-secondary btn-lg btn-myDocs m-3"

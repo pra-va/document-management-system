@@ -77,7 +77,7 @@ public class FilesController {
 
 	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
-		
+
 		return fileService.findAllFileDetailsByUsername(username);
 	}
 
@@ -94,7 +94,7 @@ public class FilesController {
 		response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
 		LOG.info("# LOG # Initiated by [{}]: User downloaded archive with all files created#",
 				SecurityContextHolder.getContext().getAuthentication().getName());
-		return zipService.zipFiles(fileService.findAllFilesByUsername(username));
+		return zipService.zipFiles(fileService.findAllFilesByUsername(username), username);
 	}
 
 	/**
@@ -105,22 +105,17 @@ public class FilesController {
 	 */
 	@GetMapping(value = "/api/files/csv/{username}")
 	public ResponseEntity<Resource> downloadCSV(@PathVariable String username) {
-		try {
-			LOG.info("# LOG # Initiated by [{}]: User generated and downloaded CSV file for all his files#",
-					SecurityContextHolder.getContext().getAuthentication().getName());
-			return fileService.generateCSV(username);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+		LOG.info("# LOG # Initiated by [{}]: User generated and downloaded CSV file for all his files#",
+				SecurityContextHolder.getContext().getAuthentication().getName());
+		return fileService.generateCSV(username);
 	}
-	
+
 	@DeleteMapping(path = "/api/files/delete/{UID}")
-	public ResponseEntity<String> deleteFileByUID(@PathVariable ("UID") String UID) throws IOException{
+	public ResponseEntity<String> deleteFileByUID(@PathVariable("UID") String UID) throws IOException {
 		fileService.deleteFileByUID(UID);
 		LOG.info("# LOG # Initiated by [{}]: User deleted file with file UID: [{}]#",
 				SecurityContextHolder.getContext().getAuthentication().getName(), UID);
 		return new ResponseEntity<String>("Deleted", HttpStatus.OK);
 	}
-	
+
 }

@@ -1,20 +1,20 @@
 import React, { useState } from "react";
-import Input from "./../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
-import Validation from "./../../../6-CommonElements/5-FormInputValidationLine/Validation";
+import Input from "./../../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
+import Validation from "./../../../../6-CommonElements/5-FormInputValidationLine/Validation";
 import axios from "axios";
-import serverUrl from "./../../../7-properties/1-URL";
+import serverUrl from "./../../../../7-properties/1-URL";
 
 const DocTypeInfo = props => {
   var [docTypeNameExists, setDocTypeNameExists] = useState(false);
 
   const handleDocTypeChange = event => {
     event.persist();
-    props.handleDocTypeNameChange(event.target.value);
+    props.handleNameChange(event.target.value);
     axios
       .get(serverUrl + "doct/" + event.target.value + "/exists")
       .then(response => {
-        setDocTypeNameExists(response.data);
-        if (response.data) {
+        setDocTypeNameExists(response.data && props.name === props.owner);
+        if (response.data && props.name === props.owner) {
           event.target.setCustomValidity("Document Type name must be unique.");
         } else {
           event.target.setCustomValidity("");
@@ -35,7 +35,7 @@ const DocTypeInfo = props => {
         type={"text"}
         placeholder={"Vacation request"}
         onChange={handleDocTypeChange}
-        value={props.docTypeValue}
+        value={props.name}
         pattern={4}
       />
       <div className="row">

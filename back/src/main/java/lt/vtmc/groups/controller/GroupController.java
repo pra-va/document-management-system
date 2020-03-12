@@ -1,8 +1,8 @@
 package lt.vtmc.groups.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,8 +24,8 @@ import lt.vtmc.groups.dto.GroupDetailsDTO;
 import lt.vtmc.groups.dto.UpdateGroupCommand;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
+import lt.vtmc.paging.PagingData;
 import lt.vtmc.user.controller.UserController;
-import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 import lt.vtmc.user.service.UserService;
 
@@ -59,7 +59,8 @@ public class GroupController {
 		if (groupService.findGroupByName(command.getGroupName()) == null) {
 			groupService.createGroup(command.getGroupName(), command.getDescription());
 			groupService.addUsersToGroup(command.getGroupName(), command.getUserList());
-			groupService.addDocTypes(command.getGroupName(), command.getDocTypesToSign(), command.getDocTypesToCreate());
+			groupService.addDocTypes(command.getGroupName(), command.getDocTypesToSign(),
+					command.getDocTypesToCreate());
 			LOG.info("# LOG # Initiated by [{}]: Group [{}] was created #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 
@@ -71,13 +72,13 @@ public class GroupController {
 		return new ResponseEntity<String>("Failed to create group", HttpStatus.CONFLICT);
 	}
 
-	@RequestMapping(path = "/api/groups", method = RequestMethod.GET)
-	public List<GroupDetailsDTO> listAllGroups() {
+	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
+	public Map<String, Object> listAllGroups(@RequestBody PagingData pagingData) {
 
-		LOG.info("# LOG # Initiated by [{}]: requested list of all groups #",
-				SecurityContextHolder.getContext().getAuthentication().getName());
+//		LOG.info("# LOG # Initiated by [{}]: requested list of all groups #",
+//				SecurityContextHolder.getContext().getAuthentication().getName());
 
-		return groupService.retrieveAllGroups();
+		return groupService.retrieveAllGroups(pagingData);
 	}
 
 	@GetMapping(path = "/api/groups/{groupname}")
@@ -118,7 +119,8 @@ public class GroupController {
 		if (groupService.findGroupByName(name) != null) {
 			groupService.updateGroupDetails(command.getNewName(), name, command.getDescription(), command.getUserList(),
 					command.getDocTypesToApprove(), command.getDocTypesToCreate());
-			groupService.addDocTypes(command.getNewName(), command.getDocTypesToApprove(), command.getDocTypesToCreate());
+			groupService.addDocTypes(command.getNewName(), command.getDocTypesToApprove(),
+					command.getDocTypesToCreate());
 			LOG.info("# LOG # Initiated by [{}]: Group [{}] was updated #",
 					SecurityContextHolder.getContext().getAuthentication().getName(), name);
 
@@ -152,7 +154,7 @@ public class GroupController {
 		if (tmpGroup != null) {
 			List<User> tmpList = tmpGroup.getUserList();
 			for (User user : tmpList) {
-				List<Group> tmpGroupList = user.getGroupList()	;
+				List<Group> tmpGroupList = user.getGroupList();
 				tmpGroupList.remove(tmpGroup);
 			}
 			tmpGroup.setUserList(null);

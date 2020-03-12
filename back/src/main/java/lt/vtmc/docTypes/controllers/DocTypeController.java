@@ -1,6 +1,8 @@
 package lt.vtmc.docTypes.controllers;
 
 import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +21,7 @@ import lt.vtmc.docTypes.dto.CreateDocTypeCommand;
 import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
 import lt.vtmc.docTypes.dto.UpdateDocTypeCommand;
 import lt.vtmc.docTypes.services.DocTypeService;
+import lt.vtmc.paging.PagingData;
 import lt.vtmc.user.controller.UserController;
 /**
  * Controller for managing Document Types.
@@ -56,9 +59,9 @@ public class DocTypeController {
 		return new ResponseEntity<String>("Failed to create doctype", HttpStatus.CONFLICT);
 	}
 	
-	@GetMapping(path = "/api/doct/all")
-	public List<DocTypeDetailsDTO> getAllDocTypes(){
-		return docTypeService.getAllDocTypes();
+	@PostMapping(path = "/api/doct/all")
+	public Map<String, Object> getAllDocTypes(@RequestBody PagingData pagingData){
+		return docTypeService.retrieveAllDocTypes(pagingData);
 	}
 	
 	@GetMapping(path = "/api/doct/{name}")
