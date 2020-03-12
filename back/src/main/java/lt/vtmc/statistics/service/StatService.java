@@ -41,19 +41,44 @@ public class StatService {
 		}
 
 		List<StatisticsDocTypeDTO> statToReturn = new ArrayList<StatisticsDocTypeDTO>();
+
+		// Finding all documents for selected docType
 		for (DocType dType : tmpList) {
-			// Finding all documents for selected docType
 			List<Document> tmpListDoc = new ArrayList<Document>();
 			tmpListDoc.addAll(docRepo.findAllBydType(dType));
 
 			// Creating temporary StatisticsDTO object with docType name
 			StatisticsDocTypeDTO tmpDoc = new StatisticsDocTypeDTO();
 			tmpDoc.setDocType(dType.getName());
+			tmpDoc.setNumberOfSubmitted(0);
+			tmpDoc.setNumberOfAccepted(0);
+			tmpDoc.setNumberOfRejected(0);
 
 			// Looping through every document of selected docType and filtering by status
 			// and date frame
+
 			for (Document document : tmpListDoc) {
-				int dateSubmit = Integer.parseInt(document.getDateSubmit().toString().substring(0, 9).replace("-", ""));
+
+				
+
+				int dateSubmit = Integer
+						.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
+
+				System.out
+						.println("######## document.getDateSubmit(): ########" + document.getDateSubmit() + "########");
+
+				System.out.println("######## document.getDateSubmit().toString(): ########"
+						+ document.getDateSubmit().toString() + "########");
+
+				System.out.println("######## document.getDateSubmit().toString().substring(0, 10): ########"
+						+ document.getDateSubmit().toString().substring(0, 10) + "########");
+
+				System.out.println(
+						"######## document.getDateSubmit().toString().substring(0, 10).replace(\"-\", \"\"): ########"
+								+ document.getDateSubmit().toString().substring(0, 10).replace("-", "") + "########");
+
+				System.out.println("######## DATE SUBMIT: ########" + dateSubmit + "########");
+
 				if (startDate <= dateSubmit & endDate >= dateSubmit) {
 					if (document.getStatus() == Status.SUBMITTED) {
 						tmpDoc.setNumberOfSubmitted((tmpDoc.getNumberOfSubmitted() + 1));
@@ -67,6 +92,7 @@ public class StatService {
 					statToReturn.add(tmpDoc);
 				}
 			}
+
 		}
 
 		return statToReturn;
@@ -108,21 +134,21 @@ public class StatService {
 
 		List<StatisticsUserDTO> statToReturn = new ArrayList<StatisticsUserDTO>();
 
-		for(Map.Entry<String, Integer> entry: userMap.entrySet()) {
+		for (Map.Entry<String, Integer> entry : userMap.entrySet()) {
 			String usernameToReturn = entry.getKey();
 			String name = userRepository.findUserByUsername(usernameToReturn).getName();
 			String surname = userRepository.findUserByUsername(usernameToReturn).getSurname();
 			int docNumber = entry.getValue();
-			
+
 			StatisticsUserDTO tmpUserToReturn = new StatisticsUserDTO();
 			tmpUserToReturn.setUsername(usernameToReturn);
 			tmpUserToReturn.setName(name);
 			tmpUserToReturn.setSurname(surname);
 			tmpUserToReturn.setDocNumber(docNumber);
 			statToReturn.add(tmpUserToReturn);
-						
+
 		}
-		
+
 		return statToReturn;
 
 	}

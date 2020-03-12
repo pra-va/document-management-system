@@ -21,7 +21,7 @@ public class StatisticsController {
 	@Autowired
 	private StatService statService;
 	
-	@GetMapping(path = "/api/statisticsdtpye")
+	@GetMapping(path = "/api/statisticsdtype")
 	public List<StatisticsDocTypeDTO> getDocTypeStatistics(String username, int startDate, int endDate ) {
 		
 		LOG.info("# LOG # Initiated by [{}]: Requested docType statistics #",
