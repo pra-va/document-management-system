@@ -44,7 +44,7 @@ var GroupInformation = props => {
   return (
     <div>
       <h3 className="d-flex justify-content-start">
-        1. Enter new group information.
+        1. Update groups information.
       </h3>
 
       <InputLine

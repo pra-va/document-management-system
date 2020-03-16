@@ -28,7 +28,6 @@ class DocTypes extends Component {
   columnNames = ["#", "Name", "Creating Groups", "Signing Groups", ""];
 
   columns = [
-    // { dataField: "number", text: "#", sort: false },
     { dataField: "name", text: "Type", sort: true },
     { dataField: "canCreate", text: "Creating Groups", sort: false },
     { dataField: "canSign", text: "Signing Groups", sort: false },
@@ -151,7 +150,7 @@ class DocTypes extends Component {
             requestNewData={this.fetchServerData}
             pagingData={this.state.pagingData}
             columns={this.columns}
-            selectType={"checkbox"}
+            selectType={"radio"}
             handleRowSelect={() => {}}
             setSelectedItems={() => {}}
           />

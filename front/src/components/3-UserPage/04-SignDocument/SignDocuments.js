@@ -7,6 +7,7 @@ import Files from "./../../../resources/doc.svg";
 import PopOver from "../../6-CommonElements/8-PopOver/PopOver";
 import SignOrRejectButton from "./SignOrRejectButton";
 import ContentWrapper from "./../../6-CommonElements/10-TopContentWrapper/ContentWrapper";
+import "./SignDocument.css";
 
 export default class SignDocuments extends Component {
   constructor(props) {
@@ -90,7 +91,6 @@ export default class SignDocuments extends Component {
   };
 
   processData = data => {
-    console.log(data);
     const tableDataTmp = data.map((item, index) => {
       return {
         uid: item.uid,
@@ -101,7 +101,9 @@ export default class SignDocuments extends Component {
         createdBy: item.author,
         files: (
           <PopOver
-            popOverApparance={<img className="invert" src={Files} alt="..." />}
+            popOverApparance={
+              <img className="invert img-resize" src={Files} alt="..." />
+            }
             popOverTitle={"Attached files:"}
             popOverContent={this.reduceFilesAttached(item.filesAttached)}
           />
@@ -136,7 +138,7 @@ export default class SignDocuments extends Component {
             requestNewData={this.fetchDocumentsToBeSigned}
             pagingData={this.state.pagingData}
             columns={this.columns}
-            selectType={"checkbox"}
+            selectType={"radio"}
             handleRowSelect={() => {}}
             setSelectedItems={() => {}}
           />

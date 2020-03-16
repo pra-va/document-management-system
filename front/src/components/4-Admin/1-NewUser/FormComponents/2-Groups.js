@@ -15,19 +15,10 @@ class Groups extends Component {
     };
   }
 
-  columns = [
-    { dataField: "name", text: "Name", sort: true },
-    { dataField: "addOrRemove", text: "", sort: false }
-  ];
+  columns = [{ dataField: "name", text: "Name", sort: true }];
 
   componentDidMount() {
     this.fetchGroupsData(0, 8, null, null, "");
-  }
-
-  componentDidUpdate() {
-    if (this.props.tableData !== this.state.tableData) {
-      this.setState({ tableData: this.props.tableData });
-    }
   }
 
   fetchGroupsData = (
@@ -48,16 +39,27 @@ class Groups extends Component {
     axios
       .post(serverUrl + "groups", pageData)
       .then(response => {
-        this.props.setUpGroups(response.data.groupList);
         this.setState({ pagingData: response.data.pagingData });
+        this.parseData(response.data.groupList);
       })
       .catch(error => {
         console.log(error);
       });
   };
 
+  parseData = data => {
+    let tempData = data.map((item, index) => {
+      return {
+        number: index + 1,
+        name: item.name,
+        description: item.description
+      };
+    });
+    this.setState({ tableData: tempData });
+  };
+
   handleRowSelect = (row, isSelect) => {
-    const selectedGroupNames = this.state.selectedGroupNames;
+    const selectedGroupNames = [...this.state.selectedGroupNames];
     if (isSelect) {
       if (!selectedGroupNames.includes(row.name)) {
         selectedGroupNames.push(row.name);
@@ -83,6 +85,14 @@ class Groups extends Component {
     return selectedItemNumbersForTable;
   };
 
+  handleSelectAll = (isSelect, rows) => {
+    rows.forEach(row => {
+      setTimeout(() => {
+        this.handleRowSelect(row, isSelect);
+      }, 1);
+    });
+  };
+
   render() {
     return (
       <div className="mx-3">
@@ -94,7 +104,7 @@ class Groups extends Component {
 
         <Table
           id={"newUserGroups"}
-          tableData={this.state.tableData}
+          tableData={[...this.state.tableData]}
           searchBarId={"currentGroupsSearchBar"}
           requestNewData={this.fetchGroupsData}
           pagingData={this.state.pagingData}
@@ -102,6 +112,7 @@ class Groups extends Component {
           selectType={"checkbox"}
           select={"true"}
           handleRowSelect={this.handleRowSelect}
+          handleSelectAll={this.handleSelectAll}
           setSelectedItems={this.setSelectedItems}
         />
       </div>

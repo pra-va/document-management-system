@@ -62,7 +62,7 @@ class NewGroup extends Component {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit group {this.props.owner}</Modal.Title>
+          <Modal.Title>Edit {this.props.owner} Document Type</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.handleSubmit}>
@@ -97,7 +97,7 @@ class NewGroup extends Component {
                   className="btn btn-dark"
                   data-dismiss="modal"
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </div>

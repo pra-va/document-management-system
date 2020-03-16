@@ -245,7 +245,7 @@ class MyDocsTable extends Component {
           requestNewData={this.fetchData}
           pagingData={this.state.pagingData}
           columns={this.columns}
-          selectType={"checkbox"}
+          selectType={"radio"}
           handleRowSelect={() => {}}
           setSelectedItems={() => {}}
         />

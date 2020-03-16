@@ -88,6 +88,9 @@ class CreateDocument extends Component {
     let tmpFilesForTable = [...this.state.attachedFilesTableValues];
     let stateLength = this.state.attachedFilesTableValues.length;
 
+    console.log("addfiles");
+    console.log(files[0]);
+
     for (let i = 0; i < files.length; i++) {
       const element = files[i];
       var size = "";
@@ -175,10 +178,10 @@ class CreateDocument extends Component {
   render() {
     return (
       <div>
-        <Navigation />{" "}
+        <Navigation />
         <div className="container">
           <ContentWrapper content={<h3>New Document</h3>} />
-          <div className="container" id="newDocument">
+          <div className="container p-0" id="newDocument">
             <form onSubmit={this.handleUpload} id="createDocumentForm">
               <EditInfo
                 handleNameChange={this.handleNameChange}
@@ -204,6 +207,7 @@ class CreateDocument extends Component {
                       values={this.state.attachedFilesTableValues}
                       size={this.state.filesSize}
                       handleRemove={this.handleRemove}
+                      areAllFilesPdf={this.state.areFilesOnlyPdf}
                     />
                   </div>
                 </div>
@@ -226,13 +230,6 @@ class CreateDocument extends Component {
                 ></div>
               </div>
               <div className="form-group row d-flex justify-content-center m-0">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark mr-2"
-                  onClick={this.props.hideNewGroup}
-                >
-                  Cancel
-                </button>
                 <button
                   type="submit"
                   className="btn btn-dark ml-2"

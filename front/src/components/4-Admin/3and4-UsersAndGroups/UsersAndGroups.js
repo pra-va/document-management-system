@@ -24,7 +24,6 @@ class ListOfUsers extends Component {
   groupsTableNames = ["#", "Group Name", "Members", ""];
 
   columnsUsers = [
-    // { dataField: "number", text: "#", sort: false },
     { dataField: "name", text: "First Name", sort: true },
     { dataField: "surname", text: "Last Name", sort: true },
     { dataField: "username", text: "Username", sort: true },
@@ -33,7 +32,6 @@ class ListOfUsers extends Component {
   ];
 
   columnsGroups = [
-    // { dataField: "number", text: "#", sort: false },
     { dataField: "name", text: "Group Name", sort: true },
     { dataField: "members", text: "Members", sort: false },
     { dataField: "edit", text: "", sort: false }
@@ -193,7 +191,7 @@ class ListOfUsers extends Component {
                 requestNewData={this.connectForUsersData}
                 pagingData={this.state.pagingData}
                 columns={this.columnsUsers}
-                selectType={"checkbox"}
+                selectType={"radio"}
                 handleRowSelect={() => {}}
                 setSelectedItems={() => {}}
               />
@@ -205,7 +203,7 @@ class ListOfUsers extends Component {
                 requestNewData={this.connectForGroupsData}
                 pagingData={this.state.pagingData}
                 columns={this.columnsGroups}
-                selectType={"checkbox"}
+                selectType={"radio"}
                 handleRowSelect={() => {}}
                 setSelectedItems={() => {}}
               />

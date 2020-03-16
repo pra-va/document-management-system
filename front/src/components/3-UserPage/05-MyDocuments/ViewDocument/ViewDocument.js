@@ -90,7 +90,9 @@ class ViewDocument extends Component {
           </div>
           <div className="row p-3">
             <div className="col-3">Decline reason:</div>
-            <div className="col-9">{this.props.item.reasonToReject}</div>
+            <div className="col-9">
+              <p>{this.props.item.reasonToReject}</p>
+            </div>
           </div>
           <div className="row p-3">
             <div className="col-3">Validator:</div>

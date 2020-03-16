@@ -29,7 +29,11 @@ class UsersProfile extends Component {
           <Modal.Body>
             <div className="m-3">
               <div className="row d-flex justify-content-center">
-                <img src={UserLogo} alt={"Unable to load..."} />
+                <img
+                  className="img-resize"
+                  src={UserLogo}
+                  alt={"Unable to load..."}
+                />
               </div>
               <div className="row d-flex justify-content-center">
                 <UsernameReciever setUpUsername={this.setUpUsername} />
