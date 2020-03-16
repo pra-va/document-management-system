@@ -14,8 +14,7 @@ class AddUsersToGroup extends Component {
     { dataField: "name", text: "Name", sort: true },
     { dataField: "surname", text: "Surname", sort: true },
     { dataField: "username", text: "Username", sort: true },
-    { dataField: "role", text: "Role", sort: true },
-    { dataField: "add", text: "", sort: false }
+    { dataField: "role", text: "Role", sort: true }
   ];
 
   componentDidMount() {
@@ -68,23 +67,7 @@ class AddUsersToGroup extends Component {
         name: item.name,
         surname: item.surname,
         username: item.username,
-        role: item.role,
-        add: (
-          <button
-            onClick={event => {
-              event.preventDefault();
-            }}
-            className={
-              this.state.selectedUsers.includes(item.username)
-                ? "btn btn-danger btn-sm"
-                : "btn btn-secondary btn-sm"
-            }
-          >
-            {this.state.selectedUsers.includes(item.username)
-              ? "Remove"
-              : "Add"}
-          </button>
-        )
+        role: item.role
       };
     });
     this.setState({ tableData: tableData });
@@ -162,10 +145,19 @@ class AddUsersToGroup extends Component {
     return selectedItemNumbersForTable;
   };
 
+  handleSelectAll = (isSelect, rows) => {
+    rows.forEach(row => {
+      setTimeout(() => {
+        this.handleRowSelect(row, isSelect);
+      }, 1);
+    });
+  };
   render() {
     return (
       <div>
-        <h3 className="d-flex justify-content-start">2. Add group users.</h3>
+        <h3 className="d-flex justify-content-start">
+          2. Update groups users.
+        </h3>
 
         <Table
           id={"newUserGroups"}
@@ -177,6 +169,7 @@ class AddUsersToGroup extends Component {
           selectType={"checkbox"}
           select={"true"}
           handleRowSelect={this.handleRowSelect}
+          handleSelectAll={this.handleSelectAll}
           setSelectedItems={this.setSelectedItems}
         />
       </div>

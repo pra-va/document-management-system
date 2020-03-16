@@ -14,19 +14,13 @@ class Groups extends Component {
     };
   }
 
-  columns = [
-    { dataField: "name", text: "Name", sort: true },
-    { dataField: "addOrRemove", text: "", sort: false }
-  ];
+  columns = [{ dataField: "name", text: "Name", sort: true }];
 
   componentDidMount() {
     this.fetchGroupsData(0, 8, null, null, "");
   }
 
   componentDidUpdate() {
-    if (this.props.tableData !== this.state.tableData) {
-      this.setState({ tableData: this.props.tableData });
-    }
     if (!this.state.initialSetupHappend && this.props.addedGroups !== null) {
       this.setState({
         selectedGroupNames: this.props.addedGroups,
@@ -53,12 +47,24 @@ class Groups extends Component {
     axios
       .post(serverUrl + "groups", pageData)
       .then(response => {
-        this.props.setUpGroups(response.data.groupList);
+        this.parseData(response.data.groupList);
         this.setState({ pagingData: response.data.pagingData });
       })
       .catch(error => {
         console.log(error);
       });
+  };
+
+  parseData = data => {
+    this.setState({ allGroups: [] });
+    let tempData = data.map((item, index) => {
+      return {
+        number: index + 1,
+        name: item.name,
+        description: item.description
+      };
+    });
+    this.setState({ tableData: tempData });
   };
 
   handleRowSelect = (row, isSelect) => {
@@ -88,12 +94,20 @@ class Groups extends Component {
     return selectedItemNumbersForTable;
   };
 
+  handleSelectAll = (isSelect, rows) => {
+    rows.forEach(row => {
+      setTimeout(() => {
+        this.handleRowSelect(row, isSelect);
+      }, 1);
+    });
+  };
+
   render() {
     return (
       <div className="mx-3">
         <div className="row d-flex justify-content-start">
           <h3 className="d-flex justify-content-start">
-            2. Add user to a group.
+            2. Update user groups.
           </h3>
         </div>
 
@@ -107,6 +121,7 @@ class Groups extends Component {
           selectType={"checkbox"}
           select={"true"}
           handleRowSelect={this.handleRowSelect}
+          handleSelectAll={this.handleSelectAll}
           setSelectedItems={this.setSelectedItems}
         />
       </div>

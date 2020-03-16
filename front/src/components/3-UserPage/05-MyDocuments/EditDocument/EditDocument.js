@@ -225,7 +225,6 @@ class EditDocument extends Component {
       newName: this.state.name,
       filesToRemoveUID: filesToRemove
     };
-    console.log("aaaaaaaaaaaaaaaaa" + data);
 
     axios
       .post(serverUrl + "doc/update" + uid, postData)

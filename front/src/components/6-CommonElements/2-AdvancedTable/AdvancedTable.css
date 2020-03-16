@@ -46,8 +46,13 @@ a.page-link:hover {
 /* When table tada toes not fit, it will be replaced with parital value and "..." at the end. */
 td,
 th {
-  max-width: 120px;
+  /* max-width: 120px; */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.react-bootstrap-table table {
+  table-layout: auto;
+  width: 100%;
 }

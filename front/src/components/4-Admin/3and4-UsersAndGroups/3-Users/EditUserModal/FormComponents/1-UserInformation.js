@@ -106,7 +106,7 @@ class UserInformation extends Component {
     return (
       <div>
         <h3 className="d-flex justify-content-start">
-          1. Enter new user information.
+          1. Update user information.
         </h3>
 
         <InputLine

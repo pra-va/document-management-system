@@ -73,8 +73,6 @@ class AcceptOrReject extends Component {
         username: this.state.username
       })
       .then(response => {
-        console.log("accepted");
-        this.props.hide();
         window.location.reload();
       })
       .catch(error => {
@@ -93,8 +91,6 @@ class AcceptOrReject extends Component {
     axios
       .post(serverUrl + "doc/reject/" + this.props.item.uid, postData)
       .then(response => {
-        console.log("accepted");
-        this.props.hide();
         window.location.reload();
       })
       .catch(error => {

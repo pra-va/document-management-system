@@ -46,11 +46,11 @@ class Table extends Component {
       const selectedItemsProp = this.props.setSelectedItems();
 
       if (
-        tableData !== tableDataProp ||
+        JSON.stringify(tableData) !== JSON.stringify(tableDataProp) ||
         JSON.stringify(selectedItems) !== JSON.stringify(selectedItemsProp)
       ) {
         this.setState({
-          tableData: this.props.tableData,
+          tableData: [...this.props.tableData],
           selectedItems: this.props.setSelectedItems()
         });
       }
@@ -85,8 +85,6 @@ class Table extends Component {
     if (this.props.columns !== undefined) {
       return this.props.columns;
     }
-
-    console.log(this.props);
 
     let columns = this.state.dataFields.map((item, index) => {
       return {
@@ -139,9 +137,13 @@ class Table extends Component {
           ? this.props.selectType
           : "checkbox",
       clickToSelect: true,
-      hideSelectColumn: true,
-      bgColor: this.props.select !== undefined ? "#262626" : "",
+      hideSelectColumn: this.props.selectType === "checkbox" ? false : true,
+      bgColor: this.props.select !== undefined ? "#6c757d" : "",
       onSelect: this.handleRowSelect,
+      onSelectAll:
+        this.props.handleSelectAll === undefined
+          ? () => {}
+          : this.props.handleSelectAll,
       selected: this.state !== undefined ? this.state.selectedItems : []
     };
 
@@ -177,7 +179,7 @@ class Table extends Component {
                         keyField="id"
                         {...props.baseProps}
                         {...paginationTableProps}
-                        classes="table-striped table-dark table-sm"
+                        classes="table-striped table-dark table-sm overflow-auto"
                         selectRow={selectRow}
                         pagination={paginationFactory({
                           page:
@@ -204,6 +206,7 @@ class Table extends Component {
                           ]
                         })}
                         onTableChange={this.handleTableChange}
+                        wrapperClasses="table-responsive"
                         hover
                       />
                     </div>
@@ -214,8 +217,9 @@ class Table extends Component {
                   remote={{ pagination: true, sort: true, search: true }}
                   keyField="id"
                   {...props.baseProps}
-                  classes="table-striped table-dark table-sm"
+                  classes="table-striped table-dark table-sm overflow-auto "
                   onTableChange={this.handleTableChange}
+                  wrapperClasses="table-responsive"
                   hover
                   selectRow={selectRow}
                 />
