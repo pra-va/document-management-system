@@ -2,6 +2,7 @@ package lt.vtmc.documents.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,12 +38,14 @@ public class Document {
 	private String dateCreate;
 
 	@NotEmpty
+	@Column(name = "description", length = 500)
 	private String description;
 
 	private String dateSubmit = null;
 
 	private String dateProcessed = null;
 
+	@Column(name = "reject_reason", length = 3000)
 	private String reasonToReject = null;
 
 	private Status status;
