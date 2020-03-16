@@ -119,14 +119,11 @@ public class DocTypeService {
 			Group tmp = dType.getGroupsApproving().get(i);
 			List<DocType> tmpList = tmp.getDocTypesToApprove();
 			tmpList.remove(dType);
-			tmp.setDocTypesToApprove(tmpList);
-			groupRepository.save(tmp);
 		}
 		for (int i = 0; i < dType.getGroupsCreating().size(); i++) {
 			Group tmp = dType.getGroupsCreating().get(i);
-			List<DocType> tmpList = tmp.getDocTypesToApprove();
+			List<DocType> tmpList = tmp.getDocTypesToCreate();
 			tmpList.remove(dType);
-			tmp.setDocTypesToApprove(tmpList);
 			groupRepository.save(tmp);
 		}
 		docTypeRepo.delete(dType);
