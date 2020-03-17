@@ -1,8 +1,11 @@
 package page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class EditUserPage extends AbstractPage {
 
@@ -12,6 +15,15 @@ public class EditUserPage extends AbstractPage {
 
 	/* BUTTONS */
 
+	@FindBy(xpath = "button[text()='Add']")
+	private WebElement buttonAddUserToGroup;
+
+	@FindBy(xpath = "button[text()='Remove']")
+	private WebElement buttonRemoveUserFromGroup;
+	
+	@FindBy(xpath = "//button[contains(text(),'Update')]")
+	private WebElement buttonUpdate;
+	
 	@FindBy(xpath = "//button[contains(text(),'Cancel')]")
 	private WebElement buttonCancel;
 
@@ -23,28 +35,70 @@ public class EditUserPage extends AbstractPage {
 	@FindBy(id = "inputLastName")
 	private WebElement lastNameField;
 
-	@FindBy(xpath = "//div[@id='newUserAddedGroups']//input[@aria-label='Search']")
-	private WebElement searchUsersGroupsField;
+	@FindBy(id = "checkBoxShowPassword")
+	private WebElement checkBoxUpdatePassword;
+
+	@FindBy(id = "inputPassword")
+	private WebElement passwordField;
 
 	@FindBy(id = "radioUser")
 	private WebElement radioUser;
 
 	@FindBy(id = "radioAdmin")
 	private WebElement radioAdmin;
+	
+	@FindBy(xpath = "//input[@placeholder='Find by Name']")
+	private WebElement searchGroups;
+	
+	@FindBy(xpath = "//*[@aria-label='Search']")
+	private WebElement searchField;
 
+	
 	/* SEND KEYS */
 
-	public void sendKeysSearchUsersGroups(String groupName) {
-		searchUsersGroupsField.sendKeys(groupName);
+	public void sendKeysUpdateFirstName(String firstName) {
+		this.firstNameField.sendKeys(firstName);
 	}
 
+	public void sendKeysUpdateLastName(String lastName) {
+		this.lastNameField.sendKeys(lastName);
+	}
+	
+	public void sendKeysUpdatePassword(String password) {
+		this.passwordField.sendKeys(password);
+	}
+
+	public void sendKeysSearchGroups(String groupName) {
+		searchField.sendKeys(groupName);
+	}
+		
 	/* CLICK BUTTONS */
 
-	public void clickCancelButton() {
-		buttonCancel.click();
+	public void checkUpdatePassword() {
+		this.checkBoxUpdatePassword.click();
+	}
+	
+	public void clickAdminRadio() {
+		this.radioAdmin.click();
+	}
+	
+	public void clickUserRadio() {
+		this.radioUser.click();
+	}
+	
+	public void clickAddRemoveSpecificGroupButton(String groupName) {
+		driver.findElement(By.xpath("//table//td[contains(text(),'" + groupName + "')]/..//td[2]//button")).click();		
 	}
 
-	/* GET METHODS */
+	public void clickUpdateButton() {
+		this.buttonUpdate.click();
+	}
+	
+	public void clickCancelButton() {
+		this.buttonCancel.click();
+	}
+
+	/* GET TEXT METHODS */
 
 	public String getFirstName() {
 		return firstNameField.getAttribute("value");
@@ -63,5 +117,20 @@ public class EditUserPage extends AbstractPage {
 	public boolean isRadioButtonUserSelected() {
 		return radioUser.isSelected();
 	}
+	
+	public boolean isUserAddedToGroup(String groupName) {
+		return driver.findElement(By.xpath("//td[contains(text(), '" + groupName + "')]/..//input")).isSelected();
+	}
+	
+	
+	/* WAITS */
 
+	public void waitForVisibility(WebElement element) {
+		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element));
+	}
+	
+	public void waitForEditUserPage() {
+		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(firstNameField));
+	}
 }
+

@@ -1,0 +1,17 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="newDocumentTests" preserve-order="true">
+	<test name="newDocumentTests">
+		<parameter name="adminUserName" value="admin"/>		
+		<parameter name="adminPassword" value="adminadmin"/>			
+		<parameter name="docName" value="Resignation Letter"/>
+		<parameter name="docDescription" value="Resignation Letter of Jane Doe"/>
+		<parameter name="docType" value="HR documents"/>
+		<parameter name="filePath" value="gggggggggggg"/>
+		<parameter name="fileName" value="ADMIN"/>		
+		<classes>
+			<class name="test.NewDocumentTests"/>
+		</classes>
+	</test>
+</suite>
+

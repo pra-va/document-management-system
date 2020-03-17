@@ -133,5 +133,4 @@ public class MainPage extends AbstractPage {
 	public void waitForLogoutButton() {
 		this.waitForVisibility(this.buttonLogout);
 	}
-
 }

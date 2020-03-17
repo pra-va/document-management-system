@@ -39,8 +39,36 @@ public class AdminNewUserPage extends AbstractPage {
 	private WebElement radioUser;
 
 	@FindBy(xpath = "//*[@aria-label='Search']")
-	private List<WebElement> searchFields;
-
+	private WebElement searchField;
+	
+	@FindBy(xpath = "//input[@id='inputFirstName']/../small[contains(text(),"
+			+ "'Field can not be empty and longer than 20 characters long.')]/span")	
+	private  WebElement firstNameLengthValidationLabel;
+	
+	@FindBy(xpath = "//input[@id='inputLastName']/../small[contains(text(),"
+			+ "'Field can not be empty and longer than 20 characters long.')]/span")	
+	private  WebElement lastNameLengthValidationLabel;
+		
+	@FindBy(xpath = "//input[@id='inputUsername']/../small[contains(text(),"
+			+ "'Username must be between 4 and 20 characters long.')]/span")	
+	private  WebElement userNameLengthValidationLabel;
+	
+	@FindBy(xpath = "//input[@id='inputUsername']/../small[contains(text(),'Username must be unique.')]/span")	
+	private  WebElement userNameUniquenessValidationLabel;
+	
+	@FindBy(xpath = "//input[@id='inputUsername']/../small[contains(text(),'Field must contain 1 word.')]/span")	
+	private  WebElement userNameNoSpacesValidationLabel;
+	
+	@FindBy(xpath = "//input[@id='inputUsername']/../small[contains(text(),'No special characters allowed.')]/span")	
+	private  WebElement userNameNoSpecCharValidationLabel;
+	
+	@FindBy(xpath = "//input[@id='inputPassword']/../small[contains(text(),"
+			+ "'Password must be between 8 and 20 characters long.')]/span")	
+	private  WebElement passwordLengthValidationLabel;
+	
+	@FindBy(xpath = "//input[@id='inputPassword']/../small[contains(text(),'Field must contain 1 word.')]/span")	
+	private  WebElement passwordNoSpacesValidationLabel;
+	
 	/* BUTTONS */
 
 	@FindBy(xpath = "//button[contains(text(),'Cancel')]")
@@ -49,7 +77,7 @@ public class AdminNewUserPage extends AbstractPage {
 	@FindBy(xpath = "//button[contains(text(),'Create')]")
 	private WebElement buttonCreate;
 
-	@FindBy(xpath = "button[text()='Add']")
+	@FindBy(xpath = "//button[contains(text(),'Add')]")
 	private WebElement buttonAddUserToGroup;
 
 	@FindBy(xpath = "button[text()='Remove']")
@@ -63,8 +91,9 @@ public class AdminNewUserPage extends AbstractPage {
 
 	public void clickCreateButton() {
 		this.buttonCreate.click();
+		new WebDriverWait(driver, 1).until(ExpectedConditions.visibilityOf(firstNameField));
 	}
-
+	
 	public void checkShowPassword() {
 		this.showPasswordCheckBox.click();
 	}
@@ -84,9 +113,9 @@ public class AdminNewUserPage extends AbstractPage {
 	public void clickUserRadio() {
 		this.radioUser.click();
 	}
-
-	public void clickAddSpecificGroupButton(String groupName) {
-		driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]/..//td[3]//button")).click();
+	
+	public void clickAddRemoveSpecificGroupButton(String groupName) {
+		driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]")).click();			
 	}
 
 	/* SEND KEYS */
@@ -107,13 +136,12 @@ public class AdminNewUserPage extends AbstractPage {
 		this.passwordField.sendKeys(password);
 	}
 
-	public void sendKeysSearchGroupToAdd(String groupName) {
-		searchFields.get(0).sendKeys(groupName);
+	public void sendKeysSearchGroup(String groupName) {
+		this.searchField.sendKeys(groupName);
 	}
-
-	public void sendKeysSearchGroupToRemove(String groupName) {
-		searchFields.get(1).sendKeys(groupName);
-
+	
+	public String returnAttribute() {
+		return searchField.getAttribute("aria-label");
 	}
 
 	/* IS CLICKABLE METHOD */
@@ -131,5 +159,36 @@ public class AdminNewUserPage extends AbstractPage {
 //	public void clickRemoveSpecificGroupButton(String groupName) {
 //		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
 //	}
+	
+	public String firstNameLengthValidationLabelAttribute(){
+		return firstNameLengthValidationLabel.getAttribute("aria-label");
+	}
+	
+	public String lastNameLengthValidationLabelAttribute() {
+		return lastNameLengthValidationLabel.getAttribute("aria-label");
+	}
+	
+	public String userNameLengthValidationLabelAttribute() {
+		return userNameLengthValidationLabel.getAttribute("aria-label");
+	}
 
+	public String userNameUniquenessValidationLabelAttribute() {
+		return userNameUniquenessValidationLabel.getAttribute("aria-label");
+	}
+
+	public String userNameNoSpacesValidationLabelAttribute() {
+		return userNameNoSpacesValidationLabel.getAttribute("aria-label");
+	}
+	
+	public String userNameNoSpecCharValidationLabelAttribute() {
+		return userNameNoSpecCharValidationLabel.getAttribute("aria-label");
+	}
+	
+	public String passwordLengthValidationLabelAttribute() {
+		return passwordLengthValidationLabel.getAttribute("aria-label");
+	}
+	
+	public String passwordNoSpacesValidationLabelAttribute() {
+		return passwordNoSpacesValidationLabel.getAttribute("aria-label");
+	}
 }
