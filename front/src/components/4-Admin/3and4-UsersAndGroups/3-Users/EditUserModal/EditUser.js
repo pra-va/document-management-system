@@ -58,7 +58,6 @@ class NewModal extends Component {
     const { firstName, lastName, password, addedGroups, role } = this.state;
 
     let url = serverUrl + "user/update/" + this.props.ownerName;
-    console.log(url);
 
     axios
       .post(url, {
@@ -69,7 +68,8 @@ class NewModal extends Component {
         surname: lastName
       })
       .then(response => {
-        window.location.reload();
+        this.props.onHide();
+        this.props.reloadTable();
       })
       .catch(error => {
         console.log(error);

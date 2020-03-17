@@ -16,7 +16,8 @@ class DocTypes extends Component {
       docTypesData: [],
       serverData: [],
       tableData: [],
-      pagingData: []
+      pagingData: [],
+      serverRequestPagingData: []
     };
   }
 
@@ -53,14 +54,16 @@ class DocTypes extends Component {
       .post(serverUrl + "doct/all", pageData)
       .then(response => {
         this.parseData(response.data.documentList);
-        this.setState({ pagingData: response.data.pagingData });
+        this.setState({
+          pagingData: response.data.pagingData,
+          serverRequestPagingData: pageData
+        });
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  //
   parseData = data => {
     if (data) {
       const tableData = data.map((item, index) => {
@@ -93,11 +96,25 @@ class DocTypes extends Component {
               }
             />
           ),
-          edit: <Edit owner={item.name} />
+          edit: <Edit owner={item.name} reloadTable={this.reloadTable} />
         };
       });
       this.setState({ tableData: tableData });
     }
+  };
+
+  reloadTable = () => {
+    const { serverRequestPagingData } = this.state;
+    setTimeout(() => {
+      this.setState({ tableData: [] });
+    }, 1);
+    this.fetchServerData(
+      serverRequestPagingData.page,
+      serverRequestPagingData.limit,
+      serverRequestPagingData.sortBy,
+      serverRequestPagingData.order,
+      serverRequestPagingData.searchValueString
+    );
   };
 
   reduceList = data => {

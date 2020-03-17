@@ -22,18 +22,27 @@ const AttachedFiles = props => {
   };
 
   const checkFileTypes = () => {
-    let areAllFilesPdf = true;
+    const { onlyPdfFiles, setOnlyPdfFiles, values } = props;
+    let filteredFilesOnlyPDF = true;
 
-    props.values.forEach(element => {
-      if (element.file.type !== "application/pdf") {
-        areAllFilesPdf = false;
+    for (let i = 0; i < values.length; i++) {
+      const element = values[i];
+      if (element.file !== undefined) {
+        if (element.file.type !== "application/pdf") {
+          filteredFilesOnlyPDF = false;
+          break;
+        }
       }
-    });
+    }
+
+    if (onlyPdfFiles !== filteredFilesOnlyPDF) {
+      setOnlyPdfFiles(filteredFilesOnlyPDF);
+    }
 
     if (numberOfFiles > 0) {
       return (
         <Validation
-          satisfied={areAllFilesPdf}
+          satisfied={filteredFilesOnlyPDF}
           output="Only files with PDF format are allowed."
         />
       );

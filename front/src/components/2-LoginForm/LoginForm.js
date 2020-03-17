@@ -38,6 +38,7 @@ class LoginForm extends Component {
         headers: { "Content-type": "application/x-www-form-urlencoded" }
       })
       .then(response => {
+        console.log(response);
         isUserAdmin = response.data.su;
         if (response.data.su === "true" || response.data.su === "false") {
           this.props.history.push({

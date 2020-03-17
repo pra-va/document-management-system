@@ -15,6 +15,7 @@ class MyDocsTable extends Component {
       username: "",
       tableData: [],
       pagingData: {},
+      requestPagingData: {},
       dataUrl: "",
       initialDataTransferHappend: false
     };
@@ -72,7 +73,10 @@ class MyDocsTable extends Component {
     axios
       .post(serverUrl + this.state.dataUrl, pageData)
       .then(response => {
-        this.setState({ pagingData: response.data.pagingData });
+        this.setState({
+          pagingData: response.data.pagingData,
+          requestPagingData: pageData
+        });
         this.processData(response.data.documents);
       })
       .catch(error => {
@@ -104,7 +108,7 @@ class MyDocsTable extends Component {
         ),
         edit:
           item.status === "CREATED" ? (
-            <EditButton item={item} />
+            <EditButton item={item} reloadTable={this.reloadTable} />
           ) : (
             <ViewButton item={item} />
           ),
@@ -125,6 +129,20 @@ class MyDocsTable extends Component {
     });
 
     this.setState({ tableData: tableData });
+  };
+
+  reloadTable = () => {
+    const { requestPagingData } = this.state;
+    setTimeout(() => {
+      this.setState({ tableData: [] });
+    }, 1);
+    this.fetchData(
+      requestPagingData.page,
+      requestPagingData.limit,
+      requestPagingData.sortBy,
+      requestPagingData.order,
+      requestPagingData.searchValueString
+    );
   };
 
   submitDocument = (uid, event) => {
