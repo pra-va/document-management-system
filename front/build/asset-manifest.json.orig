@@ -1,0 +1,58 @@
+{
+  "files": {
+<<<<<<< HEAD
+    "main.css": "./static/css/main.fadb6f25.chunk.css",
+    "main.js": "./static/js/main.0b2d154f.chunk.js",
+    "main.js.map": "./static/js/main.0b2d154f.chunk.js.map",
+=======
+    "main.css": "./static/css/main.01a6ef8d.chunk.css",
+    "main.js": "./static/js/main.5c13abd3.chunk.js",
+    "main.js.map": "./static/js/main.5c13abd3.chunk.js.map",
+>>>>>>> ec330f92b7ed62a6b421096f832a3e727cd47714
+    "runtime-main.js": "./static/js/runtime-main.c2105b6c.js",
+    "runtime-main.js.map": "./static/js/runtime-main.c2105b6c.js.map",
+    "static/css/2.b6551302.chunk.css": "./static/css/2.b6551302.chunk.css",
+    "static/js/2.f0e4be59.chunk.js": "./static/js/2.f0e4be59.chunk.js",
+    "static/js/2.f0e4be59.chunk.js.map": "./static/js/2.f0e4be59.chunk.js.map",
+    "index.html": "./index.html",
+<<<<<<< HEAD
+    "precache-manifest.7a10bde74e43c36e27059f5eaa2d7388.js": "./precache-manifest.7a10bde74e43c36e27059f5eaa2d7388.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/2.b6551302.chunk.css.map": "./static/css/2.b6551302.chunk.css.map",
+    "static/css/main.fadb6f25.chunk.css.map": "./static/css/main.fadb6f25.chunk.css.map",
+=======
+    "precache-manifest.55884e3661e20b8f2af25fa242a02e8b.js": "./precache-manifest.55884e3661e20b8f2af25fa242a02e8b.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/2.b6551302.chunk.css.map": "./static/css/2.b6551302.chunk.css.map",
+    "static/css/main.01a6ef8d.chunk.css.map": "./static/css/main.01a6ef8d.chunk.css.map",
+>>>>>>> ec330f92b7ed62a6b421096f832a3e727cd47714
+    "static/media/DocTypes.svg": "./static/media/DocTypes.db748f3d.svg",
+    "static/media/Groups.svg": "./static/media/Groups.edc41319.svg",
+    "static/media/NewDoc.svg": "./static/media/NewDoc.fc0aa076.svg",
+    "static/media/NewGroup.svg": "./static/media/NewGroup.b86f8490.svg",
+    "static/media/NewUser.svg": "./static/media/NewUser.d4251887.svg",
+    "static/media/Users.svg": "./static/media/Users.3bbacb7e.svg",
+    "static/media/admin.svg": "./static/media/admin.8105a9a4.svg",
+    "static/media/doc.svg": "./static/media/doc.863b1c6c.svg",
+    "static/media/download.svg": "./static/media/download.43a16c09.svg",
+    "static/media/my-documents.svg": "./static/media/my-documents.7f8cd3dd.svg",
+    "static/media/new-document.svg": "./static/media/new-document.6f3de006.svg",
+    "static/media/search.svg": "./static/media/search.a4e6bfc7.svg",
+    "static/media/sign-document.svg": "./static/media/sign-document.ec22fd19.svg",
+    "static/media/team.svg": "./static/media/team.03a0ce31.svg",
+    "static/media/user.svg": "./static/media/user.5e946c20.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c2105b6c.js",
+    "static/css/2.b6551302.chunk.css",
+<<<<<<< HEAD
+    "static/js/2.f0e4be59.chunk.js",
+    "static/css/main.fadb6f25.chunk.css",
+    "static/js/main.0b2d154f.chunk.js"
+=======
+    "static/js/2.ad4bc79a.chunk.js",
+    "static/css/main.01a6ef8d.chunk.css",
+    "static/js/main.5c13abd3.chunk.js"
+>>>>>>> ec330f92b7ed62a6b421096f832a3e727cd47714
+  ]
+}
