@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import lt.vtmc.documents.Status;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.user.model.User;
 
@@ -30,16 +31,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
 	Page<Document> docsByUsername(String username, String searchPhrase, Pageable pageable);
 	
-	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = 1")
-	Page<Document> docsByUsernameSubmitted(String username, String searchPhrase, Pageable pageable);
-
-	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = 2")
-	Page<Document> docsByUsernameAccepted(String username, String searchPhrase, Pageable pageable);
-	
-	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = 3")
-	Page<Document> docsByUsernameRejected(String username, String searchPhrase, Pageable pageable);
-	
-	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = 0")
-	Page<Document> docsByUsernameCreated(String username, String searchPhrase, Pageable pageable);
+	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = ?3")
+	Page<Document> docsByUsernameAndStatus(String username, String searchPhrase, Status status, Pageable pageable);
 	
 }
