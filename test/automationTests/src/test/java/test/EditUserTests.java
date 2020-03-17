@@ -19,7 +19,6 @@ import page.LoginPage;
 import page.MainPage;
 import page.ProfilePage;
 import page.UserListPage;
-import utilities.User;
 
 public class EditUserTests extends AbstractTest {
 
@@ -27,9 +26,9 @@ public class EditUserTests extends AbstractTest {
 	MainPage mainPage;
 	UserListPage userListPage;
 	EditUserPage editUserPage;
-	User newUser;
-	User newAdmin;
-	User admin;
+//	User newUser;
+//	User newAdmin;
+//	User admin;
 
 	@BeforeClass
 	public void preconditions() throws IOException {
@@ -37,24 +36,24 @@ public class EditUserTests extends AbstractTest {
 		mainPage = new MainPage(driver);
 		userListPage = new UserListPage(driver);
 		editUserPage = new EditUserPage(driver);
-		xstream = new XStream();
-		XStream.setupDefaultSecurity(xstream);
-		xstream.allowTypesByWildcard(new String[] { "utilities.User" });
-		try {
-			newAdmin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newAdmin.xml")));
-			newUser = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newUser.xml")));
-			admin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/admin.xml")));
-			wrongInfo = (User) xstream
-					.fromXML(FileUtils.readFileToString(new File("src/test/resources/wrongInfo.xml")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		xstream = new XStream();
+//		XStream.setupDefaultSecurity(xstream);
+//		xstream.allowTypesByWildcard(new String[] { "utilities.User" });
+//		try {
+//			newAdmin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newAdmin.xml")));
+//			newUser = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newUser.xml")));
+//			admin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/admin.xml")));
+//			wrongInfo = (User) xstream
+//					.fromXML(FileUtils.readFileToString(new File("src/test/resources/wrongInfo.xml")));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	@BeforeGroups("editUser")
 	public void login() {
-		loginPage.sendKeysUserName(admin.getUserName());
-		loginPage.sendKeysPassword(admin.getPassWord());
+//		loginPage.sendKeysUserName(admin.getUserName());
+//		loginPage.sendKeysPassword(admin.getPassWord());
 		loginPage.clickButtonLogin();
 	}
 

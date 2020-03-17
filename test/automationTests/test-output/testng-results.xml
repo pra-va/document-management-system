@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
+  <reporter-output>
+  </reporter-output>
+  <suite name="loginTests" duration-ms="4273" started-at="2020-03-17T07:50:58Z" finished-at="2020-03-17T07:51:03Z">
+    <groups>
+      <group name="loginTests">
+        <method signature="loginTests.adminLoginTest(java.lang.String, java.lang.String)[pri:2, instance:test.loginTests@1a968a59]" name="adminLoginTest" class="test.loginTests"/>
+        <method signature="loginTests.emptyLoginFieldsTest()[pri:1, instance:test.loginTests@1a968a59]" name="emptyLoginFieldsTest" class="test.loginTests"/>
+        <method signature="loginTests.userLoginTest(java.lang.String, java.lang.String)[pri:3, instance:test.loginTests@1a968a59]" name="userLoginTest" class="test.loginTests"/>
+        <method signature="loginTests.wrongLoginTest(java.lang.String, java.lang.String)[pri:4, instance:test.loginTests@1a968a59]" name="wrongLoginTest" class="test.loginTests"/>
+      </group> <!-- loginTests -->
+    </groups>
+    <test name="loginTests" duration-ms="4273" started-at="2020-03-17T07:50:58Z" finished-at="2020-03-17T07:51:03Z">
+      <class name="test.loginTests">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.loginTests@1a968a59]" name="beforeSuite" is-config="true" duration-ms="10785" started-at="2020-03-17T07:50:48Z" finished-at="2020-03-17T07:50:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="preconditions()[pri:0, instance:test.loginTests@1a968a59]" name="preconditions" is-config="true" duration-ms="61" started-at="2020-03-17T07:50:58Z" finished-at="2020-03-17T07:50:58Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preconditions -->
+        <test-method status="PASS" signature="emptyLoginFieldsTest()[pri:1, instance:test.loginTests@1a968a59]" name="emptyLoginFieldsTest" duration-ms="965" started-at="2020-03-17T07:50:58Z" finished-at="2020-03-17T07:50:59Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- emptyLoginFieldsTest -->
+        <test-method status="PASS" signature="adminLoginTest(java.lang.String, java.lang.String)[pri:2, instance:test.loginTests@1a968a59]" name="adminLoginTest" duration-ms="1081" started-at="2020-03-17T07:50:59Z" finished-at="2020-03-17T07:51:01Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[adminas]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[adminadmin]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- adminLoginTest -->
+        <test-method status="PASS" signature="userLoginTest(java.lang.String, java.lang.String)[pri:3, instance:test.loginTests@1a968a59]" name="userLoginTest" duration-ms="1063" started-at="2020-03-17T07:51:01Z" finished-at="2020-03-17T07:51:02Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[useris]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[useruser]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- userLoginTest -->
+        <test-method status="PASS" signature="wrongLoginTest(java.lang.String, java.lang.String)[pri:4, instance:test.loginTests@1a968a59]" name="wrongLoginTest" duration-ms="983" started-at="2020-03-17T07:51:02Z" finished-at="2020-03-17T07:51:03Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[qwerty]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[qwerty]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- wrongLoginTest -->
+        <test-method status="PASS" signature="after()[pri:0, instance:test.loginTests@1a968a59]" name="after" is-config="true" duration-ms="79" started-at="2020-03-17T07:51:03Z" finished-at="2020-03-17T07:51:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- after -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.loginTests@1a968a59]" name="afterSuite" is-config="true" duration-ms="664" started-at="2020-03-17T07:51:03Z" finished-at="2020-03-17T07:51:03Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- test.loginTests -->
+    </test> <!-- loginTests -->
+  </suite> <!-- loginTests -->
+</testng-results>

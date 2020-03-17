@@ -28,7 +28,6 @@ import page.LoginPage;
 import page.MainPage;
 import page.ProfilePage;
 import page.UserListPage;
-import utilities.User;
 
 public class NewUserCreationTests extends AbstractTest {
 	LoginPage loginPage;
@@ -39,10 +38,10 @@ public class NewUserCreationTests extends AbstractTest {
 	ProfilePage profilePage;
 	WebDriverWait wait;
 	XStream xstream;
-	User newUser;
-	User newAdmin;
-	User admin;
-	User wrongInfo;
+//	User newUser;
+//	User newAdmin;
+//	User admin;
+//	User wrongInfo;
 
 	@BeforeClass
 	public void preconditions() {
@@ -56,23 +55,23 @@ public class NewUserCreationTests extends AbstractTest {
 		xstream = new XStream();
 		XStream.setupDefaultSecurity(xstream);
 		xstream.allowTypesByWildcard(new String[] { "utilities.User" });
-		try {
-			newAdmin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newAdmin.xml")));
-			newUser = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newUser.xml")));
-			admin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/admin.xml")));
-			wrongInfo = (User) xstream
-					.fromXML(FileUtils.readFileToString(new File("src/test/resources/wrongInfo.xml")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			newAdmin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newAdmin.xml")));
+//			newUser = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/newUser.xml")));
+//			admin = (User) xstream.fromXML(FileUtils.readFileToString(new File("src/test/resources/admin.xml")));
+//			wrongInfo = (User) xstream
+//					.fromXML(FileUtils.readFileToString(new File("src/test/resources/wrongInfo.xml")));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 			
 	}
 
 	@BeforeGroups("newUserCreationTests")
 	public void login() {
-		loginPage.sendKeysUserName(admin.getUserName());
-		loginPage.sendKeysPassword(admin.getPassWord());
-		loginPage.clickButtonLogin();
+//		loginPage.sendKeysUserName(admin.getUserName());
+//		loginPage.sendKeysPassword(admin.getPassWord());
+//		loginPage.clickButtonLogin();
 	}
 	
 //	@AfterGroups("newUserCreationTests")
@@ -219,53 +218,53 @@ public class NewUserCreationTests extends AbstractTest {
 
 	@Test(groups = { "newUserCreationTests" }, priority = 1, enabled = false)
 	public void newUserCreationTest() throws InterruptedException {
-		mainPage.clickAdminButton();
-		mainPage.clickAdminNewUserButton();
-		adminNewUserPage.sendKeysFirstName(newUser.getFirstName());
-		adminNewUserPage.sendKeysLastName(newUser.getLastName());		
-		adminNewUserPage.sendKeysUserName(newUser.getUserName());		
-		adminNewUserPage.sendKeysPassword(newUser.getPassWord());		
-		adminNewUserPage.checkShowPassword();		
-		adminNewUserPage.sendKeysSearchGroupToAdd(newAdmin.getGroupOne());
-		adminNewUserPage.clickAddSpecificGroupButton(newAdmin.getGroupOne());
-		adminNewUserPage.clickCreateButton();
-		driver.navigate().refresh();
-		mainPage.clickAdminButton();
-		mainPage.clickAdminUsersButton();		
-		userListPage.sendKeysSearchForUser(newAdmin.getUserName());			
-		assertTrue(userListPage.getFirstNameFromUserListByUsername(newAdmin.getUserName()).equals(newAdmin.getFirstName()),
-				"Admin's First Name isn't displayed correctly in user list");
-		assertTrue(userListPage.getLastNameFromUserListByUsername(newAdmin.getUserName()).equals(newAdmin.getLastName()),
-				"Admin's Last Name isn't displayed correctly in user list");
-		assertTrue(userListPage.getRoleFromUserListByUsername(newAdmin.getUserName()).equals(newAdmin.getRole()),
-				"Admin's role isn't displayed correctly in user list");
-		userListPage.clickViewEditSpecificUserButton(newAdmin.getUserName());		
-		Thread.sleep(1000); ///////!!!!!
-		assertTrue(editUserPage.getFirstName().equals(newAdmin.getFirstName()),
-				"Admin First Name isn't displayed correctly");
-		assertTrue(editUserPage.getLastName().equals(newAdmin.getLastName()), "Admin Last Name isn't displayed correctly");
-		assertTrue(editUserPage.isRadioButtonAdminSelected(), "Admin's role isn't displayed correctly");
-		editUserPage.sendKeysSearchUsersGroups(newAdmin.getGroupOne());
-		assertTrue(
-				driver.findElement(By.xpath("//td[contains(text(), '" + newAdmin.getGroupOne() + "')]")).isDisplayed(),
-				"User was not added to the group correctly");		
-		editUserPage.clickCancelButton();
-		mainPage.clickLogoutButton();	
-		loginPage.sendKeysUserName(newAdmin.getUserName());
-		loginPage.sendKeysPassword(newAdmin.getPassWord());
-		loginPage.clickButtonLogin();
-		mainPage.clickProfileButton();
-		assertTrue(profilePage.getTextUsername().equals(newUser.getUserName()),
-				"Users's Username isn't displayed correctly in profile page");
-		assertTrue(profilePage.getTextFirstName().equals(newUser.getFirstName()),
-				"User's First Name isn't displayed correctly in profile page");
-		assertTrue(profilePage.getTextLastName().equals(newUser.getLastName()),
-				"User's Last Name isn't displayed correctly in profile page");
-		assertTrue(profilePage.getTextRole().contentEquals(newUser.getRole()),
-				"User's Role isn't displayed correctly in profile page");
-		assertTrue(profilePage.getTextUserGroups().equals(newAdmin.getGroupOne()),
-				"Admin's group isn't shown correctly in profile page");
-
+//		mainPage.clickAdminButton();
+//		mainPage.clickAdminNewUserButton();
+//		adminNewUserPage.sendKeysFirstName(newUser.getFirstName());
+//		adminNewUserPage.sendKeysLastName(newUser.getLastName());		
+//		adminNewUserPage.sendKeysUserName(newUser.getUserName());		
+//		adminNewUserPage.sendKeysPassword(newUser.getPassWord());		
+//		adminNewUserPage.checkShowPassword();		
+//		adminNewUserPage.sendKeysSearchGroupToAdd(newAdmin.getGroupOne());
+//		adminNewUserPage.clickAddSpecificGroupButton(newAdmin.getGroupOne());
+//		adminNewUserPage.clickCreateButton();
+//		driver.navigate().refresh();
+//		mainPage.clickAdminButton();
+//		mainPage.clickAdminUsersButton();		
+//		userListPage.sendKeysSearchForUser(newAdmin.getUserName());			
+//		assertTrue(userListPage.getFirstNameFromUserListByUsername(newAdmin.getUserName()).equals(newAdmin.getFirstName()),
+//				"Admin's First Name isn't displayed correctly in user list");
+//		assertTrue(userListPage.getLastNameFromUserListByUsername(newAdmin.getUserName()).equals(newAdmin.getLastName()),
+//				"Admin's Last Name isn't displayed correctly in user list");
+//		assertTrue(userListPage.getRoleFromUserListByUsername(newAdmin.getUserName()).equals(newAdmin.getRole()),
+//				"Admin's role isn't displayed correctly in user list");
+//		userListPage.clickViewEditSpecificUserButton(newAdmin.getUserName());		
+//		Thread.sleep(1000); ///////!!!!!
+//		assertTrue(editUserPage.getFirstName().equals(newAdmin.getFirstName()),
+//				"Admin First Name isn't displayed correctly");
+//		assertTrue(editUserPage.getLastName().equals(newAdmin.getLastName()), "Admin Last Name isn't displayed correctly");
+//		assertTrue(editUserPage.isRadioButtonAdminSelected(), "Admin's role isn't displayed correctly");
+//		editUserPage.sendKeysSearchUsersGroups(newAdmin.getGroupOne());
+//		assertTrue(
+//				driver.findElement(By.xpath("//td[contains(text(), '" + newAdmin.getGroupOne() + "')]")).isDisplayed(),
+//				"User was not added to the group correctly");		
+//		editUserPage.clickCancelButton();
+//		mainPage.clickLogoutButton();	
+//		loginPage.sendKeysUserName(newAdmin.getUserName());
+//		loginPage.sendKeysPassword(newAdmin.getPassWord());
+//		loginPage.clickButtonLogin();
+//		mainPage.clickProfileButton();
+//		assertTrue(profilePage.getTextUsername().equals(newUser.getUserName()),
+//				"Users's Username isn't displayed correctly in profile page");
+//		assertTrue(profilePage.getTextFirstName().equals(newUser.getFirstName()),
+//				"User's First Name isn't displayed correctly in profile page");
+//		assertTrue(profilePage.getTextLastName().equals(newUser.getLastName()),
+//				"User's Last Name isn't displayed correctly in profile page");
+//		assertTrue(profilePage.getTextRole().contentEquals(newUser.getRole()),
+//				"User's Role isn't displayed correctly in profile page");
+//		assertTrue(profilePage.getTextUserGroups().equals(newAdmin.getGroupOne()),
+//				"Admin's group isn't shown correctly in profile page");
+//
 	}
 
 }
