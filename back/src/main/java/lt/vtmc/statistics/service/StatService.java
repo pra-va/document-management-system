@@ -18,6 +18,12 @@ import lt.vtmc.statistics.dto.StatisticsUserDTO;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 
+
+/**
+ * Statistics Service with methods for Document type statistics or User statistics
+ * @author LD
+ *
+ */
 @Service
 public class StatService {
 
@@ -30,126 +36,118 @@ public class StatService {
 	public List<StatisticsDocTypeDTO> getDocTypeStatistics(String username, int startDate, int endDate) {
 		// Finding user by received username
 		User tmpUser = userRepository.findUserByUsername(username);
+		if (tmpUser != null) {
+			// Finding users group list
+			List<Group> tmpGroupList = tmpUser.getGroupList();
 
-		// Finding users group list
-		List<Group> tmpGroupList = tmpUser.getGroupList();
-
-		// Finding DocTypes to approve
-		List<DocType> tmpList = new ArrayList<DocType>();
-		for (Group group : tmpGroupList) {
-			tmpList.addAll(group.getDocTypesToApprove());
-		}
-
-		List<StatisticsDocTypeDTO> statToReturn = new ArrayList<StatisticsDocTypeDTO>();
-
-		// Finding all documents for selected docType
-		for (DocType dType : tmpList) {
-			List<Document> tmpListDoc = new ArrayList<Document>();
-			tmpListDoc.addAll(docRepo.findAllBydType(dType));
-
-			// Creating temporary StatisticsDTO object with docType name
-			StatisticsDocTypeDTO tmpDoc = new StatisticsDocTypeDTO();
-			tmpDoc.setDocType(dType.getName());
-			tmpDoc.setNumberOfSubmitted(0);
-			tmpDoc.setNumberOfAccepted(0);
-			tmpDoc.setNumberOfRejected(0);
-
-			// Looping through every document of selected docType and filtering by status
-			// and date frame
-
-			for (Document document : tmpListDoc) {
-
-				
-
-				int dateSubmit = Integer
-						.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
-
-				System.out
-						.println("######## document.getDateSubmit(): ########" + document.getDateSubmit() + "########");
-
-				System.out.println("######## document.getDateSubmit().toString(): ########"
-						+ document.getDateSubmit().toString() + "########");
-
-				System.out.println("######## document.getDateSubmit().toString().substring(0, 10): ########"
-						+ document.getDateSubmit().toString().substring(0, 10) + "########");
-
-				System.out.println(
-						"######## document.getDateSubmit().toString().substring(0, 10).replace(\"-\", \"\"): ########"
-								+ document.getDateSubmit().toString().substring(0, 10).replace("-", "") + "########");
-
-				System.out.println("######## DATE SUBMIT: ########" + dateSubmit + "########");
-
-				if (startDate <= dateSubmit & endDate >= dateSubmit) {
-					if (document.getStatus() == Status.SUBMITTED) {
-						tmpDoc.setNumberOfSubmitted((tmpDoc.getNumberOfSubmitted() + 1));
-					}
-					if (document.getStatus() == Status.ACCEPTED) {
-						tmpDoc.setNumberOfAccepted((tmpDoc.getNumberOfAccepted() + 1));
-					}
-					if (document.getStatus() == Status.REJECTED) {
-						tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
-					}
-					statToReturn.add(tmpDoc);
-				}
+			// Finding DocTypes to approve
+			List<DocType> tmpList = new ArrayList<DocType>();
+			for (Group group : tmpGroupList) {
+				tmpList.addAll(group.getDocTypesToApprove());
 			}
 
-		}
+			List<StatisticsDocTypeDTO> statToReturn = new ArrayList<StatisticsDocTypeDTO>();
 
-		return statToReturn;
+			// Finding all documents for selected docType
+			for (DocType dType : tmpList) {
+
+				List<Document> tmpListDoc = new ArrayList<Document>();
+				tmpListDoc.addAll(docRepo.findAllBydType(dType));
+
+				// Creating temporary StatisticsDTO object with docType name
+				StatisticsDocTypeDTO tmpDoc = new StatisticsDocTypeDTO();
+				tmpDoc.setDocType(dType.getName());
+				tmpDoc.setNumberOfSubmitted(0);
+				tmpDoc.setNumberOfAccepted(0);
+				tmpDoc.setNumberOfRejected(0);
+
+				// Looping through every document of selected docType and filtering by status
+				// and date frame
+
+				for (Document document : tmpListDoc) {
+
+					int dateSubmit = Integer
+							.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
+
+					if (startDate <= dateSubmit & endDate >= dateSubmit) {
+						if (document.getStatus() == Status.SUBMITTED) {
+							tmpDoc.setNumberOfSubmitted((tmpDoc.getNumberOfSubmitted() + 1));
+						}
+						if (document.getStatus() == Status.ACCEPTED) {
+							tmpDoc.setNumberOfAccepted((tmpDoc.getNumberOfAccepted() + 1));
+						}
+						if (document.getStatus() == Status.REJECTED) {
+							tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
+						}
+
+					}
+				}
+				statToReturn.add(tmpDoc);
+
+			}
+
+			return statToReturn;
+		} else {
+			return null;
+		}
 
 	}
 
 	public List<StatisticsUserDTO> getUserStatistics(String username) {
 		// Finding user by received username
 		User tmpUser = userRepository.findUserByUsername(username);
+		if (tmpUser != null) {
+			// Finding users group list
+			List<Group> tmpGroupList = tmpUser.getGroupList();
 
-		// Finding users group list
-		List<Group> tmpGroupList = tmpUser.getGroupList();
+			// Finding DocTypes to approve
+			List<DocType> tmpList = new ArrayList<DocType>();
 
-		// Finding DocTypes to approve
-		List<DocType> tmpList = new ArrayList<DocType>();
-
-		for (Group group : tmpGroupList) {
-			tmpList.addAll(group.getDocTypesToApprove());
-		}
-
-		List<Document> tmpListDoc = new ArrayList<Document>();
-
-		for (DocType dType : tmpList) {
-			// Finding all documents for selected docType
-			tmpListDoc.addAll(docRepo.findAllBydType(dType));
-		}
-
-		Map<String, Integer> userMap = new HashMap<>();
-
-		for (Document document : tmpListDoc) {
-			Integer docCount = userMap.get(document.getAuthor().getUsername());
-			if (docCount != null) {
-				docCount++;
-			} else {
-				docCount = 1;
+			for (Group group : tmpGroupList) {
+				tmpList.addAll(group.getDocTypesToApprove());
 			}
-			userMap.put(document.getAuthor().getUsername(), docCount);
+
+			List<Document> tmpListDoc = new ArrayList<Document>();
+
+			for (DocType dType : tmpList) {
+				// Finding all documents for selected docType
+				tmpListDoc.addAll(docRepo.findAllBydType(dType));
+			}
+
+			Map<String, Integer> userMap = new HashMap<>();
+
+			for (Document document : tmpListDoc) {
+				Integer docCount = userMap.get(document.getAuthor().getUsername());
+				if (docCount != null) {
+					docCount++;
+				} else {
+					docCount = 1;
+				}
+				userMap.put(document.getAuthor().getUsername(), docCount);
+			}
+
+			List<StatisticsUserDTO> statToReturn = new ArrayList<StatisticsUserDTO>();
+
+			for (Map.Entry<String, Integer> entry : userMap.entrySet()) {
+				String usernameToReturn = entry.getKey();
+				String name = userRepository.findUserByUsername(usernameToReturn).getName();
+				String surname = userRepository.findUserByUsername(usernameToReturn).getSurname();
+				int docNumber = entry.getValue();
+
+				StatisticsUserDTO tmpUserToReturn = new StatisticsUserDTO();
+				tmpUserToReturn.setUsername(usernameToReturn);
+				tmpUserToReturn.setName(name);
+				tmpUserToReturn.setSurname(surname);
+				tmpUserToReturn.setDocNumber(docNumber);
+				statToReturn.add(tmpUserToReturn);
+
+			}
+
+			return statToReturn;
+		} else {
+			return null;
 		}
-
-		List<StatisticsUserDTO> statToReturn = new ArrayList<StatisticsUserDTO>();
-
-		for (Map.Entry<String, Integer> entry : userMap.entrySet()) {
-			String usernameToReturn = entry.getKey();
-			String name = userRepository.findUserByUsername(usernameToReturn).getName();
-			String surname = userRepository.findUserByUsername(usernameToReturn).getSurname();
-			int docNumber = entry.getValue();
-
-			StatisticsUserDTO tmpUserToReturn = new StatisticsUserDTO();
-			tmpUserToReturn.setUsername(usernameToReturn);
-			tmpUserToReturn.setName(name);
-			tmpUserToReturn.setSurname(surname);
-			tmpUserToReturn.setDocNumber(docNumber);
-			statToReturn.add(tmpUserToReturn);
-
-		}
-
-		return statToReturn;
 
 	}
+
 }
