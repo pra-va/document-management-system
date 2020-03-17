@@ -13,6 +13,7 @@
           <include name="afterTest"/>
           <include name="beforeSuite"/>
           <include name="preconitions"/>
+          <include name="createGroupTest" invocation-numbers="0"/>
           <include name="navigateToNewGroupPage"/>
           <include name="userInGroupTest" invocation-numbers="0"/>
           <include name="afterSuite"/>

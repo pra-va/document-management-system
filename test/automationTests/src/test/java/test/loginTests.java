@@ -60,11 +60,11 @@ public class loginTests extends AbstractTest {
 	}
 
 	@Test(groups = { "loginTests" }, priority = 0, enabled = true)
-	public void emptyLoginFieldsTest() {
+	public void emptyLoginFieldsTest() throws InterruptedException {
 		loginPage.clearLoginFields();
 		loginPage.waitForLoginButton();
 		loginPage.clickButtonLogin();
-		loginPage.waitForLoginButton();
+		loginPage.waitForLoginButton();		
 		assertTrue(
 				driver.findElement(By.xpath("//*[contains(text(), 'Incorrect Username or Password!')]")).isDisplayed(),
 				"Incorrect Username or Password! text is not displayed");
@@ -72,13 +72,13 @@ public class loginTests extends AbstractTest {
 
 	@Parameters({ "userNameWrong", "passwordWrong" })
 	@Test(groups = { "loginTests" }, priority = 1, enabled = true)
-	public void wrongLoginTest(String p1, String p2) {
+	public void wrongLoginTest(String p1, String p2) throws InterruptedException {
 		loginPage.clearLoginFields();
 		loginPage.waitForLoginButton();
 		loginPage.sendKeysUserName(p1);
 		loginPage.sendKeysPassword(p2);
 		loginPage.clickButtonLogin();
-		loginPage.waitForLoginButton();
+		loginPage.waitForLoginButton();		
 		assertTrue(
 				driver.findElement(By.xpath("//*[contains(text(), 'Incorrect Username or Password!')]")).isDisplayed(),
 				"Incorrect Username or Password! text is not displayed");

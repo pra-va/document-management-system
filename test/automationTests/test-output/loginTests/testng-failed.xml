@@ -11,6 +11,7 @@
     <classes>
       <class name="test.loginTests">
         <methods>
+          <include name="userLoginTest" invocation-numbers="0"/>
           <include name="beforeSuite"/>
           <include name="after"/>
           <include name="preconditions"/>

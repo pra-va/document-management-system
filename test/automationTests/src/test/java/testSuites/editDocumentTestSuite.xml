@@ -1,0 +1,24 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="editDocumentTests" preserve-order="true">
+	<test name="editDocumentTests">
+		<parameter name="adminUserName" value="admin"/>		
+		<parameter name="adminPassword" value="adminadmin"/>
+		<parameter name="newAdminFirstName" value="gggg"/>
+		<parameter name="newAdminLastName" value="gggg"/>
+		<parameter name="newAdminUserName" value="ggggggg1"/>
+		<parameter name="newAdminPassword" value="gggggggggggg"/>
+		<parameter name="newAdminRole" value="ADMIN"/>
+		<parameter name="groupOne" value="Project managers"/>
+		<parameter name="newUserFirstName" value="wwwwww"/>
+		<parameter name="newUserLastName" value="wwwwwwwww"/>
+		<parameter name="newUserUserName" value="userNameTest10"/>
+		<parameter name="newUserUserName1" value="testUserName"/>
+		<parameter name="newUserPassword" value="wwwwwwwwwww"/>
+		<parameter name="newUserRole" value="USER"/>
+		<classes>
+			<class name="test.EditDocumentTests"/>
+		</classes>
+	</test>
+</suite>
+

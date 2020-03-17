@@ -32,8 +32,10 @@
           <include name="afterTest"/>
           <include name="beforeSuite"/>
           <include name="preconitions"/>
+          <include name="createGroupTest"/>
           <include name="navigateToNewGroupPage"/>
-          <include name="userInGroupTest" invocation-numbers="0"/>
+          <include name="groupWithoutNameTest"/>
+          <include name="userInGroupTest"/>
           <include name="afterSuite"/>
         </methods>
       </class> <!-- test.NewGroupTests -->

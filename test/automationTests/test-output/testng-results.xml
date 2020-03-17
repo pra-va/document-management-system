@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="passwordHashingTests" duration-ms="818" started-at="2020-03-17T07:40:25Z" finished-at="2020-03-17T07:40:26Z">
+    <groups>
+      <group name="passwordHashingTests">
+        <method signature="PasswordHashingTests.passwordHashingTest(java.lang.String, java.lang.String)[pri:1, instance:test.PasswordHashingTests@4f7d0008]" name="passwordHashingTest" class="test.PasswordHashingTests"/>
+      </group> <!-- passwordHashingTests -->
+    </groups>
+    <test name="passwordHashingTests" duration-ms="818" started-at="2020-03-17T07:40:25Z" finished-at="2020-03-17T07:40:26Z">
+      <class name="test.PasswordHashingTests">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.PasswordHashingTests@4f7d0008]" name="beforeSuite" is-config="true" duration-ms="5144" started-at="2020-03-17T07:40:20Z" finished-at="2020-03-17T07:40:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="preconditions()[pri:0, instance:test.PasswordHashingTests@4f7d0008]" name="preconditions" is-config="true" duration-ms="18" started-at="2020-03-17T07:40:25Z" finished-at="2020-03-17T07:40:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preconditions -->
+        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.PasswordHashingTests@4f7d0008]" name="login" is-config="true" duration-ms="257" started-at="2020-03-17T07:40:25Z" finished-at="2020-03-17T07:40:25Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[adminadmin]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- login -->
+        <test-method status="PASS" signature="passwordHashingTest(java.lang.String, java.lang.String)[pri:1, instance:test.PasswordHashingTests@4f7d0008]" name="passwordHashingTest" duration-ms="458" started-at="2020-03-17T07:40:25Z" finished-at="2020-03-17T07:40:26Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[adminadmin]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- passwordHashingTest -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:test.PasswordHashingTests@4f7d0008]" name="logout" is-config="true" duration-ms="60" started-at="2020-03-17T07:40:26Z" finished-at="2020-03-17T07:40:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logout -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.PasswordHashingTests@4f7d0008]" name="afterSuite" is-config="true" duration-ms="612" started-at="2020-03-17T07:40:26Z" finished-at="2020-03-17T07:40:27Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- test.PasswordHashingTests -->
+    </test> <!-- passwordHashingTests -->
+  </suite> <!-- passwordHashingTests -->
+</testng-results>
