@@ -32,10 +32,10 @@ public class DocType {
 	
 	private String name;
 	
-	@ManyToMany(mappedBy = "docTypesToApprove", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "docTypesToApprove")
 	private List<Group> groupsApproving = new ArrayList<Group>();
 	
-	@ManyToMany(mappedBy = "docTypesToCreate", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(mappedBy = "docTypesToCreate")
 	private List<Group> groupsCreating = new ArrayList<Group>();
 	
 	@OneToMany(fetch = FetchType.LAZY)

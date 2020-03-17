@@ -33,7 +33,8 @@ class NewGroup extends Component {
     axios
       .post(serverUrl + "groups/update/" + this.props.ownerName, editedGroup)
       .then(response => {
-        window.location.reload();
+        this.props.onHide();
+        this.props.reloadTable();
       })
       .catch(error => console.log(error));
   };

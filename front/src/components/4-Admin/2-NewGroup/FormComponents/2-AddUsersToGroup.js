@@ -14,8 +14,7 @@ class AddUsersToGroup extends Component {
     { dataField: "name", text: "Name", sort: true },
     { dataField: "surname", text: "Surname", sort: true },
     { dataField: "username", text: "Username", sort: true },
-    { dataField: "role", text: "Role", sort: true },
-    { dataField: "add", text: "", sort: false }
+    { dataField: "role", text: "Role", sort: true }
   ];
 
   componentDidMount() {
@@ -49,69 +48,10 @@ class AddUsersToGroup extends Component {
         name: item.name,
         surname: item.surname,
         username: item.username,
-        role: item.role,
-        add: (
-          <button
-            onClick={event => {
-              event.preventDefault();
-            }}
-            className={
-              this.state.selectedUsers.includes(item.username)
-                ? "btn btn-danger btn-sm"
-                : "btn btn-secondary btn-sm"
-            }
-          >
-            {this.state.selectedUsers.includes(item.username)
-              ? "Remove"
-              : "Add"}
-          </button>
-        )
+        role: item.role
       };
     });
     this.setState({ tableData: tableData });
-  };
-
-  refreshTableData = addedUsers => {
-    const tableDataTmp = [...this.state.tableData];
-    for (let i = 0; i < tableDataTmp.length; i++) {
-      const element = tableDataTmp[i];
-      tableDataTmp[i].add = (
-        <button
-          onClick={event => {
-            event.preventDefault();
-          }}
-          className={
-            addedUsers.includes(element.username)
-              ? "btn btn-danger btn-sm"
-              : "btn btn-secondary btn-sm"
-          }
-        >
-          {addedUsers.includes(element.username) ? "Remove" : "Add"}
-        </button>
-      );
-
-      this.setState({ tableData: this.loadTable() });
-      setTimeout(() => {
-        this.setState({ tableData: tableDataTmp });
-      }, 1);
-    }
-  };
-
-  loadTable = () => {
-    const { tableData } = this.state;
-    const tmpTableData = [];
-    for (let i = 0; i < tableData.length; i++) {
-      const element = tableData[i];
-      tmpTableData.push({
-        number: i,
-        name: element.name,
-        surname: element.surname,
-        username: element.username,
-        role: element.role,
-        add: ""
-      });
-    }
-    return tmpTableData;
   };
 
   handleRowSelect = (row, isSelect) => {
@@ -127,7 +67,6 @@ class AddUsersToGroup extends Component {
     }
     this.setState({ selectedUsers: selectedUsers });
     this.props.setAddedUsers(selectedUsers);
-    this.refreshTableData(selectedUsers);
   };
 
   setSelectedItems = () => {
@@ -141,6 +80,14 @@ class AddUsersToGroup extends Component {
     }
 
     return selectedItemNumbersForTable;
+  };
+
+  handleSelectAll = (isSelect, rows) => {
+    rows.forEach(row => {
+      setTimeout(() => {
+        this.handleRowSelect(row, isSelect);
+      }, 1);
+    });
   };
 
   render() {
@@ -158,6 +105,7 @@ class AddUsersToGroup extends Component {
           selectType={"checkbox"}
           select={"true"}
           handleRowSelect={this.handleRowSelect}
+          handleSelectAll={this.handleSelectAll}
           setSelectedItems={this.setSelectedItems}
         />
       </div>

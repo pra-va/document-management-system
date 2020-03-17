@@ -157,7 +157,9 @@ class AssignRights extends Component {
   render() {
     return (
       <div>
-        <h3 className="d-flex justify-content-start">2. Assign rights.</h3>
+        <h3 className="d-flex justify-content-start">
+          2. Update document type rights.
+        </h3>
 
         <Table
           id={"newUserGroups"}
@@ -166,7 +168,7 @@ class AssignRights extends Component {
           requestNewData={this.fetchDocTypeData}
           pagingData={this.state.pagingData}
           columns={this.columns}
-          selectType={"checkbox"}
+          selectType={"radio"}
           select={"false"}
           handleRowSelect={this.handleRowSelect}
           setSelectedItems={this.setSelectedItems}

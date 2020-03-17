@@ -18,7 +18,6 @@ class AddUsersToGroup extends Component {
   }
 
   columns = [
-    // { dataField: "number", text: "#", sort: false },
     { dataField: "name", text: "Type", sort: true },
     { dataField: "create", text: "Create", sort: false },
     { dataField: "sign", text: "Sign", sort: false }
@@ -170,7 +169,7 @@ class AddUsersToGroup extends Component {
           requestNewData={this.fetchDocTypeData}
           pagingData={this.state.pagingData}
           columns={this.columns}
-          selectType={"checkbox"}
+          selectType={"radio"}
           select={"false"}
           handleRowSelect={this.handleRowSelect}
           setSelectedItems={this.setSelectedItems}

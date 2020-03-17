@@ -15,7 +15,8 @@ class ListOfUsers extends Component {
     super(props);
     this.state = {
       tableData: [],
-      pagingData: []
+      pagingData: [],
+      serverRequestPagingData: []
     };
   }
 
@@ -24,7 +25,6 @@ class ListOfUsers extends Component {
   groupsTableNames = ["#", "Group Name", "Members", ""];
 
   columnsUsers = [
-    // { dataField: "number", text: "#", sort: false },
     { dataField: "name", text: "First Name", sort: true },
     { dataField: "surname", text: "Last Name", sort: true },
     { dataField: "username", text: "Username", sort: true },
@@ -33,7 +33,6 @@ class ListOfUsers extends Component {
   ];
 
   columnsGroups = [
-    // { dataField: "number", text: "#", sort: false },
     { dataField: "name", text: "Group Name", sort: true },
     { dataField: "members", text: "Members", sort: false },
     { dataField: "edit", text: "", sort: false }
@@ -76,11 +75,20 @@ class ListOfUsers extends Component {
             surname: item.surname,
             username: item.username,
             role: item.role,
-            edit: <EditButton ownerName={item.username} ownerType={"user"} />
+            edit: (
+              <EditButton
+                ownerName={item.username}
+                ownerType={"user"}
+                reloadTable={this.reloadTable}
+              />
+            )
           };
         });
-        this.setState({ tableData: tmpUsersData });
-        this.setState({ pagingData: response.data.pagingData });
+        this.setState({
+          tableData: tmpUsersData,
+          serverRequestPagingData: pageData,
+          pagingData: response.data.pagingData
+        });
       })
       .catch(error => {
         console.log(error);
@@ -126,12 +134,21 @@ class ListOfUsers extends Component {
                 }
               />
             ),
-            edit: <EditButton ownerName={item.name} ownerType={"group"} />
+            edit: (
+              <EditButton
+                ownerName={item.name}
+                ownerType={"group"}
+                reloadTable={this.reloadTable}
+              />
+            )
           };
         });
 
-        this.setState({ tableData: tmpGroupsData });
-        this.setState({ pagingData: response.data.pagingData });
+        this.setState({
+          tableData: tmpGroupsData,
+          serverRequestPagingData: pageData,
+          pagingData: response.data.pagingData
+        });
       })
       .catch(error => {
         console.log(error);
@@ -146,6 +163,31 @@ class ListOfUsers extends Component {
         return (sum += ", " + item);
       }
     }, "");
+  };
+
+  reloadTable = () => {
+    const { serverRequestPagingData } = this.state;
+    setTimeout(() => {
+      this.setState({ tableData: [] });
+    }, 1);
+
+    if (this.props.forWhat === "users") {
+      this.connectForUsersData(
+        serverRequestPagingData.page,
+        serverRequestPagingData.limit,
+        serverRequestPagingData.sortBy,
+        serverRequestPagingData.order,
+        serverRequestPagingData.searchValueString
+      );
+    } else if (this.props.forWhat === "groups") {
+      this.connectForGroupsData(
+        serverRequestPagingData.page,
+        serverRequestPagingData.limit,
+        serverRequestPagingData.sortBy,
+        serverRequestPagingData.order,
+        serverRequestPagingData.searchValueString
+      );
+    }
   };
 
   render() {
@@ -193,7 +235,7 @@ class ListOfUsers extends Component {
                 requestNewData={this.connectForUsersData}
                 pagingData={this.state.pagingData}
                 columns={this.columnsUsers}
-                selectType={"checkbox"}
+                selectType={"radio"}
                 handleRowSelect={() => {}}
                 setSelectedItems={() => {}}
               />
@@ -205,7 +247,7 @@ class ListOfUsers extends Component {
                 requestNewData={this.connectForGroupsData}
                 pagingData={this.state.pagingData}
                 columns={this.columnsGroups}
-                selectType={"checkbox"}
+                selectType={"radio"}
                 handleRowSelect={() => {}}
                 setSelectedItems={() => {}}
               />
