@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Query("SELECT u FROM User u WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', ?1,'%'))")
 	Page<User> findLike(String searchValueString, Pageable firstPageable);
 
-	@Query("select d.name from DocType d inner join d.groupsCreating g inner join g.userList u where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
+	@Query("select distinct d.name from DocType d inner join d.groupsCreating g inner join g.userList u where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
 	Page<String> docTypesUserCreatesByUsername(String username, String searchPhrase, Pageable pageable);
 
 	@Query("select distinct d from Document d inner join d.dType dt inner join dt.groupsApproving g inner join g.userList u "
