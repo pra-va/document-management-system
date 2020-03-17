@@ -184,7 +184,7 @@ class AssignRights extends Component {
           requestNewData={this.fetchDocTypeData}
           pagingData={this.state.pagingData}
           columns={this.columns}
-          selectType={"checkbox"}
+          selectType={"radio"}
           select={"false"}
           handleRowSelect={this.handleRowSelect}
           setSelectedItems={this.setSelectedItems}

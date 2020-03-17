@@ -8,12 +8,10 @@ class AddButton extends Component {
 
   handleAdd = event => {
     event.preventDefault();
-    console.log("click");
     this.setState({ added: !this.state.added });
   };
 
   componentDidUpdate() {
-    console.log(this.props.name + ": " + this.props.added);
     if (this.state.added !== this.props.added) {
       this.setState({ added: this.props.added });
     }

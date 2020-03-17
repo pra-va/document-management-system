@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,7 @@ public class UserController {
 	 * @method POST }
 	 * @param user details
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
 	public ResponseEntity<String> createAdmin(@RequestBody CreateUserCommand command) {
 		try {
@@ -87,6 +89,7 @@ public class UserController {
 	 * @method POST
 	 * @param user details
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
 
@@ -124,6 +127,7 @@ public class UserController {
 //		return userService.retrieveAllUsers();
 //	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/users", method = RequestMethod.POST)
 	public Map<String, Object> listAllUsers(@RequestBody PagingData pagingData) {
 
@@ -139,6 +143,7 @@ public class UserController {
 	 * @url /api/user/{username}
 	 * @method GET
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/user/{username}")
 	public UserDetailsDTO findUserByUsername(@PathVariable("username") String username) {
 
@@ -154,6 +159,7 @@ public class UserController {
 	 * @url /api/delete/{username}
 	 * @method DELETE
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/api/delete/{username}")
 	public ResponseEntity<String> deleteUserByUsername(@PathVariable("username") String username) {
 		User tmpUser = userService.findUserByUsername(username);
@@ -178,6 +184,7 @@ public class UserController {
 	 * @url /api/user/update/{username}
 	 * @method POST
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/user/update/{username}")
 	public ResponseEntity<String> updateUserByUsername(@PathVariable("username") String username,
 			@RequestBody UpdateUserCommand command) {
@@ -201,6 +208,7 @@ public class UserController {
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/{username}/exists")
 	public boolean checkIfUserExists(@PathVariable("username") String username) throws Exception {
 		if (userService.findUserByUsername(username) != null) {
@@ -210,18 +218,21 @@ public class UserController {
 		}
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/{username}/dtypescreate")
 	public Map<String, Object> getUserDocTypesCreate(@PathVariable("username") String username,
 			@RequestBody PagingData pagingData) {
 		return userService.getUserDocTypesToCreate(username, pagingData);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/{username}/doctobesigned")
 	public Map<String, Object> getDocumentsToBeSigned(@PathVariable("username") String username,
 			@RequestBody PagingData pagingData) {
 		return docService.findAllDocumentsToSignByUsername(username, pagingData);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/{username}/alldocuments")
 	public Map<String, Object> getAllDocumentsByUsername(@PathVariable("username") String username,
 			@RequestBody PagingData pagingData) {

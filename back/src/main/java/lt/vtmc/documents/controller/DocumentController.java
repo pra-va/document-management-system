@@ -1,7 +1,6 @@
 package lt.vtmc.documents.controller;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +54,8 @@ public class DocumentController {
 	 * @method POST
 	 * @param document details
 	 */
+
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/create")
 	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) {
 
@@ -64,6 +66,7 @@ public class DocumentController {
 		return new ResponseEntity<String>(newDoc.getUID(), HttpStatus.CREATED);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping("/api/doc/upload/{UID}")
 	public void addFiles(@PathVariable("UID") String UID, @RequestParam("files") MultipartFile[] files) {
 		LOG.info("# LOG # Initiated by [{}]: Files uploaded: [{}]#",
@@ -73,11 +76,13 @@ public class DocumentController {
 		}
 	}
 
-	@PostMapping(path = "/api/doc/all")
-	public Map<String, Object> findAllDocuments(@RequestBody PagingData pagingData) {
-		return docService.retrieveAllDocuments(pagingData);
-	}
+//	@Secured({"ROLE_ADMIN" })
+//	@PostMapping(path = "/api/doc/all")
+//	public Map<String, Object> findAllDocuments(@RequestBody PagingData pagingData) {
+//		return docService.retrieveAllDocuments(pagingData);
+//	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doc/{UID}")
 	public DocumentDetailsDTO findDocument(@PathVariable("UID") String UID) {
 		LOG.info("# LOG # Initiated by [{}]: Requested details of document UID: [{}] #",
@@ -85,6 +90,7 @@ public class DocumentController {
 		return new DocumentDetailsDTO(docService.findDocumentByUID(UID));
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping(path = "/api/doc/delete/{UID}")
 	public ResponseEntity<String> deleteDocument(@PathVariable("UID") String UID) {
 		docService.deleteDocument(docService.findDocumentByUID(UID));
@@ -93,6 +99,7 @@ public class DocumentController {
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/submit/{UID}")
 	public ResponseEntity<String> submitDocument(@PathVariable("UID") String UID) {
 		docService.setStatusPateiktas(UID);
@@ -101,6 +108,7 @@ public class DocumentController {
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/approve/{UID}")
 	public ResponseEntity<String> approveDocument(@PathVariable("UID") String UID,
 			@RequestBody ApproveDocumentCommand command) {
@@ -110,6 +118,7 @@ public class DocumentController {
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/reject/{UID}")
 	public ResponseEntity<String> rejectDocument(@PathVariable("UID") String UID,
 			@RequestBody DocumentRejection reject) {
@@ -119,6 +128,7 @@ public class DocumentController {
 		return new ResponseEntity<String>("Updated succesfully", HttpStatus.OK);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/update{UID}")
 	public ResponseEntity<String> updateDocument(@PathVariable("UID") String UID,
 			@RequestBody UpdateDocumentCommand command) {
@@ -129,29 +139,37 @@ public class DocumentController {
 		return new ResponseEntity<String>("Updated", HttpStatus.OK);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allsubmitted/{username}")
-	public Map<String, Object> returnAllSubmittedDocuments(@PathVariable("username") String username, @RequestBody PagingData pagingData) {
+	public Map<String, Object> returnAllSubmittedDocuments(@PathVariable("username") String username,
+			@RequestBody PagingData pagingData) {
 		LOG.info("# LOG # Initiated by [{}]: Requested a list of all submitted documents#",
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		return docService.returnSubmitted(username, pagingData);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allcreated/{username}")
-	public Map<String, Object> returnAllCreatedDocuments(@PathVariable("username") String username, @RequestBody PagingData pagingData) {
+	public Map<String, Object> returnAllCreatedDocuments(@PathVariable("username") String username,
+			@RequestBody PagingData pagingData) {
 		LOG.info("# LOG # Initiated by [{}]: Requested a list of all created documents#",
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		return docService.returnCreated(username, pagingData);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allaccepted/{username}")
-	public Map<String, Object> returnAllAcceptedDocuments(@PathVariable("username") String username, @RequestBody PagingData pagingData) {
+	public Map<String, Object> returnAllAcceptedDocuments(@PathVariable("username") String username,
+			@RequestBody PagingData pagingData) {
 		LOG.info("# LOG # Initiated by [{}]: Requested a list of all accepted documents#",
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		return docService.returnAccepted(username, pagingData);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allrejected/{username}")
-	public Map<String, Object> returnAllRejectedDocuments(@PathVariable("username") String username, @RequestBody PagingData pagingData) {
+	public Map<String, Object> returnAllRejectedDocuments(@PathVariable("username") String username,
+			@RequestBody PagingData pagingData) {
 		LOG.info("# LOG # Initiated by [{}]: Requested a list of all rejected documents#",
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		return docService.returnRejected(username, pagingData);

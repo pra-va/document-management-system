@@ -51,73 +51,6 @@ class NewModal extends Component {
     }
   };
 
-  parseData = data => {
-    this.setState({ allGroups: [] });
-    let tempData = data.map((item, index) => {
-      return {
-        number: index + 1,
-        name: item.name,
-        addOrRemove: (
-          <button
-            onClick={event => {
-              event.preventDefault();
-            }}
-            className={
-              this.state.addedGroups.includes(item.name)
-                ? "btn btn-danger btn-sm"
-                : "btn btn-secondary btn-sm"
-            }
-          >
-            {this.state.addedGroups.includes(item.name) ? "Remove" : "Add"}
-          </button>
-        ),
-        added: false,
-        description: item.description
-      };
-    });
-    this.setState({ allGroups: tempData });
-  };
-
-  processTableData = addedGroupList => {
-    console.log("processing data");
-    let tmpGroups = [...this.state.allGroups];
-    for (let i = 0; i < tmpGroups.length; i++) {
-      const element = tmpGroups[i];
-      tmpGroups[i].added = addedGroupList.includes(element.name);
-      tmpGroups[i].addOrRemove = (
-        <button
-          onClick={event => {
-            event.preventDefault();
-          }}
-          className={
-            addedGroupList.includes(element.name)
-              ? "btn btn-danger btn-sm"
-              : "btn btn-secondary btn-sm"
-          }
-        >
-          {addedGroupList.includes(element.name) ? "Remove" : "Add"}
-        </button>
-      );
-    }
-
-    this.setState({ allGroups: this.loadingTable() });
-    setTimeout(() => {
-      this.setState({ allGroups: tmpGroups });
-    }, 1);
-  };
-
-  loadingTable = () => {
-    let loadingData = [];
-    for (let i = 0; i < this.state.allGroups; i++) {
-      loadingData.push({
-        number: i,
-        name: this.state.allGroups[i].name,
-        addOrRemove: this.state.allGroups[i].addOrRemove
-      });
-    }
-    return loadingData;
-  };
-
   handleFirstNameChange = value => {
     this.setState({ firstName: value });
   };
@@ -140,7 +73,6 @@ class NewModal extends Component {
 
   setAddedGroups = groupList => {
     this.setState({ addedGroups: groupList });
-    this.processTableData(groupList);
   };
 
   handleNewUserSubmit = event => {
@@ -195,14 +127,9 @@ class NewModal extends Component {
               password={this.state.password}
               role={this.state.role}
             />
-
             <hr className="m-1" />
 
-            <Groups
-              tableData={this.state.allGroups}
-              setUpGroups={this.setUpGroups}
-              setAddedGroups={this.setAddedGroups}
-            />
+            <Groups setAddedGroups={this.setAddedGroups} />
 
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">

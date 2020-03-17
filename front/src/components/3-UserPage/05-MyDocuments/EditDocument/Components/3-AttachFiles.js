@@ -17,6 +17,7 @@ const UploadFile = props => {
             id="documentFileUpload"
             aria-describedby="documentFileUpload"
             onChange={handleFileUploaded}
+            accept="application/pdf"
             multiple
           />
           <label className="custom-file-label" htmlFor="documentFileUpload">

@@ -27,7 +27,8 @@ class NewGroup extends Component {
     axios
       .post(serverUrl + "doct/update/" + this.props.owner, editedDocType)
       .then(response => {
-        window.location.reload();
+        this.props.hideModal();
+        this.props.reloadTable();
       })
       .catch(error => {
         console.log(error);
@@ -62,7 +63,7 @@ class NewGroup extends Component {
         size="lg"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit group {this.props.owner}</Modal.Title>
+          <Modal.Title>Edit {this.props.owner} Document Type</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={this.handleSubmit}>
@@ -97,7 +98,7 @@ class NewGroup extends Component {
                   className="btn btn-dark"
                   data-dismiss="modal"
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </div>

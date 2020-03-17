@@ -1,9 +1,9 @@
 import React from "react";
-import "./AttachFiles.css";
 
 const UploadFile = props => {
   const handleFileUploaded = event => {
     props.handleFileAdd(event.target.files);
+    event.target.value = "";
   };
 
   return (
@@ -17,6 +17,7 @@ const UploadFile = props => {
             id="documentFileUpload"
             aria-describedby="documentFileUpload"
             onChange={handleFileUploaded}
+            accept="application/pdf"
             multiple
           />
           <label className="custom-file-label" htmlFor="documentFileUpload">

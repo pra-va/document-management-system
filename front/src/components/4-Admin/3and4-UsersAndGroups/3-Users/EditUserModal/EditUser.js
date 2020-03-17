@@ -20,72 +20,6 @@ class NewModal extends Component {
     };
   }
 
-  componentDidMount() {
-    if (this.props.mode === "edit") {
-      this.fetchEditUserData();
-    }
-  }
-
-  setUpGroups = data => {
-    if (data.length >= 0) {
-      this.parseData(data);
-    }
-  };
-
-  parseData = data => {
-    this.setState({ allGroups: [] });
-    let tempData = data.map((item, index) => {
-      return {
-        number: index + 1,
-        name: item.name,
-        addOrRemove: (
-          <button
-            onClick={event => {
-              event.preventDefault();
-            }}
-            className={
-              this.state.addedGroups.includes(item.name)
-                ? "btn btn-danger btn-sm"
-                : "btn btn-secondary btn-sm"
-            }
-          >
-            {this.state.addedGroups.includes(item.name) ? "Remove" : "Add"}
-          </button>
-        ),
-        added: false,
-        description: item.description
-      };
-    });
-    this.setState({ allGroups: tempData });
-  };
-
-  processTableData = addedGroupList => {
-    let tmpGroups = [...this.state.allGroups];
-    for (let i = 0; i < tmpGroups.length; i++) {
-      const element = tmpGroups[i];
-      tmpGroups[i].added = addedGroupList.includes(element.name);
-      tmpGroups[i].addOrRemove = (
-        <button
-          onClick={event => {
-            event.preventDefault();
-          }}
-          className={
-            addedGroupList.includes(element.name)
-              ? "btn btn-danger btn-sm"
-              : "btn btn-secondary btn-sm"
-          }
-        >
-          {addedGroupList.includes(element.name) ? "Remove" : "Add"}
-        </button>
-      );
-    }
-
-    this.setState({ allGroups: this.loadingTable() });
-    setTimeout(() => {
-      this.setState({ allGroups: tmpGroups });
-    }, 1);
-  };
-
   loadingTable = () => {
     let loadingData = [];
     for (let i = 0; i < this.state.allGroups; i++) {
@@ -116,7 +50,6 @@ class NewModal extends Component {
 
   setAddedGroups = groupList => {
     this.setState({ addedGroups: groupList });
-    this.processTableData(groupList);
   };
 
   handleUpdateUser = event => {
@@ -125,7 +58,6 @@ class NewModal extends Component {
     const { firstName, lastName, password, addedGroups, role } = this.state;
 
     let url = serverUrl + "user/update/" + this.props.ownerName;
-    console.log(url);
 
     axios
       .post(url, {
@@ -137,6 +69,7 @@ class NewModal extends Component {
       })
       .then(response => {
         this.props.onHide();
+        this.props.reloadTable();
       })
       .catch(error => {
         console.log(error);

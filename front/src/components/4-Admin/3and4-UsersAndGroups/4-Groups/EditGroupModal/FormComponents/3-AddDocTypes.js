@@ -165,7 +165,7 @@ class AddUsersToGroup extends Component {
     return (
       <div>
         <h3 className="d-flex justify-content-start">
-          3. Add create and sign rights for document type.
+          3. Update groups Create and Sign rights.
         </h3>
 
         <Table
@@ -175,7 +175,7 @@ class AddUsersToGroup extends Component {
           requestNewData={this.fetchDocTypeData}
           pagingData={this.state.pagingData}
           columns={this.columns}
-          selectType={"checkbox"}
+          selectType={"radio"}
           select={"false"}
           handleRowSelect={this.handleRowSelect}
           setSelectedItems={this.setSelectedItems}

@@ -27,6 +27,7 @@ class EditTableItemButton extends Component {
           modalState={this.state.showModal}
           hideModal={this.handleClose}
           owner={this.props.owner}
+          reloadTable={this.props.reloadTable}
         />
       </div>
     );

@@ -12,7 +12,7 @@ const SignOrReject = props => {
         className="btn btn-secondary btn-sm btn-edit"
         onClick={handleShowModal}
       >
-        Sign/Reject
+        Sign/Decline
       </button>
       <AcceptOrReject
         show={showModal}
