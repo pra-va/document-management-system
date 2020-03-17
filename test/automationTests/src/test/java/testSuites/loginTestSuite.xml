@@ -4,9 +4,9 @@
 	<test name="loginTests">
 		<parameter name="userNameWrong" value="qwerty" />
 		<parameter name="passwordWrong" value="qwerty" />
-		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminUserName" value="adminas" />
 		<parameter name="adminPasswrod" value="adminadmin" />
-		<parameter name="userUserName" value="user" />
+		<parameter name="userUserName" value="useris" />
 		<parameter name="userPassword" value="useruser" />
 		<classes>
 			<class name="test.loginTests"/>

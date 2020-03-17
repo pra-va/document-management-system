@@ -33,6 +33,7 @@ public class EditUserTests extends AbstractTest {
 	AdminNewUserPage adminNewUserPage;
 	ProfilePage profilePage;
 
+
 	@BeforeClass
 	public void preconditions() throws IOException {
 		loginPage = new LoginPage(driver);

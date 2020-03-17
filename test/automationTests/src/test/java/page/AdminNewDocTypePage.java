@@ -9,7 +9,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 public class AdminNewDocTypePage extends AbstractPage {
+	MainPage mainPage = new MainPage(driver);
 
 	public AdminNewDocTypePage(WebDriver driver) {
 		super(driver);
@@ -73,5 +77,24 @@ public class AdminNewDocTypePage extends AbstractPage {
 
 	public void waitForCreateButton() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.elementToBeClickable(this.buttonCreate));
+	}
+
+	public void createDocType(String docTypeName, String groupName) {
+		mainPage.clickAdminButton();
+		mainPage.clickAdminNewDocTypeButton();
+		this.sendKeysDocTypeName(docTypeName);
+		this.clickAddSpecificGroupButton(groupName);
+		this.clickCreateDocRigthsCheckBox(groupName);
+		this.clickSignDocRigthsCheckBox(groupName);
+		this.clickCreateButton();
+	}
+
+	public void deleteDocType(String docTypeName) {
+		try {
+			Unirest.delete("http://akademijait.vtmc.lt:8180/dvs/api/doct/delete/{name}").routeParam("name", docTypeName)
+					.asString();
+		} catch (UnirestException e) {
+			e.printStackTrace();
+		}
 	}
 }

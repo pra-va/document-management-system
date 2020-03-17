@@ -59,26 +59,26 @@ public class loginTests extends AbstractTest {
 				"You should not be able to navigate back after logging out");
 	}
 
-	@Test(groups = { "loginTests" }, priority = 0, enabled = true)
-	public void emptyLoginFieldsTest() throws InterruptedException {
+	@Test(groups = { "loginTests" }, priority = 1, enabled = true)
+	public void emptyLoginFieldsTest() {
 		loginPage.clearLoginFields();
 		loginPage.waitForLoginButton();
 		loginPage.clickButtonLogin();
-		loginPage.waitForLoginButton();		
+		loginPage.waitForWrongLoginText();
 		assertTrue(
 				driver.findElement(By.xpath("//*[contains(text(), 'Incorrect Username or Password!')]")).isDisplayed(),
 				"Incorrect Username or Password! text is not displayed");
 	}
 
 	@Parameters({ "userNameWrong", "passwordWrong" })
-	@Test(groups = { "loginTests" }, priority = 1, enabled = true)
-	public void wrongLoginTest(String p1, String p2) throws InterruptedException {
+	@Test(groups = { "loginTests" }, priority = 4, enabled = true)
+	public void wrongLoginTest(String p1, String p2) {
 		loginPage.clearLoginFields();
 		loginPage.waitForLoginButton();
 		loginPage.sendKeysUserName(p1);
 		loginPage.sendKeysPassword(p2);
 		loginPage.clickButtonLogin();
-		loginPage.waitForLoginButton();		
+		loginPage.waitForWrongLoginText();
 		assertTrue(
 				driver.findElement(By.xpath("//*[contains(text(), 'Incorrect Username or Password!')]")).isDisplayed(),
 				"Incorrect Username or Password! text is not displayed");

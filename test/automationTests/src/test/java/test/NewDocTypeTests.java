@@ -4,6 +4,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
@@ -26,7 +27,6 @@ public class NewDocTypeTests extends AbstractTest {
 	AdminNewDocTypePage newDocTypePage;
 	GroupListPage groupListPage;
 	DocTypeListPage docPage;
-	
 
 	@BeforeClass
 	public void preconitions() throws IOException {
@@ -37,7 +37,12 @@ public class NewDocTypeTests extends AbstractTest {
 		newDocTypePage = new AdminNewDocTypePage(driver);
 		groupListPage = new GroupListPage(driver);
 		docPage = new DocTypeListPage(driver);
-		
+	}
+
+	@Parameters({ "docTypeName" })
+	@AfterClass
+	public void deleteDocTypeCreatedForTest(String p1) {
+		newDocTypePage.deleteDocType(p1);
 	}
 
 	@Parameters({ "adminUserName", "adminPasswrod" })
@@ -65,17 +70,11 @@ public class NewDocTypeTests extends AbstractTest {
 		newDocTypePage.clickCancelButton();
 	}
 
-	@Parameters({ "docTypeName", "groupName" })
+	@Parameters({ "docTypeName", "groupName", "adminUserName", "groupDescription" })
 	@Test(groups = { "newDocType" }, priority = 0, enabled = true)
-	public void createNewDocTypeTest(String p1, String p2) {
-		mainPage.clickAdminButton();
-		mainPage.clickAdminNewDocTypeButton();
-		newDocTypePage.sendKeysDocTypeName(p1);
-		newDocTypePage.clickAddSpecificGroupButton(p2);
-		newDocTypePage.clickCreateDocRigthsCheckBox(p2);
-		newDocTypePage.clickSignDocRigthsCheckBox(p2);
-		// newDocTypePage.clickCreateButton();
-		newDocTypePage.clickCancelButton();
+	public void createNewDocTypeTest(String p1, String p2, String p3, String p4) {
+//		groupPage.createGroup(p3, p2, p4);
+//		newDocTypePage.createDocType(p1, p2);
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
 		mainPage.waitForAdminButton();
@@ -83,19 +82,15 @@ public class NewDocTypeTests extends AbstractTest {
 				"doc type was not created");
 	}
 
-	@Parameters({ "docTypeName" })
+	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "newDocType" }, priority = 2, enabled = true)
-	public void docTypeGroupsTest(String p1) {
+	public void docTypeGroupsTest(String p1, String p2) {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
 		mainPage.waitForAdminButton();
-		assertTrue(
-				driver.findElement(By.xpath("//td[contains(text(), '" + p1 + "')]/..//td[3]//span"))
-						.getAttribute("data-content").equalsIgnoreCase("Junior developer."),
-				"check if group rights were assigned properly");
-		assertTrue(
-				driver.findElement(By.xpath("//td[contains(text(), '" + p1 + "')]/..//td[4]//span"))
-						.getAttribute("data-content").equalsIgnoreCase("Junior developer."),
-				"check if group rights were assigned properly");
+		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p1 + "')]/..//td[3]//span"))
+				.getAttribute("data-content").contains(p2), "check if group rights were assigned properly");
+		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p1 + "')]/..//td[4]//span"))
+				.getAttribute("data-content").contains(p2), "check if group rights were assigned properly");
 	}
 }
