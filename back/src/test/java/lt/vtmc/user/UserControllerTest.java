@@ -39,10 +39,10 @@ public class UserControllerTest {
 
 	@MockBean
 	private User user;
-	
+
 	@MockBean
 	private GroupService groupService;
-	
+
 	@MockBean
 	private DocumentService docService;
 
@@ -51,7 +51,8 @@ public class UserControllerTest {
 		User mockUser = new User("testUsername", "testName", "testSurname", "testing123", "USER");
 
 		// userService.createUser to respond back with mockUser
-		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
+		Mockito.when(userService.createUser(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString())).thenReturn(mockUser);
 
 		String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"name\":\"testing123\",\"surname\":\"testing123\",\"password\":\"testing123\",\"names\":[\"dummy1\"]}";
 
@@ -64,7 +65,7 @@ public class UserControllerTest {
 
 		MockHttpServletResponse response = result.getResponse();
 
-		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 
 	@Test
@@ -72,7 +73,8 @@ public class UserControllerTest {
 		User mockUser = new User("testUsername", "testName", "testSurname", "testing123", "ADMIN");
 
 		// userService.createSystemAdministrator to respond back with mockUser
-		Mockito.when(userService.createSystemAdministrator(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
+		Mockito.when(userService.createSystemAdministrator(Mockito.anyString(), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyString())).thenReturn(mockUser);
 
 		String exampleCreateUserCommand = "{\"username\":\"testAdmin\",\"name\":\"testing123\",\"surname\":\"testing123\",\"password\":\"testing123\",\"names\":[\"dummy1\"]}";
 
@@ -85,6 +87,6 @@ public class UserControllerTest {
 
 		MockHttpServletResponse response = result.getResponse();
 
-		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
 }

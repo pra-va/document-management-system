@@ -39,17 +39,15 @@ public class GroupControllerTest {
 
 	@MockBean
 	private GroupService groupService;
-	
+
 	@MockBean
 	private Group group;
-	
+
 	@MockBean
 	private User user;
-	
+
 	@MockBean
 	private UserService userService;
-	
-	
 
 	@Test
 	public void testCreateGroup() throws Exception {
@@ -69,24 +67,24 @@ public class GroupControllerTest {
 
 		MockHttpServletResponse response = result.getResponse();
 
-		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
+		assertEquals(HttpStatus.OK.value(), response.getStatus());
 	}
-	
+
 	@Test
 	public void testAddGroup() throws Exception {
 		Group mockGroup = new Group("testName", "testDescription");
-		
+
 		User mockUser = new User("testUsername", "testName", "testSurname", "testing123", "USER");
 		List<Group> mockGrouplist = new ArrayList<Group>();
 		mockGrouplist.add(mockGroup);
 		mockUser.setGroupList(mockGrouplist);
-		
+
 		// groupService.createUser to respond back with mockGroup
 		Mockito.when(groupService.findGroupByName(Mockito.anyString())).thenReturn(mockGroup);
 
 		// userService.findUserByUsername to respond back with mockUser
 		Mockito.when(userService.findUserByUsername(Mockito.anyString())).thenReturn(mockUser);
-		
+
 		String exampleCreateGroupCommand = "[\"dummy1\", \"dummy2\"]";
 
 		// Send CreateGroupCommand as body to /api/creategroup

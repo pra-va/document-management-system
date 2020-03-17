@@ -9,6 +9,7 @@ import AttachedFiles from "./Components/4-AttachedFiles";
 import "./EditDocument.css";
 import { withRouter } from "react-router-dom";
 import Download from "./../../../../resources/download.svg";
+import Validation from "./../../../6-CommonElements/5-FormInputValidationLine/Validation";
 
 class EditDocument extends Component {
   constructor(props) {
@@ -25,32 +26,38 @@ class EditDocument extends Component {
       filesSize: 0,
       submitDisabled: true,
       submitInProgres: false,
-      filesAttachedInServer: []
+      filesAttachedInServer: [],
+      onlyPdfFiles: true
     };
   }
 
   componentDidUpdate() {
     const { name, description, selectedDocType, filesSize } = this.state;
-
-    if (
-      (name.length > 0) &
-      (description.length > 0) &
-      (selectedDocType.length > 0) &
-      (filesSize < 20000000)
-    ) {
-      if (this.state.submitDisabled) {
-        this.setState({ submitDisabled: false });
-      }
+    console.log(this.props);
+    if (name === "") {
+      this.setUpInitialData();
     } else {
-      if (!this.state.submitDisabled) {
-        this.setState({ submitDisabled: true });
+      if (
+        (name.length > 0) &
+        (description.length > 0) &
+        (selectedDocType.length > 0) &
+        (filesSize < 20000000)
+      ) {
+        if (this.state.submitDisabled) {
+          this.setState({ submitDisabled: false });
+        }
+      } else {
+        if (!this.state.submitDisabled) {
+          this.setState({ submitDisabled: true });
+        }
       }
     }
   }
 
-  componentDidMount() {
+  setUpInitialData = () => {
     const data = this.props.item;
     this.fetchUsername();
+
     this.setState({
       filesAttachedInServer: this.props.item.filesAttached,
       name: data.name,
@@ -72,15 +79,6 @@ class EditDocument extends Component {
                 this.downloadFile(event, item.uid, item.fileName);
               }}
             />
-          ),
-          remove: (
-            <button
-              className="btn btn-secondary btn-sm"
-              onClick={this.handleRemove}
-              id={item.uid}
-            >
-              Remove
-            </button>
           )
         };
       })
@@ -88,7 +86,7 @@ class EditDocument extends Component {
     this.checkAttachedFilesSize(
       this.props.item.filesAttached.map(item => item.fileSize)
     );
-  }
+  };
 
   downloadFile = (event, uid, fileName) => {
     event.preventDefault();
@@ -121,12 +119,15 @@ class EditDocument extends Component {
     this.setState({ selectedDocType: selectedDocTypeName });
   };
 
-  handleRemove = event => {
-    event.preventDefault();
+  setOnlyPdfFiles = onlyPdfFiles => {
+    this.setState({ onlyPdfFiles: onlyPdfFiles });
+  };
+
+  handleRemove = number => {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
-      if (Number(event.target.id) === Number(element.number)) {
+      if (Number(number) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
       }
@@ -162,15 +163,6 @@ class EditDocument extends Component {
         fileName: element.name,
         size: size,
         fileSize: element.size,
-        remove: (
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={this.handleRemove}
-            id={i + stateLength + 1}
-          >
-            Remove
-          </button>
-        ),
         file: files[i]
       });
     }
@@ -244,7 +236,6 @@ class EditDocument extends Component {
       newName: this.state.name,
       filesToRemoveUID: filesToRemove
     };
-    console.log("aaaaaaaaaaaaaaaaa" + data);
 
     axios
       .post(serverUrl + "doc/update" + uid, postData)
@@ -254,7 +245,7 @@ class EditDocument extends Component {
           .then(response => {
             this.props.history.push("/dvs/documents");
             this.props.hide();
-            window.location.reload();
+            this.props.reloadTable();
           })
           .catch(function(error) {
             console.log(error);
@@ -290,9 +281,11 @@ class EditDocument extends Component {
             <AttachedFiles
               values={this.state.attachedFilesTableValues}
               size={this.state.filesSize}
-              attachedFilesTableValues={this.state.attachedFilesTableValues}
+              handleRemove={this.handleRemove}
+              setOnlyPdfFiles={this.setOnlyPdfFiles}
+              onlyPdfFiles={this.state.onlyPdfFiles}
             />
-            <div className="progress my-3">
+            <div className="progress mt-3 mb-0">
               <div
                 className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
                 role="progressbar"
@@ -306,8 +299,16 @@ class EditDocument extends Component {
                 }
               ></div>
             </div>
+            <Validation
+              satisfied={this.state.filesSize <= 20000000}
+              output={
+                "Attached files can not take up more than 20 MB. (Currently: " +
+                Math.floor((this.state.filesSize / 1000000) * 100) / 100 +
+                " MB)"
+              }
+            />
             <div
-              className="form-group row d-flex justify-content-center m-0"
+              className="form-group row d-flex justify-content-center m-0 mt-3"
               id="updateDocumentFooter"
             >
               <button
@@ -321,7 +322,7 @@ class EditDocument extends Component {
                 type="submit"
                 className="btn btn-dark ml-2"
                 data-dismiss="modal"
-                disabled={this.state.submitDisabled}
+                disabled={this.state.submitDisabled || !this.state.onlyPdfFiles}
               >
                 Submit
               </button>

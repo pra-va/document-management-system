@@ -54,6 +54,12 @@
 		<appender-ref ref="FILE-ROLLING" />
 		<appender-ref ref="CONSOLE" />
 	</logger>
+	
+	<logger name="lt.vtmc.statistics.controller.StatisticsController"
+		level="INFO" additivity="false">
+		<appender-ref ref="FILE-ROLLING" />
+		<appender-ref ref="CONSOLE" />
+	</logger>
 
 
 	<root level="INFO">

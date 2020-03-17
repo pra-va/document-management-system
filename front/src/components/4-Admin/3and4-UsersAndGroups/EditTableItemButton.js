@@ -29,12 +29,14 @@ class EditTableItemButton extends Component {
             ownerName={this.props.ownerName}
             show={this.state.showModal}
             onHide={this.handleClose}
+            reloadTable={this.props.reloadTable}
           />
         ) : (
           <EditGroup
             ownerName={this.props.ownerName}
             show={this.state.showModal}
             onHide={this.handleClose}
+            reloadTable={this.props.reloadTable}
           />
         )}
       </div>

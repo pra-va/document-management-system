@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import InputLine from "../../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
+import InputLine from "./../../../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
 import axios from "axios";
-import serverUrl from "./../../../../7-properties/1-URL";
+import serverUrl from "./../../../../../7-properties/1-URL";
 
 class UserInformation extends Component {
   constructor(props) {
@@ -11,10 +11,14 @@ class UserInformation extends Component {
       firstName: "",
       lastName: "",
       password: "",
-      groupList: [],
-      role: "",
+      role: "USER",
+      usernameExists: false,
       updatePassword: false
     };
+  }
+
+  componentDidMount() {
+    this.fetchUserInfo();
   }
 
   handleFirstNameChange = event => {
@@ -27,6 +31,50 @@ class UserInformation extends Component {
     this.props.handleLastNameChange(event.target.value);
   };
 
+  fetchUserInfo = () => {
+    axios
+      .get(serverUrl + "user/" + this.props.ownerName)
+      .then(response => {
+        const user = response.data;
+        const state = {
+          firstName: user.name,
+          lastName: user.surname,
+          role: user.role,
+          addedGroups: user.groupList
+        };
+        this.setState({ ...state });
+        this.props.initialStateUpdate(state);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  handleUsernameChange = event => {
+    event.persist();
+    this.setState({ username: event.target.value });
+    this.props.handleUsernameChange(event.target.value);
+
+    if (event.target.value.length > 3) {
+      axios
+        .get(serverUrl + event.target.value + "/exists")
+        .then(response => {
+          this.setState({ usernameExists: response.data });
+          if (response.data) {
+            event.target.setCustomValidity("Username is taken.");
+          } else {
+            event.target.setCustomValidity("");
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      event.target.setCustomValidity("");
+      this.setState({ usernameExists: false });
+    }
+  };
+
   handlePasswordChange = event => {
     this.setState({ password: event.target.value });
     this.props.handlePasswordChange(event.target.value);
@@ -36,49 +84,29 @@ class UserInformation extends Component {
     this.setState({ showPassword: event.target.checked });
   };
 
-  handleRoleChange = event => {
+  adminRadioChange = event => {
+    this.setState({ userRole: event.target.value });
+    this.props.handleRoleChange(event.target.value);
+  };
+
+  userRadioChange = event => {
+    this.setState({ userRole: event.target.value });
     this.props.handleRoleChange(event.target.value);
   };
 
   updatePassword = event => {
-    this.setState({ updatePassword: event.target.checked });
-    if (!event.target.checked) {
-      this.setState({ password: "" });
+    if (event.target.checked) {
+      this.setState({ updatePassword: event.target.checked });
+    } else {
+      this.setState({ updatePassword: event.target.checked, password: "" });
     }
-  };
-
-  componentDidMount() {
-    this.getUserData();
-  }
-
-  componentDidUpdate() {}
-
-  getUserData = () => {
-    axios
-      .get(serverUrl + "user/" + this.props.ownerName)
-      .then(response => {
-        this.setState({
-          firstName: response.data.name,
-          lastName: response.data.surname,
-          role: response.data.role,
-          groupList: response.data.groupList
-        });
-        this.props.initalDataTransfer({
-          firstName: response.data.name,
-          lastName: response.data.surname,
-          role: response.data.role,
-          groupList: response.data.groupList
-        });
-        this.props.setuserGroups(response.data.groupList);
-      })
-      .catch(error => console.log(error));
   };
 
   render() {
     return (
       <div>
         <h3 className="d-flex justify-content-start">
-          1. Edit user information.
+          1. Update user information.
         </h3>
 
         <InputLine
@@ -146,7 +174,7 @@ class UserInformation extends Component {
             <div className="form-check d-flex justify-content-start">
               <label
                 className="form-check-label"
-                htmlFor="checkBoxShowPassword"
+                htmlFor="checBoxUpdatePassword"
               >
                 Update password
               </label>
@@ -154,7 +182,7 @@ class UserInformation extends Component {
                 autoComplete="on"
                 className="form-check-input"
                 type="checkbox"
-                id="checkBoxShowPassword"
+                id="checBoxUpdatePassword"
                 onClick={this.updatePassword}
               />
             </div>
@@ -172,7 +200,7 @@ class UserInformation extends Component {
                 name="adminOrUser"
                 id="radioAdmin"
                 value="ADMIN"
-                onChange={this.handleRoleChange}
+                onChange={this.adminRadioChange}
                 onClick={() => {
                   this.setState({ role: "ADMIN" });
                 }}
@@ -189,8 +217,7 @@ class UserInformation extends Component {
                 type="radio"
                 name="adminOrUser"
                 id="radioUser"
-                value="USER"
-                onChange={this.handleRoleChange}
+                onChange={this.userRadioChange}
                 onClick={() => {
                   this.setState({ role: "USER" });
                 }}

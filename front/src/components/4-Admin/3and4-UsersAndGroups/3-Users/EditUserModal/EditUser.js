@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Modal from "react-bootstrap/Modal";
-import "./../../../1-NewUser/NewUser.css";
-import UserInformation from "./1-EditUserInformation";
-import Groups from "./2-Groups";
-import UserGroups from "./../../../1-NewUser/FormComponents/3-UsersGroups";
+import "./EditUser.css";
+import UserInformation from "./FormComponents/1-UserInformation";
+import Groups from "./FormComponents/2-Groups";
 import axios from "axios";
 import serverUrl from "./../../../../7-properties/1-URL";
 
@@ -11,26 +10,26 @@ class NewModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      owner: "",
       firstName: "",
       lastName: "",
-      username: "",
       password: "",
-      role: "",
-      userGroups: [],
+      role: "USER",
       allGroups: [],
-      notAddedGroups: [],
-      addedGroups: [],
+      addedGroups: null,
       usernameExists: false
     };
   }
 
-  setuserGroups = userGroups => {
-    this.setState({ userGroups: userGroups });
-  };
-
-  setAddeduserGroups = addedGroups => {
-    this.setState({ addedGroups: addedGroups });
+  loadingTable = () => {
+    let loadingData = [];
+    for (let i = 0; i < this.state.allGroups; i++) {
+      loadingData.push({
+        number: i,
+        name: this.state.allGroups[i].name,
+        addOrRemove: this.state.allGroups[i].addOrRemove
+      });
+    }
+    return loadingData;
   };
 
   handleFirstNameChange = value => {
@@ -41,10 +40,6 @@ class NewModal extends Component {
     this.setState({ lastName: value });
   };
 
-  handleUsernameChange = value => {
-    this.setState({ username: value });
-  };
-
   handlePasswordChange = value => {
     this.setState({ password: value });
   };
@@ -53,36 +48,36 @@ class NewModal extends Component {
     this.setState({ role: value });
   };
 
-  handleUsernameExists = value => {
-    this.setState({ usernameExists: value });
+  setAddedGroups = groupList => {
+    this.setState({ addedGroups: groupList });
   };
 
-  initalDataTransfer = data => {
-    this.setState({ ...data });
-  };
-
-  handleSubmit = event => {
+  handleUpdateUser = event => {
     event.preventDefault();
-    let url = serverUrl + "user/update/" + this.props.ownerName;
 
-    let userGroups = this.state.addedGroups.map(item => {
-      return item.name;
-    });
+    const { firstName, lastName, password, addedGroups, role } = this.state;
+
+    let url = serverUrl + "user/update/" + this.props.ownerName;
 
     axios
       .post(url, {
-        groupList: userGroups,
-        name: this.state.firstName,
-        password: this.state.password,
-        role: this.state.role,
-        surname: this.state.lastName
+        groupList: addedGroups,
+        name: firstName,
+        password: password,
+        role: role,
+        surname: lastName
       })
       .then(response => {
         this.props.onHide();
+        this.props.reloadTable();
       })
       .catch(error => {
         console.log(error);
       });
+  };
+
+  initialStateUpdate = data => {
+    this.setState({ ...data });
   };
 
   render() {
@@ -91,42 +86,35 @@ class NewModal extends Component {
         show={this.props.show}
         onHide={this.props.onHide}
         size={"lg"}
-        id="editUserModal"
+        id="newUserModal"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit User: {this.props.ownerName}</Modal.Title>
+          <Modal.Title>Update {this.props.ownerName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleUpdateUser}>
             <UserInformation
-              initalDataTransfer={this.initalDataTransfer}
+              ownerName={this.props.ownerName}
               handleFirstNameChange={this.handleFirstNameChange}
               handleLastNameChange={this.handleLastNameChange}
               handleUsernameChange={this.handleUsernameChange}
               handlePasswordChange={this.handlePasswordChange}
               handleRoleChange={this.handleRoleChange}
-              handleUsernameExists={this.handleUsernameExists}
-              setuserGroups={this.setuserGroups}
+              initialStateUpdate={this.initialStateUpdate}
               firstName={this.state.firstName}
               lastName={this.state.lastName}
-              username={this.state.username}
               password={this.state.password}
               role={this.state.role}
-              userData={this.props.userData}
-              groupData={this.state.allGroups}
-              ownerName={this.props.ownerName}
             />
 
             <hr className="m-1" />
 
             <Groups
-              userGroups={this.state.userGroups}
-              setAddeduserGroups={this.setAddeduserGroups}
+              tableData={this.state.allGroups}
+              setUpGroups={this.setUpGroups}
+              setAddedGroups={this.setAddedGroups}
+              addedGroups={this.state.addedGroups}
             />
-
-            <hr className="m-1" />
-
-            <UserGroups userGroups={this.state.addedGroups} />
 
             <div className="form-group row d-flex justify-content-center">
               <div className="modal-footer ">
@@ -138,12 +126,11 @@ class NewModal extends Component {
                   Cancel
                 </button>
                 <button
-                  type={this.state.usernameExists ? "" : "submit"}
+                  type={"submit"}
                   className="btn btn-dark"
                   data-dismiss="modal"
-                  disabled={this.state.usernameExists ? true : false}
                 >
-                  Submit
+                  Update
                 </button>
               </div>
             </div>

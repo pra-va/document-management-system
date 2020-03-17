@@ -6,22 +6,23 @@ const EditButton = props => {
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => {
     setShowModal(false);
-    window.location.reload();
+    props.reloadTable();
   };
 
   return (
     <div>
+      <EditDocument
+        reloadTable={props.reloadTable}
+        show={showModal}
+        hide={handleCloseModal}
+        item={props.item}
+      />
       <button
         className="btn btn-secondary btn-sm btn-edit"
         onClick={handleShowModal}
       >
         Edit/View
       </button>
-      <EditDocument
-        show={showModal}
-        hide={handleCloseModal}
-        item={props.item}
-      />
     </div>
   );
 };

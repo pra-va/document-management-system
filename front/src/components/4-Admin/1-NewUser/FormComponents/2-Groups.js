@@ -8,34 +8,90 @@ class Groups extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableData: props.tableData,
-      groupsData: []
+      tableData: [],
+      groupsData: [],
+      selectedGroupNames: [],
+      selectedItemsAsNumbers: []
     };
   }
 
-  dataFields = ["number", "name", "addOrRemove"];
-  columnNames = ["#", "Name", ""];
+  columns = [{ dataField: "name", text: "Name", sort: true }];
 
-  componentDidUpdate() {
-    if (this.props.tableData.length !== this.state.tableData.length) {
-      this.setState({ tableData: this.props.tableData });
-    }
+  componentDidMount() {
+    this.fetchGroupsData(0, 8, null, null, "");
   }
 
-  fetchGroupsData = () => {
+  fetchGroupsData = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: sortField,
+      searchValueString: searchValueString
+    };
+
     axios
-      .get(serverUrl + "groups")
+      .post(serverUrl + "groups", pageData)
       .then(response => {
-        this.props.setUpGroups(response.data);
+        this.setState({ pagingData: response.data.pagingData });
+        this.parseData(response.data.groupList);
       })
       .catch(error => {
         console.log(error);
       });
   };
 
-  componentDidMount() {
-    this.fetchGroupsData();
-  }
+  parseData = data => {
+    let tempData = data.map((item, index) => {
+      return {
+        number: index + 1,
+        name: item.name,
+        description: item.description
+      };
+    });
+    this.setState({ tableData: tempData });
+  };
+
+  handleRowSelect = (row, isSelect) => {
+    const selectedGroupNames = [...this.state.selectedGroupNames];
+    if (isSelect) {
+      if (!selectedGroupNames.includes(row.name)) {
+        selectedGroupNames.push(row.name);
+      }
+    } else {
+      if (selectedGroupNames.includes(row.name)) {
+        selectedGroupNames.splice(selectedGroupNames.indexOf(row.name), 1);
+      }
+    }
+    this.setState({ selectedGroupNames: selectedGroupNames });
+    this.props.setAddedGroups(selectedGroupNames);
+  };
+
+  setSelectedItems = () => {
+    const { tableData, selectedGroupNames } = this.state;
+    let selectedItemNumbersForTable = [];
+    for (let index = 0; index < tableData.length; index++) {
+      const element = tableData[index].name;
+      if (selectedGroupNames.includes(element)) {
+        selectedItemNumbersForTable.push(index + 1);
+      }
+    }
+    return selectedItemNumbersForTable;
+  };
+
+  handleSelectAll = (isSelect, rows) => {
+    rows.forEach(row => {
+      setTimeout(() => {
+        this.handleRowSelect(row, isSelect);
+      }, 1);
+    });
+  };
 
   render() {
     return (
@@ -48,10 +104,16 @@ class Groups extends Component {
 
         <Table
           id={"newUserGroups"}
-          dataFields={this.dataFields}
-          columnNames={this.columnNames}
-          tableData={this.state.tableData}
+          tableData={[...this.state.tableData]}
           searchBarId={"currentGroupsSearchBar"}
+          requestNewData={this.fetchGroupsData}
+          pagingData={this.state.pagingData}
+          columns={this.columns}
+          selectType={"checkbox"}
+          select={"true"}
+          handleRowSelect={this.handleRowSelect}
+          handleSelectAll={this.handleSelectAll}
+          setSelectedItems={this.setSelectedItems}
         />
       </div>
     );

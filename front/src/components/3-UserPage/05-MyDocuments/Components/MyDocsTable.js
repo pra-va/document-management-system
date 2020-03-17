@@ -11,42 +11,73 @@ import serverUrl from "./../../../7-properties/1-URL";
 class MyDocsTable extends Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", tableData: [] };
+    this.state = {
+      username: "",
+      tableData: [],
+      pagingData: {},
+      requestPagingData: {},
+      dataUrl: "",
+      initialDataTransferHappend: false
+    };
   }
-  dataFields = [
-    "number",
-    "name",
-    "type",
-    "status",
-    "date",
-    "files",
-    "edit",
-    "submit"
+
+  columns = [
+    { dataField: "id", text: "ID", sort: true },
+    { dataField: "name", text: "Name", sort: true },
+    { dataField: "type", text: "Type", sort: true },
+    { dataField: "status", text: "Status", sort: true },
+    { dataField: "date", text: "Created", sort: true },
+    { dataField: "files", text: "Files", sort: false },
+    { dataField: "edit", text: "", sort: false },
+    { dataField: "submit", text: "", sort: false }
   ];
-  columnNames = ["ID", "Name", "Type", "Status", "Created", "Files", "", ""];
-  tableData = [];
 
-  componentDidMount() {
-    this.getUsername();
-  }
-
-  getUsername = () => {
-    axios
-      .get(serverUrl + "loggedin")
-      .then(response => {
-        this.setState({ username: response.data });
-        this.fetchData(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  sortValues = {
+    id: "d.id",
+    name: "d.name",
+    type: "dt.name",
+    status: "d.status",
+    date: "d.dateCreate"
   };
 
-  fetchData = () => {
+  componentDidUpdate() {
+    if (this.props.username !== this.state.username) {
+      this.setState({
+        username: this.props.username,
+        dataUrl: this.props.username + "/alldocuments"
+      });
+    }
+    if (
+      !this.state.initialDataTransferHappend &&
+      this.state.dataUrl.length > 0
+    ) {
+      this.fetchData(0, 8, null, null, "");
+      this.setState({ initialDataTransferHappend: true });
+    }
+  }
+
+  fetchData = (page, sizePerPage, sortField, order, searchValueString) => {
+    var modifiedSortField = null;
+    if (sortField !== null) {
+      modifiedSortField = this.sortValues[sortField];
+    }
+
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: modifiedSortField,
+      searchValueString: searchValueString
+    };
+
     axios
-      .get(serverUrl + this.state.username + "/alldocuments")
+      .post(serverUrl + this.state.dataUrl, pageData)
       .then(response => {
-        this.processData(response.data);
+        this.setState({
+          pagingData: response.data.pagingData,
+          requestPagingData: pageData
+        });
+        this.processData(response.data.documents);
       })
       .catch(error => {
         console.log(error);
@@ -56,7 +87,8 @@ class MyDocsTable extends Component {
   processData = data => {
     const tableData = data.map((item, index) => {
       return {
-        number: item.uid,
+        number: index,
+        id: item.uid,
         name: item.name,
         type: item.type,
         status: item.status,
@@ -76,7 +108,7 @@ class MyDocsTable extends Component {
         ),
         edit:
           item.status === "CREATED" ? (
-            <EditButton item={item} />
+            <EditButton item={item} reloadTable={this.reloadTable} />
           ) : (
             <ViewButton item={item} />
           ),
@@ -97,6 +129,20 @@ class MyDocsTable extends Component {
     });
 
     this.setState({ tableData: tableData });
+  };
+
+  reloadTable = () => {
+    const { requestPagingData } = this.state;
+    setTimeout(() => {
+      this.setState({ tableData: [] });
+    }, 1);
+    this.fetchData(
+      requestPagingData.page,
+      requestPagingData.limit,
+      requestPagingData.sortBy,
+      requestPagingData.order,
+      requestPagingData.searchValueString
+    );
   };
 
   submitDocument = (uid, event) => {
@@ -136,14 +182,7 @@ class MyDocsTable extends Component {
   };
 
   fetchCustomData = url => {
-    axios
-      .get(serverUrl + url)
-      .then(response => {
-        this.processData(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    this.setState({ dataUrl: url, initialDataTransferHappend: false });
   };
 
   render() {
@@ -158,7 +197,9 @@ class MyDocsTable extends Component {
                 id="all"
                 checked
                 onChange={() => {}}
-                onClick={this.fetchData}
+                onClick={() => {
+                  this.fetchCustomData(this.props.username + "/alldocuments");
+                }}
               />{" "}
               All
             </label>
@@ -168,7 +209,7 @@ class MyDocsTable extends Component {
                 name="options"
                 id="created"
                 onClick={() => {
-                  this.fetchCustomData("doc/allcreated/" + this.state.username);
+                  this.fetchCustomData("doc/allcreated/" + this.props.username);
                 }}
               />{" "}
               Created
@@ -214,12 +255,17 @@ class MyDocsTable extends Component {
             </label>
           </div>
         </div>
+
         <Table
           id={"myDocsTableSearch"}
-          dataFields={this.dataFields}
-          columnNames={this.columnNames}
           tableData={this.state.tableData}
-          searchBarId={"createGroupUsersSearchBar"}
+          searchBarId={"myDocsSearch"}
+          requestNewData={this.fetchData}
+          pagingData={this.state.pagingData}
+          columns={this.columns}
+          selectType={"radio"}
+          handleRowSelect={() => {}}
+          setSelectedItems={() => {}}
         />
       </div>
     );

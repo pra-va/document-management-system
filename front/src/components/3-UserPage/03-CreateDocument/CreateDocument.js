@@ -8,6 +8,7 @@ import serverUrl from "./../../7-properties/1-URL";
 import "./CreateDocument.css";
 import axios from "axios";
 import ContentWrapper from "./../../6-CommonElements/10-TopContentWrapper/ContentWrapper";
+import Validation from "./../../6-CommonElements/5-FormInputValidationLine/Validation";
 
 class CreateDocument extends Component {
   constructor(props) {
@@ -23,7 +24,8 @@ class CreateDocument extends Component {
       uploadProgress: 0,
       filesSize: 0,
       submitDisabled: true,
-      submitInProgres: false
+      submitInProgres: false,
+      onlyPdfFiles: true
     };
   }
 
@@ -62,12 +64,15 @@ class CreateDocument extends Component {
     this.setState({ selectedDocType: selectedDocTypeName });
   };
 
-  handleRemove = event => {
-    event.preventDefault();
+  setOnlyPdfFiles = onlyPdfFiles => {
+    this.setState({ onlyPdfFiles: onlyPdfFiles });
+  };
+
+  handleRemove = number => {
     const tmpValues = [...this.state.attachedFilesTableValues];
     for (let i = 0; i < tmpValues.length; i++) {
       const element = tmpValues[i];
-      if (Number(event.target.id) === Number(element.number)) {
+      if (Number(number) === Number(element.number)) {
         tmpValues.splice(i, 1);
         break;
       }
@@ -103,15 +108,6 @@ class CreateDocument extends Component {
         number: i + stateLength,
         fileName: element.name,
         size: size,
-        remove: (
-          <button
-            className="btn btn-secondary btn-sm"
-            onClick={this.handleRemove}
-            id={i + stateLength}
-          >
-            Remove
-          </button>
-        ),
         file: files[i]
       });
     }
@@ -185,10 +181,10 @@ class CreateDocument extends Component {
   render() {
     return (
       <div>
-        <Navigation />{" "}
+        <Navigation />
         <div className="container">
           <ContentWrapper content={<h3>New Document</h3>} />
-          <div className="container" id="newDocument">
+          <div className="container p-0" id="newDocument">
             <form onSubmit={this.handleUpload} id="createDocumentForm">
               <EditInfo
                 handleNameChange={this.handleNameChange}
@@ -197,17 +193,33 @@ class CreateDocument extends Component {
                 description={this.state.description}
               />
               <hr />
-              <SelectDocType
-                handleDocTypeSelect={this.handleDocTypeSelect}
-                username={this.state.username}
-              />
+              <div className="row">
+                <div className="col-12 col-lg-6">
+                  <SelectDocType
+                    handleDocTypeSelect={this.handleDocTypeSelect}
+                    username={this.state.username}
+                  />
+                </div>
+                <div className="col-12 col-lg-6">
+                  <div className="d-block d-lg-none d-xl-none">
+                    <hr />
+                  </div>
+                  <AttachFiles handleFileAdd={this.handleFileAdd} />
+                  <div className="overflow-auto" style={{ maxHeight: "20em" }}>
+                    <AttachedFiles
+                      values={this.state.attachedFilesTableValues}
+                      size={this.state.filesSize}
+                      handleRemove={this.handleRemove}
+                      setOnlyPdfFiles={this.setOnlyPdfFiles}
+                      onlyPdfFiles={this.state.onlyPdfFiles}
+                    />
+                  </div>
+                </div>
+              </div>
+
               <hr />
-              <AttachFiles handleFileAdd={this.handleFileAdd} />
-              <AttachedFiles
-                values={this.state.attachedFilesTableValues}
-                size={this.state.filesSize}
-              />
-              <div className="progress my-3">
+
+              <div className="progress mt-3 mb-0">
                 <div
                   className="progress-bar progress-bar-striped progress-bar-animated bg-dark"
                   role="progressbar"
@@ -221,19 +233,22 @@ class CreateDocument extends Component {
                   }
                 ></div>
               </div>
+              <Validation
+                satisfied={this.state.filesSize <= 20000000}
+                output={
+                  "Attached files can not take up more than 20 MB. (Currently: " +
+                  Math.floor((this.state.filesSize / 1000000) * 100) / 100 +
+                  " MB)"
+                }
+              />
               <div className="form-group row d-flex justify-content-center m-0">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark mr-2"
-                  onClick={this.props.hideNewGroup}
-                >
-                  Cancel
-                </button>
                 <button
                   type="submit"
                   className="btn btn-dark ml-2"
                   data-dismiss="modal"
-                  disabled={this.state.submitDisabled}
+                  disabled={
+                    this.state.submitDisabled || !this.state.onlyPdfFiles
+                  }
                 >
                   Create
                 </button>

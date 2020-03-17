@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import lt.vtmc.user.service.UserService;
 
@@ -118,7 +120,13 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 					}
 
 				}).permitAll().and().csrf().disable().exceptionHandling().authenticationEntryPoint(securityEntryPoint)
-				.and().headers().frameOptions().disable();
+				.and().headers().frameOptions().disable().and().sessionManagement().maximumSessions(1)
+				.maxSessionsPreventsLogin(true);
+	}
+
+	@Bean
+	public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+		return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 	}
 
 }

@@ -9,12 +9,12 @@ const DocTypeInfo = props => {
 
   const handleDocTypeChange = event => {
     event.persist();
-    props.handleDocTypeNameChange(event.target.value);
+    props.handleNameChange(event.target.value);
     axios
       .get(serverUrl + "doct/" + event.target.value + "/exists")
       .then(response => {
-        setDocTypeNameExists(response.data);
-        if (response.data && response.data !== props.owner) {
+        setDocTypeNameExists(response.data && props.name === props.owner);
+        if (response.data && props.name === props.owner) {
           event.target.setCustomValidity("Document Type name must be unique.");
         } else {
           event.target.setCustomValidity("");
@@ -35,15 +35,15 @@ const DocTypeInfo = props => {
         type={"text"}
         placeholder={"Vacation request"}
         onChange={handleDocTypeChange}
-        value={props.docTypeValue}
+        value={props.name}
         pattern={4}
       />
-      <div className="row mt-0 pt-0">
+      <div className="row">
         <div className="col-2"></div>
         <div className="col-10">
           <Validation
-            output="Field must be unique."
             satisfied={!docTypeNameExists}
+            output={"Field must be unique."}
           />
         </div>
       </div>

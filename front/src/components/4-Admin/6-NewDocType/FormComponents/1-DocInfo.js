@@ -9,7 +9,7 @@ const DocTypeInfo = props => {
 
   const handleDocTypeChange = event => {
     event.persist();
-    props.handleDocTypeNameChange(event.target.value);
+    props.handleNameChange(event.target.value);
     axios
       .get(serverUrl + "doct/" + event.target.value + "/exists")
       .then(response => {
@@ -27,7 +27,9 @@ const DocTypeInfo = props => {
 
   return (
     <div>
-      <h3 className="d-flex justify-content-start">1. Enter information.</h3>
+      <h3 className="d-flex justify-content-start">
+        1. Update document type information.
+      </h3>
       <Input
         id={"groupNameInput"}
         labelName={"Document type name:"}
@@ -35,7 +37,7 @@ const DocTypeInfo = props => {
         type={"text"}
         placeholder={"Vacation request"}
         onChange={handleDocTypeChange}
-        value={props.docTypeValue}
+        value={props.name}
         pattern={4}
       />
       <div className="row">
