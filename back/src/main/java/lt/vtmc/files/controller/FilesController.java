@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,6 +52,8 @@ public class FilesController {
 	 * @param file
 	 * @return
 	 */
+
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping("/api/file")
 	public void uploadFiles(MultipartFile file, Document doc) {
 		try {
@@ -68,6 +71,7 @@ public class FilesController {
 	 * @param fileName
 	 * @return
 	 */
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/{fileUID}")
 	public ResponseEntity<Resource> downloadFileByFileName(@PathVariable("fileUID") String fileUID) {
 		LOG.info("# LOG # Initiated by [{}]: User downloaded file with file UID: [{}]#",
@@ -75,17 +79,20 @@ public class FilesController {
 		return fileService.downloadFileByUID(fileUID);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
 
 		return fileService.findAllFileDetailsByUsername(username);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/info/docname/{docname}")
 	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
 		return fileService.findAllFileDetailsByDocument(docName);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
 	public byte[] downloadFiles(HttpServletResponse response, @PathVariable("username") String username)
 			throws IOException {
@@ -103,6 +110,7 @@ public class FilesController {
 	 * @param username
 	 * @return
 	 */
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(value = "/api/files/csv/{username}")
 	public ResponseEntity<Resource> downloadCSV(@PathVariable String username) {
 		LOG.info("# LOG # Initiated by [{}]: User generated and downloaded CSV file for all his files#",
@@ -110,6 +118,7 @@ public class FilesController {
 		return fileService.generateCSV(username);
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@DeleteMapping(path = "/api/files/delete/{UID}")
 	public ResponseEntity<String> deleteFileByUID(@PathVariable("UID") String UID) throws IOException {
 		fileService.deleteFileByUID(UID);

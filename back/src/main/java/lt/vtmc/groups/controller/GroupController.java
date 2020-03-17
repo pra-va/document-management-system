@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +55,7 @@ public class GroupController {
 	 * @method POST
 	 * @param user details
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/creategroup", method = RequestMethod.POST)
 	public ResponseEntity<String> createGroup(@RequestBody CreateGroupCommand command) {
 		if (groupService.findGroupByName(command.getGroupName()) == null) {
@@ -72,6 +74,7 @@ public class GroupController {
 		return new ResponseEntity<String>("Failed to create group", HttpStatus.CONFLICT);
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
 	public Map<String, Object> listAllGroups(@RequestBody PagingData pagingData) {
 
@@ -81,6 +84,7 @@ public class GroupController {
 		return groupService.retrieveAllGroups(pagingData);
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/groups/{groupname}")
 	public GroupDetailsDTO findGroupByName(@PathVariable("groupname") String name) {
 
@@ -90,6 +94,7 @@ public class GroupController {
 		return new GroupDetailsDTO(groupService.findGroupByName(name));
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/addGroup/{username}")
 	public ResponseEntity<String> addGroup(@PathVariable("username") String username, @RequestBody String[] names) {
 		if (userService.findUserByUsername(username) != null) {
@@ -113,6 +118,7 @@ public class GroupController {
 	 * @url /api/groups/{groupname}
 	 * @method POST
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/groups/update/{groupname}")
 	public ResponseEntity<String> updateGroupByGroupName(@RequestBody UpdateGroupCommand command,
 			@PathVariable("groupname") String name) {
@@ -139,6 +145,7 @@ public class GroupController {
 	 * @param name
 	 * @return
 	 */
+	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/group/{name}/exists")
 	public boolean groupNameExists(@PathVariable("name") String name) {
 		if (this.groupService.findGroupByName(name) != null) {
@@ -148,6 +155,7 @@ public class GroupController {
 		}
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/api/group/{groupname}/delete")
 	public ResponseEntity<String> deleteGroupByName(@PathVariable("groupname") String groupname) {
 		Group tmpGroup = groupService.findGroupByName(groupname);
