@@ -65,13 +65,19 @@ public class StatService {
 				// Looping through every document of selected docType and filtering by status
 				// and date frame
 
-			for (Document document : tmpListDoc) {
-					if (document.getStatus() != Status.CREATED) {
+<<<<<<< HEAD
+				for (Document document : tmpListDoc) {
+
 					System.out.println("****************");
 					System.out.println("lt.vtmc.statistics.service.StatService.getDocTypeStatistics(String, int, int)");
 					System.out.println(document.getStatus());
 					System.out.println("****************");
 
+					int dateSubmit = Integer
+							.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
+=======
+			for (Document document : tmpListDoc) {
+					if (document.getStatus() != Status.CREATED) {
 						int dateSubmit = Integer
 								.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
 
@@ -82,11 +88,19 @@ public class StatService {
 							if (document.getStatus() == Status.ACCEPTED) {
 								tmpDoc.setNumberOfAccepted((tmpDoc.getNumberOfAccepted() + 1));
 							}
-						if (document.getStatus() == Status.DECLINED) {
+							if (document.getStatus() == Status.REJECTED) {
 								tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
 							}
+>>>>>>> fa9aa216ade8e4445f388d6560698522737384ea
 
 						}
+<<<<<<< HEAD
+						if (document.getStatus() == Status.DECLINED) {
+							tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
+						}
+
+=======
+>>>>>>> fa9aa216ade8e4445f388d6560698522737384ea
 					}
 				}
 				statToReturn.add(tmpDoc);
