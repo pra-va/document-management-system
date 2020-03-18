@@ -15,29 +15,36 @@ import lt.vtmc.statistics.service.StatService;
 
 @RestController
 public class StatisticsController {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(StatisticsController.class);
 
 	@Autowired
 	private StatService statService;
-	
+
 	@GetMapping(path = "/api/statisticsdtype")
-	public List<StatisticsDocTypeDTO> getDocTypeStatistics(String username, int startDate, int endDate ) {
-		
+	public List<StatisticsDocTypeDTO> getDocTypeStatistics(String username, int startDate, int endDate) {
+
+		System.out.println("****************");
+		System.out.println("lt.vtmc.statistics.controller.StatisticsController.getDocTypeStatistics(String, int, int)");
+		System.out.println("username: " + username);
+		System.out.println("startDate: " + startDate);
+		System.out.println("endDate: " + endDate);
+		System.out.println("****************");
+
 		LOG.info("# LOG # Initiated by [{}]: Requested docType statistics #",
 				SecurityContextHolder.getContext().getAuthentication().getName());
-		
+
 		return (statService.getDocTypeStatistics(username, startDate, endDate));
-		
+
 	}
-	
+
 	@GetMapping(path = "/api/statisticsuser")
 	public List<StatisticsUserDTO> getDocUserStatistics(String username) {
-		
+
 		LOG.info("# LOG # Initiated by [{}]: Requested users statistics #",
 				SecurityContextHolder.getContext().getAuthentication().getName());
-		
+
 		return (statService.getUserStatistics(username));
-		
+
 	}
 }

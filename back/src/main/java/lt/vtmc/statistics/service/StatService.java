@@ -18,9 +18,10 @@ import lt.vtmc.statistics.dto.StatisticsUserDTO;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.model.User;
 
-
 /**
- * Statistics Service with methods for Document type statistics or User statistics
+ * Statistics Service with methods for Document type statistics or User
+ * statistics
+ * 
  * @author LD
  *
  */
@@ -66,6 +67,11 @@ public class StatService {
 
 				for (Document document : tmpListDoc) {
 
+					System.out.println("****************");
+					System.out.println("lt.vtmc.statistics.service.StatService.getDocTypeStatistics(String, int, int)");
+					System.out.println(document.getStatus());
+					System.out.println("****************");
+
 					int dateSubmit = Integer
 							.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
 
@@ -76,7 +82,7 @@ public class StatService {
 						if (document.getStatus() == Status.ACCEPTED) {
 							tmpDoc.setNumberOfAccepted((tmpDoc.getNumberOfAccepted() + 1));
 						}
-						if (document.getStatus() == Status.REJECTED) {
+						if (document.getStatus() == Status.DECLINED) {
 							tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
 						}
 

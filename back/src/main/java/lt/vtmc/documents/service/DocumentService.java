@@ -157,7 +157,7 @@ public class DocumentService {
 		List<Document> tmpList = tmpUser.getProcessedDocuments();
 		tmpList.add(tmp);
 		tmpUser.setProcessedDocuments(tmpList);
-		tmp.setStatus(Status.REJECTED);
+		tmp.setStatus(Status.DECLINED);
 		userRepo.save(tmpUser);
 		docRepo.save(tmp);
 	}
@@ -219,19 +219,21 @@ public class DocumentService {
 	}
 
 	public Map<String, Object> returnSubmitted(String username, PagingData pagingData) {
-			Pageable pageable = pagingData.getPageable();
-			Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(), Status.SUBMITTED , pageable);
-			Map<String, Object> responseMap = new HashMap<>();
-			responseMap.put("pagingData",
-					new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
-			responseMap.put("documents",
-					documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
-			return responseMap;
+		Pageable pageable = pagingData.getPageable();
+		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
+				Status.SUBMITTED, pageable);
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData",
+				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
+		responseMap.put("documents",
+				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
+		return responseMap;
 	}
 
 	public Map<String, Object> returnAccepted(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
-		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(), Status.ACCEPTED , pageable);
+		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
+				Status.ACCEPTED, pageable);
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("pagingData",
 				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
@@ -242,7 +244,8 @@ public class DocumentService {
 
 	public Map<String, Object> returnRejected(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
-		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(), Status.REJECTED ,pageable);
+		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
+				Status.DECLINED, pageable);
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("pagingData",
 				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
@@ -253,7 +256,8 @@ public class DocumentService {
 
 	public Map<String, Object> returnCreated(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
-		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(), Status.CREATED, pageable);
+		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
+				Status.CREATED, pageable);
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("pagingData",
 				new PagingResponse(documents.getNumber(), documents.getTotalElements(), documents.getSize()));
