@@ -28,6 +28,8 @@ import NewDocument from "./components/3-UserPage/03-CreateDocument/CreateDocumen
 import MyDocuments from "./components/3-UserPage/05-MyDocuments/MyDocuments";
 import SignDocuments from "./components/3-UserPage/04-SignDocument/SignDocuments";
 import AdminScreen from "./components/4-Admin/AdminScreen";
+import Statistics from "./components/8-Statistics/Statistics";
+import StatisticsByUser from "./components/8-Statistics/StatisticsByUsers";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -42,6 +44,12 @@ ReactDOM.render(
         <Route exact path="/dvs/document" component={NewDocument} />
         <Route exact path="/dvs/documents" component={MyDocuments} />
         <Route exact path="/dvs/sign" component={SignDocuments} />
+        <Route exact path="/dvs/statistics" component={Statistics} />
+        <Route
+          exact
+          path="/dvs/statisticsbyuser"
+          component={StatisticsByUser}
+        />
         <Route exact path="/dvs/notfound" component={PageNotFound} />
         <Route path="/dvs/**" component={PageNotFound} />
         <Route component={PageNotFound} />
