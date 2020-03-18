@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import InputLine from "./../../../../6-CommonElements/3-FormSingleInput/FormSingleInput";
-import axios from "axios";
-import serverUrl from "./../../../../7-properties/1-URL";
 
 class UserInformation extends Component {
   constructor(props) {

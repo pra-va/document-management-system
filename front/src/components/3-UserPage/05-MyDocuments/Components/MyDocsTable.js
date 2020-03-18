@@ -238,7 +238,7 @@ class MyDocsTable extends Component {
                   );
                 }}
               />{" "}
-              Rejected
+              Declined
             </label>
             <label className="btn btn-secondary">
               <input

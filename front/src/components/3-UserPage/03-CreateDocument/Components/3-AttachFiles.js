@@ -9,7 +9,7 @@ const UploadFile = props => {
   return (
     <div>
       <h3 className="d-flex justify-content-start">3. Attach files.</h3>
-      <div className="input-group mb-3">
+      <div className="input-group mb-3 mt-4 ">
         <div className="custom-file">
           <input
             type="file"
@@ -20,7 +20,7 @@ const UploadFile = props => {
             accept="application/pdf"
             multiple
           />
-          <label className="custom-file-label" htmlFor="documentFileUpload">
+          <label className="custom-file-label" htmlFor="documentFileUpload ">
             Choose file
           </label>
         </div>
