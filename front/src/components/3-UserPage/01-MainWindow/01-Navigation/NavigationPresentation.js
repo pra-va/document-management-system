@@ -24,7 +24,7 @@ var NavigationPresentation = props => {
   const handleShowProfile = () => setShowProfile(true);
 
   return (
-    <nav className="navbar navbar-dark bg-dark navbar-expand-md navbar-fixed-top">
+    <nav className="navbar navbar-dark bg-dark navbar-expand-lg navbar-fixed-top">
       <NewUser show={showCreateUser} onHide={handleCloseCreateUser} />
 
       <NewGroup

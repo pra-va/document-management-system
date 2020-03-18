@@ -33,7 +33,6 @@ class EditDocument extends Component {
 
   componentDidUpdate() {
     const { name, description, selectedDocType, filesSize } = this.state;
-    console.log(this.props);
     if (name === "") {
       this.setUpInitialData();
     } else {

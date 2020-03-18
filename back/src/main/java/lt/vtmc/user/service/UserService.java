@@ -113,6 +113,7 @@ public class UserService implements UserDetailsService {
 		newUser.setProcessedDocuments(new ArrayList<Document>());
 		newUser.setCreatedDocuments(new ArrayList<Document>());
 		userRepository.save(newUser);
+		System.out.println(newUser.toString());
 		return newUser;
 	}
 
@@ -205,6 +206,20 @@ public class UserService implements UserDetailsService {
 			}
 		}
 		return listToReturn;
+	}
+
+	/**
+	 * This method will return true if there is initial user created and otherwise -
+	 * false.
+	 * 
+	 * @return
+	 */
+	public boolean shouldCreateFirstUser() {
+		int usersCount = userRepository.countUsers();
+		if (usersCount == 0) {
+			return true;
+		}
+		return false;
 	}
 
 }
