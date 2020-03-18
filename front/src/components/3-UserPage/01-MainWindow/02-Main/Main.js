@@ -80,7 +80,10 @@ class Main extends Component {
           </div>
           {this.state.isUserAdmin === true ? (
             <div className="col-6 col-md-3 my-4 card-width">
-              <Link className="card text-white bg-dark card-heigth" to={"/dvs/admin"}>
+              <Link
+                className="card text-white bg-dark card-heigth"
+                to={"/dvs/admin"}
+              >
                 <img
                   className="card-img-top p-3 invert"
                   src={AdminPhoto}

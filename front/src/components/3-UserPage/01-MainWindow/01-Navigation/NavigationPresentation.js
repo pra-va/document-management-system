@@ -75,6 +75,12 @@ var NavigationPresentation = props => {
             </Link>
           </li>
 
+          <li className="nav-item active">
+            <Link className="nav-link link-text-format" to="/dvs/statistics">
+              Statistics <span className="sr-only">(current)</span>
+            </Link>
+          </li>
+
           {props.role === true ? (
             <li className="nav-item dropdown">
               <Link
