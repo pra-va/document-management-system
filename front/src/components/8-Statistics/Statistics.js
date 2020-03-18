@@ -25,6 +25,12 @@ class Statistics extends Component {
     "numberOfSubmitted"
   ];
   columnNames = ["Document type", "Accepted", "Rejected", "Submited"];
+  columnsByDoc = [
+    { dataField: "docType", text: "Document type", sort: true },
+    { dataField: "numberOfAccepted", text: "Accepted", sort: true },
+    { dataField: "numberOfRejected", text: "Rejected", sort: true },
+    { dataField: "numberOfSubmitted", text: "Submited", sort: true }
+  ];
 
   componentDidMount() {
     //this.fetchServerData();
@@ -110,20 +116,20 @@ class Statistics extends Component {
           </div>
           <div className="row d-flex justify-content-center px-5">
             {/* <div className="col-6"> */}
-              <DatePicker
-                title="From"
-                dateFormat={this.dateFormat}
-                selected={this.state.startDate}
-                onChange={this.handleStartDateChange}
-              />
+            <DatePicker
+              title="From"
+              dateFormat={this.dateFormat}
+              selected={this.state.startDate}
+              onChange={this.handleStartDateChange}
+            />
             {/* </div> */}
             {/* <div className="col-6"> */}
-              <DatePicker
-                title="To"
-                dateFormat={this.dateFormat}
-                selected={this.state.endDate}
-                onChange={this.handleEndDateChange}
-              />
+            <DatePicker
+              title="To"
+              dateFormat={this.dateFormat}
+              selected={this.state.endDate}
+              onChange={this.handleEndDateChange}
+            />
             {/* </div> */}
           </div>
           <div className="row p-1" id="tableStatisticsDType">
@@ -133,6 +139,13 @@ class Statistics extends Component {
               columnNames={this.columnNames}
               tableData={this.state.tableData}
               searchBarId={"docTypeSearchBar"}
+              columns={this.columnsByDoc}
+                // requestNewData={this.connectForUsersData}
+                // pagingData={this.state.pagingData}
+              
+                // selectType={"radio"}
+                // handleRowSelect={() => {}}
+                // setSelectedItems={() => {}}
             />
           </div>
         </div>

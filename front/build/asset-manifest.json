@@ -1,27 +1,17 @@
 {
   "files": {
-<<<<<<< HEAD
-    "main.css": "./static/css/main.8c92b88a.chunk.css",
-    "main.js": "./static/js/main.6a37d9d9.chunk.js",
-    "main.js.map": "./static/js/main.6a37d9d9.chunk.js.map",
-=======
     "main.css": "./static/css/main.fadb6f25.chunk.css",
-    "main.js": "./static/js/main.0b2d154f.chunk.js",
-    "main.js.map": "./static/js/main.0b2d154f.chunk.js.map",
->>>>>>> upstream/master
-    "runtime-main.js": "./static/js/runtime-main.c2105b6c.js",
-    "runtime-main.js.map": "./static/js/runtime-main.c2105b6c.js.map",
-    "static/css/2.b6551302.chunk.css": "./static/css/2.b6551302.chunk.css",
-    "static/js/2.f0e4be59.chunk.js": "./static/js/2.f0e4be59.chunk.js",
-    "static/js/2.f0e4be59.chunk.js.map": "./static/js/2.f0e4be59.chunk.js.map",
+    "main.js": "./static/js/main.2d5adff9.chunk.js",
+    "main.js.map": "./static/js/main.2d5adff9.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.0bd18916.js",
+    "runtime-main.js.map": "./static/js/runtime-main.0bd18916.js.map",
+    "static/css/2.4006418b.chunk.css": "./static/css/2.4006418b.chunk.css",
+    "static/js/2.69e40509.chunk.js": "./static/js/2.69e40509.chunk.js",
+    "static/js/2.69e40509.chunk.js.map": "./static/js/2.69e40509.chunk.js.map",
     "index.html": "./index.html",
-<<<<<<< HEAD
-    "precache-manifest.f42639e574132cc0620024099b1c5ccb.js": "./precache-manifest.f42639e574132cc0620024099b1c5ccb.js",
-=======
-    "precache-manifest.7a10bde74e43c36e27059f5eaa2d7388.js": "./precache-manifest.7a10bde74e43c36e27059f5eaa2d7388.js",
->>>>>>> upstream/master
+    "precache-manifest.7f36e41c899a0f925ad0ced89703ef36.js": "./precache-manifest.7f36e41c899a0f925ad0ced89703ef36.js",
     "service-worker.js": "./service-worker.js",
-    "static/css/2.b6551302.chunk.css.map": "./static/css/2.b6551302.chunk.css.map",
+    "static/css/2.4006418b.chunk.css.map": "./static/css/2.4006418b.chunk.css.map",
     "static/css/main.fadb6f25.chunk.css.map": "./static/css/main.fadb6f25.chunk.css.map",
     "static/media/DocTypes.svg": "./static/media/DocTypes.db748f3d.svg",
     "static/media/Groups.svg": "./static/media/Groups.edc41319.svg",
@@ -40,16 +30,10 @@
     "static/media/user.svg": "./static/media/user.5e946c20.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.c2105b6c.js",
-    "static/css/2.b6551302.chunk.css",
-<<<<<<< HEAD
-    "static/js/2.d268d4db.chunk.js",
-    "static/css/main.8c92b88a.chunk.css",
-    "static/js/main.6a37d9d9.chunk.js"
-=======
-    "static/js/2.f0e4be59.chunk.js",
+    "static/js/runtime-main.0bd18916.js",
+    "static/css/2.4006418b.chunk.css",
+    "static/js/2.69e40509.chunk.js",
     "static/css/main.fadb6f25.chunk.css",
-    "static/js/main.0b2d154f.chunk.js"
->>>>>>> upstream/master
+    "static/js/main.2d5adff9.chunk.js"
   ]
 }

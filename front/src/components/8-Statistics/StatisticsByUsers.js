@@ -19,7 +19,7 @@ class StatisticsByUser extends Component {
   columnNames = ["Number Of Docs", "Name", "Surname", "Username"];
 
   componentDidMount() {
-    //this.fetchServerData();
+    this.fetchServerData();
     this.parseData([
       {
         username: "admin",
@@ -37,12 +37,9 @@ class StatisticsByUser extends Component {
   }
 
   fetchServerData = () => {
+    console.log("FETCHING");
     axios
-      .get(serverUrl + "/statisticsuser", {
-        params: {
-          username: "admin"
-        }
-      })
+      .get(serverUrl + "/statisticsuser?username=admin")
       .then(response => {
         this.parseData(response.data);
       })
@@ -52,6 +49,7 @@ class StatisticsByUser extends Component {
   };
 
   parseData = data => {
+    console.log(data);
     if (data) {
       const tableData = data.map((item, index) => {
         return {
