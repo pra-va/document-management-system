@@ -120,8 +120,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 					}
 
 				}).permitAll().and().csrf().disable().exceptionHandling().authenticationEntryPoint(securityEntryPoint)
-				.and().headers().frameOptions().disable().and().sessionManagement().maximumSessions(1)
-				.maxSessionsPreventsLogin(true);
+				.and().headers().frameOptions().disable().and().sessionManagement().maximumSessions(1);
 	}
 
 	@Bean

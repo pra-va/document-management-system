@@ -68,7 +68,7 @@ public class FileDetailsDTO {
 
 	public String getCsvDetails() {
 		return UID + ", " + fileName.replace(UID + "-", "") + ", " + document.getUID() + ", " + document.getName()
-				+ ", " + document.getDateCreate() + "\n";
+				+ ", " + document.getdType().getName() + ", " + document.getDateCreate() + "\n";
 	}
 
 }
