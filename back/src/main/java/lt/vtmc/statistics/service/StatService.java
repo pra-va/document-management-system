@@ -64,22 +64,23 @@ public class StatService {
 				// Looping through every document of selected docType and filtering by status
 				// and date frame
 
-				for (Document document : tmpListDoc) {
+			for (Document document : tmpListDoc) {
+					if (document.getStatus() != Status.CREATED) {
+						int dateSubmit = Integer
+								.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
 
-					int dateSubmit = Integer
-							.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
+						if (startDate <= dateSubmit & endDate >= dateSubmit) {
+							if (document.getStatus() == Status.SUBMITTED) {
+								tmpDoc.setNumberOfSubmitted((tmpDoc.getNumberOfSubmitted() + 1));
+							}
+							if (document.getStatus() == Status.ACCEPTED) {
+								tmpDoc.setNumberOfAccepted((tmpDoc.getNumberOfAccepted() + 1));
+							}
+							if (document.getStatus() == Status.REJECTED) {
+								tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
+							}
 
-					if (startDate <= dateSubmit & endDate >= dateSubmit) {
-						if (document.getStatus() == Status.SUBMITTED) {
-							tmpDoc.setNumberOfSubmitted((tmpDoc.getNumberOfSubmitted() + 1));
 						}
-						if (document.getStatus() == Status.ACCEPTED) {
-							tmpDoc.setNumberOfAccepted((tmpDoc.getNumberOfAccepted() + 1));
-						}
-						if (document.getStatus() == Status.REJECTED) {
-							tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
-						}
-
 					}
 				}
 				statToReturn.add(tmpDoc);
