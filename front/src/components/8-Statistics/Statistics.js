@@ -12,49 +12,114 @@ class Statistics extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date("2020-01-01"),
-      endDate: new Date(),
-      tableData: []
+      username: "",
+      startDate: "",
+      endDate: "",
+      tableData: [],
+      fetchPagingData: {
+        limit: 8,
+        order: null,
+        page: 0,
+        searchValueString: "",
+        sortBy: null
+      },
+      withFilter: false,
+      serverData: [],
+      isInitialFetchDone: false
     };
   }
+
   dateFormat = "yyyy-MM-dd";
-  dataFields = [
-    "docType",
-    "numberOfAccepted",
-    "numberOfRejected",
-    "numberOfSubmitted"
-  ];
-  columnNames = ["Document type", "Accepted", "Rejected", "Submited"];
-  columnsByDoc = [
-    { dataField: "docType", text: "Document type", sort: true },
-    { dataField: "numberOfAccepted", text: "Accepted", sort: true },
-    { dataField: "numberOfRejected", text: "Rejected", sort: true },
-    { dataField: "numberOfSubmitted", text: "Submited", sort: true }
+
+  sortValues = {
+    docTypeName: "da.name",
+    submited: "submited",
+    accepted: "accepted",
+    declined: "declined"
+  };
+
+  columns = [
+    { dataField: "docTypeName", text: "Doc. Type Name", sort: true },
+    { dataField: "submited", text: "Submitted", sort: true },
+    { dataField: "accepted", text: "Accepted", sort: true },
+    { dataField: "declined", text: "Declined", sort: true }
   ];
 
   componentDidMount() {
-    //this.fetchServerData();
-    this.parseData([
-      {
-        docType: "Prasymas",
-        numberOfAccepted: 5,
-        numberOfRejected: 2,
-        numberOfSubmitted: 7
-      }
-    ]);
-    var tmp = this.changeDateFormat(this.state.endDate);
-    console.log(tmp);
+    this.fetchUsername();
   }
 
-  fetchServerData = () => {
+  componentDidUpdate() {
+    const { username, fetchPagingData } = this.state;
+    if (username.length > 0) {
+      this.fetchServerData(
+        fetchPagingData.page,
+        fetchPagingData.limit,
+        fetchPagingData.sortBy,
+        fetchPagingData.order,
+        fetchPagingData.searchValueString
+      );
+    }
+  }
+
+  fetchUsername() {
     axios
-      .get(serverUrl + "/statisticsdtype", {
+      .get(serverUrl + "loggedin")
+      .then(response => {
+        this.setState({ username: response.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  fetchServerData = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const { username, startDate, endDate, serverData } = this.state;
+    var modifiedSortField = null;
+    if (sortField !== null) {
+      modifiedSortField = this.sortValues[sortField];
+    }
+
+    const pageData = {
+      limit: sizePerPage === undefined ? 8 : sizePerPage,
+      order: order,
+      page: Number.isNaN(page) ? 0 : page,
+      sortBy: modifiedSortField,
+      searchValueString: searchValueString
+    };
+
+    console.log(pageData);
+    console.log(this.checkDate(startDate));
+    console.log(this.checkDate(endDate));
+
+    axios
+      .post(serverUrl + "statisticsdtype", pageData, {
         params: {
-          username: "admin"
+          username: username,
+          startDate: this.checkDate(startDate),
+          endDate: this.checkDate(endDate)
         }
       })
       .then(response => {
-        this.parseData(response.data);
+        console.log(response.data.statistics);
+        if (
+          JSON.stringify(response.data.statistics) !==
+          JSON.stringify(serverData)
+        ) {
+          console.log("set");
+          this.parseData(response.data.statistics);
+          this.setState({
+            pagingData: response.data.pagingData,
+            isInitialFetchDone: true,
+            serverData: response.data.statistics
+          });
+        }
       })
       .catch(error => {
         console.log(error);
@@ -62,17 +127,32 @@ class Statistics extends Component {
   };
 
   parseData = data => {
-    if (data) {
+    if (data !== undefined) {
       const tableData = data.map((item, index) => {
         return {
-          docType: item.docType,
-          numberOfAccepted: item.numberOfAccepted,
-          numberOfRejected: item.numberOfRejected,
-          numberOfSubmitted: item.numberOfSubmitted
+          number: index,
+          docTypeName: item.docType,
+          accepted: item.numberOfAccepted,
+          declined: item.numberOfRejected,
+          submited: item.numberOfSubmitted
         };
       });
       this.setState({ tableData: tableData });
     }
+  };
+
+  checkDate = date => {
+    const { withFilter } = this.state;
+
+    if (withFilter) {
+      if (date !== "") {
+        const changedDate = this.changeDateFormat(date);
+        if (changedDate.length === 8) {
+          return Number(this.changeDateFormat(date)) + 1;
+        }
+      }
+    }
+    return -1;
   };
 
   handleStartDateChange = date => {
@@ -80,6 +160,7 @@ class Statistics extends Component {
       startDate: date
     });
   };
+
   handleEndDateChange = date => {
     this.setState({
       endDate: date
@@ -90,6 +171,20 @@ class Statistics extends Component {
     let temp = Date.toISOString().slice(0, 10);
     temp = temp.split("-").join("");
     return temp;
+  };
+
+  getPagingData = pagingData => {
+    if (JSON.stringify(pagingData) !== this.state.fetchPagingData) {
+      this.setState({ fetchPagingData: pagingData });
+    }
+  };
+
+  handleFilterToggle = event => {
+    if (event.target.checked) {
+      this.setState({ withFilter: true });
+    } else {
+      this.setState({ withFilter: false });
+    }
   };
 
   render() {
@@ -115,37 +210,51 @@ class Statistics extends Component {
             </Link>
           </div>
           <div className="row d-flex justify-content-center px-5">
-            {/* <div className="col-6"> */}
-            <DatePicker
-              title="From"
-              dateFormat={this.dateFormat}
-              selected={this.state.startDate}
-              onChange={this.handleStartDateChange}
-            />
-            {/* </div> */}
-            {/* <div className="col-6"> */}
-            <DatePicker
-              title="To"
-              dateFormat={this.dateFormat}
-              selected={this.state.endDate}
-              onChange={this.handleEndDateChange}
-            />
-            {/* </div> */}
+            <div className="form-inline">
+              <DatePicker
+                placeholderText="To Date"
+                title="From"
+                id="from"
+                className="m-2 form-control"
+                dateFormat={this.dateFormat}
+                selected={this.state.startDate}
+                onChange={this.handleStartDateChange}
+              />
+              <DatePicker
+                placeholderText="From Date"
+                id="to"
+                title="To"
+                className="m-2 form-control"
+                dateFormat={this.dateFormat}
+                selected={this.state.endDate}
+                onChange={this.handleEndDateChange}
+              />
+              <div className="m-2 custom-control custom-checkbox">
+                <input
+                  type="checkbox"
+                  className="custom-control-input"
+                  id="customSwitch"
+                  onClick={this.handleFilterToggle}
+                />
+                <label className="custom-control-label" htmlFor="customSwitch">
+                  Use Date Filter
+                </label>
+              </div>
+            </div>
           </div>
-          <div className="row p-1" id="tableStatisticsDType">
+          <div className="p-1" id="tableStatisticsDType">
             <Table
-              id={"docTypes"}
-              dataFields={this.dataFields}
-              columnNames={this.columnNames}
-              tableData={this.state.tableData}
-              searchBarId={"docTypeSearchBar"}
-              columns={this.columnsByDoc}
-                // requestNewData={this.connectForUsersData}
-                // pagingData={this.state.pagingData}
-              
-                // selectType={"radio"}
-                // handleRowSelect={() => {}}
-                // setSelectedItems={() => {}}
+              id={"statsByDType"}
+              tableData={[...this.state.tableData]}
+              searchBarId={"statsByDTypeSearchBar"}
+              requestNewData={this.fetchServerData}
+              getPagingData={this.getPagingData}
+              pagingData={this.state.pagingData}
+              columns={this.columns}
+              selectType={"radio"}
+              handleRowSelect={() => {}}
+              handleSelectAll={() => {}}
+              setSelectedItems={() => {}}
             />
           </div>
         </div>

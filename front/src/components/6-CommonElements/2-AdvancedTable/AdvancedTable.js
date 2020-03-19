@@ -79,6 +79,15 @@ class Table extends Component {
       sortField,
       sortOrder
     }));
+    if (this.props.getPagingData !== undefined) {
+      this.props.getPagingData({
+        limit: sizePerPage,
+        order: sortOrder,
+        page: page - 1,
+        searchValueString: this.state.searchValue,
+        sortBy: sortField
+      });
+    }
   };
 
   createColumns = () => {

@@ -1,26 +1,25 @@
 package lt.vtmc.statistics.service;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import lt.vtmc.docTypes.model.DocType;
-import lt.vtmc.documents.Status;
-import lt.vtmc.documents.dao.DocumentRepository;
-import lt.vtmc.documents.model.Document;
-import lt.vtmc.groups.model.Group;
+import lt.vtmc.paging.PagingData;
+import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.statistics.dto.StatisticsDocTypeDTO;
 import lt.vtmc.statistics.dto.StatisticsUserDTO;
 import lt.vtmc.user.dao.UserRepository;
-import lt.vtmc.user.model.User;
-
 
 /**
- * Statistics Service with methods for Document type statistics or User statistics
+ * Statistics Service with methods for Document type statistics or User
+ * statistics
+ * 
  * @author LD
  *
  */
@@ -30,124 +29,58 @@ public class StatService {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
-	private DocumentRepository docRepo;
+	public Map<String, Object> getDocTypeStatistics(String username, int startDate, int endDate,
+			PagingData pagingData) {
 
-	public List<StatisticsDocTypeDTO> getDocTypeStatistics(String username, int startDate, int endDate) {
-		// Finding user by received username
-		User tmpUser = userRepository.findUserByUsername(username);
-		if (tmpUser != null) {
-			// Finding users group list
-			List<Group> tmpGroupList = tmpUser.getGroupList();
+		if (startDate == -1 || endDate == -1) {
 
-			// Finding DocTypes to approve
-			List<DocType> tmpList = new ArrayList<DocType>();
-			for (Group group : tmpGroupList) {
-				tmpList.addAll(group.getDocTypesToApprove());
-			}
+			Page<StatisticsDocTypeDTO> docStatisticsDto = userRepository.statisticsByDocType(username,
+					pagingData.getSearchValueString(), pagingData.getPageable());
 
-			List<StatisticsDocTypeDTO> statToReturn = new ArrayList<StatisticsDocTypeDTO>();
+			Map<String, Object> responseMap = new HashMap<>();
+			responseMap.put("pagingData", new PagingResponse(docStatisticsDto.getNumber(),
+					docStatisticsDto.getTotalElements(), docStatisticsDto.getSize()));
+			responseMap.put("statistics", docStatisticsDto.getContent());
 
-			// Finding all documents for selected docType
-			for (DocType dType : tmpList) {
+			return responseMap;
+		}
 
-				List<Document> tmpListDoc = new ArrayList<Document>();
-				tmpListDoc.addAll(docRepo.findAllBydType(dType));
+		String start = convertDate(startDate + 1).toInstant().toString();
+		String end = convertDate(endDate + 1).toInstant().toString();
 
-				// Creating temporary StatisticsDTO object with docType name
-				StatisticsDocTypeDTO tmpDoc = new StatisticsDocTypeDTO();
-				tmpDoc.setDocType(dType.getName());
-				tmpDoc.setNumberOfSubmitted(0);
-				tmpDoc.setNumberOfAccepted(0);
-				tmpDoc.setNumberOfRejected(0);
-
-				// Looping through every document of selected docType and filtering by status
-				// and date frame
-
-			for (Document document : tmpListDoc) {
-					if (document.getStatus() != Status.CREATED) {
-						int dateSubmit = Integer
-								.parseInt(document.getDateSubmit().toString().substring(0, 10).replace("-", ""));
-
-						if (startDate <= dateSubmit & endDate >= dateSubmit) {
-							if (document.getStatus() == Status.SUBMITTED) {
-								tmpDoc.setNumberOfSubmitted((tmpDoc.getNumberOfSubmitted() + 1));
-							}
-							if (document.getStatus() == Status.ACCEPTED) {
-								tmpDoc.setNumberOfAccepted((tmpDoc.getNumberOfAccepted() + 1));
-							}
-							if (document.getStatus() == Status.REJECTED) {
-								tmpDoc.setNumberOfRejected((tmpDoc.getNumberOfRejected() + 1));
-							}
-
-						}
-					}
-				}
-				statToReturn.add(tmpDoc);
-
-			}
-
-			return statToReturn;
-		} else {
+		if (start == null || end == null) {
 			return null;
 		}
 
+		Page<StatisticsDocTypeDTO> docStatisticsDto = userRepository.statisticsByDocType(username,
+				pagingData.getSearchValueString(), start, end, pagingData.getPageable());
+
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData", new PagingResponse(docStatisticsDto.getNumber(),
+				docStatisticsDto.getTotalElements(), docStatisticsDto.getSize()));
+		responseMap.put("statistics", docStatisticsDto.getContent());
+
+		return responseMap;
 	}
 
-	public List<StatisticsUserDTO> getUserStatistics(String username) {
-		// Finding user by received username
-		User tmpUser = userRepository.findUserByUsername(username);
-		if (tmpUser != null) {
-			// Finding users group list
-			List<Group> tmpGroupList = tmpUser.getGroupList();
-
-			// Finding DocTypes to approve
-			List<DocType> tmpList = new ArrayList<DocType>();
-
-			for (Group group : tmpGroupList) {
-				tmpList.addAll(group.getDocTypesToApprove());
-			}
-
-			List<Document> tmpListDoc = new ArrayList<Document>();
-
-			for (DocType dType : tmpList) {
-				// Finding all documents for selected docType
-				tmpListDoc.addAll(docRepo.findAllBydType(dType));
-			}
-
-			Map<String, Integer> userMap = new HashMap<>();
-
-			for (Document document : tmpListDoc) {
-				Integer docCount = userMap.get(document.getAuthor().getUsername());
-				if (docCount != null) {
-					docCount++;
-				} else {
-					docCount = 1;
-				}
-				userMap.put(document.getAuthor().getUsername(), docCount);
-			}
-
-			List<StatisticsUserDTO> statToReturn = new ArrayList<StatisticsUserDTO>();
-
-			for (Map.Entry<String, Integer> entry : userMap.entrySet()) {
-				String usernameToReturn = entry.getKey();
-				String name = userRepository.findUserByUsername(usernameToReturn).getName();
-				String surname = userRepository.findUserByUsername(usernameToReturn).getSurname();
-				int docNumber = entry.getValue();
-
-				StatisticsUserDTO tmpUserToReturn = new StatisticsUserDTO();
-				tmpUserToReturn.setUsername(usernameToReturn);
-				tmpUserToReturn.setName(name);
-				tmpUserToReturn.setSurname(surname);
-				tmpUserToReturn.setDocNumber(docNumber);
-				statToReturn.add(tmpUserToReturn);
-
-			}
-
-			return statToReturn;
-		} else {
-			return null;
+	public Date convertDate(int date) {
+		try {
+			return new SimpleDateFormat("yyyyMMdd").parse(date + "");
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+		return null;
+	}
+
+	public Map<String, Object> getUserStatistics(String username, PagingData pagingData) {
+
+		Page<StatisticsUserDTO> statisticsData = userRepository.statisticsByUsers(username,
+				pagingData.getSearchValueString(), pagingData.getPageable());
+		Map<String, Object> responseMap = new HashMap<>();
+		responseMap.put("pagingData", new PagingResponse(statisticsData.getNumber(), statisticsData.getTotalElements(),
+				statisticsData.getSize()));
+		responseMap.put("statistics", statisticsData.getContent());
+		return responseMap;
 
 	}
 

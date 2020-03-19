@@ -12,36 +12,69 @@ class StatisticsByUser extends Component {
     this.state = {
       docTypesData: [],
       serverData: [],
-      tableData: []
+      tableData: [],
+      username: "",
+      initialFetch: false
     };
   }
-  dataFields = ["docNumber", "name", "surname", "username"];
-  columnNames = ["Number Of Docs", "Name", "Surname", "Username"];
+
+  columns = [
+    { dataField: "name", text: "First Name", sort: true },
+    { dataField: "surname", text: "Last Name", sort: true },
+    { dataField: "docNumber", text: "Number Of Documents", sort: true }
+  ];
 
   componentDidMount() {
-    this.fetchServerData();
-    this.parseData([
-      {
-        username: "admin",
-        name: "Adminas",
-        surname: "Adomauskas",
-        docNumber: 3
-      },
-      {
-        username: "tomdku",
-        name: "Tomas",
-        surname: "Domkus",
-        docNumber: 69
-      }
-    ]);
+    this.fetchUsername();
   }
 
-  fetchServerData = () => {
-    console.log("FETCHING");
+  componentDidUpdate() {
+    const { username, initialFetch } = this.state;
+
+    if (username !== "" && !initialFetch) {
+      this.fetchServerData(0, 8, null, null, "");
+    }
+  }
+
+  fetchUsername() {
     axios
-      .get(serverUrl + "/statisticsuser?username=admin")
+      .get(serverUrl + "loggedin")
       .then(response => {
-        this.parseData(response.data);
+        this.setState({ username: response.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  fetchServerData = (
+    page,
+    sizePerPage,
+    sortField,
+    order,
+    searchValueString
+  ) => {
+    const { username } = this.state;
+    const pageData = {
+      limit: sizePerPage,
+      order: order,
+      page: page,
+      sortBy: sortField,
+      searchValueString: searchValueString
+    };
+    axios
+      .post(serverUrl + "statisticsuser", pageData, {
+        params: {
+          username: username
+        }
+      })
+      .then(response => {
+        this.parseData(response.data.statistics);
+        this.setState({
+          pagingData: response.data.pagingData,
+          initialFetch: true,
+          serverData: response.data.statistics
+        });
       })
       .catch(error => {
         console.log(error);
@@ -49,10 +82,10 @@ class StatisticsByUser extends Component {
   };
 
   parseData = data => {
-    console.log(data);
     if (data) {
       const tableData = data.map((item, index) => {
         return {
+          number: index,
           username: item.username,
           name: item.name,
           surname: item.surname,
@@ -85,13 +118,18 @@ class StatisticsByUser extends Component {
               By Users
             </Link>
           </div>
-          <div className="row p-1" id="tableUserStatistics">
+          <div id="tableUserStatistics">
             <Table
-              id={"userStatistics"}
-              dataFields={this.dataFields}
-              columnNames={this.columnNames}
-              tableData={this.state.tableData}
-              searchBarId={"userStatisticsSearchBar"}
+              id={"statsByUser"}
+              tableData={[...this.state.tableData]}
+              searchBarId={"statsByUserSearch"}
+              requestNewData={this.fetchServerData}
+              pagingData={this.state.pagingData}
+              columns={this.columns}
+              selectType={"radio"}
+              handleRowSelect={() => {}}
+              handleSelectAll={() => {}}
+              setSelectedItems={() => {}}
             />
           </div>
         </div>
