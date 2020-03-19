@@ -15,6 +15,11 @@ class NewGroup extends Component {
     };
   }
 
+  componentDidUpdate() {
+    console.log(this.state.canCreate);
+    console.log(this.state.canSign);
+  }
+
   handleSubmit = event => {
     event.preventDefault();
 
@@ -23,6 +28,8 @@ class NewGroup extends Component {
       groupsCreating: this.state.canCreate,
       groupsApproving: this.state.canSign
     };
+
+    console.log(editedDocType);
 
     axios
       .post(serverUrl + "doct/update/" + this.props.owner, editedDocType)

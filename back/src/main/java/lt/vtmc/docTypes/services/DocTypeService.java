@@ -1,6 +1,7 @@
 package lt.vtmc.docTypes.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import lt.vtmc.docTypes.dao.DocTypeRepository;
 import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
 import lt.vtmc.docTypes.model.DocType;
-import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
@@ -80,7 +80,7 @@ public class DocTypeService {
 
 	@Transactional
 	public DocType addDocTypeToGroupsCreate(String[] groupListCreate, DocType newDoc) {
-		if (groupListCreate.length == 0 ) {
+		if (groupListCreate.length == 0) {
 			newDoc.setDocumentList(new ArrayList<Document>());
 		} else {
 			for (int i = 0; i < groupListCreate.length; i++) {

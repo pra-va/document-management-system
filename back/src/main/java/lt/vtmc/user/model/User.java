@@ -52,16 +52,16 @@ public class User {
 	@NotEmpty(message = "Role field may not be empty")
 	private String role;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "USERS_TO_GROUPS", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<Group> groupList;
 
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<Document> createdDocuments = new ArrayList<Document>();;
-	
+	private List<Document> createdDocuments = new ArrayList<Document>();
+
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<Document> processedDocuments = new ArrayList<Document>();;
-	
+	private List<Document> processedDocuments = new ArrayList<Document>();
+
 	/**
 	 * Constructor.
 	 * 
@@ -76,6 +76,7 @@ public class User {
 		this.password = password;
 		this.role = role;
 	}
+
 	/**
 	 * Empty constructor.
 	 */
@@ -85,15 +86,19 @@ public class User {
 	public List<Document> getCreatedDocuments() {
 		return createdDocuments;
 	}
+
 	public void setCreatedDocuments(List<Document> createdDocuments) {
 		this.createdDocuments = createdDocuments;
 	}
+
 	public List<Document> getProcessedDocuments() {
 		return processedDocuments;
 	}
+
 	public void setProcessedDocuments(List<Document> processedDocuments) {
 		this.processedDocuments = processedDocuments;
 	}
+
 	/**
 	 * 
 	 * @return password

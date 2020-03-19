@@ -323,7 +323,7 @@ class EditDocument extends Component {
                 data-dismiss="modal"
                 disabled={this.state.submitDisabled || !this.state.onlyPdfFiles}
               >
-                Submit
+                Update
               </button>
             </div>
           </form>
