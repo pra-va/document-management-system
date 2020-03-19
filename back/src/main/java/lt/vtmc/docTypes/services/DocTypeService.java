@@ -157,11 +157,6 @@ public class DocTypeService {
 			newApproveList.add(groupRepository.findGroupByName(group));
 		}
 		
-		List<Group> newCreateList = new ArrayList<Group>();
-		for (String group : groupsCreating) {
-			newCreateList.add(groupRepository.findGroupByName(group));
-		}
-		
 		List<Group> tmpApproveList = docTypeToUpdate.getGroupsApproving();
 		for (Group group : tmpApproveList) {
 			{
@@ -172,12 +167,18 @@ public class DocTypeService {
 			}
 		}
 		
-		docTypeToUpdate.setGroupsApproving(newApproveList);
+		
 		for (Group group : newApproveList) {
 			List<DocType> tmpList = group.getDocTypesToApprove(); 
 			tmpList.add(docTypeToUpdate);
 			group.setDocTypesToApprove(tmpList);
 			groupRepository.save(group);
+		}
+		docTypeToUpdate.setGroupsApproving(newApproveList);
+		
+		List<Group> newCreateList = new ArrayList<Group>();
+		for (String group : groupsCreating) {
+			newCreateList.add(groupRepository.findGroupByName(group));
 		}
 		
 		List<Group> tmpCreateList = docTypeToUpdate.getGroupsCreating();
@@ -190,14 +191,14 @@ public class DocTypeService {
 			}
 		}
 		
-		docTypeToUpdate.setGroupsCreating(newCreateList);
+		
 		for (Group group : newCreateList) {
 			List<DocType> tmpList = group.getDocTypesToCreate(); 
 			tmpList.add(docTypeToUpdate);
 			group.setDocTypesToCreate(tmpList);
 			groupRepository.save(group);
 		}
-		
+		docTypeToUpdate.setGroupsCreating(newCreateList);
 		docTypeRepo.save(docTypeToUpdate);
 	}
 
