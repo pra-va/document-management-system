@@ -238,4 +238,38 @@ public class UserController {
 			@RequestBody PagingData pagingData) {
 		return docService.returnAllDocumentsByUsername(username, pagingData);
 	}
+
+	/**
+	 * This method will create initial administrator. It only can be executed
+	 * successfully if there is no user with administrator role in database.
+	 * 
+	 * @param command
+	 * @return
+	 */
+	@PostMapping("/api/user/first/create")
+	public ResponseEntity<String> createInitialAdmin(@RequestBody CreateUserCommand command) {
+		boolean adminShouldBeCreated = userService.shouldCreateFirstUser();
+		if (adminShouldBeCreated) {
+			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
+					command.getPassword());
+			return new ResponseEntity<String>("Created succesfully.", HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<String>("Initial Admin is already created.", HttpStatus.METHOD_NOT_ALLOWED);
+		}
+	}
+
+	/**
+	 * Returns info if initial user needs to be created.
+	 * 
+	 * @return
+	 */
+	@GetMapping("/api/user/first")
+	public ResponseEntity<String> shouldInitAdminBeCreated() {
+		boolean dbContainsAdmin = userService.shouldCreateFirstUser();
+		if (dbContainsAdmin) {
+			return new ResponseEntity<String>("Initial user needs to be created.", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("Initial Admin is already created.", HttpStatus.IM_USED);
+		}
+	}
 }

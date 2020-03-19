@@ -8,13 +8,11 @@ class SelectType extends Component {
     this.state = { tableData: [], selectedRow: undefined };
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     if (this.props.username !== "" && this.state.tableData.length === 0) {
       this.fetchUserDocTypes(0, 99999999, "name", "asc", "");
     }
   }
-
-  componentDidUpdate() {}
 
   dataFields = ["number", "type", "select"];
   columnNames = ["#", "Type", ""];

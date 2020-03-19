@@ -24,7 +24,7 @@ var NavigationPresentation = props => {
   const handleShowProfile = () => setShowProfile(true);
 
   return (
-    <nav className="navbar navbar-dark bg-dark navbar-expand-md navbar-fixed-top">
+    <nav className="navbar navbar-dark bg-dark navbar-expand-lg navbar-fixed-top">
       <NewUser show={showCreateUser} onHide={handleCloseCreateUser} />
 
       <NewGroup
@@ -72,6 +72,12 @@ var NavigationPresentation = props => {
           <li className="nav-item active">
             <Link className="nav-link link-text-format" to="/dvs/documents">
               My Documents <span className="sr-only">(current)</span>
+            </Link>
+          </li>
+
+          <li className="nav-item active">
+            <Link className="nav-link link-text-format" to="/dvs/statistics">
+              Statistics <span className="sr-only">(current)</span>
             </Link>
           </li>
 

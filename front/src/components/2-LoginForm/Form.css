@@ -29,3 +29,7 @@
 .width {
   width: 22vh;
 }
+
+.close {
+  line-height: 1.5;
+}
