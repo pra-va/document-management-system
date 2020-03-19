@@ -89,7 +89,7 @@ public class UserController {
 	 * @method POST
 	 * @param user details
 	 */
-	@Secured({ "ROLE_ADMIN" })
+//	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
 	public ResponseEntity<String> createUser(@RequestBody CreateUserCommand command) {
 

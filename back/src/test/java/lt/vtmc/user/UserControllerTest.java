@@ -65,7 +65,7 @@ public class UserControllerTest {
 
 		MockHttpServletResponse response = result.getResponse();
 
-		assertEquals(HttpStatus.OK.value(), response.getStatus());
+		assertEquals(HttpStatus.CREATED.value(), response.getStatus());
 	}
 
 	@Test
