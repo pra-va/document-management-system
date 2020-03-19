@@ -213,6 +213,7 @@ class UserInformation extends Component {
             <div className="form-check form-check-inline">
               <input
                 autoComplete="on"
+                value="ADMIN"
                 className="form-check-input"
                 type="radio"
                 name="adminOrUser"

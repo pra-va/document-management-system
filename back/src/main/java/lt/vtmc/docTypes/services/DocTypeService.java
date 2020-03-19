@@ -1,6 +1,7 @@
 package lt.vtmc.docTypes.services;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import lt.vtmc.docTypes.dao.DocTypeRepository;
 import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
 import lt.vtmc.docTypes.model.DocType;
-import lt.vtmc.documents.dto.DocumentDetailsDTO;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
@@ -80,7 +80,7 @@ public class DocTypeService {
 
 	@Transactional
 	public DocType addDocTypeToGroupsCreate(String[] groupListCreate, DocType newDoc) {
-		if (groupListCreate.length == 0 ) {
+		if (groupListCreate.length == 0) {
 			newDoc.setDocumentList(new ArrayList<Document>());
 		} else {
 			for (int i = 0; i < groupListCreate.length; i++) {
@@ -149,8 +149,56 @@ public class DocTypeService {
 
 	@Transactional
 	public void updateDocTypeDetails(String newName, String name, String[] groupsApproving, String[] groupsCreating) {
-		deleteDocType(docTypeRepo.findDocTypeByName(name));
-		createDocType(newName, groupsCreating, groupsApproving);
+		DocType updateDocType = docTypeRepo.findDocTypeByName(name);
+
+		List<Group> approving = createGroupListFromGroupNames(groupsApproving);
+		List<Group> creating = createGroupListFromGroupNames(groupsCreating);
+
+		updateDocType.setName(newName);
+		updateDocType.setGroupsApproving(approving);
+		updateDocType.setGroupsCreating(creating);
+
+		updateDocType = docTypeRepo.save(updateDocType);
+
+		System.out.println("\n\n\n\n\n\n\n\n\n***********************");
+		System.out.println(updateDocType.toString());
+		System.out.println(Arrays.toString(groupsApproving));
+		System.out.println(creating.toString());
+		System.out.println(approving.toString());
+		System.out.println(updateDocType.toString());
+		System.out.println("***********************\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+	}
+
+	public List<Group> createGroupListFromGroupNames(String[] groupNames) {
+		List<Group> groups = new ArrayList<>();
+		for (int i = 0; i < groupNames.length; i++) {
+			String element = groupNames[i];
+			groups.add(groupRepository.findGroupByName(element));
+		}
+		return groups;
+	}
+
+	public void docTypeCreate(String groupName, String docTypeName, boolean add, List<Group> creatingGroups) {
+		Group group = groupRepository.findGroupByName(groupName);
+		DocType docType = docTypeRepo.findDocTypeByName(docTypeName);
+
+		List<DocType> docTypesCreate = group.getDocTypesToCreate();
+
+		if (add) {
+			docTypesCreate.add(docTypeRepo.findDocTypeByName(docTypeName));
+		} else {
+			for (int i = 0; i < docTypesCreate.size(); i++) {
+				if (docTypesCreate.get(i).getName().equals(docTypeName)) {
+					docTypesCreate.remove(i);
+				}
+			}
+		}
+		group.setDocTypesToCreate(docTypesCreate);
+		docType.setGroupsCreating(creatingGroups);
+
+		groupRepository.save(group);
+		docTypeRepo.save(docType);
+
 	}
 
 }

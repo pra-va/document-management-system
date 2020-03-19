@@ -31,11 +31,11 @@ export default class SignDocuments extends Component {
   ];
 
   sortValues = {
-    number: "d.id",
-    name: "d.name",
+    number: "id",
+    name: "name",
     type: "dt.name",
-    submited: "d.dateSubmit",
-    createdBy: "u.name"
+    submited: "dateSubmit",
+    createdBy: "u.username"
   };
 
   componentDidMount() {
@@ -69,16 +69,19 @@ export default class SignDocuments extends Component {
     }
 
     const pageData = {
-      limit: sizePerPage,
+      limit: sizePerPage === undefined ? 8 : sizePerPage,
       order: order,
-      page: page,
-      sortBy: modifiedSortField,
-      searchValueString: searchValueString
+      page: Number.isNaN(page) ? 0 : page,
+      searchValueString: searchValueString,
+      sortBy: modifiedSortField
     };
+
+    console.log(pageData);
 
     axios
       .post(serverUrl + this.state.username + "/doctobesigned", pageData)
       .then(response => {
+        console.log(response.data.documents);
         this.setState({
           serverData: response.data.documents,
           pagingData: response.data.pagingData

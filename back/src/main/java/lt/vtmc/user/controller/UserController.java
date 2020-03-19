@@ -143,7 +143,7 @@ public class UserController {
 	 * @url /api/user/{username}
 	 * @method GET
 	 */
-	@Secured({ "ROLE_ADMIN" })
+	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@GetMapping(path = "/api/user/{username}")
 	public UserDetailsDTO findUserByUsername(@PathVariable("username") String username) {
 
