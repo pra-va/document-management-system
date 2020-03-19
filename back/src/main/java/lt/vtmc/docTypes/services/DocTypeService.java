@@ -149,56 +149,57 @@ public class DocTypeService {
 
 	@Transactional
 	public void updateDocTypeDetails(String newName, String name, String[] groupsApproving, String[] groupsCreating) {
-		DocType updateDocType = docTypeRepo.findDocTypeByName(name);
-
-		List<Group> approving = createGroupListFromGroupNames(groupsApproving);
-		List<Group> creating = createGroupListFromGroupNames(groupsCreating);
-
-		updateDocType.setName(newName);
-		updateDocType.setGroupsApproving(approving);
-		updateDocType.setGroupsCreating(creating);
-
-		updateDocType = docTypeRepo.save(updateDocType);
-
-		System.out.println("\n\n\n\n\n\n\n\n\n***********************");
-		System.out.println(updateDocType.toString());
-		System.out.println(Arrays.toString(groupsApproving));
-		System.out.println(creating.toString());
-		System.out.println(approving.toString());
-		System.out.println(updateDocType.toString());
-		System.out.println("***********************\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-	}
-
-	public List<Group> createGroupListFromGroupNames(String[] groupNames) {
-		List<Group> groups = new ArrayList<>();
-		for (int i = 0; i < groupNames.length; i++) {
-			String element = groupNames[i];
-			groups.add(groupRepository.findGroupByName(element));
+		DocType docTypeToUpdate = docTypeRepo.findDocTypeByName(name);
+		docTypeToUpdate.setName(newName);
+		
+		List<Group> newApproveList = new ArrayList<Group>();
+		for (String group : groupsApproving) {
+			newApproveList.add(groupRepository.findGroupByName(group));
 		}
-		return groups;
-	}
-
-	public void docTypeCreate(String groupName, String docTypeName, boolean add, List<Group> creatingGroups) {
-		Group group = groupRepository.findGroupByName(groupName);
-		DocType docType = docTypeRepo.findDocTypeByName(docTypeName);
-
-		List<DocType> docTypesCreate = group.getDocTypesToCreate();
-
-		if (add) {
-			docTypesCreate.add(docTypeRepo.findDocTypeByName(docTypeName));
-		} else {
-			for (int i = 0; i < docTypesCreate.size(); i++) {
-				if (docTypesCreate.get(i).getName().equals(docTypeName)) {
-					docTypesCreate.remove(i);
-				}
+		
+		List<Group> newCreateList = new ArrayList<Group>();
+		for (String group : groupsCreating) {
+			newCreateList.add(groupRepository.findGroupByName(group));
+		}
+		
+		List<Group> tmpApproveList = docTypeToUpdate.getGroupsApproving();
+		for (Group group : tmpApproveList) {
+			{
+				List<DocType> tmpList = group.getDocTypesToApprove();
+				tmpList.remove(docTypeToUpdate);
+				group.setDocTypesToApprove(tmpList);
+				groupRepository.save(group);
 			}
 		}
-		group.setDocTypesToCreate(docTypesCreate);
-		docType.setGroupsCreating(creatingGroups);
-
-		groupRepository.save(group);
-		docTypeRepo.save(docType);
-
+		
+		docTypeToUpdate.setGroupsApproving(newApproveList);
+		for (Group group : newApproveList) {
+			List<DocType> tmpList = group.getDocTypesToApprove(); 
+			tmpList.add(docTypeToUpdate);
+			group.setDocTypesToApprove(tmpList);
+			groupRepository.save(group);
+		}
+		
+		List<Group> tmpCreateList = docTypeToUpdate.getGroupsCreating();
+		for (Group group : tmpCreateList) {
+			{
+				List<DocType> tmpList = group.getDocTypesToCreate();
+				tmpList.remove(docTypeToUpdate);
+				group.setDocTypesToCreate(tmpList);
+				groupRepository.save(group);
+			}
+		}
+		
+		docTypeToUpdate.setGroupsCreating(newCreateList);
+		for (Group group : newCreateList) {
+			List<DocType> tmpList = group.getDocTypesToCreate(); 
+			tmpList.add(docTypeToUpdate);
+			group.setDocTypesToCreate(tmpList);
+			groupRepository.save(group);
+		}
+		
+		docTypeRepo.save(docTypeToUpdate);
 	}
+
 
 }
