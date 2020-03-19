@@ -76,12 +76,9 @@ export default class SignDocuments extends Component {
       sortBy: modifiedSortField
     };
 
-    console.log(pageData);
-
     axios
       .post(serverUrl + this.state.username + "/doctobesigned", pageData)
       .then(response => {
-        console.log(response.data.documents);
         this.setState({
           serverData: response.data.documents,
           pagingData: response.data.pagingData

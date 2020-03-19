@@ -94,10 +94,6 @@ class Statistics extends Component {
       searchValueString: searchValueString
     };
 
-    console.log(pageData);
-    console.log(this.checkDate(startDate));
-    console.log(this.checkDate(endDate));
-
     axios
       .post(serverUrl + "statisticsdtype", pageData, {
         params: {
@@ -112,7 +108,6 @@ class Statistics extends Component {
           JSON.stringify(response.data.statistics) !==
           JSON.stringify(serverData)
         ) {
-          console.log("set");
           this.parseData(response.data.statistics);
           this.setState({
             pagingData: response.data.pagingData,

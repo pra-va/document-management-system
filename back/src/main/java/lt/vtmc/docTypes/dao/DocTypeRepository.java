@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import lt.vtmc.docTypes.model.DocType;
 
-public interface DocTypeRepository extends JpaRepository<DocType, Integer> {
+public interface DocTypeRepository extends JpaRepository<DocType, String> {
 
 	DocType findDocTypeByName(String name);
 

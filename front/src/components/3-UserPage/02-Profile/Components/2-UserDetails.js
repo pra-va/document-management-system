@@ -62,7 +62,6 @@ class UserDetails extends Component {
         if (this.state.userData === null) {
           this.setState({ userData: response.data });
           this.setUpData(response.data);
-          console.log(response);
         }
       })
       .catch(error => {
