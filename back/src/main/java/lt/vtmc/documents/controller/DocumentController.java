@@ -55,7 +55,7 @@ public class DocumentController {
 	 * @param document details
 	 */
 
-//	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/create")
 	public ResponseEntity<String> createDocument(@RequestBody CreateDocumentCommand command) {
 

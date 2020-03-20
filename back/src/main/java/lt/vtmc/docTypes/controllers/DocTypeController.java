@@ -101,7 +101,7 @@ public class DocTypeController {
 		return false;
 	}
 
-//	@Secured({ "ROLE_ADMIN" })
+	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doct/update/{name}")
 	public ResponseEntity<String> updateDocTypeByGroupName(@RequestBody UpdateDocTypeCommand command,
 			@PathVariable("name") String name) {
