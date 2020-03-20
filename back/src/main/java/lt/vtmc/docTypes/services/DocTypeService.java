@@ -1,7 +1,6 @@
 package lt.vtmc.docTypes.services;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,56 +150,43 @@ public class DocTypeService {
 	public void updateDocTypeDetails(String newName, String name, String[] groupsApproving, String[] groupsCreating) {
 		DocType docTypeToUpdate = docTypeRepo.findDocTypeByName(name);
 		docTypeToUpdate.setName(newName);
-		
 		List<Group> newApproveList = new ArrayList<Group>();
 		for (String group : groupsApproving) {
 			newApproveList.add(groupRepository.findGroupByName(group));
 		}
-		
 		List<Group> tmpApproveList = docTypeToUpdate.getGroupsApproving();
 		for (Group group : tmpApproveList) {
 			{
 				List<DocType> tmpList = group.getDocTypesToApprove();
 				tmpList.remove(docTypeToUpdate);
 				group.setDocTypesToApprove(tmpList);
-				groupRepository.save(group);
 			}
 		}
-		
-		
 		for (Group group : newApproveList) {
-			List<DocType> tmpList = group.getDocTypesToApprove(); 
+			List<DocType> tmpList = group.getDocTypesToApprove();
 			tmpList.add(docTypeToUpdate);
 			group.setDocTypesToApprove(tmpList);
-			groupRepository.save(group);
 		}
 		docTypeToUpdate.setGroupsApproving(newApproveList);
-		
 		List<Group> newCreateList = new ArrayList<Group>();
 		for (String group : groupsCreating) {
 			newCreateList.add(groupRepository.findGroupByName(group));
 		}
-		
 		List<Group> tmpCreateList = docTypeToUpdate.getGroupsCreating();
 		for (Group group : tmpCreateList) {
 			{
 				List<DocType> tmpList = group.getDocTypesToCreate();
 				tmpList.remove(docTypeToUpdate);
 				group.setDocTypesToCreate(tmpList);
-				groupRepository.save(group);
 			}
 		}
-		
-		
 		for (Group group : newCreateList) {
-			List<DocType> tmpList = group.getDocTypesToCreate(); 
+			List<DocType> tmpList = group.getDocTypesToCreate();
 			tmpList.add(docTypeToUpdate);
 			group.setDocTypesToCreate(tmpList);
-			groupRepository.save(group);
 		}
 		docTypeToUpdate.setGroupsCreating(newCreateList);
 		docTypeRepo.save(docTypeToUpdate);
 	}
-
 
 }
