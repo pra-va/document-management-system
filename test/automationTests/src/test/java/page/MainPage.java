@@ -119,7 +119,7 @@ public class MainPage extends AbstractPage {
 	/* OTHER METHODS */
 
 	public void waitForVisibility(WebElement element) {
-		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element));
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(element));
 	}
 
 	public void navigateToMainPage() {

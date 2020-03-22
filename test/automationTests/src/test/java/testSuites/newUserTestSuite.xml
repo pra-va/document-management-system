@@ -4,17 +4,17 @@
 	<test name="newUserTests">
 		<parameter name="adminUserName" value="admin"/>		
 		<parameter name="adminPassword" value="adminadmin"/>
-		<parameter name="newAdminFirstName" value="gggg"/>
-		<parameter name="newAdminLastName" value="gggg"/>
-		<parameter name="newAdminUserName" value="newAdmin18"/>
-		<parameter name="newAdminPassword" value="gggggggggggg"/>
+		<parameter name="newAdminFirstName" value="TestAdminFirstName"/>
+		<parameter name="newAdminLastName" value="TestAdminLastName"/>
+		<parameter name="newAdminUserName" value="TestAdminUserName"/>
+		<parameter name="newAdminPassword" value="12345678"/>
 		<parameter name="newAdminRole" value="ADMIN"/>
-		<parameter name="groupOne" value="Junior QA Engineers"/>
-		<parameter name="newUserFirstName" value="wwwwww"/>
-		<parameter name="newUserLastName" value="wwwwwwwww"/>
-		<parameter name="newUserUserName" value="userNameTest17"/>
+		<parameter name="groupName" value="GroupForNewUserTests"/>
+		<parameter name="newUserFirstName" value="TestUserFirstName"/>
+		<parameter name="newUserLastName" value="TestUSerLastName"/>
+		<parameter name="newUserUserName" value="TestUserUsername"/>
 		<parameter name="newUserUserName1" value="testUserName"/>
-		<parameter name="newUserPassword" value="wwwwwwwwwww"/>
+		<parameter name="newUserPassword" value="abc123456789"/>
 		<parameter name="newUserRole" value="USER"/>
 		<parameter name="newUserFirstName21char" value="user12345678910111213"/>		
 		<parameter name="newUserLastName21char" value="user12345678910111213"/>	

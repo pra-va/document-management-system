@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.Base64;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.client.ClientProtocolException;
@@ -30,6 +31,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import org.openqa.selenium.By;
 import org.openqa.selenium.json.Json;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
@@ -68,7 +70,6 @@ public class PasswordHashingTests extends AbstractTest {
 	public void preconditions() {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
-
 	}
 
 	@Parameters({ "adminUserName", "adminPassword" })
@@ -82,8 +83,7 @@ public class PasswordHashingTests extends AbstractTest {
 	/*-
 	 * Test checks if:
 	 *   - new User Password is hashed.
-	 * Preconditions: 
-	 *   - admin is logged in the system (API URL's are locked for other users);
+	 * Preconditions:  
 	 *   - new user is created.
 	 * Test steps:
 	 * 1. Get HTTP response of user password by username.
@@ -96,10 +96,10 @@ public class PasswordHashingTests extends AbstractTest {
 
 		String hashedPassword = Unirest.get("http://akademijait.vtmc.lt:8180/dvs/api/testingonly/returnpass/{username}")
 				.routeParam("username", adminUserName).asString().getBody();
-
-		assertFalse(hashedPassword.equals(adminPassword), "User password isn't hashed");
-
+		
+		assertFalse(hashedPassword.equals(adminPassword), "User password isn't hashed");		
 	}
+	
 	/*-
 	 * Test checks if:
 	 *   - User Password is hashed after edition.

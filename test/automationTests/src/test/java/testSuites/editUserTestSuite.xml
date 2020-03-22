@@ -6,10 +6,11 @@
 		<parameter name="adminPassword" value="adminadmin" />
 		<parameter name="newAdminFirstName" value="gggg" />
 		<parameter name="newAdminLastName" value="gggg" />
-		<parameter name="newAdminUserName" value="newAdmin18" />
-		<parameter name="newAdminPassword" value="gggggggggggg" />
+		<parameter name="newAdminUserName" value="newAdmin20" />
+		<parameter name="newAdminPassword" value="123456789" />
 		<parameter name="newAdminRole" value="ADMIN" />
-		<parameter name="groupOne" value="Junior QA Engineers" />
+		<parameter name="groupNameOne" value="GroupOneForEditUserTests10" />
+		<parameter name="groupNameTwo" value="GroupTwoForEditUserTests11" />
 		<parameter name="newUserFirstName" value="wwwwww" />
 		<parameter name="newUserLastName" value="wwwwwwwww" />
 		<parameter name="newUserUserName" value="userNameTest17" />
