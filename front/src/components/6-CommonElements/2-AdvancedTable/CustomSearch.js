@@ -27,7 +27,7 @@ const CustomSearchBar = props => {
           <input
             id={props.id}
             type="text"
-            placeholder="Find by Name"
+            placeholder="Search"
             aria-label="Search"
             className="form-control"
             style={{ backgroundColor: "#343a40", color: "#fff" }}

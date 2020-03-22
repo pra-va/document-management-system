@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ public class StatisticsController {
 	@Autowired
 	private StatService statService;
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/statisticsdtype")
 	public Map<String, Object> getDocTypeStatistics(String username, int startDate, int endDate,
 			@RequestBody PagingData pagingData) {
@@ -32,6 +34,7 @@ public class StatisticsController {
 
 	}
 
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/statisticsuser")
 	public Map<String, Object> getDocUserStatistics(String username, @RequestBody PagingData pagingData) {
 

@@ -269,4 +269,17 @@ public class DocumentService {
 				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
 		return responseMap;
 	}
+
+	@Transactional
+	public boolean deleteDocumentRequestedByUser(String uid, String username) {
+		boolean doesUserHaveDoc = docRepo.doesUserHaveDoc(uid, username);
+
+		if (doesUserHaveDoc) {
+			deleteDocument(docRepo.findDocumentByUID(uid));
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 }

@@ -175,7 +175,7 @@ class AssignRights extends Component {
   render() {
     return (
       <div>
-        <h3 className="d-flex justify-content-start">2. Assign rights.</h3>
+        <h3 className="d-flex justify-content-start">2. Update rights.</h3>
 
         <Table
           id={"newUserGroups"}

@@ -27,7 +27,7 @@ const DocTypeInfo = props => {
 
   return (
     <div>
-      <h3 className="d-flex justify-content-start">1. Enter information.</h3>
+      <h3 className="d-flex justify-content-start">1. Update information.</h3>
       <Input
         id={"groupNameInput"}
         labelName={"Document type name:"}

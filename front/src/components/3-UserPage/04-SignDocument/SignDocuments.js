@@ -116,13 +116,19 @@ export default class SignDocuments extends Component {
   };
 
   reduceFilesAttached = fileslist => {
-    return fileslist.reduce((sum, item, index) => {
-      if (index === 0) {
-        return (sum = item.fileName);
+    let sum = "";
+    for (let i = 0; i < fileslist.length; i++) {
+      const element = fileslist[i].fileName;
+      if (i === 0) {
+        sum = element;
+      } else if (i < 5) {
+        sum += ", " + element;
       } else {
-        return (sum += ", " + item.fileName);
+        sum += " and " + Number(fileslist.length - 5) + " more...";
+        break;
       }
-    }, "");
+    }
+    return sum;
   };
 
   render() {
