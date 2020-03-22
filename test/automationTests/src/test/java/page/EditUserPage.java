@@ -52,6 +52,9 @@ public class EditUserPage extends AbstractPage {
 	
 	@FindBy(xpath = "//*[@aria-label='Search']")
 	private WebElement searchField;
+	
+	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
+	private WebElement searchField2;
 
 	
 	/* SEND KEYS */
@@ -70,6 +73,10 @@ public class EditUserPage extends AbstractPage {
 
 	public void sendKeysSearchGroups(String groupName) {
 		searchField.sendKeys(groupName);
+	}
+	
+	public void sendKeysSearchGroups2(String groupName) {
+		searchField2.sendKeys(groupName);
 	}
 		
 	/* CLICK BUTTONS */
