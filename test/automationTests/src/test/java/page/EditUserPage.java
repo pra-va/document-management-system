@@ -1,6 +1,8 @@
 package page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -35,7 +37,7 @@ public class EditUserPage extends AbstractPage {
 	@FindBy(id = "inputLastName")
 	private WebElement lastNameField;
 
-	@FindBy(id = "checkBoxShowPassword")
+	@FindBy(id = "checBoxUpdatePassword")
 	private WebElement checkBoxUpdatePassword;
 
 	@FindBy(id = "inputPassword")
@@ -47,13 +49,12 @@ public class EditUserPage extends AbstractPage {
 	@FindBy(id = "radioAdmin")
 	private WebElement radioAdmin;
 	
-	@FindBy(xpath = "//input[@placeholder='Find by Name']")
-	private WebElement searchGroups;
+	@FindBy(xpath = "//input[@placeholder='Search']")
+	private WebElement searchGroupField;
 	
-	@FindBy(xpath = "//*[@aria-label='Search']")
-	private WebElement searchField;
-
-	
+	@FindBy(xpath = "//th[text()='Name']")
+	private WebElement tableHeader;
+		
 	/* SEND KEYS */
 
 	public void sendKeysUpdateFirstName(String firstName) {
@@ -69,9 +70,9 @@ public class EditUserPage extends AbstractPage {
 	}
 
 	public void sendKeysSearchGroups(String groupName) {
-		searchField.sendKeys(groupName);
+		searchGroupField.sendKeys(groupName);
 	}
-		
+	
 	/* CLICK BUTTONS */
 
 	public void checkUpdatePassword() {
@@ -85,9 +86,9 @@ public class EditUserPage extends AbstractPage {
 	public void clickUserRadio() {
 		this.radioUser.click();
 	}
-	
+		
 	public void clickAddRemoveSpecificGroupButton(String groupName) {
-		driver.findElement(By.xpath("//table//td[contains(text(),'" + groupName + "')]/..//td[2]//button")).click();		
+		driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]")).click();			
 	}
 
 	public void clickUpdateButton() {
@@ -97,8 +98,28 @@ public class EditUserPage extends AbstractPage {
 	public void clickCancelButton() {
 		this.buttonCancel.click();
 	}
+	
+	public void sortByGroupName() {		
+		JavascriptExecutor jse2 = (JavascriptExecutor)driver;
+		jse2.executeScript("arguments[0].scrollIntoView()", tableHeader); 
+		tableHeader.click();
+	}
+	
+	/*CLEAR FIELDS*/
+	
+	public void clearFirstNameFiel() {
+		this.firstNameField.clear();
+	}
+	
+	public void clearLastNameFiel() {
+		this.lastNameField.clear();
+	}
+	
+	public void clearSearchGroupsField() {
+		this.searchGroupField.clear();
+	}
 
-	/* GET TEXT METHODS */
+	/* GET TEXT*/
 
 	public String getFirstName() {
 		return firstNameField.getAttribute("value");

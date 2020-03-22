@@ -1,120 +1,134 @@
 package test;
 
-import static org.testng.Assert.assertEquals;
+import org.testng.annotations.AfterClass;
 import static org.testng.Assert.assertTrue;
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
+import page.AdminNewUserPage;
 import page.EditDocumentPage;
 import page.LoginPage;
 import page.MainPage;
 import page.MyDocumentsPage;
 import page.NewDocumentPage;
+import utilities.API;
 
 public class NewDocumentTests extends AbstractTest {
 	LoginPage loginPage;
 	MainPage mainPage;
 	NewDocumentPage newDocumentPage;
 	MyDocumentsPage myDocumentsPage;
-	EditDocumentPage editDocumentPage;
-	String deleteUserApiURL;
-	String date;
+	AdminNewUserPage adminNewUserPage;
+	EditDocumentPage editDocumentPage;	
+	HttpResponse<JsonNode> documentInfoJson;
+	String documentID;
+	String fileID;	
+	File file;
+	Date date;
+	String modifiedDate;
 
+	@Parameters({ "groupName", "userFirstName", "userLastName", "userPassword", "userUserName", "docTypeName" })
 	@BeforeClass
-	public void preconditions() {
+	public void preconditions(String groupName, String userFirstName, String userLastName, String userPassword,
+			String userUserName, String docTypeName) throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
+		adminNewUserPage = new AdminNewUserPage(driver);
 		newDocumentPage = new NewDocumentPage(driver);
 		myDocumentsPage = new MyDocumentsPage(driver);
-		editDocumentPage = new EditDocumentPage(driver);
-		// deleteUserApiURL =
-		// "http://akademijait.vtmc.lt:8180/dvs/api/delete/{username}";
+		editDocumentPage = new EditDocumentPage(driver);		
+		API.createGroup("Group Two description", "[\"\"]", "[\"\"]", groupName, "[\"\"]");
+		API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName);
+		API.createDocType("[\"\"]", "[\"" + groupName + "\"]", docTypeName); //?
 	}
 
-	@Parameters({ "adminUserName", "adminPassword" })
+	@Parameters({ "userUserName", "userPassword" })
 	@BeforeGroups({ "newDocumentTests" })
-	public void login(String adminUserName, String adminPassword) {
-		loginPage.sendKeysUserName(adminUserName);
-		loginPage.sendKeysPassword(adminPassword);
+	public void login(String userUserName, String userPassword) {
+		loginPage.sendKeysUserName(userUserName);
+		loginPage.sendKeysPassword(userPassword);
 		loginPage.clickButtonLogin();
 	}
 
-	@Parameters({ "newUserUserName", "newAdminUserName" })
 	@AfterGroups("newDocumentTests")
-	public void logout(String newUserUserName, String newAdminUserName) {
-		// Unirest.delete(deleteUserApiURL).routeParam("username",
-		// newUserUserName).asString();
-		// Unirest.delete(deleteUserApiURL).routeParam("username",
-		// newAdminUserName).asString();
-		// mainPage.waitForLogoutButton();
-		// mainPage.clickLogoutButton();
-	}
-
-	// TODO ADD PARAMETERS!!!!!!!!
-	// @Parameters({ "docName", "docDescription", "docType","filePath", "fileName"})
-	@Test(groups = { "newDocumentTests" }, priority = 1, enabled = true)
-	public void createNewDocumentTest() throws InterruptedException{
+	public void logout() {
 		mainPage.waitForLogoutButton();
-		mainPage.clickCreateDocumentButton();
-		newDocumentPage.sendKeysDocNameField("newDoc12345");
+		mainPage.clickLogoutButton();
+	}
+		
+	@AfterClass
+	public void deleteEntities() throws UnirestException {				
+		API.deleteFile(fileID);
+		API.deleteDocument(documentID);
+		//API.deleteUser(userName);
+		//API.deleteGroup(groupName);
+		//API.deleteDoctype(docTypeName);
+	}
+		
+	// TODO ADD PARAMETERS!!!!!!!!
+	@Parameters({ "filePath", "fileName" })
+	/// @Parameters({ "docName", "docDescription", "docTypeName","filePath",
+	/// "fileName"})
+	@Test(groups = { "newDocumentTests" }, priority = 1, enabled = true)
+	public void createNewDocumentTest(String filePath, String fileName) throws UnirestException, InterruptedException {
+		mainPage.waitForLogoutButton();
+		mainPage.clickCreateDocumentButton();	
+		
+		newDocumentPage.sendKeysDocNameField("7newDoc7");
 		newDocumentPage.sendKeysDocDescriptionField("description");
-		newDocumentPage.sendKeysSearchForDocType("docType");
-		newDocumentPage.clickSelectSpecificDocTypeButton("docType");
-		//WAIT!!		
-		File file = new File("src/test/java/utilities/testFile.pdf");		
-		newDocumentPage.sendKeysFileUploadField(file.getAbsolutePath());		
-		newDocumentPage.waitForFileNameVisibility("testFile.pdf");
-		newDocumentPage.clickCreateButton();
+		newDocumentPage.sendKeysSearchForDocType("docType14");
+		newDocumentPage.clickSelectSpecificDocTypeButton("docType14");		
+		file = new File(filePath);
+		newDocumentPage.sendKeysFileUploadField(file.getAbsolutePath());
+		newDocumentPage.waitForFileNameVisibility(fileName);		
+		newDocumentPage.clickCreateButton();		
 		mainPage.clickMyDocumentsButton();
-		myDocumentsPage.sendKeysSearchDocument("newDoc12345");
-		assertTrue(myDocumentsPage.isDocumentNameDisplayed("newDoc12345"),
+		myDocumentsPage.sendKeysSearchDocument("7newDoc7");
+		Thread.sleep(2000);
+		assertTrue(myDocumentsPage.isDocumentNameDisplayed("7newDoc7"),
 				"Document name isn't displayed correctly on My documents list");
-		String ID = myDocumentsPage.getIDbyDocumentName("newDoc12345"); // for doc delete
-		date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());		
-		//assertEquals(myDocumentsPage.getCreationDatebyDocumentName("newDoc12345"), date,
-			//	"Document creation date isn't displayed correctly in ");
-		assertTrue(myDocumentsPage.getStatusByDocumentName("newDoc12345").equals("CREATED"),
+		assertTrue(myDocumentsPage.getTypeByDocumentName("7newDoc7").equals("docType14"),
+				"Document type isn't displayed correctly on My documents list");
+		//This parameter is used for Delete Document API call
+		documentID = myDocumentsPage.getIDbyDocumentName("7newDoc7"); 
+		documentInfoJson = API.getFileDetails(documentID);
+		//This parameter is used for Delete File API call
+		fileID = documentInfoJson.getBody().toString().substring(9, 26);
+		System.out.println(fileID);
+		date = new Date();
+		modifiedDate= new SimpleDateFormat("yyyy-MM-dd").format(date);
+		assertTrue(myDocumentsPage.getCreationDatebyDocumentName("7newDoc7").equals(modifiedDate),
+		"Document creation date isn't displayed correctly on My documents list");		
+		assertTrue(myDocumentsPage.getFileNameByDocumentName("7newDoc7").equals(fileName),
+				"Attached file name isn't displayed correctly in File icon tooltip");
+		assertTrue(myDocumentsPage.getStatusByDocumentName("7newDoc7").equals("CREATED"),
 				"Document status isn't displayed correctly on My documents list");
-		myDocumentsPage.clickEditViewDocument("newDoc12345");
-		editDocumentPage.waitForEditDocumentPage();
-		assertTrue(editDocumentPage.getDocName().equals("newDoc12345"),
+		myDocumentsPage.clickEditViewDocument("7newDoc7");		
+		editDocumentPage.waitForEditDocumentPage();		
+		assertTrue(editDocumentPage.getDocName().equals("7newDoc7"),
 				"Document name isn't displayed correctly on Edit document page");
 		assertTrue(editDocumentPage.getDocDescription().equals("description"),
-				"Document description isn't displayed correctly on Edit document page");
-		
-		//assertEquals("docType", editDocumentPage.getDocType(),
-		//		"Document type isn't displayed correctly on Edit document page");
-		 assertTrue(editDocumentPage.isFileNameDisplayed("testFile.pdf"), 
-				 "Document name isn't displayed correctly on Edit document page");
-		 editDocumentPage.clickCancelButton();
-		 
-		 //iskelti!!!!
-		 //edit document test
-		 
-		 myDocumentsPage.sendKeysSearchDocument("newDoc12345");
-		 myDocumentsPage.clickEditViewDocument("newDoc12345");
-		 editDocumentPage.waitForEditDocumentPage();
-		 editDocumentPage.clearDocNameField();
-		 editDocumentPage.sendKeysDocNameField("newName");
-		 editDocumentPage.clearDocDescriptionField();
-		 editDocumentPage.sendKeysDocDescriptionField("newDescription");
-		 //add new file
-		 editDocumentPage.clickRemoveFileButton("test.pdf");
-		 Thread.sleep(2000);
-		 editDocumentPage.clickSubmitButton();
+				"Document description isn't displayed correctly on Edit/View document page");
+	
+//		assertTrue(editDocumentPage.getDocType().equals("docType14"),
+//				"Document type isn't displayed correctly on Edit document page");
+		assertTrue(editDocumentPage.isFileNameDisplayed(fileName),
+				"Attached file name isn't displayed correctly on Edit/View document page");
+		editDocumentPage.clickCancelButton();
 	}
 
 }

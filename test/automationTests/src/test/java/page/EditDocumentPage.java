@@ -24,27 +24,21 @@ public class EditDocumentPage extends AbstractPage {
 	@FindBy(id = "inputDocDescription")
 	private WebElement docDescriptionFied;
 	
+	@FindBy(id = "documentFileUpload")
+	private WebElement fileUploadField;
+	
 	/* SELECT */
 	
 	@FindBy(id = "selectDocType")
 	private Select drpdwDocumentType;
+		
+	/* BUTTONS */
 	
-//	@FindBy(xpath = "//*[@aria-label='Search']")
-//	private List<WebElement> searchFields;
-//	
-//	@FindBy(id = "documentFileUpload")
-//	private WebElement fileUploadField;
-//		
-//	/* BUTTONS */
-//	
-	@FindBy(xpath = "//button[contains(text(),'Submit')]")
-	private WebElement buttonSubmit;
+	@FindBy(xpath = "//button[contains(text(),'Update')]")
+	private WebElement buttonUpdate;
 	
 	@FindBy(xpath = "//button[contains(text(),'Cancel')]")
 	private WebElement buttonCancel;
-		
-	@FindBy(id = "documentFileUpload")
-	private WebElement fileUploadField;
 		
 	/* SEND KEYS */
 	
@@ -59,7 +53,7 @@ public class EditDocumentPage extends AbstractPage {
 	public void sendKeysFileUploadField(String filePath) {
 		this.fileUploadField.sendKeys(filePath);
 	}
-	
+		
 	/*CLEAR FIELDS*/
 			
 	public void clearDocNameField() {
@@ -72,8 +66,8 @@ public class EditDocumentPage extends AbstractPage {
 		
 	/* CLICK BUTTONS */
 	
-	public void clickSubmitButton() {		
-		this.buttonSubmit.click();
+	public void clickUpdateButton() {		
+		this.buttonUpdate.click();
 	}
 	
 	public void clickCancelButton() {		
