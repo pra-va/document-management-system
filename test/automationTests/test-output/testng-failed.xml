@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [editUserTests]">
+  <test thread-count="5" name="editUserTests(failed)">
+    <parameter name="newAdminPassword" value="123456789"/>
+    <parameter name="newUserFirstName" value="wwwwww"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="newUserRole" value="USER"/>
+    <parameter name="groupNameTwo" value="GroupTwoForEditUserTests11"/>
+    <parameter name="newAdminFirstName" value="gggg"/>
+    <parameter name="newUserUserName" value="userNameTest17"/>
+    <parameter name="newAdminLastName" value="gggg"/>
+    <parameter name="groupNameOne" value="GroupOneForEditUserTests10"/>
+    <parameter name="newAdminRole" value="ADMIN"/>
+    <parameter name="newAdminUserName" value="newAdmin20"/>
+    <parameter name="newUserPassword" value="wwwwwwwwwww"/>
+    <parameter name="newUserLastName" value="wwwwwwwww"/>
+    <parameter name="newUserUserName1" value="testUserName"/>
+    <parameter name="adminPassword" value="adminadmin"/>
+    <classes>
+      <class name="test.EditUserTests">
+        <methods>
+          <include name="preconditions"/>
+          <include name="beforeSuite"/>
+          <include name="editUserTest" invocation-numbers="0"/>
+          <include name="afterSuite"/>
+        </methods>
+      </class> <!-- test.EditUserTests -->
+    </classes>
+  </test> <!-- editUserTests(failed) -->
+</suite> <!-- Failed suite [editUserTests] -->

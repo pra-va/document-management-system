@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [submitSignDeclineDocumentTests]">
+  <test thread-count="5" name="submitSignDeclineDocumentTests(failed)">
+    <parameter name="docDescription" value="Resignation Letter of Jane Doe"/>
+    <parameter name="docName" value="Resignation Letter"/>
+    <parameter name="fileName" value="ADMIN"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="docType" value="HR documents"/>
+    <parameter name="filePath" value="gggggggggggg"/>
+    <parameter name="adminPassword" value="adminadmin"/>
+    <classes>
+      <class name="test.SubmitSignDeclineDocumentTests">
+        <methods>
+          <include name="submitDocumentTest"/>
+          <include name="beforeSuite"/>
+          <include name="preconditions"/>
+          <include name="afterSuite"/>
+        </methods>
+      </class> <!-- test.SubmitSignDeclineDocumentTests -->
+    </classes>
+  </test> <!-- submitSignDeclineDocumentTests(failed) -->
+</suite> <!-- Failed suite [submitSignDeclineDocumentTests] -->

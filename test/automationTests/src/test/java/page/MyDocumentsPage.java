@@ -27,12 +27,15 @@ public class MyDocumentsPage extends AbstractPage {
 	@FindBy(id = "submitted")
 	private WebElement buttonSubmitted;
 
-	@FindBy(id = "rejected")
-	private WebElement buttonRejected;
+	@FindBy(id = "declined")
+	private WebElement buttonDeclined;
 
 	@FindBy(id = "accepted")
 	private WebElement buttonAccepted;
 
+	@FindBy(id = "popover")
+	private WebElement fileIcon;
+	
 	/* CLICK BUTTONS */
 
 	public void clickButtonAll() {
@@ -47,45 +50,64 @@ public class MyDocumentsPage extends AbstractPage {
 		this.buttonSubmitted.click();
 	}
 
-	public void clickButtonRejected() {
-		this.buttonRejected.click();
+	public void clickButtonDeclined() {
+		this.buttonDeclined.click();
 	}
 
 	public void clickButtonAccepted() {
 		this.buttonAccepted.click();
 	}
-    //driver.findElement(By.xpath("//td[7]//button")).click();
+    
 	public void clickEditViewDocument(String documentName) {
-		driver.findElement(By.xpath("//td[8]//button")).click();
+		driver.findElement(By.xpath("//td[7]//button")).click();
+	}
+	
+	public void clickButtonSubmit(String documentName) {
+		driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//button[text()='Submit']")).click();
 	}
 
-	/* SEND KEYS */
+	/*CLEAR FIELDS*/
 
+	public void clearSearchDocumentField() {
+		this.searchDocumentField.clear();
+	}
+	
+	/* SEND KEYS */
+	
 	public void sendKeysSearchDocument(String documentInformation) {
 		this.searchDocumentField.sendKeys(documentInformation);
 	}
 
-	/* GET TEXT METHODS */
-    //return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[1]")).getText();
+	/* GET TEXT */
+    
 	public String getIDbyDocumentName(String documentName) {
-		return driver.findElement(By.xpath("//td[3][text()='" + documentName + "']/..//td[2]")).getText();
+		return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[1]")).getText();
 	}
-	//return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[3]")).getText();
+	
 	public String getTypeByDocumentName(String documentName) {
-		return driver.findElement(By.xpath("//td[3][text()='" + documentName + "']/..//td[4]")).getText();
+		return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[3]")).getText();
 	}
-	//return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[4]")).getText();
+	
 	public String getStatusByDocumentName(String documentName) {
-		return driver.findElement(By.xpath("//td[3][text()='" + documentName + "']/..//td[5]")).getText();
+		return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[4]")).getText();
 	}
-	//return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[5]")).getText();
+	
 	public String getCreationDatebyDocumentName(String documentName) {
-		return driver.findElement(By.xpath("//td[3][text()='" + documentName + "']/..//td[6]")).getText();
+		return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[5]")).getText();
+	}
+	
+	public String getFileNameByDocumentName(String documentName) {
+		return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//td[6]/span")).getAttribute("data-content");
 	}
 
-	/* IS DISPLAYED METHOD */
-	//return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']")).isDisplayed();
+	/* IS DISPLAYED */
+	
 	public boolean isDocumentNameDisplayed(String documentName) {
-		return driver.findElement(By.xpath("//td[3][text()='" + documentName + "']")).isDisplayed();
+		return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']")).isDisplayed();
+	}
+	
+	
+	public boolean isButtonSubmitEnabled(String documentName) {
+		return driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//button[text()='Submit']")).isEnabled();
 	}
 }

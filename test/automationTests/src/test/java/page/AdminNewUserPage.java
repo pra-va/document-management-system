@@ -155,10 +155,6 @@ public class AdminNewUserPage extends AbstractPage {
 	public void waitForCancelButton() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(this.buttonCancel));
 	}
-
-//	public void clickRemoveSpecificGroupButton(String groupName) {
-//		driver.findElement(By.xpath("//td[contains(text()," + groupName + ")]/..//td[3]//button")).click();
-//	}
 	
 	public String firstNameLengthValidationLabelAttribute(){
 		return firstNameLengthValidationLabel.getAttribute("aria-label");

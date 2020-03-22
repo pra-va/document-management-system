@@ -2,8 +2,11 @@ package test;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
@@ -20,6 +23,7 @@ import page.LoginPage;
 import page.MainPage;
 import page.ProfilePage;
 import page.UserListPage;
+import utilities.API;
 
 public class NewUserTests extends AbstractTest {
 	LoginPage loginPage;
@@ -30,9 +34,11 @@ public class NewUserTests extends AbstractTest {
 	ProfilePage profilePage;
 	WebDriverWait wait;
 	String deleteUserApiURL;
+	String deleteGroupApiUrl;
 
+	@Parameters({ "groupName" })
 	@BeforeClass
-	public void preconditions() {
+	public void preconditions(String groupName) throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		adminNewUserPage = new AdminNewUserPage(driver);
@@ -41,12 +47,13 @@ public class NewUserTests extends AbstractTest {
 		profilePage = new ProfilePage(driver);
 		wait = new WebDriverWait(driver, 2);
 		deleteUserApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/delete/{username}";
-
+		deleteGroupApiUrl = "http://akademijait.vtmc.lt:8180/dvs/api/group/{groupname}/delete";
+		API.createGroup("Some group description", "[\"\"]", "[\"\"]", groupName, "[\"\"]");
 	}
 
-	@Parameters({ "adminUserName", "adminPassword" })
+	@Parameters({ "adminUserName", "adminPassword", "groupName" })
 	@BeforeGroups({ "newUserTests", "newUserFieldValidationTests" })
-	public void login(String adminUserName, String adminPassword) {
+	public void login(String adminUserName, String adminPassword, String groupName) {
 		loginPage.sendKeysUserName(adminUserName);
 		loginPage.sendKeysPassword(adminPassword);
 		loginPage.clickButtonLogin();
@@ -60,11 +67,17 @@ public class NewUserTests extends AbstractTest {
 
 	@Parameters({ "newUserUserName", "newAdminUserName" })
 	@AfterGroups("newUserTests")
-	public void logout(String newUserUserName, String newAdminUserName) throws UnirestException {
-		Unirest.delete(deleteUserApiURL).routeParam("username", newUserUserName).asString();
-		Unirest.delete(deleteUserApiURL).routeParam("username", newAdminUserName).asString();		
-		mainPage.waitForLogoutButton();		
+	public void logout() throws UnirestException {
+		mainPage.waitForLogoutButton();
 		mainPage.clickLogoutButton();
+	}
+
+	@AfterClass
+	@Parameters({ "newUserUserName", "newAdminUserName", "groupName" })
+	public void deleteEntities(String newUserUserName, String newAdminUserName, String groupName) throws UnirestException {		
+	Unirest.delete(deleteUserApiURL).routeParam("username", newUserUserName).asString();
+	Unirest.delete(deleteUserApiURL).routeParam("username", newAdminUserName).asString();	
+	Unirest.delete(deleteGroupApiUrl).routeParam("groupName", groupName).asString();
 	}
 
 	/*-
@@ -86,24 +99,24 @@ public class NewUserTests extends AbstractTest {
 	 * 11. Check if all data on Profile Page is displayed correctly.
 	 */
 	@Parameters({ "newAdminFirstName", "newAdminLastName", "newAdminUserName", "newAdminPassword", "newAdminRole",
-			"groupOne" })
+			"groupName" })
 	@Test(groups = { "newUserTests" }, priority = 1, enabled = true)
 	public void createNewAdminTest(String newAdminFirstName, String newAdminLastName, String newAdminUserName,
-			String newAdminPassword, String newAdminRole, String groupOne) throws InterruptedException {
+			String newAdminPassword, String newAdminRole, String groupName) throws InterruptedException {
 		adminNewUserPage.sendKeysFirstName(newAdminFirstName);
 		adminNewUserPage.sendKeysLastName(newAdminLastName);
 		adminNewUserPage.sendKeysUserName(newAdminUserName);
 		adminNewUserPage.sendKeysPassword(newAdminPassword);
 		adminNewUserPage.clickAdminRadio();
-		adminNewUserPage.sendKeysSearchGroup(groupOne);
-		//driver.waitUntil(ExpectedConditions.visibilityOf(YourElement,2000));		
-		adminNewUserPage.clickAddRemoveSpecificGroupButton(groupOne);
+		adminNewUserPage.sendKeysSearchGroup(groupName);
+		// driver.waitUntil(ExpectedConditions.visibilityOf(YourElement,2000));
+		adminNewUserPage.clickAddRemoveSpecificGroupButton(groupName);
 		adminNewUserPage.clickCreateButton();
 		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "New user isn't created");
-		driver.navigate().refresh();		
+		driver.navigate().refresh();
 		mainPage.clickAdminButton();
-		mainPage.clickAdminUsersButton();	
-		userListPage.sendKeysSearchForUser(newAdminUserName);		
+		mainPage.clickAdminUsersButton();
+		userListPage.sendKeysSearchForUser(newAdminUserName);
 		assertTrue(userListPage.getFirstNameFromUserListByUsername(newAdminUserName).equals(newAdminFirstName),
 				"Admin's First Name isn't displayed correctly in user list");
 		assertTrue(userListPage.getLastNameFromUserListByUsername(newAdminUserName).equals(newAdminLastName),
@@ -117,12 +130,12 @@ public class NewUserTests extends AbstractTest {
 				"Admin Last Name isn't displayed correctly in Edit user form");
 		assertTrue(editUserPage.isRadioButtonAdminSelected(),
 				"Admin's role isn't displayed correctly in Edit user form");
-		//editUserPage.sendKeysSearchGroups(groupOne);	
-		//!!!!!!!!!
+		// editUserPage.sendKeysSearchGroups(groupOne);
+		// !!!!!!!!!
 		driver.findElement(By.xpath("//*[@aria-label='Search']")).sendKeys("qqqqqq");
-							
-		assertTrue(editUserPage.isUserAddedToGroup(groupOne), "User was not added to the group correctly");		
-		editUserPage.clickCancelButton();		
+
+		assertTrue(editUserPage.isUserAddedToGroup(groupName), "User was not added to the group correctly");
+		editUserPage.clickCancelButton();
 		mainPage.clickLogoutButton();
 		loginPage.sendKeysUserName(newAdminUserName);
 		loginPage.sendKeysPassword(newAdminPassword);
@@ -136,7 +149,7 @@ public class NewUserTests extends AbstractTest {
 				"Admin's Last Name isn't displayed correctly in profile page");
 		assertTrue(profilePage.getTextRole().equals(newAdminRole),
 				"Admin's Role isn't displayed correctly in profile page");
-		assertTrue(profilePage.getTextUserGroups().equals(groupOne),
+		assertTrue(profilePage.getTextUserGroups().equals(groupName),
 				"Admin's group isn't displayed correctly in profile page");
 		profilePage.clickButtonClose();
 	}
@@ -160,23 +173,23 @@ public class NewUserTests extends AbstractTest {
 	 * 11. Check if all user data on Profile Page is displayed correctly.
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName", "newUserPassword", "newUserRole",
-			"groupOne" })
+			"groupName" })
 	@Test(groups = { "newUserTests" }, priority = 1, enabled = true)
 	public void createNewUserTest(String newUserFirstName, String newUserLastName, String newUserUserName,
-			String newUserPassword, String newUserRole, String groupOne) {
+			String newUserPassword, String newUserRole, String groupName) {
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
 		adminNewUserPage.sendKeysLastName(newUserLastName);
 		adminNewUserPage.sendKeysUserName(newUserUserName);
 		adminNewUserPage.sendKeysPassword(newUserPassword);
 		adminNewUserPage.checkShowPassword();
-		adminNewUserPage.sendKeysSearchGroup(groupOne);		
-		adminNewUserPage.clickAddRemoveSpecificGroupButton(groupOne);
+		adminNewUserPage.sendKeysSearchGroup(groupName);
+		adminNewUserPage.clickAddRemoveSpecificGroupButton(groupName);
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "New admin isn't created");		
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "New admin isn't created");
 		driver.navigate().refresh();
 		mainPage.clickAdminButton();
 		mainPage.clickAdminUsersButton();
-		userListPage.sendKeysSearchForUser(newUserUserName);				
+		userListPage.sendKeysSearchForUser(newUserUserName);
 		assertTrue(userListPage.getFirstNameFromUserListByUsername(newUserUserName).equals(newUserFirstName),
 				"User's First Name isn't displayed correctly in user list");
 		assertTrue(userListPage.getLastNameFromUserListByUsername(newUserUserName).equals(newUserLastName),
@@ -190,9 +203,8 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(editUserPage.getLastName().equals(newUserLastName),
 				"User's Last Name isn't displayed correctly in Edit user page");
 		assertTrue(editUserPage.isRadioButtonUserSelected(), "User's role isn't displayed correctly in Edit user page");
-		editUserPage.sendKeysSearchGroups(groupOne);
-		assertTrue(editUserPage.isUserAddedToGroup(groupOne),
-				"User was not added to the group correctly");		
+		editUserPage.sendKeysSearchGroups(groupName);
+		assertTrue(editUserPage.isUserAddedToGroup(groupName), "User was not added to the group correctly");
 		editUserPage.clickCancelButton();
 		mainPage.clickLogoutButton();
 		loginPage.sendKeysUserName(newUserUserName);
@@ -200,17 +212,15 @@ public class NewUserTests extends AbstractTest {
 		loginPage.clickButtonLogin();
 		mainPage.clickProfileButton();
 		profilePage.waitForHeaderUsernameVisibility();
-//		assertTrue(profilePage.getTextUsername().equals(newUserUserName),
-//				"User's Username isn't displayed correctly in profile page");
 		assertTrue(profilePage.getTextFirstName().equals(newUserFirstName),
 				"User's First Name isn't displayed correctly in profile page");
 		assertTrue(profilePage.getTextLastName().equals(newUserLastName),
 				"User's Last Name isn't displayed correctly in profile page");
 		assertTrue(profilePage.getTextRole().contentEquals(newUserRole),
 				"User's Role isn't displayed correctly in profile page");
-		assertTrue(profilePage.getTextUserGroups().equals(groupOne),
+		assertTrue(profilePage.getTextUserGroups().equals(groupName),
 				"User's group isn't shown correctly in profile page");
-		profilePage.clickButtonClose();		
+		profilePage.clickButtonClose();
 		mainPage.clickLogoutButton();
 	}
 
