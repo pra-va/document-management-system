@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lt.vtmc.docTypes.dao.DocTypeRepository;
+import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.documents.Status;
 import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.dto.DocumentDetailsDTO;
@@ -97,30 +98,34 @@ public class DocumentService {
 	@Transactional
 	public void deleteDocument(Document document) {
 		List<File4DB> tmpList = document.getFileList();
-		if (tmpList.size() > 0) {
+		document.setFileList(null);
+		if (tmpList!=null) {
 			for (File4DB file4db : tmpList) {
 				fileService.deleteFileByUID(file4db.getUID());
 			}
 		}
 
-		document.setFileList(null);
 		User author = document.getAuthor();
 		User handler = document.getHandler();
+		DocType docType = document.getdType();
 
 		if (author != null) {
 			List<Document> tmpListAuth = author.getCreatedDocuments();
 			tmpListAuth.remove(document);
+			author.setCreatedDocuments(tmpListAuth);
 			document.setAuthor(null);
 		}
 
 		if (handler != null) {
-			List<Document> tmpListHand = handler.getCreatedDocuments();
+			List<Document> tmpListHand = handler.getProcessedDocuments();
 			tmpListHand.remove(document);
+			handler.setProcessedDocuments(tmpListHand);
 			document.setHandler(null);
 		}
 
-		List<Document> tmpListDocType = document.getdType().getDocumentList();
+		List<Document> tmpListDocType = docType.getDocumentList();
 		tmpListDocType.remove(document);
+		docType.setDocumentList(tmpListDocType);
 		document.setdType(null);
 
 		docRepo.delete(document);

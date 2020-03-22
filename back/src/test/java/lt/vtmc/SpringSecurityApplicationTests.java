@@ -27,10 +27,10 @@ class SpringSecurityApplicationTests {
 	 */
 	@Test
 	public void createFakeUserAndSystemAdministrator() {
-//		if (userService.findUserByUsername("admin") == null) {
-//			userService.createSystemAdministrator("admin", "testName", "testSurname", "adminadmin");
-//			userService.createUser("user", "testName", "testSurname", "useruser");
-//		}
+		if (userService.findUserByUsername("admin") == null) {
+			userService.createSystemAdministrator("admin", "testName", "testSurname", "adminadmin");
+			userService.createUser("user", "testName", "testSurname", "useruser");
+		}
 	}
 
 	@Test
