@@ -255,6 +255,21 @@ class EditDocument extends Component {
       });
   };
 
+  removeDoc = event => {
+    event.preventDefault();
+    const { name } = this.state;
+    if (
+      window.confirm("Do you really want to delete document '" + name + "'?")
+    ) {
+      axios
+        .delete(serverUrl + "doc/delete/" + this.props.item.uid)
+        .then(response => {})
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
+
   render() {
     return (
       <Modal show={this.props.show} onHide={this.props.hide} size="lg">
@@ -319,11 +334,18 @@ class EditDocument extends Component {
               </button>
               <button
                 type="submit"
-                className="btn btn-dark ml-2"
+                className="btn btn-dark mx-2"
                 data-dismiss="modal"
                 disabled={this.state.submitDisabled || !this.state.onlyPdfFiles}
               >
                 Update
+              </button>
+              <button
+                className="btn btn-danger ml-2"
+                data-dismiss="modal"
+                onClick={this.removeDoc}
+              >
+                Remove
               </button>
             </div>
           </form>

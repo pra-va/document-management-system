@@ -156,13 +156,19 @@ class ListOfUsers extends Component {
   };
 
   reduceList = data => {
-    return data.reduce((sum, item, index) => {
-      if (index === 0) {
-        return (sum = item);
+    let sum = "";
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      if (i === 0) {
+        sum = element;
+      } else if (i < 5) {
+        sum += ", " + element;
       } else {
-        return (sum += ", " + item);
+        sum += " and " + Number(data.length - 5) + " more...";
+        break;
       }
-    }, "");
+    }
+    return sum;
   };
 
   reloadTable = () => {

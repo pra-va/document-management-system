@@ -35,7 +35,6 @@ ReactDOM.render(
   <BrowserRouter>
     <App>
       <Switch>
-        <Route exact path="/dvs/admin" component={AdminScreen} />
         <Route exact path="/dvs/" component={LoginForm} />
         <Route exact path="/dvs/home" component={HomePage} />
         <Route exact path="/dvs/users" component={ListOfUsers} />
@@ -43,6 +42,7 @@ ReactDOM.render(
         <Route exact path="/dvs/doctypes" component={DocTypes} />
         <Route exact path="/dvs/document" component={NewDocument} />
         <Route exact path="/dvs/documents" component={MyDocuments} />
+        <Route exact path="/dvs/admin" component={AdminScreen} />
         <Route exact path="/dvs/sign" component={SignDocuments} />
         <Route exact path="/dvs/statistics" component={Statistics} />
         <Route

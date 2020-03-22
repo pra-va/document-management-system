@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,12 +76,6 @@ public class DocumentController {
 			filesControl.uploadFiles(multipartFile, docService.findDocumentByUID(UID));
 		}
 	}
-
-//	@Secured({"ROLE_ADMIN" })
-//	@PostMapping(path = "/api/doc/all")
-//	public Map<String, Object> findAllDocuments(@RequestBody PagingData pagingData) {
-//		return docService.retrieveAllDocuments(pagingData);
-//	}
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doc/{UID}")
@@ -173,5 +168,27 @@ public class DocumentController {
 		LOG.info("# LOG # Initiated by [{}]: Requested a list of all rejected documents#",
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		return docService.returnRejected(username, pagingData);
+	}
+
+	/**
+	 * Remove document by document unique id if it belongs to a user that is sending
+	 * this request.
+	 */
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+	@DeleteMapping("/api/doc/{uid}")
+	public @ResponseBody ResponseEntity<String> removeDocByUser(@PathVariable String uid) {
+		String requestedBy = SecurityContextHolder.getContext().getAuthentication().getName();
+		if (!requestedBy.equals(null)) {
+			boolean isDocDeleted = docService.deleteDocumentRequestedByUser(uid, requestedBy);
+			if (isDocDeleted) {
+				return new ResponseEntity<String>("Document '" + uid + "' deleted.", HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("Unable to delete. User does not have requested document.",
+						HttpStatus.NOT_FOUND);
+			}
+		} else {
+			return new ResponseEntity<String>("Unable to delete. Failed to locate requesting user.",
+					HttpStatus.UNAUTHORIZED);
+		}
 	}
 }

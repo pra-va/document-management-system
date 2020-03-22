@@ -78,8 +78,8 @@ public class GroupController {
 	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
 	public Map<String, Object> listAllGroups(@RequestBody PagingData pagingData) {
 
-//		LOG.info("# LOG # Initiated by [{}]: requested list of all groups #",
-//				SecurityContextHolder.getContext().getAuthentication().getName());
+		LOG.info("# LOG # Initiated by [{}]: requested list of all groups #",
+				SecurityContextHolder.getContext().getAuthentication().getName());
 
 		return groupService.retrieveAllGroups(pagingData);
 	}

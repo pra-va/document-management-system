@@ -20,19 +20,19 @@ import lt.vtmc.user.model.User;
 public interface UserRepository extends JpaRepository<User, String> {
 	User findUserByUsername(String username);
 
-	@Query("SELECT u FROM User u WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', ?1,'%'))")
+	@Query("SELECT u FROM User u WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.surname) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.role) LIKE LOWER(CONCAT('%', ?1,'%'))")
 	Page<User> findLike(String searchValueString, Pageable firstPageable);
 
 	@Query("select distinct d.name from DocType d inner join d.groupsCreating g inner join g.userList u where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
 	Page<String> docTypesUserCreatesByUsername(String username, String searchPhrase, Pageable pageable);
 
-	@Query("select distinct d, u.username, dt.name from Document d inner join d.dType dt inner join dt.groupsApproving g inner join g.userList u where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = 1")
+	@Query("select distinct d, u.username, a.name, a.surname, dt.name from Document d inner join d.author a inner join d.dType dt inner join dt.groupsApproving g inner join g.userList u where u.username = ?1 and (LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(d.UID) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(dt.name) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(d.dateSubmit) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(CONCAT(a.name, ' ', a.surname)) LIKE LOWER(CONCAT('%', ?2,'%'))) and d.status = 1")
 	Page<Document> docsToSignByUsername(String username, String searchPhrase, Pageable pageable);
 
-	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
+	@Query("select d, dt from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and (LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(d.dateCreate) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(dt.name) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(d.UID) LIKE LOWER(CONCAT('%', ?2,'%')))")
 	Page<Document> docsByUsername(String username, String searchPhrase, Pageable pageable);
 
-	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) and d.status = ?3")
+	@Query("select d from User u inner join u.createdDocuments d inner join d.dType dt where u.username = ?1 and (LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(d.dateCreate) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(dt.name) LIKE LOWER(CONCAT('%', ?2,'%')) or LOWER(d.UID) LIKE LOWER(CONCAT('%', ?2,'%'))) and d.status = ?3")
 	Page<Document> docsByUsernameAndStatus(String username, String searchPhrase, Status status, Pageable pageable);
 
 	@Query("select new lt.vtmc.statistics.dto.StatisticsUserDTO(a.username as username, a.name as name, a.surname as surname, count(distinct d.id) as docNumber) from User u join u.groupList g join g.docTypesToApprove da join da.documentList d join d.author a where u.username = ?1 and LOWER(a.username) LIKE LOWER(CONCAT('%', ?2,'%')) and (d.status = '1' or d.status = '2' or d.status = '3') group by a.username")

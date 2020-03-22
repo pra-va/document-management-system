@@ -3,7 +3,6 @@ import Table from "../../../6-CommonElements/2-AdvancedTable/AdvancedTable";
 import axios from "axios";
 import serverUrl from "../../../7-properties/1-URL";
 import CheckBox from "../../../6-CommonElements/6-CheckBox/CheckBox";
-import columnToggle from "react-bootstrap-table2-toolkit/lib/src/column-toggle";
 
 class AssignRights extends Component {
   constructor(props) {
@@ -158,9 +157,7 @@ class AssignRights extends Component {
   render() {
     return (
       <div>
-        <h3 className="d-flex justify-content-start">
-          2. Update document type rights.
-        </h3>
+        <h3 className="d-flex justify-content-start">2. Set rights.</h3>
 
         <Table
           id={"newUserGroups"}

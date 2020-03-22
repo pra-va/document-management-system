@@ -19,7 +19,7 @@ class AdminScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isUserAdmin: "false",
+      isUserAdmin: true,
       showNewUser: false,
       showNewGroup: false,
       showCreateDocType: false
@@ -68,7 +68,7 @@ class AdminScreen extends Component {
   render() {
     return (
       <div>
-        <Navigation isUserAdmin={this.state.isUserAdmin} />
+        <Navigation />
 
         {<NewUser show={this.state.showNewUser} onHide={this.hideNewUser} />}
 

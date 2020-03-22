@@ -115,8 +115,8 @@ public class DocTypeController {
 			return new ResponseEntity<String>("Updated succesfully", HttpStatus.ACCEPTED);
 		}
 
-//		LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT updated - [{}] was NOT found #",
-//				SecurityContextHolder.getContext().getAuthentication().getName(), name, name);
+		LOG.info("# LOG # Initiated by [{}]: Group [{}] was NOT updated - [{}] was NOT found #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), name, name);
 
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}

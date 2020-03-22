@@ -150,12 +150,18 @@ public class DocTypeService {
 	public void updateDocTypeDetails(String newName, String name, String[] groupsApproving, String[] groupsCreating) {
 		DocType docTypeToUpdate = docTypeRepo.findDocTypeByName(name);
 		docTypeToUpdate.setName(newName);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 06bb333dc58cbc8d9aaa2051f6a75987ead0ab48
 		List<Group> newApproveList = new ArrayList<Group>();
 		for (String group : groupsApproving) {
 			newApproveList.add(groupRepository.findGroupByName(group));
 		}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 06bb333dc58cbc8d9aaa2051f6a75987ead0ab48
 		List<Group> tmpApproveList = docTypeToUpdate.getGroupsApproving();
 		for (Group group : tmpApproveList) {
 			{
@@ -164,19 +170,24 @@ public class DocTypeService {
 				group.setDocTypesToApprove(tmpList);
 			}
 		}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 06bb333dc58cbc8d9aaa2051f6a75987ead0ab48
 		for (Group group : newApproveList) {
 			List<DocType> tmpList = group.getDocTypesToApprove();
 			tmpList.add(docTypeToUpdate);
 			group.setDocTypesToApprove(tmpList);
 		}
 		docTypeToUpdate.setGroupsApproving(newApproveList);
-		
 		List<Group> newCreateList = new ArrayList<Group>();
 		for (String group : groupsCreating) {
 			newCreateList.add(groupRepository.findGroupByName(group));
 		}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 06bb333dc58cbc8d9aaa2051f6a75987ead0ab48
 		List<Group> tmpCreateList = docTypeToUpdate.getGroupsCreating();
 		for (Group group : tmpCreateList) {
 			{
@@ -185,7 +196,10 @@ public class DocTypeService {
 				group.setDocTypesToCreate(tmpList);
 			}
 		}
+<<<<<<< HEAD
+=======
 
+>>>>>>> 06bb333dc58cbc8d9aaa2051f6a75987ead0ab48
 		for (Group group : newCreateList) {
 			List<DocType> tmpList = group.getDocTypesToCreate();
 			tmpList.add(docTypeToUpdate);

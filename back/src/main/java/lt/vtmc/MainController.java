@@ -16,13 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class MainController {
 
 	@Secured({ "ROLE_ADMIN" })
-	@RequestMapping(value = { "/users", "/groups", "/doctypes" })
+	@RequestMapping(value = { "/users", "/groups", "/doctypes", "/admin" })
 	public ModelAndView adminView(ModelMap model) {
 		return new ModelAndView("forward:/", model);
 	}
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	@RequestMapping(value = { "/home", "/document", "/documents", "sign" })
+	@RequestMapping(value = { "/home", "/document", "/documents", "/sign", "/statistics" })
 	public ModelAndView homePageView(ModelMap model) {
 		return new ModelAndView("forward:/", model);
 	}

@@ -97,8 +97,10 @@ public class DocumentService {
 	@Transactional
 	public void deleteDocument(Document document) {
 		List<File4DB> tmpList = document.getFileList();
-		for (File4DB file4db : tmpList) {
-			fileService.deleteFileByUID(file4db.getUID());
+		if (tmpList.size() > 0) {
+			for (File4DB file4db : tmpList) {
+				fileService.deleteFileByUID(file4db.getUID());
+			}
 		}
 
 		document.setFileList(null);
@@ -190,10 +192,6 @@ public class DocumentService {
 
 	public Map<String, Object> findAllDocumentsToSignByUsername(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
-
-		System.out.println("*****************");
-		System.out.println(pagingData.getPageable().toString());
-		System.out.println("*****************");
 		Page<Document> documents = userRepo.docsToSignByUsername(username, pagingData.getSearchValueString(), pageable);
 		Map<String, Object> responseMap = new HashMap<>();
 		responseMap.put("pagingData",
@@ -268,5 +266,28 @@ public class DocumentService {
 		responseMap.put("documents",
 				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
 		return responseMap;
+	}
+
+	@Transactional
+	public boolean deleteDocumentRequestedByUser(String uid, String username) {
+		boolean doesUserHaveDoc = docRepo.doesUserHaveDoc(uid, username);
+		System.out.println("*****************************************");
+		System.out.println("\n\n\n\n\n\n\n\n\n");
+		System.out.println(doesUserHaveDoc);
+		System.out.println("\n\n\n\n\n\n\n\n\n");
+		System.out.println("*****************************************");
+
+		if (doesUserHaveDoc) {
+			System.out.println("*****************************************");
+			System.out.println("\n\n\n\n\n\n\n\n\n");
+			System.out.println(docRepo.findDocumentByUID(uid).getUID());
+			System.out.println("\n\n\n\n\n\n\n\n\n");
+			System.out.println("*****************************************");
+			deleteDocument(docRepo.findDocumentByUID(uid));
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 }

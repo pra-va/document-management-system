@@ -118,17 +118,19 @@ class DocTypes extends Component {
   };
 
   reduceList = data => {
-    if (data) {
-      let reducedList = data.reduce((sum, item, index) => {
-        if (index === 0) {
-          return sum + item;
-        } else {
-          return sum + ", " + item;
-        }
-      });
-      reducedList += ".";
-      return reducedList;
+    let sum = "";
+    for (let i = 0; i < data.length; i++) {
+      const element = data[i];
+      if (i === 0) {
+        sum = element;
+      } else if (i < 5) {
+        sum += ", " + element;
+      } else {
+        sum += " and " + Number(data.length - 5) + " more...";
+        break;
+      }
     }
+    return sum;
   };
 
   render() {
