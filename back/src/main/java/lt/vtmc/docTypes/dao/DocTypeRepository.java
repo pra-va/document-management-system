@@ -13,4 +13,5 @@ public interface DocTypeRepository extends JpaRepository<DocType, String> {
 
 	@Query("SELECT d FROM DocType d WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', ?1,'%'))")
 	Page<DocType> findLike(String searchValueString, Pageable firstPageable);
+
 }
