@@ -30,7 +30,7 @@ public interface DocumentRepository extends JpaRepository<Document, String> {
 
 	Page<Document> findLike(String searchValueString, Pageable firstPageable);
 
-	@Query("select case when (count(d.UID) = 1) then true else false end from User u join u.createdDocuments d where u.username = ?2 and d.UID = ?1 ")
+	@Query("select case when (count(d.UID) = 1) then true else false end from User u join u.createdDocuments d where u.username = ?2 and d.UID = ?1 and d.status = '0'")
 	boolean doesUserHaveDoc(String uid, String username);
 
 	@Transactional

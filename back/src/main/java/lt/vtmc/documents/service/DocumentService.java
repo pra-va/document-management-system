@@ -99,7 +99,7 @@ public class DocumentService {
 	public void deleteDocument(Document document) {
 		List<File4DB> tmpList = document.getFileList();
 		document.setFileList(null);
-		if (tmpList!=null) {
+		if (tmpList != null) {
 			for (File4DB file4db : tmpList) {
 				fileService.deleteFileByUID(file4db.getUID());
 			}
@@ -276,23 +276,12 @@ public class DocumentService {
 	@Transactional
 	public boolean deleteDocumentRequestedByUser(String uid, String username) {
 		boolean doesUserHaveDoc = docRepo.doesUserHaveDoc(uid, username);
-		System.out.println("*****************************************");
-		System.out.println("\n\n\n\n\n\n\n\n\n");
-		System.out.println(doesUserHaveDoc);
-		System.out.println("\n\n\n\n\n\n\n\n\n");
-		System.out.println("*****************************************");
 
 		if (doesUserHaveDoc) {
-			System.out.println("*****************************************");
-			System.out.println("\n\n\n\n\n\n\n\n\n");
-			System.out.println(docRepo.findDocumentByUID(uid).getUID());
-			System.out.println("\n\n\n\n\n\n\n\n\n");
-			System.out.println("*****************************************");
 			deleteDocument(docRepo.findDocumentByUID(uid));
 			return true;
 		} else {
 			return false;
 		}
-
 	}
 }
