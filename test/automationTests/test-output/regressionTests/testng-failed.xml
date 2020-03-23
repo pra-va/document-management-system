@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [regressionTests]">
+  <test thread-count="5" name="loginTests(failed)">
+    <parameter name="userPassword" value="useruser"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="userUserName" value="user"/>
+    <parameter name="adminPasswrod" value="adminadmin"/>
+    <parameter name="passwordWrong" value="qwerty"/>
+    <parameter name="userNameWrong" value="qwerty"/>
+    <classes>
+      <class name="test.loginTests">
+        <methods>
+          <include name="userLoginTest" invocation-numbers="0"/>
+          <include name="beforeSuite"/>
+          <include name="after"/>
+          <include name="preconditions"/>
+          <include name="afterSuite"/>
+        </methods>
+      </class> <!-- test.loginTests -->
+    </classes>
+  </test> <!-- loginTests(failed) -->
+  <test thread-count="5" name="newDocTypeTests(failed)">
+    <parameter name="docTypeName" value="Resignation letter"/>
+    <parameter name="groupName" value="Project managers"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="adminPasswrod" value="adminadmin"/>
+    <classes>
+      <class name="test.NewDocTypeTests">
+        <methods>
+          <include name="createNewDocTypeTest"/>
+          <include name="docTypeGroupsTest" invocation-numbers="0"/>
+          <include name="beforeSuite"/>
+          <include name="preconitions"/>
+          <include name="afterSuite"/>
+          <include name="deleteDocTypeCreatedForTest"/>
+        </methods>
+      </class> <!-- test.NewDocTypeTests -->
+    </classes>
+  </test> <!-- newDocTypeTests(failed) -->
+</suite> <!-- Failed suite [regressionTests] -->

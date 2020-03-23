@@ -65,7 +65,7 @@ public class AdminNewGroupPage extends AbstractPage {
 	}
 
 	public void clickAddSpecificUserButton(String user) {
-		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[5]//button")).click();
+		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[1]//input")).click();
 	}
 
 	public void clickRemoveSpecificUserButton(String user) {

@@ -49,8 +49,19 @@ public class EditUserPage extends AbstractPage {
 	@FindBy(id = "radioAdmin")
 	private WebElement radioAdmin;
 	
+
 	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
+	private WebElement searchGroups;
+	
+	@FindBy(xpath = "//*[@aria-label='Search']")
+	private WebElement searchField;
+	
+	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
+	private WebElement searchField2;
+
+	@FindBy(xpath = "//input[@placeholder='Search']")
 	private WebElement searchGroupField;
+
 	
 	@FindBy(xpath = "//th[text()='Name']")
 	private WebElement tableHeader;
@@ -73,6 +84,10 @@ public class EditUserPage extends AbstractPage {
 		searchGroupField.sendKeys(groupName);
 	}
 	
+	public void sendKeysSearchGroups2(String groupName) {
+		searchField2.sendKeys(groupName);
+	}
+		
 	/* CLICK BUTTONS */
 
 	public void checkUpdatePassword() {

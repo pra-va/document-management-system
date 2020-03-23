@@ -2,7 +2,6 @@ package test;
 
 import static org.testng.Assert.assertTrue;
 
-import java.io.IOException;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
@@ -14,6 +13,7 @@ import org.testng.annotations.Test;
 import page.AdminNewDocTypePage;
 import page.AdminNewGroupPage;
 import page.DocTypeListPage;
+import page.EditDocTypePage;
 import page.GroupListPage;
 import page.LoginPage;
 import page.MainPage;
@@ -27,9 +27,10 @@ public class NewDocTypeTests extends AbstractTest {
 	AdminNewDocTypePage newDocTypePage;
 	GroupListPage groupListPage;
 	DocTypeListPage docPage;
+	EditDocTypePage editDocPage;
 
 	@BeforeClass
-	public void preconitions() throws IOException {
+	public void preconitions() {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		groupPage = new AdminNewGroupPage(driver);
@@ -37,6 +38,7 @@ public class NewDocTypeTests extends AbstractTest {
 		newDocTypePage = new AdminNewDocTypePage(driver);
 		groupListPage = new GroupListPage(driver);
 		docPage = new DocTypeListPage(driver);
+		editDocPage = new EditDocTypePage(driver);
 	}
 
 	@Parameters({ "docTypeName" })
@@ -59,7 +61,17 @@ public class NewDocTypeTests extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 
-	@Test(groups = { "newDocType" }, priority = 1, enabled = true)
+	/*-
+	 * Preconditions: 
+	 *   - admin is logged in the system;
+	 * Test steps:
+	 * 1. Open new document type page.
+	 * 2. Leave document types name field empty.
+	 * 3. Click create button.
+	 * Expected results:
+	 *   - New document type should not be created without a name.
+	 */
+	@Test(groups = { "newDocType" }, priority = 0, enabled = true)
 	public void docTypeNoNameTest() {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminNewDocTypeButton();
@@ -70,27 +82,55 @@ public class NewDocTypeTests extends AbstractTest {
 		newDocTypePage.clickCancelButton();
 	}
 
+	/*-
+	 * Preconditions: 
+	 *   - admin is logged in the system;
+	 *   - at least one group is created for testing purpose.
+	 * Test steps:
+	 * 1. Open new document type page.
+	 * 2. Enter document types name.
+	 * 3. Check create and sign checkboxes on the group that was created for testing purpose.
+	 * 4. Click create button.
+	 * Expected results:
+	 *   - New document type is created.
+	 */
 	@Parameters({ "docTypeName", "groupName", "adminUserName", "groupDescription" })
-	@Test(groups = { "newDocType" }, priority = 0, enabled = true)
+	@Test(groups = { "newDocType" }, priority = 1, enabled = true)
 	public void createNewDocTypeTest(String p1, String p2, String p3, String p4) {
 //		groupPage.createGroup(p3, p2, p4);
 //		newDocTypePage.createDocType(p1, p2);
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
 		mainPage.waitForAdminButton();
+		docPage.sendKeysDocTypeSearch(p1);
+		mainPage.waitForAdminButton();
 		assertTrue(driver.findElement(By.xpath("//td[contains(text(),'" + p1 + "')]")).isDisplayed(),
 				"doc type was not created");
+		docPage.clearDocTypeSearch();
 	}
 
+	/*-
+	 * Preconditions: 
+	 *   - admin is logged in the system;
+	 *   - at lease one document type was created for testing purpose with a test group create/sign rights set.
+	 * Test steps:
+	 * 1. Open admin document types page.
+	 * Expected results:
+	 *   - Create/sign rights where set properly for the selected group.
+	 */
 	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "newDocType" }, priority = 2, enabled = true)
-	public void docTypeGroupsTest(String p1, String p2) {
+	public void docTypeGroupsTest(String p1, String p2) throws InterruptedException {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
 		mainPage.waitForAdminButton();
-		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p1 + "')]/..//td[3]//span"))
-				.getAttribute("data-content").contains(p2), "check if group rights were assigned properly");
-		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p1 + "')]/..//td[4]//span"))
-				.getAttribute("data-content").contains(p2), "check if group rights were assigned properly");
+		docPage.sendKeysDocTypeSearch(p1);
+		docPage.clickEditSpecificDocType(p1);
+		editDocPage.waitForCancelButton();
+		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]/..//td[2]//input")).isSelected(),
+				"group rights weren't assigned properly");
+		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]/..//td[3]//input")).isSelected(),
+				"group rights weren't assigned properly");
+		docPage.clickCancelButton();
 	}
 }
