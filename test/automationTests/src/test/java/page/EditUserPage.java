@@ -49,7 +49,7 @@ public class EditUserPage extends AbstractPage {
 	@FindBy(id = "radioAdmin")
 	private WebElement radioAdmin;
 	
-	@FindBy(xpath = "//input[@placeholder='Search']")
+	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
 	private WebElement searchGroupField;
 	
 	@FindBy(xpath = "//th[text()='Name']")
@@ -141,8 +141,7 @@ public class EditUserPage extends AbstractPage {
 	
 	public boolean isUserAddedToGroup(String groupName) {
 		return driver.findElement(By.xpath("//td[contains(text(), '" + groupName + "')]/..//input")).isSelected();
-	}
-	
+	}	
 	
 	/* WAITS */
 
@@ -150,8 +149,18 @@ public class EditUserPage extends AbstractPage {
 		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element));
 	}
 	
+	public void waitForGroupNameVisibility(String groupName) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.
+				visibilityOf(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
+	}
+	
+	public void waitForGroupNameSelection(String groupName) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.
+				elementToBeSelected(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
+	}
+	
 	public void waitForEditUserPage() {
-		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(firstNameField));
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(buttonCancel));
 	}
 }
 
