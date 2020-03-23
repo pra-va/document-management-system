@@ -2,12 +2,14 @@ package test;
 
 import static org.testng.Assert.assertFalse;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -55,6 +57,7 @@ import com.mashape.unirest.request.body.MultipartBody;
 import page.LoginPage;
 import page.MainPage;
 import utilities.API;
+import utilities.GetSessionId;
 
 public class PasswordHashingTests extends AbstractTest {
 	LoginPage loginPage;
@@ -94,10 +97,32 @@ public class PasswordHashingTests extends AbstractTest {
 	public void passwordHashingTest(String adminUserName, String adminPassword)
 			throws UnirestException, ClientProtocolException, IOException {
 
-		String hashedPassword = Unirest.get("http://akademijait.vtmc.lt:8180/dvs/api/testingonly/returnpass/{username}")
-				.routeParam("username", adminUserName).asString().getBody();
+//		String hashedPassword = Unirest.get("http://akademijait.vtmc.lt:8180/dvs/api/testingonly/returnpass/{username}")
+//				.routeParam("username", adminUserName).asString().getBody();
+//		
+//		assertFalse(hashedPassword.equals(adminPassword), "User password isn't hashed");	
+		   
+//		GetSessionId getSessionID = new GetSessionId();
+//		String sessionID = getSessionID.login("admin", "adminadmin");
+//		System.out.println(sessionID);
+//		API.createUser("[\"" + "" + "\"]", "testApi", "testApi", "testApi", "123456789", sessionID);
+		//API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName);	
 		
-		assertFalse(hashedPassword.equals(adminPassword), "User password isn't hashed");		
+		String sessionID =  GetSessionId.login("admin", "adminadmin");
+		System.out.println(sessionID);
+	//	String id = API.getFileDetails("1584905808250", sessionID);
+	//	System.out.println(id.substring(10, 20));
+		API.createUser("[]", "APItestFirstName", "APItestLastName", "12345678", "testAPIuserName4", sessionID);
+		//API.createAdmin("[\"\"]", "APItesAdminFirstName", "APItestAdminName", "12345678", "testAdmin", sessionID);
+		//API.createGroup("description", "[\"\"]", "[\"\"]", "testGroup", "[\"\"]", sessionID);
+		API.createDocType("[]", "[]", "testDocType10", sessionID); //neveikia!!!!1
+		//API.deleteUser("testAPIuserName3", sessionID);
+		//API.deleteGroup("testGroup", sessionID);docType14
+	//	API.deleteDoctype("testDocType", sessionID);
+		//API.deleteFile("20200322191504050", sessionID);
+		//API.deleteDocument("1584904503935", sessionID);
+				
+				
 	}
 	
 	/*-
@@ -111,8 +136,8 @@ public class PasswordHashingTests extends AbstractTest {
 	 * 2. Get HTTP response of user password by username.
 	 * 3. Check if HTTP response is not equal to password.
 	 */
-	// @Test(groups = { "passwordHashingTests" }, priority = 1, enabled = false)
-	// public void editedPasswordHashingTest() {
+	 @Test(groups = { "passwordHashingTests" }, priority = 1, enabled = false)
+	 public void editedPasswordHashingTest() throws IOException {
 
 //		String hashedPassword = Unirest.get("http://akademijait.vtmc.lt:8180/dvs/api/testingonly/returnpass/{username}")
 //				.routeParam("username", adminUserName).asString().getBody();
@@ -122,8 +147,8 @@ public class PasswordHashingTests extends AbstractTest {
 	// String inputJson = {
 
 	// }
-
-//	}
+		
+	}
 
 	@AfterGroups("passwordHashingTests")
 	public void logout() {
