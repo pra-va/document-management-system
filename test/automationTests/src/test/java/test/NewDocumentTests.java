@@ -26,6 +26,7 @@ import page.MainPage;
 import page.MyDocumentsPage;
 import page.NewDocumentPage;
 import utilities.API;
+import utilities.GetSessionId;
 
 public class NewDocumentTests extends AbstractTest {
 	LoginPage loginPage;
@@ -40,6 +41,7 @@ public class NewDocumentTests extends AbstractTest {
 	File file;
 	Date date;
 	String modifiedDate;
+	String sessionID;
 
 	@Parameters({ "groupName", "userFirstName", "userLastName", "userPassword", "userUserName", "docTypeName" })
 	@BeforeClass
@@ -50,10 +52,11 @@ public class NewDocumentTests extends AbstractTest {
 		adminNewUserPage = new AdminNewUserPage(driver);
 		newDocumentPage = new NewDocumentPage(driver);
 		myDocumentsPage = new MyDocumentsPage(driver);
-		editDocumentPage = new EditDocumentPage(driver);		
-		API.createGroup("Group Two description", "[\"\"]", "[\"\"]", groupName, "[\"\"]");
-		API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName);
-		API.createDocType("[\"\"]", "[\"" + groupName + "\"]", docTypeName); //?
+		editDocumentPage = new EditDocumentPage(driver);
+		sessionID =  GetSessionId.login("admin", "adminadmin");
+		API.createGroup("Group Two description", "[]", "[]", groupName, "[]", sessionID);
+		API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName, sessionID);
+		API.createDocType("[]", "[\"" + groupName + "\"]", docTypeName, sessionID);
 	}
 
 	@Parameters({ "userUserName", "userPassword" })
@@ -69,16 +72,26 @@ public class NewDocumentTests extends AbstractTest {
 		mainPage.waitForLogoutButton();
 		mainPage.clickLogoutButton();
 	}
-		
+	
+	@Parameters({ "groupName", "docTypeName" })
 	@AfterClass
-	public void deleteEntities() throws UnirestException {				
-		API.deleteFile(fileID);
-		API.deleteDocument(documentID);
-		//API.deleteUser(userName);
-		//API.deleteGroup(groupName);
-		//API.deleteDoctype(docTypeName);
+	public void deleteEntities(String userUserName, String groupName, String docTypeName) throws UnirestException, IOException{				
+		//API.deleteFile(fileID);
+		//API.deleteDocument(documentID);
+		API.deleteUser(userUserName, sessionID);
+		API.deleteGroup(groupName, sessionID);
+		API.deleteDoctype(docTypeName, sessionID);
 	}
-		
+			
+	/*-
+	 * Test creates new document with attached file, checks if all properties are saved correctly in "My Documents" list 
+	 * and "Edit Document" page.
+	 * 
+	 * Preconditions: admin is logged in the system, at least one group was created.
+	 * 
+	 * 
+	 */
+	
 	// TODO ADD PARAMETERS!!!!!!!!
 	@Parameters({ "filePath", "fileName" })
 	/// @Parameters({ "docName", "docDescription", "docTypeName","filePath",
@@ -86,8 +99,7 @@ public class NewDocumentTests extends AbstractTest {
 	@Test(groups = { "newDocumentTests" }, priority = 1, enabled = true)
 	public void createNewDocumentTest(String filePath, String fileName) throws UnirestException, InterruptedException {
 		mainPage.waitForLogoutButton();
-		mainPage.clickCreateDocumentButton();	
-		
+		mainPage.clickCreateDocumentButton();			
 		newDocumentPage.sendKeysDocNameField("7newDoc7");
 		newDocumentPage.sendKeysDocDescriptionField("description");
 		newDocumentPage.sendKeysSearchForDocType("docType14");
@@ -105,9 +117,9 @@ public class NewDocumentTests extends AbstractTest {
 				"Document type isn't displayed correctly on My documents list");
 		//This parameter is used for Delete Document API call
 		documentID = myDocumentsPage.getIDbyDocumentName("7newDoc7"); 
-		documentInfoJson = API.getFileDetails(documentID);
+	//	documentInfoJson = API.getFileDetails(documentID);
 		//This parameter is used for Delete File API call
-		fileID = documentInfoJson.getBody().toString().substring(9, 26);
+		//fileID = documentInfoJson.getBody().toString().substring(9, 26);
 		System.out.println(fileID);
 		date = new Date();
 		modifiedDate= new SimpleDateFormat("yyyy-MM-dd").format(date);

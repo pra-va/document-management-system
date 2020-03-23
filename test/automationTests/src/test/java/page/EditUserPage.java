@@ -46,9 +46,9 @@ public class EditUserPage extends AbstractPage {
 	private WebElement radioUser;
 
 	@FindBy(id = "radioAdmin")
-	private WebElement radioAdmin;
+	private WebElement radioAdmin;	
 
-	@FindBy(xpath = "//input[@placeholder='Find by Name']")
+	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
 	private WebElement searchGroups;
 
 	@FindBy(xpath = "//*[@aria-label='Search']")
@@ -155,13 +155,25 @@ public class EditUserPage extends AbstractPage {
 		return driver.findElement(By.xpath("//td[contains(text(), '" + groupName + "')]/..//input")).isSelected();
 	}
 
+	}	
+	
 	/* WAITS */
 
 	public void waitForVisibility(WebElement element) {
 		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element));
 	}
-
+	
+	public void waitForGroupNameVisibility(String groupName) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.
+				visibilityOf(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
+	}
+	
+	public void waitForGroupNameSelection(String groupName) {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.
+				elementToBeSelected(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
+	}
+	
 	public void waitForEditUserPage() {
-		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(firstNameField));
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(buttonCancel));
 	}
 }

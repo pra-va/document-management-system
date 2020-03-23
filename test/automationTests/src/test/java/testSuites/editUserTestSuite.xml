@@ -7,7 +7,7 @@
 		<parameter name="newAdminFirstName" value="gggg" />
 		<parameter name="newAdminLastName" value="gggg" />
 		<parameter name="newAdminUserName" value="newAdmin20" />
-		<parameter name="newAdminPassword" value="123456789" />
+		<parameter name="newAdminPassword" value="12345678" />
 		<parameter name="newAdminRole" value="ADMIN" />
 		<parameter name="groupNameOne" value="GroupOneForEditUserTests10" />
 		<parameter name="groupNameTwo" value="GroupTwoForEditUserTests11" />

@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
@@ -24,6 +25,7 @@ import page.MainPage;
 import page.ProfilePage;
 import page.UserListPage;
 import utilities.API;
+import utilities.GetSessionId;
 
 public class NewUserTests extends AbstractTest {
 	LoginPage loginPage;
@@ -35,6 +37,7 @@ public class NewUserTests extends AbstractTest {
 	WebDriverWait wait;
 	String deleteUserApiURL;
 	String deleteGroupApiUrl;
+	String sessionID;
 
 	@Parameters({ "groupName" })
 	@BeforeClass
@@ -48,7 +51,8 @@ public class NewUserTests extends AbstractTest {
 		wait = new WebDriverWait(driver, 2);
 		deleteUserApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/delete/{username}";
 		deleteGroupApiUrl = "http://akademijait.vtmc.lt:8180/dvs/api/group/{groupname}/delete";
-		API.createGroup("Some group description", "[\"\"]", "[\"\"]", groupName, "[\"\"]");
+		sessionID =  GetSessionId.login("admin", "adminadmin");
+		API.createGroup("Some group description", "[]", "[]", groupName, "[]", sessionID);
 	}
 
 	@Parameters({ "adminUserName", "adminPassword", "groupName" })
@@ -63,6 +67,7 @@ public class NewUserTests extends AbstractTest {
 	public void navigateToNewUserPage() {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminNewUserButton();
+		
 	}
 
 	@Parameters({ "newUserUserName", "newAdminUserName" })
@@ -74,16 +79,18 @@ public class NewUserTests extends AbstractTest {
 
 	@AfterClass
 	@Parameters({ "newUserUserName", "newAdminUserName", "groupName" })
-	public void deleteEntities(String newUserUserName, String newAdminUserName, String groupName) throws UnirestException {		
-	Unirest.delete(deleteUserApiURL).routeParam("username", newUserUserName).asString();
-	Unirest.delete(deleteUserApiURL).routeParam("username", newAdminUserName).asString();	
-	Unirest.delete(deleteGroupApiUrl).routeParam("groupName", groupName).asString();
+	public void deleteEntities(String newUserUserName, String newAdminUserName, String groupName) throws IOException{
+	API.deleteUser(newUserUserName, sessionID);	
+	API.deleteUser(newAdminUserName, sessionID);
+	API.deleteGroup(groupName, sessionID);	
 	}
 
 	/*-
 	 * Test creates new user with admin role, checks if all properties are saved correctly in user list, 
 	 * "Edit user" page and "Profile" page, checks login to the system with new user's credentials.
-	 * Precondition: admin is logged in the system.
+	 * 
+	 * Preconditions: admin is logged in the system, at least one group was created.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password", 
@@ -103,6 +110,7 @@ public class NewUserTests extends AbstractTest {
 	@Test(groups = { "newUserTests" }, priority = 1, enabled = true)
 	public void createNewAdminTest(String newAdminFirstName, String newAdminLastName, String newAdminUserName,
 			String newAdminPassword, String newAdminRole, String groupName) throws InterruptedException {
+		 SoftAssert softAssertion= new SoftAssert();
 		adminNewUserPage.sendKeysFirstName(newAdminFirstName);
 		adminNewUserPage.sendKeysLastName(newAdminLastName);
 		adminNewUserPage.sendKeysUserName(newAdminUserName);
@@ -129,11 +137,7 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(editUserPage.getLastName().equals(newAdminLastName),
 				"Admin Last Name isn't displayed correctly in Edit user form");
 		assertTrue(editUserPage.isRadioButtonAdminSelected(),
-				"Admin's role isn't displayed correctly in Edit user form");
-		// editUserPage.sendKeysSearchGroups(groupOne);
-		// !!!!!!!!!
-		driver.findElement(By.xpath("//*[@aria-label='Search']")).sendKeys("qqqqqq");
-
+				"Admin's role isn't displayed correctly in Edit user form");	
 		assertTrue(editUserPage.isUserAddedToGroup(groupName), "User was not added to the group correctly");
 		editUserPage.clickCancelButton();
 		mainPage.clickLogoutButton();
@@ -152,6 +156,7 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(profilePage.getTextUserGroups().equals(groupName),
 				"Admin's group isn't displayed correctly in profile page");
 		profilePage.clickButtonClose();
+		softAssertion.assertAll();
 	}
 
 	/*-
@@ -177,6 +182,8 @@ public class NewUserTests extends AbstractTest {
 	@Test(groups = { "newUserTests" }, priority = 1, enabled = true)
 	public void createNewUserTest(String newUserFirstName, String newUserLastName, String newUserUserName,
 			String newUserPassword, String newUserRole, String groupName) {
+		
+		 SoftAssert softAssertion= new SoftAssert();
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
 		adminNewUserPage.sendKeysLastName(newUserLastName);
 		adminNewUserPage.sendKeysUserName(newUserUserName);
@@ -222,6 +229,7 @@ public class NewUserTests extends AbstractTest {
 				"User's group isn't shown correctly in profile page");
 		profilePage.clickButtonClose();
 		mainPage.clickLogoutButton();
+		softAssertion.assertAll();
 	}
 
 	/*-
