@@ -262,7 +262,7 @@ class EditDocument extends Component {
       window.confirm("Do you really want to delete document '" + name + "'?")
     ) {
       axios
-        .delete(serverUrl + "doc/delete/" + this.props.item.uid)
+        .delete(serverUrl + "doc/byUser/" + this.props.item.uid)
         .then(response => {
           this.props.hide();
           this.props.reloadTable();

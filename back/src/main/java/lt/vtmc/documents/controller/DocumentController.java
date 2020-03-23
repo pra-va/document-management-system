@@ -175,7 +175,7 @@ public class DocumentController {
 	 * this request.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	@DeleteMapping("/api/doc/{uid}")
+	@DeleteMapping("/api/doc/byUser/{uid}")
 	public @ResponseBody ResponseEntity<String> removeDocByUser(@PathVariable String uid) {
 		String requestedBy = SecurityContextHolder.getContext().getAuthentication().getName();
 		if (!requestedBy.equals(null)) {
