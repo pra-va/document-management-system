@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [newGrouTests]">
-  <test thread-count="5" name="newGroupTests(failed)">
+  <test thread-count="5" name="editGroupTests(failed)">
     <parameter name="docTypeName" value="Resignation Letter"/>
     <parameter name="groupName" value="Project managers"/>
     <parameter name="adminUserName" value="admin"/>
     <parameter name="adminPasswrod" value="adminadmin"/>
     <parameter name="newGroupName" value="New Project managers"/>
     <classes>
-      <class name="test.EditDocTypeTests">
+      <class name="test.EditGroupTest">
         <methods>
-          <include name="preconitions"/>
           <include name="beforeSuite"/>
-          <include name="editDocTypeNameTest"/>
+          <include name="updateGroupCreatSignRightsTest" invocation-numbers="0"/>
+          <include name="preconitions"/>
           <include name="afterSuite"/>
         </methods>
-      </class> <!-- test.EditDocTypeTests -->
+      </class> <!-- test.EditGroupTest -->
     </classes>
-  </test> <!-- newGroupTests(failed) -->
+  </test> <!-- editGroupTests(failed) -->
 </suite> <!-- Failed suite [newGrouTests] -->

@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-newGrouTests">
-                    <span>C:\Users\PC\Documents\GitHub\data-management-system\test\automationTests\src\test\java\testSuites\editDocTypeTestSuite.xml</span>
+                    <span>C:\Users\PC\Documents\GitHub\data-management-system\test\automationTests\src\test\java\testSuites\editGroupTestSuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,   1 passed</span>
+                    <span class="method-stats">3 methods,   3 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -102,7 +102,17 @@
                     <div class="method-list-content passed suite-newGrouTests">
                       <span>
                         <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-newGrouTests" title="test.EditDocTypeTests" hash-for-method="editDocTypeNameTest(Resignation Letter, Project managers)">editDocTypeNameTest(Resignation Letter, Project managers)</a> <!-- method navigator-link -->
+                        <a href="#" class="method navigator-link" panel-name="suite-newGrouTests" title="test.EditGroupTest" hash-for-method="editGroupName(Project managers, New Project managers)">editGroupName(Project managers, New Project managers)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newGrouTests" title="test.EditGroupTest" hash-for-method="updateGroupCreatSignRightsTest(Project managers, Resignation Letter)">updateGroupCreatSignRightsTest(Project managers, Resignation Letter)</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newGrouTests" title="test.EditGroupTest" hash-for-method="updateGroupUsersTest(Project managers, admin)">updateGroupUsersTest(Project managers, admin)</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-newGrouTests -->
@@ -120,15 +130,31 @@
           <div class="suite-newGrouTests-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
-              <span class="class-name">test.EditDocTypeTests</span>
+              <span class="class-name">test.EditGroupTest</span>
             </div> <!-- main-panel-header rounded-window-top -->
             <div class="main-panel-content rounded-window-bottom">
               <div class="method">
                 <div class="method-content">
-                  <a name="editDocTypeNameTest(Resignation Letter, Project managers)">
-                  </a> <!-- editDocTypeNameTest(Resignation Letter, Project managers) -->
-                  <span class="method-name">editDocTypeNameTest</span>
-                  <span class="parameters">(Resignation Letter, Project managers)</span>
+                  <a name="editGroupName(Project managers, New Project managers)">
+                  </a> <!-- editGroupName(Project managers, New Project managers) -->
+                  <span class="method-name">editGroupName</span>
+                  <span class="parameters">(Project managers, New Project managers)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="updateGroupCreatSignRightsTest(Project managers, Resignation Letter)">
+                  </a> <!-- updateGroupCreatSignRightsTest(Project managers, Resignation Letter) -->
+                  <span class="method-name">updateGroupCreatSignRightsTest</span>
+                  <span class="parameters">(Project managers, Resignation Letter)</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="updateGroupUsersTest(Project managers, admin)">
+                  </a> <!-- updateGroupUsersTest(Project managers, admin) -->
+                  <span class="method-name">updateGroupUsersTest</span>
+                  <span class="parameters">(Project managers, admin)</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -136,23 +162,23 @@
         </div> <!-- panel newGrouTests -->
         <div panel-name="test-xml-newGrouTests" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\PC\Documents\GitHub\data-management-system\test\automationTests\src\test\java\testSuites\editDocTypeTestSuite.xml</span>
+            <span class="header-content">C:\Users\PC\Documents\GitHub\data-management-system\test\automationTests\src\test\java\testSuites\editGroupTestSuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
 &lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;newGrouTests&quot;&gt;
-  &lt;test thread-count=&quot;5&quot; name=&quot;newGroupTests&quot;&gt;
+  &lt;test thread-count=&quot;5&quot; name=&quot;editGroupTests&quot;&gt;
     &lt;parameter name=&quot;docTypeName&quot; value=&quot;Resignation Letter&quot;/&gt;
     &lt;parameter name=&quot;groupName&quot; value=&quot;Project managers&quot;/&gt;
     &lt;parameter name=&quot;adminUserName&quot; value=&quot;admin&quot;/&gt;
     &lt;parameter name=&quot;adminPasswrod&quot; value=&quot;adminadmin&quot;/&gt;
     &lt;parameter name=&quot;newGroupName&quot; value=&quot;New Project managers&quot;/&gt;
     &lt;classes&gt;
-      &lt;class name=&quot;test.EditDocTypeTests&quot;/&gt;
+      &lt;class name=&quot;test.EditGroupTest&quot;/&gt;
     &lt;/classes&gt;
-  &lt;/test&gt; &lt;!-- newGroupTests --&gt;
+  &lt;/test&gt; &lt;!-- editGroupTests --&gt;
 &lt;/suite&gt; &lt;!-- newGrouTests --&gt;
             </pre>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -164,7 +190,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">newGroupTests (1 class)</span>
+                <span class="test-name">editGroupTests (1 class)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -175,10 +201,18 @@
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="test-group">
-              <span class="test-group-name">editDocType</span>
+              <span class="test-group-name">editGroup</span>
               <br/>
               <div class="method-in-group">
-                <span class="method-in-group-name">editDocTypeNameTest</span>
+                <span class="method-in-group-name">editGroupName</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">updateGroupCreatSignRightsTest</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">updateGroupUsersTest</span>
                 <br/>
               </div> <!-- method-in-group -->
             </div> <!-- test-group -->
@@ -198,16 +232,24 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
+data.addRows(3);
 data.setCell(0, 0, 0)
-data.setCell(0, 1, 'editDocTypeNameTest')
-data.setCell(0, 2, 'test.EditDocTypeTests')
-data.setCell(0, 3, 35);
+data.setCell(0, 1, 'updateGroupCreatSignRightsTest')
+data.setCell(0, 2, 'test.EditGroupTest')
+data.setCell(0, 3, 4202);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'updateGroupUsersTest')
+data.setCell(1, 2, 'test.EditGroupTest')
+data.setCell(1, 3, 3457);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'editGroupName')
+data.setCell(2, 2, 'test.EditGroupTest')
+data.setCell(2, 3, 3051);
 window.suiteTableData['newGrouTests']= { tableData: data, tableDiv: 'times-div-newGrouTests'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 35 ms</span>
+              <span class="suite-total-time">Total running time: 10 seconds</span>
               <div id="times-div-newGrouTests">
               </div> <!-- times-div-newGrouTests -->
             </div> <!-- times-div -->
@@ -233,30 +275,38 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="chronological-class">
-              <div class="chronological-class-name">test.EditDocTypeTests</div> <!-- chronological-class-name -->
+              <div class="chronological-class-name">test.EditGroupTest</div> <!-- chronological-class-name -->
               <div class="configuration-suite before">
                 <span class="method-name">beforeSuite</span>
                 <span class="method-start">0 ms</span>
               </div> <!-- configuration-suite before -->
               <div class="configuration-class before">
                 <span class="method-name">preconitions</span>
-                <span class="method-start">11191 ms</span>
+                <span class="method-start">11246 ms</span>
               </div> <!-- configuration-class before -->
               <div class="test-method">
                 <span class="method-name">login(admin, adminadmin)</span>
-                <span class="method-start">11238 ms</span>
+                <span class="method-start">11309 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
-                <span class="method-name">editDocTypeNameTest(Resignation Letter, Project managers)</span>
-                <span class="method-start">11603 ms</span>
+                <span class="method-name">editGroupName(Project managers, New Project managers)</span>
+                <span class="method-start">11643 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">updateGroupUsersTest(Project managers, admin)</span>
+                <span class="method-start">14700 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">updateGroupCreatSignRightsTest(Project managers, Resignation Letter)</span>
+                <span class="method-start">18159 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">logout</span>
-                <span class="method-start">11642 ms</span>
+                <span class="method-start">22364 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-suite after">
                 <span class="method-name">afterSuite</span>
-                <span class="method-start">12508 ms</span>
+                <span class="method-start">22588 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

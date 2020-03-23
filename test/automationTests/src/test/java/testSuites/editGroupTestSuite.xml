@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="newGrouTests" preserve-order="true">
-	<test name="newGroupTests">
+	<test name="editGroupTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPasswrod" value="adminadmin" />
 		<parameter name="groupName" value="Project managers" />

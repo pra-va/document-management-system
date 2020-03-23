@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
   <reporter-output>
   </reporter-output>
-  <suite name="newGrouTests" duration-ms="1293" started-at="2020-03-22T08:38:00Z" finished-at="2020-03-22T08:38:01Z">
+  <suite name="newGrouTests" duration-ms="11315" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:55:00Z">
     <groups>
-      <group name="editDocType">
-        <method signature="EditDocTypeTests.editDocTypeNameTest(java.lang.String, java.lang.String)[pri:0, instance:test.EditDocTypeTests@754ba872]" name="editDocTypeNameTest" class="test.EditDocTypeTests"/>
-      </group> <!-- editDocType -->
+      <group name="editGroup">
+        <method signature="EditGroupTest.editGroupName(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@754ba872]" name="editGroupName" class="test.EditGroupTest"/>
+        <method signature="EditGroupTest.updateGroupCreatSignRightsTest(java.lang.String, java.lang.String)[pri:2, instance:test.EditGroupTest@754ba872]" name="updateGroupCreatSignRightsTest" class="test.EditGroupTest"/>
+        <method signature="EditGroupTest.updateGroupUsersTest(java.lang.String, java.lang.String)[pri:1, instance:test.EditGroupTest@754ba872]" name="updateGroupUsersTest" class="test.EditGroupTest"/>
+      </group> <!-- editGroup -->
     </groups>
-    <test name="newGroupTests" duration-ms="1293" started-at="2020-03-22T08:38:00Z" finished-at="2020-03-22T08:38:01Z">
-      <class name="test.EditDocTypeTests">
-        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.EditDocTypeTests@754ba872]" name="beforeSuite" is-config="true" duration-ms="11191" started-at="2020-03-22T08:37:49Z" finished-at="2020-03-22T08:38:00Z">
+    <test name="editGroupTests" duration-ms="11315" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:55:00Z">
+      <class name="test.EditGroupTest">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.EditGroupTest@754ba872]" name="beforeSuite" is-config="true" duration-ms="11246" started-at="2020-03-22T12:54:37Z" finished-at="2020-03-22T12:54:48Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeSuite -->
-        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.EditDocTypeTests@754ba872]" name="preconitions" is-config="true" duration-ms="47" started-at="2020-03-22T08:38:00Z" finished-at="2020-03-22T08:38:00Z">
+        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.EditGroupTest@754ba872]" name="preconitions" is-config="true" duration-ms="47" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:54:48Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preconitions -->
-        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.EditDocTypeTests@754ba872]" name="login" is-config="true" duration-ms="365" started-at="2020-03-22T08:38:00Z" finished-at="2020-03-22T08:38:00Z">
+        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@754ba872]" name="login" is-config="true" duration-ms="334" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:54:49Z">
           <params>
             <param index="0">
               <value>
@@ -34,31 +36,63 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- login -->
-        <test-method status="PASS" signature="editDocTypeNameTest(java.lang.String, java.lang.String)[pri:0, instance:test.EditDocTypeTests@754ba872]" name="editDocTypeNameTest" duration-ms="35" started-at="2020-03-22T08:38:00Z" finished-at="2020-03-22T08:38:00Z">
+        <test-method status="PASS" signature="editGroupName(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@754ba872]" name="editGroupName" duration-ms="3051" started-at="2020-03-22T12:54:49Z" finished-at="2020-03-22T12:54:52Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[Resignation Letter]]>
+                <![CDATA[Project managers]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[Project managers]]>
+                <![CDATA[New Project managers]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- editDocTypeNameTest -->
-        <test-method status="PASS" signature="logout()[pri:0, instance:test.EditDocTypeTests@754ba872]" name="logout" is-config="true" duration-ms="838" started-at="2020-03-22T08:38:00Z" finished-at="2020-03-22T08:38:01Z">
+        </test-method> <!-- editGroupName -->
+        <test-method status="PASS" signature="updateGroupUsersTest(java.lang.String, java.lang.String)[pri:1, instance:test.EditGroupTest@754ba872]" name="updateGroupUsersTest" duration-ms="3457" started-at="2020-03-22T12:54:52Z" finished-at="2020-03-22T12:54:55Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Project managers]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[admin]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateGroupUsersTest -->
+        <test-method status="PASS" signature="updateGroupCreatSignRightsTest(java.lang.String, java.lang.String)[pri:2, instance:test.EditGroupTest@754ba872]" name="updateGroupCreatSignRightsTest" duration-ms="4202" started-at="2020-03-22T12:54:55Z" finished-at="2020-03-22T12:55:00Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[Project managers]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Resignation Letter]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updateGroupCreatSignRightsTest -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:test.EditGroupTest@754ba872]" name="logout" is-config="true" duration-ms="197" started-at="2020-03-22T12:55:00Z" finished-at="2020-03-22T12:55:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logout -->
-        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.EditDocTypeTests@754ba872]" name="afterSuite" is-config="true" duration-ms="702" started-at="2020-03-22T08:38:01Z" finished-at="2020-03-22T08:38:02Z">
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.EditGroupTest@754ba872]" name="afterSuite" is-config="true" duration-ms="676" started-at="2020-03-22T12:55:00Z" finished-at="2020-03-22T12:55:00Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterSuite -->
-      </class> <!-- test.EditDocTypeTests -->
-    </test> <!-- newGroupTests -->
+      </class> <!-- test.EditGroupTest -->
+    </test> <!-- editGroupTests -->
   </suite> <!-- newGrouTests -->
 </testng-results>
