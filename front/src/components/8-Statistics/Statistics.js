@@ -15,6 +15,8 @@ class Statistics extends Component {
       username: "",
       startDate: "",
       endDate: "",
+      oldStartDate: "",
+      oldEndDate: "",
       tableData: [],
       fetchPagingData: {
         limit: 8,
@@ -25,7 +27,9 @@ class Statistics extends Component {
       },
       withFilter: false,
       serverData: [],
-      isInitialFetchDone: false
+      sortBy: -1,
+      sortOrder: -1,
+      isNewFetchNeeded: true
     };
   }
 
@@ -50,8 +54,8 @@ class Statistics extends Component {
   }
 
   componentDidUpdate() {
-    const { username, fetchPagingData } = this.state;
-    if (username.length > 0) {
+    const { username, fetchPagingData, isNewFetchNeeded } = this.state;
+    if (username.length > 0 && isNewFetchNeeded) {
       this.fetchServerData(
         fetchPagingData.page,
         fetchPagingData.limit,
@@ -80,7 +84,16 @@ class Statistics extends Component {
     order,
     searchValueString
   ) => {
-    const { username, startDate, endDate, serverData } = this.state;
+    const {
+      username,
+      startDate,
+      endDate,
+      sortBy,
+      sortOrder,
+      oldEndDate,
+      oldStartDate,
+      isNewFetchNeeded
+    } = this.state;
     var modifiedSortField = null;
     if (sortField !== null) {
       modifiedSortField = this.sortValues[sortField];
@@ -103,22 +116,51 @@ class Statistics extends Component {
         }
       })
       .then(response => {
-        console.log(response.data.statistics);
         if (
-          JSON.stringify(response.data.statistics) !==
-          JSON.stringify(serverData)
+          !this.isNewDataContainsSameElements(response.data.statistics) ||
+          sortBy !== pageData.sortBy ||
+          sortOrder !== pageData.order ||
+          oldEndDate !== endDate ||
+          oldStartDate !== startDate
         ) {
-          this.parseData(response.data.statistics);
-          this.setState({
-            pagingData: response.data.pagingData,
-            isInitialFetchDone: true,
-            serverData: response.data.statistics
-          });
+          if (isNewFetchNeeded) {
+            this.parseData(response.data.statistics);
+            this.setState({
+              pagingData: response.data.pagingData,
+              serverData: response.data.statistics,
+              sortBy: pageData.sortBy,
+              sortOrder: pageData.order,
+              isNewFetchNeeded: false,
+              oldEndDate: endDate,
+              oldStartDate: startDate
+            });
+          }
         }
       })
       .catch(error => {
         console.log(error);
       });
+  };
+
+  isNewDataContainsSameElements = newServerData => {
+    const { serverData } = this.state;
+    let currentData = [...serverData];
+    let newData = [...newServerData];
+
+    if (currentData.length !== newData.length) {
+      return false;
+    } else {
+      let tmpData = JSON.stringify(newData);
+      for (let i = 0; i < currentData.length; i++) {
+        const item = JSON.stringify(currentData[i]);
+        if (tmpData.includes(item)) {
+          continue;
+        } else {
+          return false;
+        }
+      }
+      return true;
+    }
   };
 
   parseData = data => {
@@ -152,13 +194,15 @@ class Statistics extends Component {
 
   handleStartDateChange = date => {
     this.setState({
-      startDate: date
+      startDate: date,
+      isNewFetchNeeded: true
     });
   };
 
   handleEndDateChange = date => {
     this.setState({
-      endDate: date
+      endDate: date,
+      isNewFetchNeeded: true
     });
   };
 
@@ -169,16 +213,32 @@ class Statistics extends Component {
   };
 
   getPagingData = pagingData => {
-    if (JSON.stringify(pagingData) !== this.state.fetchPagingData) {
-      this.setState({ fetchPagingData: pagingData });
+    const { fetchPagingData } = this.state;
+    const dataTmp = {
+      limit:
+        pagingData.limit === undefined
+          ? fetchPagingData.limit
+          : pagingData.limit,
+      order: pagingData.order,
+      page: Number.isNaN(pagingData.page)
+        ? fetchPagingData.page
+        : pagingData.page,
+      sortBy: pagingData.sortBy,
+      searchValueString: pagingData.searchValueString
+    };
+
+    if (
+      JSON.stringify(pagingData) !== JSON.stringify(this.state.fetchPagingData)
+    ) {
+      this.setState({ fetchPagingData: dataTmp, isNewFetchNeeded: true });
     }
   };
 
   handleFilterToggle = event => {
     if (event.target.checked) {
-      this.setState({ withFilter: true });
+      this.setState({ withFilter: true, isNewFetchNeeded: true });
     } else {
-      this.setState({ withFilter: false });
+      this.setState({ withFilter: false, isNewFetchNeeded: true });
     }
   };
 
@@ -242,7 +302,7 @@ class Statistics extends Component {
               id={"statsByDType"}
               tableData={[...this.state.tableData]}
               searchBarId={"statsByDTypeSearchBar"}
-              requestNewData={this.fetchServerData}
+              requestNewData={() => {}}
               getPagingData={this.getPagingData}
               pagingData={this.state.pagingData}
               columns={this.columns}

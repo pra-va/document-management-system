@@ -202,7 +202,7 @@ class EditDocument extends Component {
     headers: { "Content-Type": "multipart/form-data" }
   };
 
-  handleUpload = event => {
+  handleSubmit = event => {
     event.preventDefault();
     this.setState({ submitInProgres: true });
     const data = new FormData();
@@ -263,7 +263,10 @@ class EditDocument extends Component {
     ) {
       axios
         .delete(serverUrl + "doc/delete/" + this.props.item.uid)
-        .then(response => {})
+        .then(response => {
+          this.props.hide();
+          this.props.reloadTable();
+        })
         .catch(error => {
           console.log(error);
         });
@@ -277,7 +280,7 @@ class EditDocument extends Component {
           <Modal.Title>Edit Document ID {this.props.item.uid}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={this.handleUpload} id="editDocumentForm">
+          <form onSubmit={this.handleSubmit} id="editDocumentForm">
             <EditInfo
               handleNameChange={this.handleNameChange}
               handleDescriptionChange={this.handleDescriptionChange}

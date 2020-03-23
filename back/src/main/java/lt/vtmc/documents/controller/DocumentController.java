@@ -183,7 +183,8 @@ public class DocumentController {
 			if (isDocDeleted) {
 				return new ResponseEntity<String>("Document '" + uid + "' deleted.", HttpStatus.OK);
 			} else {
-				return new ResponseEntity<String>("Unable to delete. User does not have requested document.",
+				return new ResponseEntity<String>(
+						"Unable to delete. User does not have requested document or status of the document is not 'CREATED'.",
 						HttpStatus.NOT_FOUND);
 			}
 		} else {
