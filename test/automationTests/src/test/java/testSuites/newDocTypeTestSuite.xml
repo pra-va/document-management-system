@@ -4,7 +4,7 @@
 	<test name="newDocTypeTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPasswrod" value="adminadmin" />
-		<parameter name="docTypeName" value="Resignation letter" />
+		<parameter name="docTypeName" value="Resignation Letter" />
 		<parameter name="groupName" value="Project managers" />
 		<parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers." />
 		<classes>

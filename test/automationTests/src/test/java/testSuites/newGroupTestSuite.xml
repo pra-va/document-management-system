@@ -6,7 +6,7 @@
 		<parameter name="adminPasswrod" value="adminadmin" />
 		<parameter name="groupName" value="Project managers" />
 		<parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers." />
-		<parameter name="docTypeName" value="Resignation letter" />
+		<parameter name="docTypeName" value="Resignation Letter" />
 		<classes>
 			<class name="test.NewGroupTests"/>
 		</classes>
