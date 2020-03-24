@@ -25,7 +25,13 @@ public class UserListPage extends MainPage {
 	/* SEND KEYS */
 
 	public void sendKeysSearchForUser(String userInformation) {
-		searchField.sendKeys(userInformation);
+		this.searchField.sendKeys(userInformation);
+	}
+	
+	/*CLEAR FIELD*/
+	
+	public void clearSearchUserFiels() {
+		this.searchField.clear();
 	}
 
 	/* CLICK BUTTONS */

@@ -1,5 +1,6 @@
 package page;
 
+import java.io.File;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -68,4 +69,19 @@ public class NewDocumentPage extends AbstractPage {
 		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf
 				(driver.findElement(By.xpath("//div[contains(text(),"+ fileName + ")]"))));
 	}
+	
+	public void createDocument(String documentName, String DocDescription, String docTypeName, String filePath, String fileName) {
+		
+		sendKeysDocNameField(documentName);
+		sendKeysDocDescriptionField(DocDescription);
+		sendKeysSearchForDocType(docTypeName);
+		clickSelectSpecificDocTypeButton(docTypeName);
+		File file = new File(filePath);
+		sendKeysFileUploadField(file.getAbsolutePath());
+		waitForFileNameVisibility(fileName);
+		clickCreateButton();
+	}
+	
+	
+	
 }

@@ -3,6 +3,8 @@ package test;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
@@ -17,6 +19,8 @@ import page.MyDocumentsPage;
 import page.NewDocumentPage;
 import page.SignDeclineDocumentPage;
 import page.SignDocumentPage;
+import utilities.API;
+import utilities.GetSessionId;
 
 public class SubmitSignDeclineDocumentTests extends AbstractTest {
 	LoginPage loginPage;
@@ -26,19 +30,25 @@ public class SubmitSignDeclineDocumentTests extends AbstractTest {
 	EditDocumentPage editDocumentPage;
 	SignDocumentPage signDocumentPage;
 	SignDeclineDocumentPage signDeclineDocumentPage;
+	String sessionID;
 
+	
+	@Parameters({ "groupDescription","groupName", "userFirstName", "userLastName", "userPassword", 
+		"userUserName", "docTypeName", "signingUserFirstName", "signingUserLastName", "signingUserUserName", "signingUserPasssword"})
 	@BeforeClass
-	public void preconditions() {
+	public void preconditions() throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		newDocumentPage = new NewDocumentPage(driver);
 		myDocumentsPage = new MyDocumentsPage(driver);
 		editDocumentPage = new EditDocumentPage(driver);
 		signDocumentPage = new SignDocumentPage(driver);
-		signDeclineDocumentPage = new SignDeclineDocumentPage(driver);
-		
-		// deleteUserApiURL =
-		// "http://akademijait.vtmc.lt:8180/dvs/api/delete/{username}";
+		signDeclineDocumentPage = new SignDeclineDocumentPage(driver);	
+		sessionID =  GetSessionId.login("admin", "adminadmin");	
+//		API.createGroup(groupDescription, "[]", "[]", groupName, "[]", sessionID);
+//		API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName, sessionID);
+//		API.createDocType("[]", "[\"" + groupName + "\"]", docTypeName, sessionID); 	
+		//API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName, sessionID);
 	}
 
 	@Parameters({ "adminUserName", "adminPassword" })
@@ -60,9 +70,13 @@ public class SubmitSignDeclineDocumentTests extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 	
+	// @Parameters({ "userUserName", "groupName", "docTypeName"})
 	@AfterClass
 	public void deleteEntities() {
-		
+//		sessionID =  GetSessionId.login("admin", "adminadmin");				
+//		API.deleteUser(userUserName, sessionID);
+//		API.deleteGroup(groupName, sessionID);
+//		API.deleteDoctype(docTypeName, sessionID);		
 	}
 
 	// TODO ADD PARAMETERS!!!!!!!!
@@ -70,19 +84,29 @@ public class SubmitSignDeclineDocumentTests extends AbstractTest {
 	// create two users in different groups, create three docs, signs as user that
 	// signs docs
 
-	// @Parameters({ "docName", "docDescription", "docType","filePath", "fileName"})
+	@Parameters({ "documentName", "documentDescription", "filePath", "fileName", "docTypeName"})
 	@Test(groups = { "submitSignDeclineDocument" }, priority = 1, enabled = true)
-	public void submitDocumentTest() throws InterruptedException {
+	public void submitDocumentTest(String documentName, String documentDescription, String docTypeName, 
+			String filePath, String fileName) throws InterruptedException {
+		mainPage.clickCreateDocumentButton();
+		newDocumentPage.createDocument(documentName, documentDescription, docTypeName, filePath, fileName);
 		mainPage.waitForLogoutButton();
 		mainPage.clickMyDocumentsButton();
-		myDocumentsPage.sendKeysSearchDocument("DOCtest");
-		myDocumentsPage.clickButtonSubmit("DOCtest");
+		myDocumentsPage.sendKeysSearchDocument(documentName);
+		myDocumentsPage.clickButtonSubmit(documentName);
 		myDocumentsPage.clickButtonSubmitted();
-		assertTrue(myDocumentsPage.getStatusByDocumentName("DOCtest").equals("SUBMITTED"),
+		assertTrue(myDocumentsPage.getStatusByDocumentName(documentName).equals("SUBMITTED"),
 				"Submitted Document status isn't displayed correctly on My Documents page");
 		// TODO login as other user
+		mainPage.clickLogoutButton();
+		//loginPage.sendKeysUserName(adminUserName);
+		//loginPage.sendKeysPassword(adminPassword);
+		//loginPage.clickButtonLogin();
+		
 		mainPage.clickSignDocumentButton();
-
+//		sessionID =  GetSessionId.login("admin", "adminadmin");	
+//		API.deleteFile(fileID, sessionID);
+//		API.deleteDocument(documentID, sessionID);
 	}
 
 	@Test(groups = { "submitSignDeclineDocument" }, priority = 1, enabled = true)

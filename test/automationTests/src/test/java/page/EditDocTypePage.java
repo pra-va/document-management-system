@@ -75,6 +75,15 @@ public class EditDocTypePage extends AbstractPage {
 
 	public void clearSearchField() {
 		this.searchField.clear();
+
+	public void createDocType(String groupsThatApprove, String groupsThatCreate, String docTypeName)
+			throws IOException {
+		//API.createDocType(groupsThatApprove, groupsThatCreate, docTypeName);
+	}
+
+	public void createGroup(String description, String docTypesToCreate, String docTypesToSign, String groupName,
+			String userList) throws IOException {
+		//API.createGroup(description, docTypesToCreate, docTypesToSign, groupName, userList);
 	}
 
 }

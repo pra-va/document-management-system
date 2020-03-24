@@ -1,7 +1,7 @@
 package test;
 
-import org.testng.annotations.AfterClass;
 import static org.testng.Assert.assertTrue;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,7 +16,6 @@ import org.testng.annotations.Test;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import page.AdminNewUserPage;
@@ -33,7 +32,7 @@ public class NewDocumentTests extends AbstractTest {
 	MainPage mainPage;
 	NewDocumentPage newDocumentPage;
 	MyDocumentsPage myDocumentsPage;
-	AdminNewUserPage adminNewUserPage;
+	AdminNewUserPage newUserPage;
 	EditDocumentPage editDocumentPage;	
 	HttpResponse<JsonNode> documentInfoJson;
 	String documentID;
@@ -49,13 +48,13 @@ public class NewDocumentTests extends AbstractTest {
 			String userUserName, String docTypeName) throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
-		adminNewUserPage = new AdminNewUserPage(driver);
+		newUserPage = new AdminNewUserPage(driver);
 		newDocumentPage = new NewDocumentPage(driver);
 		myDocumentsPage = new MyDocumentsPage(driver);
 		editDocumentPage = new EditDocumentPage(driver);
 		sessionID =  GetSessionId.login("admin", "adminadmin");
 		API.createGroup("Group Two description", "[]", "[]", groupName, "[]", sessionID);
-		API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName, sessionID);
+		API.createAdmin("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName, sessionID);		
 		API.createDocType("[]", "[\"" + groupName + "\"]", docTypeName, sessionID);
 	}
 
@@ -73,11 +72,10 @@ public class NewDocumentTests extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 	
-	@Parameters({ "groupName", "docTypeName" })
+	@Parameters({ "userUserName", "groupName", "docTypeName"})
 	@AfterClass
-	public void deleteEntities(String userUserName, String groupName, String docTypeName) throws UnirestException, IOException{				
-		//API.deleteFile(fileID);
-		//API.deleteDocument(documentID);
+	public void deleteEntities(String userUserName, String groupName, String docTypeName) throws IOException{	
+		sessionID =  GetSessionId.login("admin", "adminadmin");		
 		API.deleteUser(userUserName, sessionID);
 		API.deleteGroup(groupName, sessionID);
 		API.deleteDoctype(docTypeName, sessionID);
@@ -87,60 +85,70 @@ public class NewDocumentTests extends AbstractTest {
 	 * Test creates new document with attached file, checks if all properties are saved correctly in "My Documents" list 
 	 * and "Edit Document" page.
 	 * 
-	 * Preconditions: admin is logged in the system, at least one group was created.
-	 * 
-	 * 
+	 * Preconditions: 
+	 * - admin is logged in the system;
+	 * - one group was created;
+	 * - one user was created and added to this group;
+	 * - one document type was create and previously created group was added to list of groups that can create this type.
+	 * 	
+	 * Test steps: 	 
+	 * 1. Log in as previously created user.
+	 * 1. Click "Create document" button. 
+	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name
+	 *    , click "Choose File", select file, click "Open".
+	 * 3. Click "Create" button. 	   
+	 * 4. Check if properties ("Name", "Type", "Status", creation date, file name in File icon tooltip) 
+	 * on "My Documents" list are displayed correctly . 
+	 * 5. Click "Edit / View" button. 
+	 * 6. Check if all properties ("Name", "Type", file name) are displayed correctly. 
+	 * 7. Click button "Cancel".
+	 * 8. Click button "Logout". 		 
 	 */
 	
-	// TODO ADD PARAMETERS!!!!!!!!
-	@Parameters({ "filePath", "fileName" })
-	/// @Parameters({ "docName", "docDescription", "docTypeName","filePath",
-	/// "fileName"})
+	@Parameters({ "documentName", "documentDescription", "filePath", "fileName", "docTypeName"})
 	@Test(groups = { "newDocumentTests" }, priority = 1, enabled = true)
-	public void createNewDocumentTest(String filePath, String fileName) throws UnirestException, InterruptedException {
+	public void createNewDocumentTest(String documentName, String documentDescription, String filePath, 
+			String fileName, String docTypeName) throws UnirestException, InterruptedException, IOException {
+		sessionID =  GetSessionId.login("admin", "adminadmin");
 		mainPage.waitForLogoutButton();
 		mainPage.clickCreateDocumentButton();			
-		newDocumentPage.sendKeysDocNameField("7newDoc7");
-		newDocumentPage.sendKeysDocDescriptionField("description");
-		newDocumentPage.sendKeysSearchForDocType("docType14");
-		newDocumentPage.clickSelectSpecificDocTypeButton("docType14");		
+		newDocumentPage.sendKeysDocNameField(documentName);
+		newDocumentPage.sendKeysDocDescriptionField(documentDescription);		
+		newDocumentPage.sendKeysSearchForDocType(docTypeName);
+		newDocumentPage.clickSelectSpecificDocTypeButton(docTypeName);		
 		file = new File(filePath);
 		newDocumentPage.sendKeysFileUploadField(file.getAbsolutePath());
 		newDocumentPage.waitForFileNameVisibility(fileName);		
 		newDocumentPage.clickCreateButton();		
 		mainPage.clickMyDocumentsButton();
-		myDocumentsPage.sendKeysSearchDocument("7newDoc7");
-		Thread.sleep(2000);
-		assertTrue(myDocumentsPage.isDocumentNameDisplayed("7newDoc7"),
+		myDocumentsPage.sendKeysSearchDocument(documentName);		
+		assertTrue(myDocumentsPage.isDocumentNameDisplayed(documentName),
 				"Document name isn't displayed correctly on My documents list");
-		assertTrue(myDocumentsPage.getTypeByDocumentName("7newDoc7").equals("docType14"),
-				"Document type isn't displayed correctly on My documents list");
-		//This parameter is used for Delete Document API call
-		documentID = myDocumentsPage.getIDbyDocumentName("7newDoc7"); 
-	//	documentInfoJson = API.getFileDetails(documentID);
-		//This parameter is used for Delete File API call
-		//fileID = documentInfoJson.getBody().toString().substring(9, 26);
-		System.out.println(fileID);
+		assertTrue(myDocumentsPage.getTypeByDocumentName(documentName).equals(docTypeName),
+				"Document type isn't displayed correctly on My documents list");		
+		documentID = myDocumentsPage.getIDbyDocumentName(documentName); 	
+		fileID = API.getFileDetails(documentID, sessionID);		
 		date = new Date();
 		modifiedDate= new SimpleDateFormat("yyyy-MM-dd").format(date);
-		assertTrue(myDocumentsPage.getCreationDatebyDocumentName("7newDoc7").equals(modifiedDate),
+		assertTrue(myDocumentsPage.getCreationDatebyDocumentName(documentName).equals(modifiedDate),
 		"Document creation date isn't displayed correctly on My documents list");		
-		assertTrue(myDocumentsPage.getFileNameByDocumentName("7newDoc7").equals(fileName),
+		assertTrue(myDocumentsPage.getFileNameByDocumentName(documentName).equals(fileName),
 				"Attached file name isn't displayed correctly in File icon tooltip");
-		assertTrue(myDocumentsPage.getStatusByDocumentName("7newDoc7").equals("CREATED"),
+		assertTrue(myDocumentsPage.getStatusByDocumentName(documentName).equals("CREATED"),
 				"Document status isn't displayed correctly on My documents list");
-		myDocumentsPage.clickEditViewDocument("7newDoc7");		
+		myDocumentsPage.clickEditViewDocument(documentName);		
 		editDocumentPage.waitForEditDocumentPage();		
-		assertTrue(editDocumentPage.getDocName().equals("7newDoc7"),
+		assertTrue(editDocumentPage.getDocName().equals(documentName),
 				"Document name isn't displayed correctly on Edit document page");
-		assertTrue(editDocumentPage.getDocDescription().equals("description"),
-				"Document description isn't displayed correctly on Edit/View document page");
-	
-//		assertTrue(editDocumentPage.getDocType().equals("docType14"),
+		assertTrue(editDocumentPage.getDocDescription().equals(documentDescription),
+				"Document description isn't displayed correctly on Edit/View document page");	
+//		assertTrue(editDocumentPage.getDocType().equals(docTypeName),
 //				"Document type isn't displayed correctly on Edit document page");
 		assertTrue(editDocumentPage.isFileNameDisplayed(fileName),
 				"Attached file name isn't displayed correctly on Edit/View document page");
 		editDocumentPage.clickCancelButton();
+		API.deleteFile(fileID, sessionID);
+		API.deleteDocument(documentID, sessionID);
 	}
 
 }

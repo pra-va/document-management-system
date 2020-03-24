@@ -4,10 +4,10 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.IOException;
 
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
@@ -20,108 +20,111 @@ import page.MainPage;
 import page.MyDocumentsPage;
 import page.NewDocumentPage;
 import utilities.API;
+import utilities.GetSessionId;
 
 public class EditDocumentTests extends AbstractTest {
 	LoginPage loginPage;
 	MainPage mainPage;
 	NewDocumentPage newDocumentPage;
 	MyDocumentsPage myDocumentsPage;
-	EditDocumentPage editDocumentPage;
+	EditDocumentPage editDocumentPage;	
+	String sessionID;
+	String documentID;
+	String fileID;
 
+	@Parameters({ "groupDescription","groupName", "userFirstName", "userLastName", "userPassword", 
+		"userUserName", "docTypeName"})
 	@BeforeClass
-	public void preconditions() {
+	public void preconditions(String groupDescription, String groupName, String userFirstName, String userLastName,
+		String userPassword, String userUserName, String docTypeName) throws IOException {
+		sessionID =  GetSessionId.login("admin", "adminadmin");	
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		newDocumentPage = new NewDocumentPage(driver);
 		myDocumentsPage = new MyDocumentsPage(driver);
-		editDocumentPage = new EditDocumentPage(driver);
-		
-//		deleteUserApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/delete/{username}";
-//		deleteGroupApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/group/{groupname}/delete";
-//		deleteDocTypeApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/doct/delete/{name}";
-//		documentDetailsApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/files/info/docname/{docname}";
-//		deleteFileApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/files/delete/{UID}";
-//		deleteDocumentApi = "http://akademijait.vtmc.lt:8180/dvs/api/doc/delete/{name}";
-//		API.createGroup("Group Two description", "[\"\"]", "[\"\"]", groupName, "[\"\"]");
-//		API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName);
-//		API.createDocType("[\"\"]", "[\"" + groupName + "\"]", docTypeName); 
-		
-		
+		editDocumentPage = new EditDocumentPage(driver);		
+		API.createGroup(groupDescription, "[]", "[]", groupName, "[]", sessionID);
+		API.createUser("[\"" + groupName + "\"]", userFirstName, userLastName, userPassword, userUserName, sessionID);
+		API.createDocType("[]", "[\"" + groupName + "\"]", docTypeName, sessionID); 			
 	}
 
-	@Parameters({ "adminUserName", "adminPassword" })
+	@Parameters({ "userUserName", "userPassword" })
 	@BeforeGroups({ "editDocumentTests" })
-	public void login(String adminUserName, String adminPassword) {
-		loginPage.sendKeysUserName(adminUserName);
-		loginPage.sendKeysPassword(adminPassword);
+	public void login(String userUserName, String userPassword) {
+		loginPage.sendKeysUserName(userUserName);
+		loginPage.sendKeysPassword(userPassword);
 		loginPage.clickButtonLogin();
 	}
-
-	@Parameters({ "newUserUserName", "newAdminUserName" })
+	
 	@AfterGroups("editDocumentTests")
-	public void logout(String newUserUserName, String newAdminUserName) {
-		// Unirest.delete(deleteUserApiURL).routeParam("username",
-		// newUserUserName).asString();
+	public void logout() {	
 		// mainPage.waitForLogoutButton();
 		// mainPage.clickLogoutButton();
 	}
+	
+	@Parameters({ "userUserName","groupName", "docTypeName"})
+	@AfterClass
+	public void deleteEntities(String userUserName, String groupName, String docTypeName) throws IOException {
+		sessionID =  GetSessionId.login("admin", "adminadmin");				
+		API.deleteUser(userUserName, sessionID);
+		API.deleteGroup(groupName, sessionID);
+		API.deleteDoctype(docTypeName, sessionID);
+	}
 
-	// @Parameters({ "", "newAdminUserName" })
+	@Parameters({ "userUserName","groupName", "docTypeName", "documentName", "updatedDocumentName", 
+		"documentDescription", "updatedDocumentDescription", "filePath", "fileName", "updatedFilePath", "updatedFileName"})
+	
 	@Test(groups = { "editDocumentTests" }, priority = 1, enabled = true)
-	public void editDocumentTest() throws InterruptedException {
+	public void editDocumentTest(String userUserName, String groupName, String docTypeName, String documentName, 
+			String updatedDocumentName, String documentDescription, String updatedDocumentDescription, 
+			String filePath, String fileName, String updatedFilePath, String updatedFileName) throws InterruptedException, IOException {
 
-		// !! sukurti dok per API
 		mainPage.waitForLogoutButton();
-//		mainPage.clickCreateDocumentButton();
-//		newDocumentPage.sendKeysDocNameField("7newDoc");
-//		newDocumentPage.sendKeysDocDescriptionField("description");
-//		newDocumentPage.sendKeysSearchForDocType("docType");
-//		newDocumentPage.clickSelectSpecificDocTypeButton("docType");
-//		// WAIT
-//		File file = new File("src/test/java/utilities/testFile.pdf");
-//		newDocumentPage.sendKeysFileUploadField(file.getAbsolutePath());
-//		newDocumentPage.waitForFileNameVisibility("testFile.pdf");
-//		newDocumentPage.clickCreateButton();
+		mainPage.clickCreateDocumentButton();
+		newDocumentPage.createDocument(documentName, documentDescription, docTypeName, filePath, fileName);							
 		mainPage.clickMyDocumentsButton();
-		myDocumentsPage.sendKeysSearchDocument("7newDoc");
-		myDocumentsPage.clickEditViewDocument("7newDoc");
+		myDocumentsPage.sendKeysSearchDocument(documentName);		
+		myDocumentsPage.clickEditViewDocument(documentName);
 		editDocumentPage.waitForEditDocumentPage();
 		editDocumentPage.clearDocNameField();
-		editDocumentPage.sendKeysDocNameField("DOCtest");
+		editDocumentPage.sendKeysDocNameField(updatedDocumentName);
 		editDocumentPage.clearDocDescriptionField();
-		editDocumentPage.sendKeysDocDescriptionField("newDescription");
-		// add new file
-		Thread.sleep(3000);
-		editDocumentPage.clickRemoveFileButton("testFile.pdf");
-		Thread.sleep(3000);
+		editDocumentPage.sendKeysDocDescriptionField(updatedDocumentDescription);		
+		//editDocumentPage.clickRemoveFileButton(fileName);
+		
 		// WAIT!
-		File file2 = new File("src/test/java/utilities/testFile2.pdf");
-		editDocumentPage.sendKeysFileUploadField(file2.getAbsolutePath());
-		editDocumentPage.waitForFileNameVisibility("testFile2.pdf");		
+		File file2 = new File(updatedFilePath);
+		//editDocumentPage.sendKeysFileUploadField(file2.getAbsolutePath());
+		//editDocumentPage.waitForFileNameVisibility(updatedFileName);		
 		editDocumentPage.clickUpdateButton();
-	
-		driver.findElement(By.xpath("//th[contains(text(),'Created')]")).click();
+		mainPage.waitForLogoutButton();		
+		//Thread.sleep(4000);
 		myDocumentsPage.clearSearchDocumentField();
-		myDocumentsPage.sendKeysSearchDocument("DOCtest");			
-		assertTrue(myDocumentsPage.isDocumentNameDisplayed("DOCtest"),
+		myDocumentsPage.sendKeysSearchDocument(updatedDocumentName);	
+		myDocumentsPage.waitForDocumentVisibility(updatedDocumentName);
+		assertTrue(myDocumentsPage.isDocumentNameDisplayed(updatedDocumentName),
 				"Document name isn't displayed correctly on My documents list");
-		String ID = myDocumentsPage.getIDbyDocumentName("newDoc12345"); // for doc delete
-		assertTrue(myDocumentsPage.getStatusByDocumentName("DOCtest").equals("CREATED"),
+		documentID = myDocumentsPage.getIDbyDocumentName(updatedDocumentName); // for doc delete
+		fileID = API.getFileDetails(documentID, sessionID);	
+		assertTrue(myDocumentsPage.getStatusByDocumentName(updatedDocumentName).equals("CREATED"),
 				"Document status isn't displayed correctly on My documents list");
-		myDocumentsPage.clickEditViewDocument("DOCtest");
+		myDocumentsPage.clickEditViewDocument(updatedDocumentName);
 		editDocumentPage.waitForEditDocumentPage();
 		System.out.println(editDocumentPage.getDocName());
-		assertTrue(editDocumentPage.getDocName().equals("DOCtest"),
+		assertTrue(editDocumentPage.getDocName().equals(updatedDocumentName),
 				"Document name isn't displayed correctly on Edit/View document page");
-		assertTrue(editDocumentPage.getDocDescription().equals("newDescription"),
+		assertTrue(editDocumentPage.getDocDescription().equals(updatedDocumentDescription),
 				"Document description isn't displayed correctly on Edit/View document page");
 		// assertEquals("docType", editDocumentPage.getDocType(),
 		// "Document type isn't displayed correctly on Edit document page");
-		assertTrue(editDocumentPage.isFileNameDisplayed("testFile2.pdf"),
+		assertTrue(editDocumentPage.isFileNameDisplayed(updatedFileName),
 				"Attached file name isn't displayed correctly on Edit/View document page");
-		assertFalse(editDocumentPage.isFileNameDisplayed("testFile.pdf"),
-				"File was not removed");
+//		assertFalse(editDocumentPage.isFileNameDisplayed(fileName),
+//				"File was not removed");
 		editDocumentPage.clickCancelButton();
+		sessionID =  GetSessionId.login("admin", "adminadmin");	
+		API.deleteFile(fileID, sessionID);
+		API.deleteDocument(documentID, sessionID);
 	}
 
 }

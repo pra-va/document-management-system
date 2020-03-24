@@ -41,6 +41,7 @@ public class API {
 		} else {
 			// System.out.println(entity + " WAS NOT CREATED");
 		}
+
 	}
 
 	public static void delete(String apiURL, String session_id) throws IOException {
@@ -69,6 +70,63 @@ public class API {
 			// System.out.println(entity + " WAS NOT CREATED");
 		}
 	}
+
+	public static JSONArray get(String apiURL, String session_id) throws IOException {
+		JSONArray jsonArray = null;
+		String jsonString = null;
+		HttpURLConnection getConnection = null;
+		try {
+			URL obj = new URL(apiURL);
+			getConnection = (HttpURLConnection) obj.openConnection();
+			getConnection.setRequestProperty("Cookie", "JSESSIONID=" + session_id);
+			getConnection.setRequestMethod("GET");
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getConnection.getInputStream()));
+			StringBuilder stringBuilder = new StringBuilder();
+
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				stringBuilder.append(line + '\n');
+			}
+			jsonString = stringBuilder.toString();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			getConnection.disconnect();
+		}
+
+		try {
+			jsonArray = new JSONArray(jsonString);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return jsonArray;
+	}
+	
+	
+	public static String getStringResponse(String apiURL, String session_id) throws IOException {
+		
+		URL obj = new URL(apiURL);
+		HttpURLConnection getConnection = (HttpURLConnection) obj.openConnection();
+		getConnection.setRequestProperty("Cookie", "JSESSIONID=" + session_id);
+		getConnection.setRequestMethod("GET");
+		getConnection.connect();
+		getConnection.disconnect();
+
+		BufferedReader br = new BufferedReader(new InputStreamReader((getConnection.getInputStream())));
+		StringBuilder sb = new StringBuilder();
+		String output;
+		while ((output = br.readLine()) != null) {
+		  sb.append(output);
+		}
+		return sb.toString();
+	}
+	
+//}
 
 //	public static String get(String apiURL, String session_id) throws IOException {
 //		URL obj = new URL(apiURL);
@@ -218,15 +276,20 @@ public class API {
 		delete(deleteFileApiURL, session_id);
 	}
 
+	public static String getFileDetails(String documentID, String session_id) throws IOException {
+		String getFileDetailsApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/files/info/docname/" + documentID;
+		return get(getFileDetailsApiURL, session_id).toString().substring(9, 26);
+	}
+
 	// Document is not deleted when file is attached, use deleteFile method first
 	public static void deleteDocument(String documentID, String session_id) throws IOException {
 		String deleteDocumentApi = "http://akademijait.vtmc.lt:8180/dvs/api/doc/delete/" + documentID;
 		delete(deleteDocumentApi, session_id);
 	}
 
-//	public static String getFileDetails(String documentID, String session_id) throws IOException {
-//		String getFileDetailsApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/files/info/docname/" + documentID;
-//		get(getFileDetailsApiURL, session_id);
-//		return response;
-
+	public static String getPasswordFromDatabase(String userName, String session_id) throws IOException {
+		String getPasswordApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/testingonly/returnpass/" + userName;
+		return getStringResponse(getPasswordApiURL, session_id);
+	}
+		
 }

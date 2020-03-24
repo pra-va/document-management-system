@@ -4,16 +4,15 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.thoughtworks.xstream.XStream;
 
-import page.AdminNewGroupPage;
 import page.AdminNewUserPage;
 import page.EditUserPage;
 import page.LoginPage;
@@ -21,6 +20,7 @@ import page.MainPage;
 import page.ProfilePage;
 import page.UserListPage;
 import utilities.API;
+import utilities.GetSessionId;
 
 public class EditUserTests extends AbstractTest {
 
@@ -30,6 +30,7 @@ public class EditUserTests extends AbstractTest {
 	EditUserPage editUserPage;
 	AdminNewUserPage adminNewUserPage;
 	ProfilePage profilePage;
+	String sessionID;
 
 	@Parameters({ "groupNameOne", "groupNameTwo", "newAdminFirstName", "newAdminLastName", "newAdminPassword",
 			"newAdminUserName" })
@@ -43,11 +44,11 @@ public class EditUserTests extends AbstractTest {
 		editUserPage = new EditUserPage(driver);
 		adminNewUserPage = new AdminNewUserPage(driver);
 		profilePage = new ProfilePage(driver);
-		//API.createGroup("Group One description", "[\"\"]", "[\"\"]", groupNameOne, "[\"\"]");
-		//API.createGroup("Group Two description", "[\"\"]", "[\"\"]", groupNameTwo, "[\"\"]");
-		//API.createAdmin("[\"" + groupNameOne + "\"]", newAdminFirstName, newAdminLastName, newAdminPassword,
-				//newAdminUserName);
-
+		sessionID = GetSessionId.login("admin", "adminadmin");
+		API.createGroup("Group One description", "[]", "[]", groupNameOne, "[]", sessionID);
+		API.createGroup("Group Two description", "[]", "[]", groupNameTwo, "[]", sessionID);
+		API.createAdmin("[\"" + groupNameOne + "\"]", newAdminFirstName, newAdminLastName, newAdminPassword,
+				newAdminUserName, sessionID);
 	}
 
 	@Parameters({ "adminUserName", "adminPassword" })
@@ -56,6 +57,21 @@ public class EditUserTests extends AbstractTest {
 		loginPage.sendKeysUserName(adminUserName);
 		loginPage.sendKeysPassword(adminPassword);
 		loginPage.clickButtonLogin();
+	}
+
+	@AfterGroups("editUser")
+	public void logout() throws UnirestException {
+		mainPage.waitForLogoutButton();
+		mainPage.clickLogoutButton();
+	}
+
+	@Parameters({ "groupNameOne", "groupNameTwo", "newAdminUserName" })
+	@AfterClass
+	public void deleteEntities(String groupNameOne, String groupNameTwo, String newAdminUserName) throws IOException {
+		sessionID = GetSessionId.login("admin", "adminadmin");
+		API.deleteUser(newAdminUserName, sessionID);
+		API.deleteGroup(groupNameOne, sessionID);
+		API.deleteGroup(groupNameTwo, sessionID);
 	}
 
 	// TODO EDIT!!!
@@ -76,22 +92,22 @@ public class EditUserTests extends AbstractTest {
 	 * 4. Fill fields in Edit user form: "First Name", "Last Name", check box "Update password",  
 	 * fill field "Password", click "Yes" on "Admin" selection, search for a first group name, 
 	 * click on Group name in section "Add user to groups", clear search filed, search for second group, click on group name, 
-	 * click button "Submit". 
+	 * click button "Update". 
 	 * 5. Click "Admin" menu, "Users" option. 
 	 * 6. Search for Username. 
 	 * 7. Check if new properties ("First Name", "Last Name", "Role") on a list are displayed correctly. 
 	 * 8. Click "Edit / View" button. 
-	 * 9. Check if all properties ("First Name", "Last Name", "Role", groups) are displayed correctly. 
+	 * 9. Check if all properties ("First Name", "Last Name", "Role", groups) on edit page are displayed correctly. 
 	 * 10. Click button "Cancel".
 	 * 11. Click button "Logout". 
 	 * 12. Login to the system using new user's username and password, click button "Login".	 
 	 * 13. Check if all new user data on Profile Page is displayed correctly.
 	 */
-	@Parameters({ "newAdminUserName", "newAdminPassword", "newAdminRole", "groupNameOne", "groupNameTwo" })
+	@Parameters({ "newAdminUserName", "newAdminPassword", "newAdminRole", "groupNameOne", "groupNameTwo", "updatedPassword" })
 	@Test(groups = { "editUser" }, priority = 1, enabled = true)
 	public void editUserTest(String newAdminUserName, String newAdminPassword, String newAdminRole, String groupNameOne,
-			String groupNameTwo) throws InterruptedException {
-
+			String groupNameTwo, String updatedPassword) throws InterruptedException {
+		
 		mainPage.clickAdminButton();
 		mainPage.clickAdminUsersButton();
 		userListPage.sendKeysSearchForUser(newAdminUserName);
@@ -102,34 +118,25 @@ public class EditUserTests extends AbstractTest {
 		editUserPage.clearLastNameFiel();
 		editUserPage.sendKeysUpdateLastName("newLastName");
 		editUserPage.checkUpdatePassword();
-		editUserPage.sendKeysUpdatePassword("aaaaaaaaaaa");
+		editUserPage.sendKeysUpdatePassword(updatedPassword);
 		editUserPage.clickUserRadio();
-		editUserPage.sendKeysSearchGroups(groupNameOne);
-		Thread.sleep(2000);
-		editUserPage.waitForGroupNameVisibility(groupNameOne);
-		Thread.sleep(2000);
-		editUserPage.clickAddRemoveSpecificGroupButton(groupNameOne);
-		Thread.sleep(2000);
-		//editUserPage.waitForGroupNameSelection(groupNameOne);	
-		Thread.sleep(2000);
-		editUserPage.clearSearchGroupsField();
-		Thread.sleep(2000);
-		editUserPage.sendKeysSearchGroups(groupNameTwo);
-		Thread.sleep(2000);
-		editUserPage.waitForGroupNameVisibility(groupNameTwo);
-		Thread.sleep(2000);
-		editUserPage.clickAddRemoveSpecificGroupButton(groupNameTwo);
-		Thread.sleep(2000);
-		//editUserPage.waitForGroupNameSelection(groupNameTwo);
-		Thread.sleep(4000);
+		editUserPage.sendKeysSearchGroups(groupNameOne);		
+		editUserPage.waitForGroupNameVisibility(groupNameOne);		
+		editUserPage.clickAddRemoveSpecificGroupButton(groupNameOne);			
+		editUserPage.clearSearchGroupsField();		
+		editUserPage.sendKeysSearchGroups(groupNameTwo);		
+		editUserPage.waitForGroupNameVisibility(groupNameTwo);		
+		editUserPage.clickAddRemoveSpecificGroupButton(groupNameTwo);			
 		editUserPage.clickUpdateButton();
-		//mainPage.clickAdminUsersButton();
-		//userListPage.sendKeysSearchForUser(newAdminUserName);
+		mainPage.waitForLogoutButton();
+		mainPage.clickAdminButton();
+		mainPage.clickAdminUsersButton();
+		userListPage.clearSearchUserFiels();
+		userListPage.sendKeysSearchForUser(newAdminUserName);		
 		assertTrue(userListPage.getFirstNameFromUserListByUsername(newAdminUserName).equals("newFirstName"),
 				"User's First Name isn't displayed correctly in user list");
 		assertTrue(userListPage.getLastNameFromUserListByUsername(newAdminUserName).equals("newLastName"),
-				"User's Last Name isn't displayed correctly in user list");
-		Thread.sleep(4000);
+				"User's Last Name isn't displayed correctly in user list");		
 		assertTrue(userListPage.getRoleFromUserListByUsername(newAdminUserName).equals("USER"),
 				"User's role isn't displayed correctly in user list");
 		userListPage.clickViewEditSpecificUserButton(newAdminUserName);
@@ -139,19 +146,17 @@ public class EditUserTests extends AbstractTest {
 		assertTrue(editUserPage.getLastName().equals("newLastName"),
 				"User's Last Name isn't displayed correctly in Edit user page");
 		assertTrue(editUserPage.isRadioButtonUserSelected(), "User's role isn't displayed correctly in Edit user page");
-
-//		driver.findElement(By.xpath("//td[contains(text(), 'Name')]")).click();
-//		editUserPage.sendKeysSearchGroups(groupNameTwo);
-//		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + groupNameTwo + "')]")).isSelected(),
-//				"User was not added to the group correctly");
+		editUserPage.sendKeysSearchGroups(groupNameTwo);		
+		assertTrue(editUserPage.isUserAddedToGroup(groupNameTwo),
+				"User was not added to the group correctly");		
 		editUserPage.clickCancelButton();
-		Thread.sleep(2000);
+		mainPage.waitForLogoutButton();
 		mainPage.clickLogoutButton();
 		loginPage.sendKeysUserName(newAdminUserName);
-		loginPage.sendKeysPassword("aaaaaaaaaaa");
+		loginPage.sendKeysPassword(updatedPassword);
 		loginPage.clickButtonLogin();
 		mainPage.clickProfileButton();
-		profilePage.waitForHeaderUsernameVisibility();
+		profilePage.waitForHeaderUsernameVisibility();	
 		assertTrue(profilePage.getTextFirstName().equals("newFirstName"),
 				"User's First Name isn't displayed correctly in profile page");
 		assertTrue(profilePage.getTextLastName().equals("newLastName"),
@@ -160,8 +165,6 @@ public class EditUserTests extends AbstractTest {
 				"User's Role isn't displayed correctly in profile page");
 		assertTrue(profilePage.getTextUserGroups().equals(groupNameTwo),
 				"User's group isn't shown correctly in profile page");
-		profilePage.clickButtonClose();
-		mainPage.clickLogoutButton();
-
+		profilePage.clickButtonClose();		
 	}
 }

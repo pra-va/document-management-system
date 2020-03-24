@@ -150,11 +150,17 @@ public class AdminNewUserPage extends AbstractPage {
 		return buttonCreate.isDisplayed();
 	}
 
-	/* OTHER METHODS */
+	/*WAITS*/
 
+	public void waitForGroupSelection() {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.elementToBeSelected(By.xpath("//td[@class='selection-cell']/input")));
+	}
+	
 	public void waitForCancelButton() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(this.buttonCancel));
 	}
+	
+	/* OTHER METHODS */
 	
 	public String firstNameLengthValidationLabelAttribute(){
 		return firstNameLengthValidationLabel.getAttribute("aria-label");

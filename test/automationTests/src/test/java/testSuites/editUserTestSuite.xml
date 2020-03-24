@@ -4,18 +4,18 @@
 	<test name="editUserTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPassword" value="adminadmin" />
-		<parameter name="newAdminFirstName" value="gggg" />
-		<parameter name="newAdminLastName" value="gggg" />
-		<parameter name="newAdminUserName" value="newAdmin20" />
+		<parameter name="newAdminFirstName" value="newAdminFirstName" />
+		<parameter name="newAdminLastName" value="newAdminLastName" />
+		<parameter name="newAdminUserName" value="newAdminUserName" />
 		<parameter name="newAdminPassword" value="12345678" />
 		<parameter name="newAdminRole" value="ADMIN" />
 		<parameter name="groupNameOne" value="GroupOneForEditUserTests10" />
 		<parameter name="groupNameTwo" value="GroupTwoForEditUserTests11" />
-		<parameter name="newUserFirstName" value="wwwwww" />
-		<parameter name="newUserLastName" value="wwwwwwwww" />
-		<parameter name="newUserUserName" value="userNameTest17" />
+		<parameter name="newUserFirstName" value="newUserFirstName" />
+		<parameter name="newUserLastName" value="newUserLastName" />
+		<parameter name="newUserUserName" value="newUserUserName" />
 		<parameter name="newUserUserName1" value="testUserName" />
-		<parameter name="newUserPassword" value="wwwwwwwwwww" />
+		<parameter name="updatedPassword" value="abc1234567" />
 		<parameter name="newUserRole" value="USER" />
 		<classes>
 			<class name="test.EditUserTests" />
