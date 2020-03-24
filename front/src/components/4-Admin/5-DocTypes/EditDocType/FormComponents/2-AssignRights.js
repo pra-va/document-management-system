@@ -64,6 +64,7 @@ class AssignRights extends Component {
     axios
       .post(serverUrl + "groups", pageData)
       .then(response => {
+        console.log(response.data);
         this.processData(
           response.data.groupList,
           this.state.canCreate,

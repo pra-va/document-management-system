@@ -51,9 +51,9 @@ class DocTypes extends Component {
     };
 
     axios
-      .post(serverUrl + "doct/all", pageData)
+      .post(serverUrl + "doct/all/nogroups", pageData)
       .then(response => {
-        this.parseData(response.data.documentList);
+        this.parseData(response.data);
         this.setState({
           pagingData: response.data.pagingData,
           serverRequestPagingData: pageData
@@ -66,21 +66,17 @@ class DocTypes extends Component {
 
   parseData = data => {
     if (data) {
-      const tableData = data.map((item, index) => {
+      const tableData = data.documentList.content.map((item, index) => {
         return {
           number: index + 1,
-          name: item.name,
+          name: item,
           canCreate: (
             <PopOver
               popOverApparance={
                 <img src={GroupLogo} alt="unable to load" className="invert" />
               }
               popOverTitle={"Groups with Create rights:"}
-              popOverContent={
-                item.groupsToCreate.length > 0
-                  ? this.reduceList(item.groupsToCreate)
-                  : "None"
-              }
+              popOverContent={this.reduceList(data.creating[item])}
             />
           ),
           canSign: (
@@ -89,14 +85,10 @@ class DocTypes extends Component {
                 <img src={GroupLogo} alt="unable to load" className="invert" />
               }
               popOverTitle={"Groups with Sign rights:"}
-              popOverContent={
-                item.groupsToApprove.length > 0
-                  ? this.reduceList(item.groupsToApprove)
-                  : "None"
-              }
+              popOverContent={this.reduceList(data.approving[item])}
             />
           ),
-          edit: <Edit owner={item.name} reloadTable={this.reloadTable} />
+          edit: <Edit owner={item} reloadTable={this.reloadTable} />
         };
       });
       this.setState({ tableData: tableData });

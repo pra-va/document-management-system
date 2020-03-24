@@ -1,5 +1,6 @@
 package lt.vtmc.docTypes.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -63,6 +64,30 @@ public class DocTypeController {
 	@PostMapping(path = "/api/doct/all")
 	public Map<String, Object> getAllDocTypes(@RequestBody PagingData pagingData) {
 		return docTypeService.retrieveAllDocTypes(pagingData);
+	}
+
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+	@PostMapping(path = "/api/doct/all/nogroups")
+	public Map<String, Object> getAllDocTypesNoGroups(@RequestBody PagingData pagingData) {
+		return docTypeService.retrieveAllDocTypesNoGroups(pagingData);
+	}
+
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+	@GetMapping(path = "/api/doct/groups/approving")
+	public List<String> getGroupsApproving(String docTypeName) {
+		return docTypeService.getGroupsApproving(docTypeName);
+	}
+
+//	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+//	@GetMapping(path = "/api/doct/names")
+//	public List<String> getDocTypeNames() {
+//		return docTypeService.g;
+//	}
+
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+	@GetMapping(path = "/api/doct/groups/creating")
+	public List<String> getGroupsCreating(String docTypeName) {
+		return docTypeService.getGroupsCreating(docTypeName);
 	}
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })

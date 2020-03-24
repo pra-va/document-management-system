@@ -33,7 +33,6 @@ class AddUsersToGroup extends Component {
     axios
       .post(serverUrl + "user/nogroups", pageData)
       .then(response => {
-        console.log(response.data);
         this.processData(response.data.userList);
         this.setState({ pagingData: response.data.pagingData });
       })
