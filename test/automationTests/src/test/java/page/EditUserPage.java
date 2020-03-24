@@ -140,7 +140,7 @@ public class EditUserPage extends AbstractPage {
 	}
 	
 	public boolean isUserAddedToGroup(String groupName) {
-		return driver.findElement(By.xpath("//td[contains(text(), '" + groupName + "')]/..//input")).isSelected();
+		return driver.findElement(By.xpath("//td[@class='selection-cell']/input")).isSelected();
 	}	
 	
 	/* WAITS */

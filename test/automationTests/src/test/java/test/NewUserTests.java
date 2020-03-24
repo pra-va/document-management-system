@@ -69,8 +69,7 @@ public class NewUserTests extends AbstractTest {
 		mainPage.clickAdminNewUserButton();
 		
 	}
-
-	@Parameters({ "newUserUserName", "newAdminUserName" })
+	
 	@AfterGroups("newUserTests")
 	public void logout() throws UnirestException {
 		mainPage.waitForLogoutButton();
@@ -80,7 +79,8 @@ public class NewUserTests extends AbstractTest {
 	@AfterClass
 	@Parameters({ "newUserUserName", "newAdminUserName", "groupName" })
 	public void deleteEntities(String newUserUserName, String newAdminUserName, String groupName) throws IOException{
-	API.deleteUser(newUserUserName, sessionID);	
+	sessionID =  GetSessionId.login("admin", "adminadmin");
+	API.deleteUser(newUserUserName,sessionID);	
 	API.deleteUser(newAdminUserName, sessionID);
 	API.deleteGroup(groupName, sessionID);	
 	}
@@ -116,9 +116,9 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.sendKeysUserName(newAdminUserName);
 		adminNewUserPage.sendKeysPassword(newAdminPassword);
 		adminNewUserPage.clickAdminRadio();
-		adminNewUserPage.sendKeysSearchGroup(groupName);
-		// driver.waitUntil(ExpectedConditions.visibilityOf(YourElement,2000));
+		adminNewUserPage.sendKeysSearchGroup(groupName);		
 		adminNewUserPage.clickAddRemoveSpecificGroupButton(groupName);
+		adminNewUserPage.waitForGroupSelection();
 		adminNewUserPage.clickCreateButton();
 		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "New user isn't created");
 		driver.navigate().refresh();
@@ -138,6 +138,7 @@ public class NewUserTests extends AbstractTest {
 				"Admin Last Name isn't displayed correctly in Edit user form");
 		assertTrue(editUserPage.isRadioButtonAdminSelected(),
 				"Admin's role isn't displayed correctly in Edit user form");	
+		editUserPage.sendKeysSearchGroups(groupName);
 		assertTrue(editUserPage.isUserAddedToGroup(groupName), "User was not added to the group correctly");
 		editUserPage.clickCancelButton();
 		mainPage.clickLogoutButton();
@@ -162,7 +163,9 @@ public class NewUserTests extends AbstractTest {
 	/*-
 	 * Test creates new user, checks if all properties are saved correctly in user list, 
 	 * "Edit user" page and "Profile" page, checks logins to the system with new user's credentials.
-	 * Precondition: admin is logged in the system.
+	 * 
+	 * Precondition: admin is logged in the system, at least one group is created.
+	 * 
 	 * Test steps: 	 
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password", search for a group name, click button
