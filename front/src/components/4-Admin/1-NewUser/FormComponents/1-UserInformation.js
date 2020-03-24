@@ -34,7 +34,11 @@ class UserInformation extends Component {
 
     if (event.target.value.length > 3) {
       axios
-        .get(serverUrl + event.target.value + "/exists")
+        .get(serverUrl + "user/exists", {
+          params: {
+            username: event.target.value
+          }
+        })
         .then(response => {
           this.setState({ usernameExists: response.data });
           if (response.data) {

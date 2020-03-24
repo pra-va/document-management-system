@@ -50,31 +50,6 @@ class UserInformation extends Component {
       });
   };
 
-  handleUsernameChange = event => {
-    event.persist();
-    this.setState({ username: event.target.value });
-    this.props.handleUsernameChange(event.target.value);
-
-    if (event.target.value.length > 3) {
-      axios
-        .get(serverUrl + event.target.value + "/exists")
-        .then(response => {
-          this.setState({ usernameExists: response.data });
-          if (response.data) {
-            event.target.setCustomValidity("Username is taken.");
-          } else {
-            event.target.setCustomValidity("");
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    } else {
-      event.target.setCustomValidity("");
-      this.setState({ usernameExists: false });
-    }
-  };
-
   handlePasswordChange = event => {
     this.setState({ password: event.target.value });
     this.props.handlePasswordChange(event.target.value);

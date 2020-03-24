@@ -20,6 +20,9 @@ import lt.vtmc.user.model.User;
 public interface UserRepository extends JpaRepository<User, String> {
 	User findUserByUsername(String username);
 
+	@Query("select case when count(u.username) > 0 then true else false end from  User u where u.username = ?1")
+	boolean isUsernameExists(String username);
+
 	@Query("SELECT u FROM User u WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.surname) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.role) LIKE LOWER(CONCAT('%', ?1,'%'))")
 	Page<User> findLike(String searchValueString, Pageable firstPageable);
 
