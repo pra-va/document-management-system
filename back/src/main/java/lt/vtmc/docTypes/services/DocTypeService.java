@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import lt.vtmc.docTypes.dao.DocTypeRepository;
 import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
 import lt.vtmc.docTypes.model.DocType;
+import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.model.Document;
+import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.groups.dao.GroupRepository;
 import lt.vtmc.groups.model.Group;
 import lt.vtmc.groups.service.GroupService;
@@ -42,6 +44,8 @@ public class DocTypeService {
 	@Autowired
 	private GroupRepository groupRepository;
 
+	@Autowired
+	private DocumentService docService;
 	/**
 	 * 
 	 * This method finds groups from group repository.
@@ -92,15 +96,6 @@ public class DocTypeService {
 		return newDoc;
 	}
 
-//	public List<DocTypeDetailsDTO> getAllDocTypes() {
-//		List<DocType> tmpList = docTypeRepo.findAll();
-//		List<DocTypeDetailsDTO> list = new ArrayList<DocTypeDetailsDTO>();
-//		for (int i = 0; i < tmpList.size(); i++) {
-//			list.add(new DocTypeDetailsDTO(tmpList.get(i)));
-//		}
-//		return list;
-//	}
-
 	public Map<String, Object> retrieveAllDocTypes(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<DocType> doctypelist = docTypeRepo.findLike(pagingData.getSearchValueString(), firstPageable);
@@ -114,6 +109,11 @@ public class DocTypeService {
 
 	@Transactional
 	public void deleteDocType(DocType dType) {
+		List <Document> tmpListDocuments = dType.getDocumentList();
+		for (Document document : tmpListDocuments) {
+			document.setdType(null);
+			docService.deleteDocument(document);
+		}
 		for (int i = 0; i < dType.getGroupsApproving().size(); i++) {
 			Group tmp = dType.getGroupsApproving().get(i);
 			List<DocType> tmpList = tmp.getDocTypesToApprove();
@@ -123,7 +123,6 @@ public class DocTypeService {
 			Group tmp = dType.getGroupsCreating().get(i);
 			List<DocType> tmpList = tmp.getDocTypesToCreate();
 			tmpList.remove(dType);
-			groupRepository.save(tmp);
 		}
 		docTypeRepo.delete(dType);
 	}

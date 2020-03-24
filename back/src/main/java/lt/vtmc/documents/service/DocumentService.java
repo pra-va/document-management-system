@@ -122,12 +122,12 @@ public class DocumentService {
 			handler.setProcessedDocuments(tmpListHand);
 			document.setHandler(null);
 		}
-
-		List<Document> tmpListDocType = docType.getDocumentList();
-		tmpListDocType.remove(document);
-		docType.setDocumentList(tmpListDocType);
-		document.setdType(null);
-
+		if (docType != null) {
+			List<Document> tmpListDocType = docType.getDocumentList();
+			tmpListDocType.remove(document);
+			docType.setDocumentList(tmpListDocType);
+			document.setdType(null);
+		}
 		docRepo.delete(document);
 	}
 

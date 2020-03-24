@@ -161,6 +161,7 @@ public class FileService {
 
 	public void deleteFileByUID(String uID) {
 		File4DB tmpFile = filesRepository.findFile4dbByUID(uID);
+		tmpFile.getDocument().getFileList().remove(tmpFile);
 		filesRepository.delete(tmpFile);
 	}
 
