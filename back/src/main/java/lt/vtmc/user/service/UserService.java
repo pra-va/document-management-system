@@ -28,6 +28,7 @@ import lt.vtmc.paging.PagingData;
 import lt.vtmc.paging.PagingResponse;
 import lt.vtmc.user.dao.UserRepository;
 import lt.vtmc.user.dto.UserDetailsDTO;
+import lt.vtmc.user.dto.UserNoGroupsDTO;
 import lt.vtmc.user.model.User;
 
 /**
@@ -232,6 +233,17 @@ public class UserService implements UserDetailsService {
 			return true;
 		}
 		return false;
+	}
+
+	public Map<String, Object> getUsersNoGroups(String searchPhrase, PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<UserNoGroupsDTO> userlist = userRepository.findLikeNoGroups(pagingData.getSearchValueString(),
+				firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		responseMap.put("pagingData",
+				new PagingResponse(userlist.getNumber(), userlist.getTotalElements(), userlist.getSize()));
+		responseMap.put("userList", userlist);
+		return responseMap;
 	}
 
 }

@@ -255,4 +255,10 @@ public class UserController {
 			return new ResponseEntity<String>("Initial Admin is already created.", HttpStatus.IM_USED);
 		}
 	}
+
+	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
+	@PostMapping("/api/user/nogroups")
+	public Map<String, Object> getUsersNoGroup(@RequestBody PagingData pagingData) {
+		return userService.getUsersNoGroups(pagingData.getSearchValueString(), pagingData);
+	}
 }

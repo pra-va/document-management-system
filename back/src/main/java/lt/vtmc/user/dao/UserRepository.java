@@ -9,6 +9,7 @@ import lt.vtmc.documents.Status;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.statistics.dto.StatisticsDocTypeDTO;
 import lt.vtmc.statistics.dto.StatisticsUserDTO;
+import lt.vtmc.user.dto.UserNoGroupsDTO;
 import lt.vtmc.user.model.User;
 
 /**
@@ -25,6 +26,9 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 	@Query("SELECT u FROM User u WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.surname) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.role) LIKE LOWER(CONCAT('%', ?1,'%'))")
 	Page<User> findLike(String searchValueString, Pageable firstPageable);
+
+	@Query("select new lt.vtmc.user.dto.UserNoGroupsDTO(u.username, u.name, u.surname, u.role) from User u where LOWER(u.username) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.name) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.surname) LIKE LOWER(CONCAT('%', ?1,'%')) OR LOWER(u.role) LIKE LOWER(CONCAT('%', ?1,'%'))")
+	Page<UserNoGroupsDTO> findLikeNoGroups(String searchPhrase, Pageable page);
 
 	@Query("select distinct d.name from DocType d inner join d.groupsCreating g inner join g.userList u where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%'))")
 	Page<String> docTypesUserCreatesByUsername(String username, String searchPhrase, Pageable pageable);
