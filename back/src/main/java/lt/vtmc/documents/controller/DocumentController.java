@@ -78,7 +78,7 @@ public class DocumentController {
 	}
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	@GetMapping(path = "/api/doc/{UID}")
+	@GetMapping(path = "/api/doc/{UID}") //changed API url (remove find)
 	public DocumentDetailsDTO findDocument(@PathVariable("UID") String UID) {
 		LOG.info("# LOG # Initiated by [{}]: Requested details of document UID: [{}] #",
 				SecurityContextHolder.getContext().getAuthentication().getName(), UID);

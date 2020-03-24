@@ -165,4 +165,8 @@ public class FileService {
 		filesRepository.delete(tmpFile);
 	}
 
+	public void deleteFile(File4DB tmpFile) {
+//		tmpFile.getDocument().getFileList().remove(tmpFile);
+		filesRepository.delete(tmpFile);
+	}
 }
