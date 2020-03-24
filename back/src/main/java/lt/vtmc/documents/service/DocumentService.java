@@ -98,10 +98,9 @@ public class DocumentService {
 	@Transactional
 	public void deleteDocument(Document document) {
 		List<File4DB> tmpList = document.getFileList();
-		document.setFileList(null);
 		if (tmpList != null) {
 			for (File4DB file4db : tmpList) {
-				fileService.deleteFileByUID(file4db.getUID());
+				fileService.deleteFile(file4db);
 			}
 		}
 
