@@ -55,11 +55,11 @@ function toggleAllBoxes() {
 <body>
 <h2 align='center'>Default test</h2><table border='1' align="center">
 <tr>
-<td>Tests passed/Failed/Skipped:</td><td>0/1/0</td>
+<td>Tests passed/Failed/Skipped:</td><td>0/2/0</td>
 </tr><tr>
-<td>Started on:</td><td>Sun Mar 22 12:10:54 EET 2020</td>
+<td>Started on:</td><td>Mon Mar 23 12:23:32 EET 2020</td>
 </tr>
-<tr><td>Total time:</td><td>0 seconds (63 ms)</td>
+<tr><td>Total time:</td><td>0 seconds (41 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -68,6 +68,85 @@ function toggleAllBoxes() {
 </table><p/>
 <small><i>(Hover the method name to see the test class name)</i></small><p/>
 <table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED CONFIGURATIONS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='test.EditDocTypeTests.preconitions()'><b>preconitions</b><br>Test class: test.EditDocTypeTests</td>
+<td><div><pre>org.testng.TestNGException: 
+Parameter &apos;docTypeName&apos; is required by BeforeClass on method preconitions but has not been marked @Optional or defined
+in C:\Users\PC\AppData\Local\Temp\testng-eclipse-1256969716\testng-customsuite.xml
+	at org.testng.internal.Parameters.createParams(Parameters.java:290)
+	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:359)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:620)
+	at org.testng.internal.Parameters.createConfigurationParameters(Parameters.java:190)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:209)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:168)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:105)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1062186835", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1062186835'><pre>org.testng.TestNGException: 
+Parameter &apos;docTypeName&apos; is required by BeforeClass on method preconitions but has not been marked @Optional or defined
+in C:\Users\PC\AppData\Local\Temp\testng-eclipse-1256969716\testng-customsuite.xml
+	at org.testng.internal.Parameters.createParams(Parameters.java:290)
+	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:359)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:620)
+	at org.testng.internal.Parameters.createConfigurationParameters(Parameters.java:190)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:209)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.internal.TestMethodWorker.invokeBeforeClassMethods(TestMethodWorker.java:168)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:105)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>0</td>
+<td>test.EditDocTypeTests@e25b2fe</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-skipped'>
+<tr><td colspan='4' align='center'><b>SKIPPED CONFIGURATIONS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='test.EditDocTypeTests.deleteEntities()'><b>deleteEntities</b><br>Test class: test.EditDocTypeTests</td>
+<td></td>
+<td>0</td>
+<td>test.EditDocTypeTests@e25b2fe</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-failed'>
 <tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
 <tr><td><b>Test method</b></td>
 <td width="30%"><b>Exception</b></td>
@@ -75,10 +154,10 @@ function toggleAllBoxes() {
 <td><b>Instance</b></td>
 </tr>
 <tr>
-<td title='test.EditDocTypeTests.editDocTypeNameTest()'><b>editDocTypeNameTest</b><br>Test class: test.EditDocTypeTests</td>
+<td title='test.EditDocTypeTests.editDocTypeGroupTest()'><b>editDocTypeGroupTest</b><br>Test class: test.EditDocTypeTests</td>
 <td><div><pre>org.testng.TestNGException: 
-Parameter &apos;docTypeName&apos; is required by @Test on method editDocTypeNameTest but has not been marked @Optional or defined
-in C:\Users\PC\AppData\Local\Temp\testng-eclipse--807701739\testng-customsuite.xml
+Parameter &apos;docTypeName&apos; is required by @Test on method editDocTypeGroupTest but has not been marked @Optional or defined
+in C:\Users\PC\AppData\Local\Temp\testng-eclipse-1256969716\testng-customsuite.xml
 	at org.testng.internal.Parameters.createParams(Parameters.java:290)
 	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:359)
 	at org.testng.internal.Parameters.createParameters(Parameters.java:620)
@@ -103,10 +182,10 @@ in C:\Users\PC\AppData\Local\Temp\testng-eclipse--807701739\testng-customsuite.x
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-</pre></div><a href='#' onClick='toggleBox("stack-trace1326393666", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace1326393666'><pre>org.testng.TestNGException: 
-Parameter &apos;docTypeName&apos; is required by @Test on method editDocTypeNameTest but has not been marked @Optional or defined
-in C:\Users\PC\AppData\Local\Temp\testng-eclipse--807701739\testng-customsuite.xml
+</pre></div><a href='#' onClick='toggleBox("stack-trace1802066694", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1802066694'><pre>org.testng.TestNGException: 
+Parameter &apos;docTypeName&apos; is required by @Test on method editDocTypeGroupTest but has not been marked @Optional or defined
+in C:\Users\PC\AppData\Local\Temp\testng-eclipse-1256969716\testng-customsuite.xml
 	at org.testng.internal.Parameters.createParams(Parameters.java:290)
 	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:359)
 	at org.testng.internal.Parameters.createParameters(Parameters.java:620)
@@ -133,7 +212,67 @@ in C:\Users\PC\AppData\Local\Temp\testng-eclipse--807701739\testng-customsuite.x
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 </pre></div></td>
 <td>0</td>
-<td>test.EditDocTypeTests@204f30ec</td></tr>
+<td>test.EditDocTypeTests@e25b2fe</td></tr>
+<tr>
+<td title='test.EditDocTypeTests.editDocTypeNameTest()'><b>editDocTypeNameTest</b><br>Test class: test.EditDocTypeTests</td>
+<td><div><pre>org.testng.TestNGException: 
+Parameter &apos;docTypeName&apos; is required by @Test on method editDocTypeNameTest but has not been marked @Optional or defined
+in C:\Users\PC\AppData\Local\Temp\testng-eclipse-1256969716\testng-customsuite.xml
+	at org.testng.internal.Parameters.createParams(Parameters.java:290)
+	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:359)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:620)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:769)
+	at org.testng.internal.ParameterHandler.handleParameters(ParameterHandler.java:49)
+	at org.testng.internal.ParameterHandler.createParameters(ParameterHandler.java:37)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:924)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1074263646", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1074263646'><pre>org.testng.TestNGException: 
+Parameter &apos;docTypeName&apos; is required by @Test on method editDocTypeNameTest but has not been marked @Optional or defined
+in C:\Users\PC\AppData\Local\Temp\testng-eclipse-1256969716\testng-customsuite.xml
+	at org.testng.internal.Parameters.createParams(Parameters.java:290)
+	at org.testng.internal.Parameters.createParametersForMethod(Parameters.java:359)
+	at org.testng.internal.Parameters.createParameters(Parameters.java:620)
+	at org.testng.internal.Parameters.handleParameters(Parameters.java:769)
+	at org.testng.internal.ParameterHandler.handleParameters(ParameterHandler.java:49)
+	at org.testng.internal.ParameterHandler.createParameters(ParameterHandler.java:37)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:924)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>0</td>
+<td>test.EditDocTypeTests@e25b2fe</td></tr>
 </table><p>
 </body>
 </html>

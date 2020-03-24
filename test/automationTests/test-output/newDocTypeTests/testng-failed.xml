@@ -2,15 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [newDocTypeTests]">
   <test thread-count="5" name="newDocTypeTests(failed)">
-    <parameter name="docTypeName" value="Resignation Letter"/>
-    <parameter name="groupName" value="Project managers"/>
+    <parameter name="docTypeName" value="ResignationLetter"/>
+    <parameter name="groupName" value="ProjectManagers"/>
     <parameter name="adminUserName" value="admin"/>
     <parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers."/>
     <parameter name="adminPasswrod" value="adminadmin"/>
     <classes>
       <class name="test.NewDocTypeTests">
         <methods>
-          <include name="createNewDocTypeTest" invocation-numbers="0"/>
           <include name="docTypeGroupsTest" invocation-numbers="0"/>
           <include name="beforeSuite"/>
           <include name="preconitions"/>

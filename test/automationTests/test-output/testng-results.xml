@@ -2,25 +2,25 @@
 <testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
   <reporter-output>
   </reporter-output>
-  <suite name="newGrouTests" duration-ms="11315" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:55:00Z">
+  <suite name="newGrouTests" duration-ms="6110" started-at="2020-03-24T07:06:21Z" finished-at="2020-03-24T07:06:27Z">
     <groups>
-      <group name="editGroup">
-        <method signature="EditGroupTest.editGroupName(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@754ba872]" name="editGroupName" class="test.EditGroupTest"/>
-        <method signature="EditGroupTest.updateGroupCreatSignRightsTest(java.lang.String, java.lang.String)[pri:2, instance:test.EditGroupTest@754ba872]" name="updateGroupCreatSignRightsTest" class="test.EditGroupTest"/>
-        <method signature="EditGroupTest.updateGroupUsersTest(java.lang.String, java.lang.String)[pri:1, instance:test.EditGroupTest@754ba872]" name="updateGroupUsersTest" class="test.EditGroupTest"/>
-      </group> <!-- editGroup -->
+      <group name="createGroup">
+        <method signature="NewGroupTests.createGroupTest(java.lang.String, java.lang.String, java.lang.String)[pri:1, instance:test.NewGroupTests@4dfa3a9d]" name="createGroupTest" class="test.NewGroupTests"/>
+        <method signature="NewGroupTests.groupWithoutNameTest()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="groupWithoutNameTest" class="test.NewGroupTests"/>
+        <method signature="NewGroupTests.userInGroupTest(java.lang.String, java.lang.String)[pri:2, instance:test.NewGroupTests@4dfa3a9d]" name="userInGroupTest" class="test.NewGroupTests"/>
+      </group> <!-- createGroup -->
     </groups>
-    <test name="editGroupTests" duration-ms="11315" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:55:00Z">
-      <class name="test.EditGroupTest">
-        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.EditGroupTest@754ba872]" name="beforeSuite" is-config="true" duration-ms="11246" started-at="2020-03-22T12:54:37Z" finished-at="2020-03-22T12:54:48Z">
+    <test name="newGroupTests" duration-ms="6110" started-at="2020-03-24T07:06:21Z" finished-at="2020-03-24T07:06:27Z">
+      <class name="test.NewGroupTests">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="beforeSuite" is-config="true" duration-ms="10941" started-at="2020-03-24T07:06:10Z" finished-at="2020-03-24T07:06:21Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeSuite -->
-        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.EditGroupTest@754ba872]" name="preconitions" is-config="true" duration-ms="47" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:54:48Z">
+        <test-method status="PASS" signature="preconitions()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="preconitions" is-config="true" duration-ms="67" started-at="2020-03-24T07:06:21Z" finished-at="2020-03-24T07:06:21Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preconitions -->
-        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@754ba872]" name="login" is-config="true" duration-ms="334" started-at="2020-03-22T12:54:48Z" finished-at="2020-03-22T12:54:49Z">
+        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="login" is-config="true" duration-ms="319" started-at="2020-03-24T07:06:21Z" finished-at="2020-03-24T07:06:22Z">
           <params>
             <param index="0">
               <value>
@@ -36,63 +36,79 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- login -->
-        <test-method status="PASS" signature="editGroupName(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@754ba872]" name="editGroupName" duration-ms="3051" started-at="2020-03-22T12:54:49Z" finished-at="2020-03-22T12:54:52Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[Project managers]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[New Project managers]]>
-              </value>
-            </param>
-          </params>
+        <test-method status="PASS" signature="groupWithoutNameTest()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="groupWithoutNameTest" duration-ms="1359" started-at="2020-03-24T07:06:22Z" finished-at="2020-03-24T07:06:23Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- editGroupName -->
-        <test-method status="PASS" signature="updateGroupUsersTest(java.lang.String, java.lang.String)[pri:1, instance:test.EditGroupTest@754ba872]" name="updateGroupUsersTest" duration-ms="3457" started-at="2020-03-22T12:54:52Z" finished-at="2020-03-22T12:54:55Z">
+        </test-method> <!-- groupWithoutNameTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="afterTest" is-config="true" duration-ms="219" started-at="2020-03-24T07:06:23Z" finished-at="2020-03-24T07:06:23Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="createGroupTest(java.lang.String, java.lang.String, java.lang.String)[pri:1, instance:test.NewGroupTests@4dfa3a9d]" name="createGroupTest" duration-ms="2450" started-at="2020-03-24T07:06:23Z" finished-at="2020-03-24T07:06:26Z">
           <params>
             <param index="0">
-              <value>
-                <![CDATA[Project managers]]>
-              </value>
-            </param>
-            <param index="1">
               <value>
                 <![CDATA[admin]]>
               </value>
             </param>
+            <param index="1">
+              <value>
+                <![CDATA[ProjectManagers]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Project managers who manage projects that need managing by the managers.]]>
+              </value>
+            </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- updateGroupUsersTest -->
-        <test-method status="PASS" signature="updateGroupCreatSignRightsTest(java.lang.String, java.lang.String)[pri:2, instance:test.EditGroupTest@754ba872]" name="updateGroupCreatSignRightsTest" duration-ms="4202" started-at="2020-03-22T12:54:55Z" finished-at="2020-03-22T12:55:00Z">
+        </test-method> <!-- createGroupTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="afterTest" is-config="true" duration-ms="186" started-at="2020-03-24T07:06:26Z" finished-at="2020-03-24T07:06:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="userInGroupTest(java.lang.String, java.lang.String)[pri:2, instance:test.NewGroupTests@4dfa3a9d]" name="userInGroupTest" duration-ms="1041" started-at="2020-03-24T07:06:26Z" finished-at="2020-03-24T07:06:27Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[Project managers]]>
+                <![CDATA[admin]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[Resignation Letter]]>
+                <![CDATA[ProjectManagers]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- updateGroupCreatSignRightsTest -->
-        <test-method status="PASS" signature="logout()[pri:0, instance:test.EditGroupTest@754ba872]" name="logout" is-config="true" duration-ms="197" started-at="2020-03-22T12:55:00Z" finished-at="2020-03-22T12:55:00Z">
+        </test-method> <!-- userInGroupTest -->
+        <test-method status="PASS" signature="afterTest()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="afterTest" is-config="true" duration-ms="207" started-at="2020-03-24T07:06:27Z" finished-at="2020-03-24T07:06:27Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterTest -->
+        <test-method status="PASS" signature="logout()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="logout" is-config="true" duration-ms="126" started-at="2020-03-24T07:06:27Z" finished-at="2020-03-24T07:06:27Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logout -->
-        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.EditGroupTest@754ba872]" name="afterSuite" is-config="true" duration-ms="676" started-at="2020-03-22T12:55:00Z" finished-at="2020-03-22T12:55:00Z">
+        <test-method status="PASS" signature="deleteGroupCreatedForTest(java.lang.String)[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="deleteGroupCreatedForTest" is-config="true" duration-ms="106" started-at="2020-03-24T07:06:27Z" finished-at="2020-03-24T07:06:27Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ProjectManagers]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteGroupCreatedForTest -->
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.NewGroupTests@4dfa3a9d]" name="afterSuite" is-config="true" duration-ms="683" started-at="2020-03-24T07:06:28Z" finished-at="2020-03-24T07:06:28Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterSuite -->
-      </class> <!-- test.EditGroupTest -->
-    </test> <!-- editGroupTests -->
+      </class> <!-- test.NewGroupTests -->
+    </test> <!-- newGroupTests -->
   </suite> <!-- newGrouTests -->
 </testng-results>

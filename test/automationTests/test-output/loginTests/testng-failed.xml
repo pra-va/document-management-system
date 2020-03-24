@@ -3,8 +3,8 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [loginTests]">
   <test thread-count="5" name="loginTests(failed)">
     <parameter name="userPassword" value="useruser"/>
-    <parameter name="adminUserName" value="adminas"/>
-    <parameter name="userUserName" value="useris"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="userUserName" value="user"/>
     <parameter name="adminPasswrod" value="adminadmin"/>
     <parameter name="passwordWrong" value="qwerty"/>
     <parameter name="userNameWrong" value="qwerty"/>

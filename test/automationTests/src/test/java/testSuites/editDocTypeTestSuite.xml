@@ -4,8 +4,8 @@
 	<test name="EditDocTypeTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPasswrod" value="adminadmin" />
-		<parameter name="groupName" value="Project managers" />
-		<parameter name="docTypeName" value="Resignation Letter" />
+		<parameter name="groupName" value="ProjectManagers" />
+		<parameter name="docTypeName" value="ResignationLetter" />
 		<parameter name="newDocTypeName" value="New name" />
 		<classes>
 			<class name="test.EditDocTypeTests"/>

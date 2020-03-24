@@ -1,23 +1,16 @@
 package utilities;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
-import java.util.Base64;
 
-import com.mashape.unirest.http.HttpResponse;
-import com.mashape.unirest.http.JsonNode;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class API {
 
@@ -55,6 +48,9 @@ public class API {
 		HttpURLConnection deleteConnection = (HttpURLConnection) obj.openConnection();
 		deleteConnection.setRequestProperty("Cookie", "JSESSIONID=" + session_id);
 		deleteConnection.setRequestMethod("DELETE");
+		deleteConnection.setRequestProperty("Content-Type", "application/json");
+		deleteConnection.setRequestProperty("charset", "utf-8");
+		deleteConnection.setDoOutput(true);
 		deleteConnection.connect();
 		deleteConnection.disconnect();
 		int responseCode = deleteConnection.getResponseCode();

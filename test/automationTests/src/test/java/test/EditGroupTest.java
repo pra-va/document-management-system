@@ -3,7 +3,10 @@ package test;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeGroups;
@@ -14,19 +17,34 @@ import page.EditGroupPage;
 import page.GroupListPage;
 import page.LoginPage;
 import page.MainPage;
+import utilities.API;
+import utilities.GetSessionId;
 
 public class EditGroupTest extends AbstractTest {
 	LoginPage loginPage;
 	MainPage mainPage;
 	GroupListPage groupListPage;
 	EditGroupPage editGroupPage;
+	String sessionID;
 
+	@Parameters({ "docTypeName", "groupName" })
 	@BeforeClass
-	public void preconitions() {
+	public void preconitions(String docTypeName, String groupName) throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		groupListPage = new GroupListPage(driver);
 		editGroupPage = new EditGroupPage(driver);
+		sessionID = GetSessionId.login("admin", "adminadmin");
+		API.createGroup("Random description", "[]", "[]", groupName, "[]", sessionID);
+		API.createDocType("[]", "[]", docTypeName, sessionID);
+	}
+
+	@Parameters({ "docTypeName", "groupName" })
+	@AfterClass
+	public void deleteEntities(String docTypeName, String groupName) throws IOException {
+		sessionID = GetSessionId.login("adminas", "adminadmin");
+		API.deleteGroup(groupName, sessionID);
+		API.deleteDoctype(docTypeName, sessionID);
 	}
 
 	@Parameters({ "adminUserName", "adminPasswrod" })
@@ -104,20 +122,20 @@ public class EditGroupTest extends AbstractTest {
 		groupListPage.sendKeysSearchForGroup(p1);
 		groupListPage.clickEditSpecificGroupButton(p1);
 		editGroupPage.sendKeysSearchGroupsUsers(p2);
-		assertFalse(driver
+		assertTrue(driver
 				.findElement(
 						By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + p2 + "')]/..//td[1]//input"))
-				.isSelected(), "User should have been removed from the group");
+				.isSelected(), " User should have been added to the group");
 		editGroupPage.clickSpecificUserCheckBox(p2);
 		editGroupPage.clickUpdateButton();
 		driver.navigate().refresh();
 		groupListPage.sendKeysSearchForGroup(p1);
 		groupListPage.clickEditSpecificGroupButton(p1);
 		editGroupPage.sendKeysSearchGroupsUsers(p2);
-		assertTrue(driver
+		assertFalse(driver
 				.findElement(
 						By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + p2 + "')]/..//td[1]//input"))
-				.isSelected(), "User should have been added to the group");
+				.isSelected(), "User should have been removed from the group");
 		editGroupPage.clickCancelButton();
 	}
 
@@ -150,14 +168,14 @@ public class EditGroupTest extends AbstractTest {
 		groupListPage.sendKeysSearchForGroup(p1);
 		groupListPage.clickEditSpecificGroupButton(p1);
 		editGroupPage.sendKeysSearchDocTypes(p2);
-		assertFalse(driver
+		assertTrue(driver
 				.findElement(
 						By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + p2 + "')]/..//td[2]//input"))
-				.isSelected(), "User should have been removed from the group");
-		assertFalse(driver
+				.isSelected(), "Creater / sign rights should have been added for this group");
+		assertTrue(driver
 				.findElement(
 						By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + p2 + "')]/..//td[3]//input"))
-				.isSelected(), "User should have been removed from the group");
+				.isSelected(), "Creater / sign rights should have been added for this group");
 		editGroupPage.clickSpecificDocTypeCreateCheckBox(p2);
 		editGroupPage.clickSpecificDocTypeSignCheckBox(p2);
 		editGroupPage.clickUpdateButton();
@@ -165,14 +183,14 @@ public class EditGroupTest extends AbstractTest {
 		groupListPage.sendKeysSearchForGroup(p1);
 		groupListPage.clickEditSpecificGroupButton(p1);
 		editGroupPage.sendKeysSearchDocTypes(p2);
-		assertTrue(driver
+		assertFalse(driver
 				.findElement(
 						By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + p2 + "')]/..//td[2]//input"))
-				.isSelected(), "User should have been removed from the group");
-		assertTrue(driver
+				.isSelected(), "Creater / sign rights should have been removed from this group");
+		assertFalse(driver
 				.findElement(
 						By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + p2 + "')]/..//td[3]//input"))
-				.isSelected(), "User should have been removed from the group");
+				.isSelected(), "Creater / sign rights should have been removed from this group");
 		editGroupPage.clickCancelButton();
 	}
 }

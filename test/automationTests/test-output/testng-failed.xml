@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite guice-stage="DEVELOPMENT" name="Failed suite [newGrouTests]">
-  <test thread-count="5" name="editGroupTests(failed)">
-    <parameter name="docTypeName" value="Resignation Letter"/>
-    <parameter name="groupName" value="Project managers"/>
+<suite guice-stage="DEVELOPMENT" name="Failed suite [newDocTypeTests]">
+  <test thread-count="5" name="newDocTypeTests(failed)">
+    <parameter name="docTypeName" value="ResignationLetter"/>
+    <parameter name="groupName" value="ProjectManagers"/>
     <parameter name="adminUserName" value="admin"/>
+    <parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers."/>
     <parameter name="adminPasswrod" value="adminadmin"/>
-    <parameter name="newGroupName" value="New Project managers"/>
     <classes>
-      <class name="test.EditGroupTest">
+      <class name="test.NewDocTypeTests">
         <methods>
+          <include name="docTypeGroupsTest" invocation-numbers="0"/>
           <include name="beforeSuite"/>
-          <include name="updateGroupCreatSignRightsTest" invocation-numbers="0"/>
           <include name="preconitions"/>
           <include name="afterSuite"/>
+          <include name="deleteDocTypeCreatedForTest"/>
         </methods>
-      </class> <!-- test.EditGroupTest -->
+      </class> <!-- test.NewDocTypeTests -->
     </classes>
-  </test> <!-- editGroupTests(failed) -->
-</suite> <!-- Failed suite [newGrouTests] -->
+  </test> <!-- newDocTypeTests(failed) -->
+</suite> <!-- Failed suite [newDocTypeTests] -->
