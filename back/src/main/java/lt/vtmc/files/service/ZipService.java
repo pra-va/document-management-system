@@ -28,6 +28,15 @@ public class ZipService {
 	@Autowired
 	private FileService fileService;
 
+	/**
+	 * This method will turn files provided as byteArrayResource in a map to a byte
+	 * array of a zip file.
+	 * 
+	 * @param files
+	 * @param username
+	 * @return byte array of zip file
+	 * @throws IOException
+	 */
 	public byte[] zipFiles(Map<String, ByteArrayResource> files, String username) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);

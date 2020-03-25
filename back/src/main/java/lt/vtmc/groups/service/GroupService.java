@@ -46,6 +46,9 @@ public class GroupService {
 	/**
 	 * 
 	 * This method finds groups from group repository.
+	 *
+	 * @param name of the group
+	 * @return group entity type object
 	 */
 	public Group findGroupByName(String name) {
 		return groupRepository.findGroupByName(name);
@@ -53,8 +56,10 @@ public class GroupService {
 
 	/**
 	 * Method to create user groups.
-	 * 
-	 * @return Group
+	 *
+	 * @param name of the group
+	 * @param description of the group
+	 * @return groupt entity type object
 	 */
 	@Transactional
 	public Group createGroup(String name, String description) {
@@ -72,8 +77,8 @@ public class GroupService {
 	/**
 	 * Method to add users to groups.
 	 * 
-	 * @param names
-	 * @param username
+	 * @param groupList of groups to add the user to
+	 * @param username or the user added to groups
 	 */
 	@Transactional
 	public void addUserToGroupByUsername(String[] groupList, String username) {
@@ -94,8 +99,8 @@ public class GroupService {
 	/**
 	 * Method to remove users from groups.
 	 * 
-	 * @param names
-	 * @param username
+	 * @param groupList of groups to remove the user from
+	 * @param username of the user to be removed from the groups
 	 */
 	@Transactional
 	public void removeUserFromGroupByUsername(String[] groupList, String username) {
@@ -116,8 +121,8 @@ public class GroupService {
 	/**
 	 * Method to remove users from groups.
 	 * 
-	 * @param names
-	 * @param username, String[] userlist
+	 * @param groupname of the group to remove users from
+	 * @param userlist of users to remove from the group
 	 */
 	@Transactional
 	public void removeUsersFromGroup(String groupname, String[] userlist) {
@@ -137,8 +142,8 @@ public class GroupService {
 	/**
 	 * Method to add users to groups.
 	 * 
-	 * @param names
-	 * @param username, String[] userlist
+	 * @param groupname of the group to add users to
+	 * @param userlist of users to add to the group
 	 */
 	@Transactional
 	public void addUsersToGroup(String groupname, String[] userlist) {
@@ -158,7 +163,9 @@ public class GroupService {
 	/**
 	 * Method to return all groups.
 	 * 
-	 * @param PagingData
+	 * @param pagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of groupDetailsDTO objects
 	 */
 	public Map<String, Object> retrieveAllGroups(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
@@ -174,9 +181,9 @@ public class GroupService {
 	/**
 	 * Method to update user groups.
 	 * 
-	 * @param Username, String[]groupList
+	 * @param newGroupList of groups to add the user to
+	 * @param username of the user to add to the group
 	 */
-	
 	public void updateGroups(String[] newGroupList, String username) {
 		List<Group> currentGroupList = new ArrayList<Group>();
 		for (int i = 0; i < newGroupList.length; i++) {
@@ -189,11 +196,14 @@ public class GroupService {
 
 	/**
 	 * Method to update group details.
-	 * 
-	 * @param String newName, String name, String description, String[] newUserList,
-	 *	String[] docTypesToApprove, String[] docTypesToCreate
+	 *  
+	 * @param newName for the group
+	 * @param name of the group (current)
+	 * @param description of the group
+	 * @param newUserList to update
+	 * @param docTypesToApprove full list of document types to approve
+	 * @param docTypesToCreate full list of document types to create
 	 */
-	
 	@Transactional
 	public void updateGroupDetails(String newName, String name, String description, String[] newUserList,
 			String[] docTypesToApprove, String[] docTypesToCreate) {
@@ -224,9 +234,10 @@ public class GroupService {
 	/**
 	 * Method to add document types to existing group.
 	 * 
-	 * @param String name, String[] docTypesToApprove, String[] docTypesToCreate
+	 * @param name of document type to add document types to
+	 * @param docTypesToApprove list of document types to approve
+	 * @param docTypesToCreate list of document types to create
 	 */
-	
 	@Transactional
 	public void addDocTypes(String name, String[] docTypesToApprove, String[] docTypesToCreate) {
 		Group groupToAddTo = groupRepository.findGroupByName(name);

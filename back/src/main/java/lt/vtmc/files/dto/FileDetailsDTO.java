@@ -5,18 +5,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.files.model.File4DB;
 
+/**
+ * DTO for file details.
+ * 
+ * @author pra-va
+ *
+ */
 public class FileDetailsDTO {
 
-	private String fileName; //
+	private String fileName;
 
-	private String fileType; //
+	private String fileType;
 
 	private long fileSize;
 
 	@JsonIgnore
-	private Document document; //
+	private Document document;
 
-	private String UID; //
+	private String UID;
 
 	public FileDetailsDTO(File4DB file) {
 		this.fileName = file.getFileName();

@@ -50,7 +50,7 @@ public interface DocumentRepository extends JpaRepository<Document, String> {
 	 *
 	 * @param searchValueString to search database for
 	 * @param firstPageable Sets response list size, sort order and search phrase
-	 * @return list of document entity type objects
+	 * @return page of document entity type objects
 	 */
 	@Query("SELECT d FROM Document d WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', ?1,'%'))")
 
