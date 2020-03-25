@@ -1,12 +1,17 @@
 package lt.vtmc.docTypes.dto;
 
-
+/**
+ * DTO object requested in controller as request body and used to update
+ * document types.
+ * 
+ *
+ */
 public class UpdateDocTypeCommand {
-	
+
 	private String newName;
 
 	private String[] groupsApproving;
-	
+
 	private String[] groupsCreating;
 
 	public String getNewName() {

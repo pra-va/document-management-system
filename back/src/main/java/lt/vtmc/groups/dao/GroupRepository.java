@@ -19,6 +19,5 @@ public interface GroupRepository extends JpaRepository<Group, String> {
 	Page<Group> findAllByName(String name, Pageable pageable);
 
 	@Query("SELECT g FROM Group g WHERE LOWER(g.name) LIKE LOWER(CONCAT('%', ?1,'%'))")
-
 	Page<Group> findLike(String name, Pageable pageable);
 }

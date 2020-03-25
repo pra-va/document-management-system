@@ -5,18 +5,19 @@ import java.util.List;
 import lt.vtmc.docTypes.model.DocType;
 import lt.vtmc.groups.model.Group;
 
+/**
+ * DTO to return document type details.
+ *
+ */
 public class DocTypeDetailsDTO {
 
 	private String name;
 
-	
 	private List<Group> groupsToApprove;
 
-	
 	private List<Group> groupsToCreate;
 
 	public DocTypeDetailsDTO(DocType docType) {
-		super();
 		this.name = docType.getName();
 		this.groupsToCreate = docType.getGroupsCreating();
 		this.groupsToApprove = docType.getGroupsApproving();
@@ -54,5 +55,4 @@ public class DocTypeDetailsDTO {
 		this.groupsToCreate = groupsToCreate;
 	}
 
-	
 }

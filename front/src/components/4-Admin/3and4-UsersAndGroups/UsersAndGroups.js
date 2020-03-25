@@ -66,9 +66,9 @@ class ListOfUsers extends Component {
     };
 
     axios
-      .post(serverUrl + "users", pageData)
+      .post(serverUrl + "user/nogroups", pageData)
       .then(response => {
-        let tmpUsersData = response.data.userList.map((item, index) => {
+        let tmpUsersData = response.data.userList.content.map((item, index) => {
           return {
             number: index + 1,
             name: item.name,

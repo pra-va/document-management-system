@@ -205,6 +205,8 @@ public class UserController {
 	@PostMapping(path = "/api/{username}/dtypescreate")
 	public Map<String, Object> getUserDocTypesCreate(@PathVariable("username") String username,
 			@RequestBody PagingData pagingData) {
+		LOG.info("# LOG # Initiated by [{}]: Requested document types that user [{}] can create #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), username);
 		return userService.getUserDocTypesToCreate(username, pagingData);
 	}
 
@@ -212,6 +214,8 @@ public class UserController {
 	@PostMapping(path = "/api/{username}/doctobesigned")
 	public Map<String, Object> getDocumentsToBeSigned(@PathVariable("username") String username,
 			@RequestBody PagingData pagingData) {
+		LOG.info("# LOG # Initiated by [{}]: Requested document types that user [{}] can sign #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), username);
 		return docService.findAllDocumentsToSignByUsername(username, pagingData);
 	}
 
@@ -219,6 +223,9 @@ public class UserController {
 	@PostMapping(path = "/api/{username}/alldocuments")
 	public Map<String, Object> getAllDocumentsByUsername(@PathVariable("username") String username,
 			@RequestBody PagingData pagingData) {
+		LOG.info("# LOG # Initiated by [{}]: Requested all documents of user [{}] #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), username);
+
 		return docService.returnAllDocumentsByUsername(username, pagingData);
 	}
 
@@ -233,10 +240,13 @@ public class UserController {
 	public ResponseEntity<String> createInitialAdmin(@RequestBody CreateUserCommand command) {
 		boolean adminShouldBeCreated = userService.shouldCreateFirstUser();
 		if (adminShouldBeCreated) {
+			LOG.info("# LOG # Initial user with username [{}] has been created. #", command.getUsername());
 			userService.createSystemAdministrator(command.getUsername(), command.getName(), command.getSurname(),
 					command.getPassword());
 			return new ResponseEntity<String>("Created succesfully.", HttpStatus.CREATED);
 		} else {
+			LOG.info(
+					"# LOG # Atempt to create initial admin has been blocked because there is already admin created. #");
 			return new ResponseEntity<String>("Initial Admin is already created.", HttpStatus.METHOD_NOT_ALLOWED);
 		}
 	}
@@ -250,9 +260,18 @@ public class UserController {
 	public ResponseEntity<String> shouldInitAdminBeCreated() {
 		boolean dbContainsAdmin = userService.shouldCreateFirstUser();
 		if (dbContainsAdmin) {
+			LOG.info("# LOG # Initial admin creation check returned true. Initial admin needs to be created. #");
 			return new ResponseEntity<String>("Initial user needs to be created.", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("Initial Admin is already created.", HttpStatus.IM_USED);
 		}
+	}
+
+	@Secured({ "ROLE_ADMIN" })
+	@PostMapping("/api/user/nogroups")
+	public Map<String, Object> getUsersNoGroup(@RequestBody PagingData pagingData) {
+		LOG.info("# LOG # Initiated by [{}]: Requested list of users without groups. #",
+				SecurityContextHolder.getContext().getAuthentication().getName());
+		return userService.getUsersNoGroups(pagingData.getSearchValueString(), pagingData);
 	}
 }

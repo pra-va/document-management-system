@@ -55,7 +55,6 @@ class UserDetails extends Component {
   };
 
   fetchUserData = () => {
-    console.log(serverUrl + "user/" + this.state.username);
     axios
       .get(serverUrl + "user/" + this.state.username)
       .then(response => {

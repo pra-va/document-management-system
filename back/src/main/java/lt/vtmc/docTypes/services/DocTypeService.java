@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import lt.vtmc.docTypes.dao.DocTypeRepository;
 import lt.vtmc.docTypes.dto.DocTypeDetailsDTO;
 import lt.vtmc.docTypes.model.DocType;
-import lt.vtmc.documents.dao.DocumentRepository;
 import lt.vtmc.documents.model.Document;
 import lt.vtmc.documents.service.DocumentService;
 import lt.vtmc.groups.dao.GroupRepository;
@@ -46,6 +45,7 @@ public class DocTypeService {
 
 	@Autowired
 	private DocumentService docService;
+
 	/**
 	 * 
 	 * This method finds groups from group repository.
@@ -107,9 +107,37 @@ public class DocTypeService {
 		return responseMap;
 	}
 
+	public Map<String, Object> retrieveAllDocTypesNoGroups(PagingData pagingData) {
+		Pageable firstPageable = pagingData.getPageable();
+		Page<String> doctypelist = docTypeRepo.findLikeDocTypeNames(pagingData.getSearchValueString(), firstPageable);
+		Map<String, Object> responseMap = new HashMap<String, Object>();
+		Map<String, List<String>> approving = new HashMap<>();
+		Map<String, List<String>> creating = new HashMap<>();
+		for (int i = 0; i < doctypelist.getContent().size(); i++) {
+			String element = doctypelist.getContent().get(i);
+			approving.put(element, docTypeRepo.findGroupsApprovingByDocTypeName(element));
+			creating.put(element, docTypeRepo.findGroupsCreatingByDocTypeName(element));
+		}
+
+		responseMap.put("pagingData",
+				new PagingResponse(doctypelist.getNumber(), doctypelist.getTotalElements(), doctypelist.getSize()));
+		responseMap.put("documentList", doctypelist);
+		responseMap.put("creating", creating);
+		responseMap.put("approving", approving);
+		return responseMap;
+	}
+
+	public List<String> getGroupsApproving(String docTypeName) {
+		return docTypeRepo.findGroupsApprovingByDocTypeName(docTypeName);
+	}
+
+	public List<String> getGroupsCreating(String docTypeName) {
+		return docTypeRepo.findGroupsCreatingByDocTypeName(docTypeName);
+	}
+
 	@Transactional
 	public void deleteDocType(DocType dType) {
-		List <Document> tmpListDocuments = dType.getDocumentList();
+		List<Document> tmpListDocuments = dType.getDocumentList();
 		for (Document document : tmpListDocuments) {
 			document.setdType(null);
 			docService.deleteDocument(document);
@@ -170,7 +198,7 @@ public class DocTypeService {
 			group.setDocTypesToApprove(tmpList);
 		}
 		docTypeToUpdate.setGroupsApproving(newApproveList);
-		
+
 		List<Group> newCreateList = new ArrayList<Group>();
 		for (String group : groupsCreating) {
 			newCreateList.add(groupRepository.findGroupByName(group));
