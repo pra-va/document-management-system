@@ -71,15 +71,15 @@ public class NewDocTypeTests extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 * Test steps:
-	 * 1. Open new document type page.
-	 * 2. Leave document types name field empty.
-	 * 3. Click create button.
-	 * Expected results:
-	 *   - New document type should not be created without a name.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 * Test steps:<br>
+	 * 1. Open new document type page.<br>
+	 * 2. Leave document types name field empty.<br>
+	 * 3. Click create button.<br>
+	 * Expected results:<br>
+	 *   - New document type should not be created without a name.<br>
 	 */
 	@Test(groups = { "newDocType" }, priority = 0, enabled = true)
 	public void docTypeNoNameTest() {
@@ -92,17 +92,17 @@ public class NewDocTypeTests extends AbstractTest {
 		newDocTypePage.clickCancelButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - at least one group is created for testing purpose.
-	 * Test steps:
-	 * 1. Open new document type page.
-	 * 2. Enter document types name.
-	 * 3. Check create and sign checkboxes on the group that was created for testing purpose.
-	 * 4. Click create button.
-	 * Expected results:
-	 *   - New document type is created.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 *   - at least one group is created for testing purpose.<br>
+	 * Test steps:<br>
+	 * 1. Open new document type page.<br>
+	 * 2. Enter document types name.<br>
+	 * 3. Check create and sign checkboxes on the group that was created for testing purpose.<br>
+	 * 4. Click create button.<br>
+	 * Expected results:<br>
+	 *   - New document type is created.<br>
 	 */
 	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "newDocType" }, priority = 1, enabled = true)
@@ -119,14 +119,14 @@ public class NewDocTypeTests extends AbstractTest {
 		docPage.clearDocTypeSearch();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - at lease one document type was created for testing purpose with a test group create/sign rights set.
-	 * Test steps:
-	 * 1. Open admin document types page.
-	 * Expected results:
-	 *   - Create/sign rights where set properly for the selected group.
+	/**-
+	 * Preconditions:<br> 
+	 *   - admin is logged in the system;<br>
+	 *   - at lease one document type was created for testing purpose with a test group create/sign rights set.<br>
+	 * Test steps:<br>
+	 * 1. Open admin document types page.<br>
+	 * Expected results:<br>
+	 *   - Create/sign rights where set properly for the selected group.<br>
 	 */
 	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "newDocType" }, priority = 2, enabled = true)

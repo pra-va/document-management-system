@@ -75,28 +75,28 @@ public class EditUserTests extends AbstractTest {
 		API.deleteGroup(groupNameTwo, sessionID);
 	}
 
-	/*-	 
-	 * Preconditions: 
-	 * - one User  and two groups are created.
-	 * - admin is logged in the system.
+	/**-	 
+	 * Preconditions: <br>
+	 * - one User  and two groups are created.<br>
+	 * - admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Login to the system as an admin. 
-	 * 2. Click "Admin" menu, "Users" option. 
-	 * 3. Search for specific user and click "Edit / view" button.
-	 * 4. Fill fields in Edit user form: "First Name", "Last Name", check box "Update password",  
-	 *    fill field "Password", click "Yes" on "Admin" selection, search for a first group name, 
-	 *    click on Group name in section "Add user to groups", clear search filed, search for second group, click on group name, 
-	 *    click button "Update". 
-	 * 5. Click "Admin" menu, "Users" option. 
-	 * 6. Search for Username. 	 
-	 *    Expected conditions: "First Name", "Last Name", "Role" on a list are displayed correctly. 	  
-	 * 7. Click "Edit / View" button. 
-	 * 8. Check if all properties ("First Name", "Last Name", "Role", groups) on edit page are displayed correctly. 
-	 * 9. Click button "Cancel".
-	 * 10. Click button "Logout". 
-	 * 11. Login to the system using new user's username and password, click button "Login".
-	 *     Expected conditions: all new user data on Profile Page is displayed correctly.
+	 * Test steps:<br>
+	 * 1. Login to the system as an admin. <br>
+	 * 2. Click "Admin" menu, "Users" option. <br>
+	 * 3. Search for specific user and click "Edit / view" button.<br>
+	 * 4. Fill fields in Edit user form: "First Name", "Last Name", check box "Update password", <br> 
+	 *    fill field "Password", click "Yes" on "Admin" selection, search for a first group name, <br>
+	 *    click on Group name in section "Add user to groups", clear search filed, search for second group, click on group name, <br>
+	 *    click button "Update". <br>
+	 * 5. Click "Admin" menu, "Users" option.<br> 
+	 * 6. Search for Username. 	 <br>
+	 *    Expected conditions: "First Name", "Last Name", "Role" on a list are displayed correctly. <br>	  
+	 * 7. Click "Edit / View" button. <br>
+	 * 8. Check if all properties ("First Name", "Last Name", "Role", groups) on edit page are displayed correctly. <br>
+	 * 9. Click button "Cancel".<br>
+	 * 10. Click button "Logout". <br>
+	 * 11. Login to the system using new user's username and password, click button "Login".<br>
+	 *     Expected results: all new user data on Profile Page is displayed correctly.<br>
 	 */
 	@Parameters({ "newAdminUserName", "newAdminPassword", "newAdminRole", "groupNameOne", "groupNameTwo", "updatedPassword" })
 	@Test(groups = { "editUser" }, priority = 1, enabled = true)

@@ -86,25 +86,26 @@ public class SubmitDocumentTests extends AbstractTest {
 		API.deleteDoctype(docTypeName, sessionID);
 	}
 
-	/*-	 
-	 * Preconditions: 
-	 * - two group were created;
-	 * - two users were created and added to groups, one user per group;
-	 * - one document type was created, one group rights were set to "Create", other to "Sign";
-	 * - user with document creation rights is logged in the system.
-	 * 	
-	 * Test steps: 	 	  
-	 * 1. Click "Create document" button. 
+	/**-	 
+	 * Preconditions:<br>
+	 * - two group were created;<br>
+	 * - two users were created and added to groups, one user per group;<br>
+	 * - one document type was created, one group rights were set to "Create", other to "Sign";<br>
+	 * - user with document creation rights is logged in the system.<br>
+	 * 	<br>
+	 * Test steps:<br> 	 	  
+	 * 1. Click "Create document" button.<br> 
 	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name,
-	 *    click "Choose File", select file, click "Open".
-	 * 3. Click "Create" button. 	 
-	 * 4. Open "My Documents" list.
-	 * 5. Click button "Submit".
-	 * Expected condition: document status changed to "Submitted".
-	 * 6. Click button "Log out".
-	 * 7. Log in as user who can sign document: fill "Username", "Password", click "Log in".
-	 * 8. Click button "Sign Document".
-	 * Expected conditions: document is shown, it's status is "Submitted". 	 		 
+	 *    click "Choose File", select file, click "Open".<br>
+	 * 3. Click "Create" button. <br>	 
+	 * 4. Open "My Documents" list.<br>
+	 * 5. Click button "Submit".<br>
+	 * 
+	 * Expected condition: document status changed to "Submitted".<br>
+	 * 6. Click button "Log out".<br>
+	 * 7. Log in as user who can sign document: fill "Username", "Password", click "Log in".<br>
+	 * 8. Click button "Sign Document".<br>
+	 * Expected results: document is shown, it's status is "Submitted". <br>		 
 	 */
 	@Parameters({ "documentName", "documentDescription", "docTypeName", "filePath", "fileName", "UserUserNameSIGN",
 			"UserPassswordSIGN" })

@@ -61,18 +61,18 @@ public class EditDocTypeTests extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - at least one doc type is created for testing purpose.
-	 * Test steps:
-	 * 1. Open admin doc types page.
-	 * 2. Enter name of the doc type you are searching for.
-	 * 3. Click edit that doc type and change its name.
-	 * 4. Click update button.
-	 * 5. Change the doc type name back
-	 * Expected results:
-	 *   - Doc type name is changed correctly.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 *   - at least one doc type is created for testing purpose.<br>
+	 * Test steps:<br>
+	 * 1. Open admin doc types page.<br>
+	 * 2. Enter name of the doc type you are searching for.<br>
+	 * 3. Click edit that doc type and change its name.<br>
+	 * 4. Click update button.<br>
+	 * 5. Change the doc type name back.<br>
+	 * Expected results:<br>
+	 *   - Doc type name is changed correctly.<br>
 	 */
 	@Parameters({ "docTypeName", "newDocTypeName" })
 	@Test(groups = { "editDocType" }, priority = 0, enabled = true)
@@ -96,18 +96,18 @@ public class EditDocTypeTests extends AbstractTest {
 		docListPage.clearDocTypeSearch();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - at least one doc type and group are created for testing purpose.
-	 * Test steps:
-	 * 1. Open admin groups page.
-	 * 2. Enter name of the doc type you are searching for.
-	 * 3. Click edit that doc type and add assign group with creating/signing rights.
-	 * 4. Click update button.
-	 * 5. Click edit the doc type again and remove creating/signing rights for the same group.
-	 * Expected results:
-	 *   - Creating/signing rights assigned and removed for the group correctly.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 *   - at least one doc type and group are created for testing purpose.<br>
+	 * Test steps:<br>
+	 * 1. Open admin groups page.<br>
+	 * 2. Enter name of the doc type you are searching for.<br>
+	 * 3. Click edit that doc type and add assign group with creating/signing rights.<br>
+	 * 4. Click update button.<br>
+	 * 5. Click edit the doc type again and remove creating/signing rights for the same group.<br>
+	 * Expected results:<br>
+	 *   - Creating/signing rights assigned and removed for the group correctly.<br>
 	 */
 	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "editDocType" }, priority = 1, enabled = true)

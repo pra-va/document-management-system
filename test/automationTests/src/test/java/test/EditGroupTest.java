@@ -61,18 +61,18 @@ public class EditGroupTest extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - at least one group is created for testing purpose.
-	 * Test steps:
-	 * 1. Open admin groups page.
-	 * 2. Enter name of the group you are searching for.
-	 * 3. Click edit that group and change its name.
-	 * 4. Click update button.
-	 * 5. Change the group name back
-	 * Expected results:
-	 *   - Groups name is changed correctly.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 *   - at least one group is created for testing purpose.<br>
+	 * Test steps:<br>
+	 * 1. Open admin groups page.<br>
+	 * 2. Enter name of the group you are searching for.<br>
+	 * 3. Click edit that group and change its name.<br>
+	 * 4. Click update button.<br>
+	 * 5. Change the group name back<br>
+	 * Expected results:<br>
+	 *   - Groups name is changed correctly.<br>
 	 */
 	@Parameters({ "groupName", "newGroupName" })
 	@Test(groups = { "editGroup" }, priority = 0, enabled = true)
@@ -95,18 +95,18 @@ public class EditGroupTest extends AbstractTest {
 		groupListPage.clearSearchField();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - at least one group is created for testing purpose.
-	 * Test steps:
-	 * 1. Open admin groups page.
-	 * 2. Enter name of the group you are searching for.
-	 * 3. Click edit that group and remove a user.
-	 * 4. Click update button.
-	 * 5. Click edit group again and add the user back.
-	 * Expected results:
-	 *   - User is removed and added to the group correctly.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 *   - at least one group is created for testing purpose.<br>
+	 * Test steps:<br>
+	 * 1. Open admin groups page.<br>
+	 * 2. Enter name of the group you are searching for.<br>
+	 * 3. Click edit that group and remove a user.<br>
+	 * 4. Click update button.<br>
+	 * 5. Click edit group again and add the user back.<br>
+	 * Expected results:<br>
+	 *   - User is removed and added to the group correctly.<br>
 	 */
 	@Parameters({ "groupName", "adminUserName" })
 	@Test(groups = { "editGroup" }, priority = 1, enabled = true)
@@ -139,18 +139,18 @@ public class EditGroupTest extends AbstractTest {
 		editGroupPage.clickCancelButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - at least one group is created for testing purpose.
-	 * Test steps:
-	 * 1. Open admin groups page.
-	 * 2. Enter name of the group you are searching for.
-	 * 3. Click edit that group and remove creat and sign rights on specific document type .
-	 * 4. Click update button.
-	 * 5. Click edit group again and add create and sign rights back.
-	 * Expected results:
-	 *   - Create and sign rights are removed and added to the group correctly.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 *   - at least one group is created for testing purpose.<br>
+	 * Test steps:<br>
+	 * 1. Open admin groups page.<br>
+	 * 2. Enter name of the group you are searching for.<br>
+	 * 3. Click edit that group and remove creat and sign rights on specific document type .<br>
+	 * 4. Click update button.<br>
+	 * 5. Click edit group again and add create and sign rights back.<br>
+	 * Expected results:<br>
+	 *   - Create and sign rights are removed and added to the group correctly.<br>
 	 */
 	@Parameters({ "groupName", "docTypeName" })
 	@Test(groups = { "editGroup" }, priority = 2, enabled = true)

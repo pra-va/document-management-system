@@ -71,25 +71,25 @@ public class EditDocumentTests extends AbstractTest {
 		API.deleteDoctype(docTypeName, sessionID);
 	}
 
-	/*-	 
-	 * Preconditions: 	  
-	 * - one group was created;
-	 * - one user was created and added to this group;
-	 * - one document type was create and previously created group was added to list of groups that can create this type;
-	 * - one document was created;
-	 * - user with document creation rights is logged in the system.
+	/**-	 
+	 * Preconditions:<br> 
+	 * - one group was created;<br>
+	 * - one user was created and added to this group;<br>
+	 * - one document type was create and previously created group was added to list of groups that can create this type;<br>
+	 * - one document was created;<br>
+	 * - user with document creation rights is logged in the system.<br>
 	 * 	
-	 * Test steps:	  
-	 * 1. Click "My documents" button. 
-	 * 2. Search for document name.
-	 * 3. Click "Edit / View button".
-	 * 2. Clear fields and enter new inputs in form: "Document Name", "Document Description", remove file, click "Choose File", select file,
-	 * click "Open".
-	 * 3. Click "Update" button. 	   
-	 * Expected conditions: ("Document Name", "Type", "Status", creation date, file name in File icon tooltip) 
-	 *  on "My Documents" list are displayed correctly . 
-	 * 4. Click "Edit / View" button.	 * 
-	 * Expected conditions: "Document Name", "Document Description", file name) are displayed correctly. 	 	 
+	 * Test steps:	<br>  
+	 * 1. Click "My documents" button. <br>
+	 * 2. Search for document name.<br>
+	 * 3. Click "Edit / View button".<br>
+	 * 2. Clear fields and enter new inputs in form: "Document Name", "Document Description", remove file, click "Choose File", select file,<br>
+	 * click "Open".<br>
+	 * 3. Click "Update" button.<br>
+	 * Expected conditions: ("Document Name", "Type", "Status", creation date)<br> 
+	 *  on "My Documents" list are displayed correctly . <br>
+	 * 4. Click "Edit / View" button. <br>
+	 * Expected results: "Document Name", "Document Description", file name) are displayed correctly. <br>	 	 
 	 */
 
 	@Parameters({ "userUserName", "groupName", "docTypeName", "documentName", "updatedDocumentName",

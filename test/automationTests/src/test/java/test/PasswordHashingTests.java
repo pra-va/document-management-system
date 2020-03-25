@@ -31,12 +31,12 @@ public class PasswordHashingTests extends AbstractTest {
 		API.deleteUser(userUserName, sessionID);
 	}
 
-	/*-	 
-	 * Preconditions: new user is created.
+	/**-	 
+	 * Preconditions: new user is created.<br>
 	 * 
-	 * Test steps:
-	 * 1. Get API call response of user password by username.
-	 * Expected results: response is not equal to password.
+	 * Test steps:<br>
+	 * 1. Get API call response of user password by username.<br>
+	 * Expected results: response is not equal to password.<br>
 	 */
 
 	@Parameters({ "userUserName", "userPassword" })
