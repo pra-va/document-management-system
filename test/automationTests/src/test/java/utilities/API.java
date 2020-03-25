@@ -26,7 +26,7 @@ public class API {
 		os.flush();
 		os.close();
 		int responseCode = postConnection.getResponseCode();
-		// System.out.println("POST Response Code : " + responseCode);
+		 System.out.println("POST Response Code : " + responseCode);
 		// System.out.println("POST Response Message : " +
 		// postConnection.getResponseMessage());
 		if (responseCode == HttpURLConnection.HTTP_CREATED) { // success
@@ -55,8 +55,8 @@ public class API {
 		deleteConnection.connect();
 		deleteConnection.disconnect();
 		int responseCode = deleteConnection.getResponseCode();
-		System.out.println("POST Response Code :  " + responseCode);
-		System.out.println("POST Response Message : " + deleteConnection.getResponseMessage());
+		System.out.println("DELETE Response Code :  " + responseCode);
+		//System.out.println("POST Response Message : " + deleteConnection.getResponseMessage());
 		if (responseCode == HttpURLConnection.HTTP_OK) { // success
 			BufferedReader in = new BufferedReader(new InputStreamReader(deleteConnection.getInputStream()));
 			String inputLine;
@@ -126,26 +126,6 @@ public class API {
 		return sb.toString();
 	}
 	
-//}
-
-//	public static String get(String apiURL, String session_id) throws IOException {
-//		URL obj = new URL(apiURL);
-//		HttpURLConnection getConnection = (HttpURLConnection) obj.openConnection();
-//		getConnection.setRequestProperty("Cookie", "JSESSIONID=" + session_id);
-//		getConnection.setRequestMethod("GET");
-//		getConnection.connect();
-//		getConnection.disconnect();
-//		StringBuilder result = new StringBuilder();
-//		InputStream in = new BufferedReader(new InputStreamReader(getConnection.getInputStream()));
-//		  BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//
-//          String line;
-//          while ((line = reader.readLine()) != null) {
-//              result.append(line);
-//          }
-//
-//	}
-
 	public static void createUser(String groupList, String firstName, String lastName, String password, String username,
 			String session_id) throws IOException {
 		final String POST_PARAMS = "{\n" + "   \"groupList\": " + groupList + ",\n" + "    \"name\": \"" + firstName
@@ -188,73 +168,6 @@ public class API {
 		String entity = "DOCTYPE";
 		post(apiUrl, POST_PARAMS, entity, session_id);
 	}
-//
-//	public static void createDocument(String authorUsername, String description, String docType, String name)
-//			throws IOException {
-//		final String POST_DOCUMENT_PARAMS = "{\n" + "    \"authorUsername\": \"" + authorUsername + "\",\n"
-//				+ "    \"description\": \"" + description + "\",\n" + "    \"docType\": \"" + docType + "\",\n"
-//				+ "    \"name\": \"" + name + "\"" + "\n}";
-//		System.out.println(POST_DOCUMENT_PARAMS);
-//		URL obj = new URL("http://akademijait.vtmc.lt:8180/dvs/api/doc/create");
-//		HttpURLConnection postConnection = (HttpURLConnection) obj.openConnection();
-//		postConnection.setRequestMethod("POST");
-//		postConnection.setRequestProperty("Content-Type", "application/json");
-//		postConnection.setDoOutput(true);
-//		OutputStream os = postConnection.getOutputStream();
-//		os.write(POST_DOCUMENT_PARAMS.getBytes());
-//		os.flush();
-//		os.close();
-//		int responseCode = postConnection.getResponseCode();
-//		System.out.println("POST Response Code :  " + responseCode);
-//		System.out.println("POST Response Message : " + postConnection.getResponseMessage());
-//		String docID = "";
-//		if (responseCode == HttpURLConnection.HTTP_CREATED) { // success
-//			BufferedReader in = new BufferedReader(new InputStreamReader(postConnection.getInputStream()));
-//			String inputLine;
-//			StringBuffer response = new StringBuffer();
-//			while ((inputLine = in.readLine()) != null) {
-//				response.append(inputLine);
-//			}
-//			in.close();
-//			// print result
-//			docID = response.toString();
-//		} else {
-//			System.out.println("DOCUMENT WAS NOT CREATED");
-//		}
-//
-//		URL uploadFile = new URL("http://akademijait.vtmc.lt:8180/dvs/api/doc/upload/" + docID + "");
-//		File file = new File("src/test/java/utilities/testFile.pdf");
-//		HttpURLConnection postFileConnection = (HttpURLConnection) uploadFile.openConnection();
-//		postFileConnection.setRequestMethod("POST");
-//		postFileConnection.setRequestProperty("Content-Type", "application/pdf");
-//		postFileConnection.setDoOutput(true);
-//		BufferedOutputStream bos = new BufferedOutputStream(postFileConnection.getOutputStream());
-//		BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file.getAbsolutePath()));
-//		int i;
-//		// read byte by byte until end of stream
-//		while ((i = bis.read()) > 0) {
-//			bos.write(i);
-//		}
-//		bis.close();
-//		bos.close();
-//		int responseCode2 = postFileConnection.getResponseCode();
-//		System.out.println("POST Response Code :  " + responseCode2);
-//		System.out.println("POST Response Message : " + postFileConnection.getResponseMessage());
-//
-//		if (responseCode2 == HttpURLConnection.HTTP_CREATED) { // success
-//			BufferedReader in = new BufferedReader(new InputStreamReader(postConnection.getInputStream()));
-//			String inputLine;
-//			StringBuffer response = new StringBuffer();
-//			while ((inputLine = in.readLine()) != null) {
-//				response.append(inputLine);
-//			}
-//			in.close();
-//			// print result
-//			System.out.println(response.toString());
-//		} else {
-//			System.out.println("FILE WAS NOT ATTACHED");
-//		}
-//	}
 
 	public static void deleteUser(String userName, String session_id) throws IOException {
 		String deleteUserApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/delete/" + userName;
@@ -278,7 +191,7 @@ public class API {
 
 	public static String getFileDetails(String documentID, String session_id) throws IOException {
 		String getFileDetailsApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/files/info/docname/" + documentID;
-		return get(getFileDetailsApiURL, session_id).toString().substring(9, 26);
+		return get(getFileDetailsApiURL, session_id).toString().substring(9, 26);			
 	}
 
 	// Document is not deleted when file is attached, use deleteFile method first

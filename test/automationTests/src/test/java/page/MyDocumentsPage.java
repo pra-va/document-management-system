@@ -1,6 +1,9 @@
 package page;
 
+import javax.xml.xpath.XPath;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -64,8 +67,9 @@ public class MyDocumentsPage extends AbstractPage {
 		driver.findElement(By.xpath("//td[7]//button")).click();
 	}
 
-	public void clickButtonSubmit(String documentName) {
+	public void clickButtonSubmit(String documentName) throws InterruptedException {			
 		driver.findElement(By.xpath("//td[2][text()='" + documentName + "']/..//button[text()='Submit']")).click();
+		Thread.sleep(1000);	
 	}
 
 	/* CLEAR FIELDS */
@@ -118,10 +122,35 @@ public class MyDocumentsPage extends AbstractPage {
 	
 	/* WAIT */
 	
-	public void waitForDocumentVisibility(String documentName) {
-		new WebDriverWait(driver, 6).until(ExpectedConditions.visibilityOf
-				(driver.findElement(By.xpath("//td[text()='" + documentName + "']"))));
+	public void waitForDocumentVisibility(String documentName) {		
+		new WebDriverWait(driver, 3).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='" + documentName + "']")));		
 	}
 	
+	public void waitForButtonSubmittedToBeClickable() {
+		new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(buttonSubmitted));
+	}
+	
+	public void waitForButtonDeclinedToBeClickable() {
+		new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(buttonDeclined));
+	}
+	
+	public void waitForButtonAcceptedToBeClickable() {		
+		new WebDriverWait(driver, 3).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.elementToBeClickable(buttonAccepted));
+	}
 
+	public void waitForButtonSubmitBeClickable() {
+		new WebDriverWait(driver, 3).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[text()='Submit']"))));		
+	}
+	
+	public void waitForButtonSubmitNotBeClickable() {
+		new WebDriverWait(driver, 5).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[text()='View']")));		
+	}
+	
+	public void waitForButtonEditViewToBeClickable() {
+		new WebDriverWait(driver, 5).until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//td[7]//button"))));
+	}
 }

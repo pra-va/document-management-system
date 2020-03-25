@@ -32,10 +32,10 @@ public class EditUserTests extends AbstractTest {
 	ProfilePage profilePage;
 	String sessionID;
 
-	@Parameters({ "groupNameOne", "groupNameTwo", "newAdminFirstName", "newAdminLastName", "newAdminPassword",
+	@Parameters({ "adminUserName", "adminPassword", "groupNameOne", "groupNameTwo", "newAdminFirstName", "newAdminLastName", "newAdminPassword",
 			"newAdminUserName" })
 	@BeforeClass
-	public void preconditions(String groupNameOne, String groupNameTwo, String newAdminFirstName,
+	public void preconditions(String adminUserName, String adminPassword, String groupNameOne, String groupNameTwo, String newAdminFirstName,
 			String newAdminLastName, String newAdminPassword, String newAdminUserName) throws IOException {
 
 		loginPage = new LoginPage(driver);
@@ -44,7 +44,7 @@ public class EditUserTests extends AbstractTest {
 		editUserPage = new EditUserPage(driver);
 		adminNewUserPage = new AdminNewUserPage(driver);
 		profilePage = new ProfilePage(driver);
-		sessionID = GetSessionId.login("admin", "adminadmin");
+		sessionID = GetSessionId.login(adminUserName, adminPassword);
 		API.createGroup("Group One description", "[]", "[]", groupNameOne, "[]", sessionID);
 		API.createGroup("Group Two description", "[]", "[]", groupNameTwo, "[]", sessionID);
 		API.createAdmin("[\"" + groupNameOne + "\"]", newAdminFirstName, newAdminLastName, newAdminPassword,
@@ -65,43 +65,38 @@ public class EditUserTests extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 
-	@Parameters({ "groupNameOne", "groupNameTwo", "newAdminUserName" })
+	@Parameters({"adminUserName", "adminPassword", "groupNameOne", "groupNameTwo", "newAdminUserName" })
 	@AfterClass
-	public void deleteEntities(String groupNameOne, String groupNameTwo, String newAdminUserName) throws IOException {
-		sessionID = GetSessionId.login("admin", "adminadmin");
+	public void deleteEntities(String adminUserName, String adminPassword ,String groupNameOne, String groupNameTwo, String newAdminUserName)
+			throws IOException {
+		sessionID = GetSessionId.login(adminUserName, adminPassword);
 		API.deleteUser(newAdminUserName, sessionID);
 		API.deleteGroup(groupNameOne, sessionID);
 		API.deleteGroup(groupNameTwo, sessionID);
 	}
 
-	// TODO EDIT!!!
-	// before test create user and two groups
-	// delete user and groups after test
-
-	/*-
-	 * Test edits user properties, checks if all properties are saved correctly in user list, 
-	 * "Edit user" page and "Profile" page, checks logins to the system with new credentials. 
-	 * 
+	/*-	 
 	 * Preconditions: 
-	 * - one User with Admin role and Two groups are created.
+	 * - one User  and two groups are created.
+	 * - admin is logged in the system.
 	 * 
 	 * Test steps:
 	 * 1. Login to the system as an admin. 
 	 * 2. Click "Admin" menu, "Users" option. 
 	 * 3. Search for specific user and click "Edit / view" button.
 	 * 4. Fill fields in Edit user form: "First Name", "Last Name", check box "Update password",  
-	 * fill field "Password", click "Yes" on "Admin" selection, search for a first group name, 
-	 * click on Group name in section "Add user to groups", clear search filed, search for second group, click on group name, 
-	 * click button "Update". 
+	 *    fill field "Password", click "Yes" on "Admin" selection, search for a first group name, 
+	 *    click on Group name in section "Add user to groups", clear search filed, search for second group, click on group name, 
+	 *    click button "Update". 
 	 * 5. Click "Admin" menu, "Users" option. 
-	 * 6. Search for Username. 
-	 * 7. Check if new properties ("First Name", "Last Name", "Role") on a list are displayed correctly. 
-	 * 8. Click "Edit / View" button. 
-	 * 9. Check if all properties ("First Name", "Last Name", "Role", groups) on edit page are displayed correctly. 
-	 * 10. Click button "Cancel".
-	 * 11. Click button "Logout". 
-	 * 12. Login to the system using new user's username and password, click button "Login".	 
-	 * 13. Check if all new user data on Profile Page is displayed correctly.
+	 * 6. Search for Username. 	 
+	 *    Expected conditions: "First Name", "Last Name", "Role" on a list are displayed correctly. 	  
+	 * 7. Click "Edit / View" button. 
+	 * 8. Check if all properties ("First Name", "Last Name", "Role", groups) on edit page are displayed correctly. 
+	 * 9. Click button "Cancel".
+	 * 10. Click button "Logout". 
+	 * 11. Login to the system using new user's username and password, click button "Login".
+	 *     Expected conditions: all new user data on Profile Page is displayed correctly.
 	 */
 	@Parameters({ "newAdminUserName", "newAdminPassword", "newAdminRole", "groupNameOne", "groupNameTwo", "updatedPassword" })
 	@Test(groups = { "editUser" }, priority = 1, enabled = true)
@@ -146,6 +141,7 @@ public class EditUserTests extends AbstractTest {
 		assertTrue(editUserPage.getLastName().equals("newLastName"),
 				"User's Last Name isn't displayed correctly in Edit user page");
 		assertTrue(editUserPage.isRadioButtonUserSelected(), "User's role isn't displayed correctly in Edit user page");
+		editUserPage.waitForSearchFieldToBeAttached();
 		editUserPage.sendKeysSearchGroups(groupNameTwo);		
 		assertTrue(editUserPage.isUserAddedToGroup(groupNameTwo),
 				"User was not added to the group correctly");		

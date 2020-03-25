@@ -1,5 +1,7 @@
 package page;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -139,5 +141,10 @@ public class MainPage extends AbstractPage {
 
 	public void waitForLogoutButton() {
 		this.waitForVisibility(this.buttonLogout);
+	}
+	
+	public void waitForLogoutButtonToBeClickable() {
+		new WebDriverWait(driver, 3).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.elementToBeClickable(buttonLogout));
 	}
 }
