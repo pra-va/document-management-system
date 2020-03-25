@@ -76,7 +76,11 @@ class DocTypes extends Component {
                 <img src={GroupLogo} alt="unable to load" className="invert" />
               }
               popOverTitle={"Groups with Create rights:"}
-              popOverContent={this.reduceList(data.creating[item])}
+              popOverContent={
+                data.creating[item].length > 0
+                  ? this.reduceList(data.creating[item])
+                  : "None"
+              }
             />
           ),
           canSign: (
@@ -85,7 +89,11 @@ class DocTypes extends Component {
                 <img src={GroupLogo} alt="unable to load" className="invert" />
               }
               popOverTitle={"Groups with Sign rights:"}
-              popOverContent={this.reduceList(data.approving[item])}
+              popOverContent={
+                data.approving[item].length > 0
+                  ? this.reduceList(data.approving[item])
+                  : "None"
+              }
             />
           ),
           edit: <Edit owner={item} reloadTable={this.reloadTable} />

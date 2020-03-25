@@ -82,13 +82,16 @@ public class FilesController {
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
-
+		LOG.info("# LOG # Initiated by [{}]: User requested file details by username [{}]#",
+				SecurityContextHolder.getContext().getAuthentication().getName(), username);
 		return fileService.findAllFileDetailsByUsername(username);
 	}
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/info/docname/{docname}")
 	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
+		LOG.info("# LOG # Initiated by [{}]: User requested all file details by document [{}]#",
+				SecurityContextHolder.getContext().getAuthentication().getName(), docName);
 		return fileService.findAllFileDetailsByDocument(docName);
 	}
 

@@ -78,7 +78,7 @@ public class DocumentController {
 	}
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	@GetMapping(path = "/api/doc/{UID}") //changed API url (remove find)
+	@GetMapping(path = "/api/doc/{UID}") // changed API url (remove find)
 	public DocumentDetailsDTO findDocument(@PathVariable("UID") String UID) {
 		LOG.info("# LOG # Initiated by [{}]: Requested details of document UID: [{}] #",
 				SecurityContextHolder.getContext().getAuthentication().getName(), UID);
@@ -181,13 +181,21 @@ public class DocumentController {
 		if (!requestedBy.equals(null)) {
 			boolean isDocDeleted = docService.deleteDocumentRequestedByUser(uid, requestedBy);
 			if (isDocDeleted) {
+				LOG.info("# LOG # Initiated by [{}]: Deleted unsubmitted document with UID [{}]. #",
+						SecurityContextHolder.getContext().getAuthentication().getName(), uid);
 				return new ResponseEntity<String>("Document '" + uid + "' deleted.", HttpStatus.OK);
 			} else {
+				LOG.info(
+						"# LOG # Initiated by [{}]: Failesd to delete document with UID [{}]. User either has not created this document or it has been already submitted. #",
+						SecurityContextHolder.getContext().getAuthentication().getName(), uid);
 				return new ResponseEntity<String>(
 						"Unable to delete. User does not have requested document or status of the document is not 'CREATED'.",
 						HttpStatus.NOT_FOUND);
 			}
 		} else {
+			LOG.info(
+					"# LOG # Initiated by [{}]: Unable to delete document with UID [{}]. User can not be identified. #",
+					SecurityContextHolder.getContext().getAuthentication().getName(), uid);
 			return new ResponseEntity<String>("Unable to delete. Failed to locate requesting user.",
 					HttpStatus.UNAUTHORIZED);
 		}

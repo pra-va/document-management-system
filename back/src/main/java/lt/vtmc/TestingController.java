@@ -1,10 +1,8 @@
 package lt.vtmc;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-=======
 import org.springframework.web.bind.annotation.DeleteMapping;
->>>>>>> 1dc3f35c08876375ba4daab289b9f5995934145d
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lt.vtmc.user.dao.UserRepository;
 
 @RestController
-public class TestingOnlyController {
+public class TestingController {
 
 	@Autowired
 	private UserRepository userRepo;

@@ -44,7 +44,7 @@ public class DocTypeController {
 	 * method.
 	 * 
 	 * @url /api/createdoctype
-	 * @method POST }
+	 * @method POST
 	 * @param user details
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -60,42 +60,84 @@ public class DocTypeController {
 		return new ResponseEntity<String>("Failed to create doctype", HttpStatus.CONFLICT);
 	}
 
+	/**
+	 * Controller method that will return all document types.
+	 * 
+	 * @param pagingData
+	 * @return allDocumentTypes and paging info for table.
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doct/all")
 	public Map<String, Object> getAllDocTypes(@RequestBody PagingData pagingData) {
+		LOG.info("# LOG # Initiated by [{}]: Retrieved all document types. #",
+				SecurityContextHolder.getContext().getAuthentication().getName());
 		return docTypeService.retrieveAllDocTypes(pagingData);
 	}
 
+	/**
+	 * Controller method to get all document types without groups.
+	 * 
+	 * @param pagingData
+	 * @return allDocumentTypes and paging info for table.
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doct/all/nogroups")
 	public Map<String, Object> getAllDocTypesNoGroups(@RequestBody PagingData pagingData) {
+		LOG.info("# LOG # Initiated by [{}]: Retrieved all document types without groups. #",
+				SecurityContextHolder.getContext().getAuthentication().getName());
 		return docTypeService.retrieveAllDocTypesNoGroups(pagingData);
 	}
 
+	/**
+	 * Controller method to get approving groups by user name provided in
+	 * parameters.
+	 * 
+	 * @param docTypeName
+	 * @return List of groups that approve doc type provided in parameters.
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doct/groups/approving")
 	public List<String> getGroupsApproving(String docTypeName) {
+		LOG.info("# LOG # Initiated by [{}]: Retrieved all approving groups for document type [{}]. #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), docTypeName);
 		return docTypeService.getGroupsApproving(docTypeName);
 	}
 
-//	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-//	@GetMapping(path = "/api/doct/names")
-//	public List<String> getDocTypeNames() {
-//		return docTypeService.g;
-//	}
-
+	/**
+	 * Controller method to get creating groups by user name provided in parameters.
+	 * 
+	 * @param docTypeName
+	 * @return List of groups that approve doc type provided in parameters.
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doct/groups/creating")
 	public List<String> getGroupsCreating(String docTypeName) {
+		LOG.info("# LOG # Initiated by [{}]: Retrieved all creating groups for document type [{}]. #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), docTypeName);
 		return docTypeService.getGroupsCreating(docTypeName);
 	}
 
+	/**
+	 * Controller method to find document type by provided name. Name has to be
+	 * exact.
+	 * 
+	 * @param name
+	 * @return DocType
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doct/{name}")
 	public DocTypeDetailsDTO findDocTypeByName(@PathVariable("name") String name) {
+		LOG.info("# LOG # Initiated by [{}]: Retrieved document type [{}]. #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), name);
 		return new DocTypeDetailsDTO(docTypeService.findDocTypeByName(name));
 	}
 
+	/**
+	 * Controller method to delete docType by provided name.
+	 * 
+	 * @param name
+	 * @return ResponseEntity
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping(path = "/api/doct/delete/{name}")
 	public ResponseEntity<String> deleteDocType(@PathVariable("name") String name) {
@@ -105,18 +147,41 @@ public class DocTypeController {
 		return new ResponseEntity<String>("Deleted succesfully", HttpStatus.OK);
 	}
 
+	/**
+	 * Controller method that will find groups that can sign document type by
+	 * provided name.
+	 * 
+	 * @param name
+	 * @return List of groups that can sign specific doc type
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doct/{name}/signs")
 	public String[] findGroupsSigningDocType(@PathVariable("name") String name) {
+		LOG.info("# LOG # Initiated by [{}]: Retrieved groups that can sign document type [{}]. #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), name);
 		return docTypeService.findGroupsSigningDocType(name);
 	}
 
+	/**
+	 * Controller method that will return list of groups creating doc type.
+	 * 
+	 * @param name
+	 * @return
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doct/{name}/creates")
 	public String[] findGroupsCreatingDocType(@PathVariable("name") String name) {
+		LOG.info("# LOG # Initiated by [{}]: Retrieved groups that can create document type [{}]. #",
+				SecurityContextHolder.getContext().getAuthentication().getName(), name);
 		return docTypeService.findGroupsCreatingDocType(name);
 	}
 
+	/**
+	 * Controller method to check if doc type with provided name exists
+	 * 
+	 * @param name
+	 * @return true if exists, false otherwise
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doct/{name}/exists")
 	public boolean docTypeExists(@PathVariable("name") String name) {
@@ -126,9 +191,16 @@ public class DocTypeController {
 		return false;
 	}
 
+	/**
+	 * Controller method to update document type by name.
+	 * 
+	 * @param command
+	 * @param name
+	 * @return ResponseEntity
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doct/update/{name}")
-	public ResponseEntity<String> updateDocTypeByGroupName(@RequestBody UpdateDocTypeCommand command,
+	public ResponseEntity<String> updateDocTypeByName(@RequestBody UpdateDocTypeCommand command,
 			@PathVariable("name") String name) {
 		if (docTypeService.findDocTypeByName(name) != null) {
 			docTypeService.updateDocTypeDetails(command.getNewName(), name, command.getGroupsApproving(),

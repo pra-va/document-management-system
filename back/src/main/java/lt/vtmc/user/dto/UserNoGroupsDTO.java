@@ -1,5 +1,12 @@
 package lt.vtmc.user.dto;
 
+/**
+ * This data transfer object should be used when there is need to transfer user
+ * derails without the groups that this user belongs to.
+ * 
+ * @author pra-va
+ *
+ */
 public class UserNoGroupsDTO {
 
 	private String username;
