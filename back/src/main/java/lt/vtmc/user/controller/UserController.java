@@ -51,9 +51,8 @@ public class UserController {
 	 * Creates user with ADMIN role. Only system administrator should be able to
 	 * access this method.
 	 * 
-	 * @url /api/createadmin
-	 * @method POST
-	 * @param user details
+	 * @param command of new administrator details
+	 * @return response entity of type string with message
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/createadmin", method = RequestMethod.POST)
@@ -85,9 +84,8 @@ public class UserController {
 	 * Creates user with USER role. Only system administrator should be able to
 	 * access this method.
 	 * 
-	 * @url /api/createuser
-	 * @method POST
-	 * @param user details
+	 * @param command of new user details
+	 * @return response entity of type string with message
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/createuser", method = RequestMethod.POST)
@@ -117,8 +115,8 @@ public class UserController {
 	/**
 	 * Controller method to get a list of users by paging data provided.
 	 * 
-	 * @param pagingData
-	 * @method POST
+	 * @param pagingData to set number of items that will be returned, sorting order
+	 *                   and search phrase
 	 * @return map of users and paging information
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -134,8 +132,8 @@ public class UserController {
 	/**
 	 * Finds and returns a user using username.
 	 * 
-	 * @url /api/user/{username}
-	 * @method GET
+	 * @param username of user to be found
+	 * @return user details DTO
 	 */
 	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
 	@GetMapping(path = "/api/user/{username}")
@@ -148,10 +146,10 @@ public class UserController {
 	}
 
 	/**
-	 * Deletes user from database
+	 * Deletes user from database.
 	 * 
-	 * @url /api/delete/{username}
-	 * @method DELETE
+	 * @param username to be deleted from database
+	 * @return response entity with status and message
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/api/delete/{username}")
@@ -173,10 +171,11 @@ public class UserController {
 	}
 
 	/**
-	 * Updates user information in the database
+	 * Updates user information in the database.
 	 * 
-	 * @url /api/user/update/{username}
-	 * @method POST
+	 * @param username of user entity that is going to be updated
+	 * @param command  of update user
+	 * @return response entity of update status
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/user/update/{username}")
@@ -205,9 +204,8 @@ public class UserController {
 	/**
 	 * Method will check if provided user name already exists in data base.
 	 * 
-	 * @param username
+	 * @param username to check if it exists
 	 * @return true if user name exists
-	 * @method GET
 	 * @throws Exception
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -220,9 +218,8 @@ public class UserController {
 	 * 
 	 * Controller method will return document types that a user can create.
 	 * 
-	 * @param username
-	 * @param pagingData
-	 * @method POST
+	 * @param username   that is requested
+	 * @param pagingData to set response size, sort order and search phrase
 	 * @return list of doc types user can create and paging information
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -238,9 +235,8 @@ public class UserController {
 	 * 
 	 * Controller method will return document types that a user can sign.
 	 * 
-	 * @param username
-	 * @param pagingData
-	 * @method POST
+	 * @param username   that is requested
+	 * @param pagingData to set response size, sort order and search phrase
 	 * @return list of doc types user can sign and paging information
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -255,9 +251,8 @@ public class UserController {
 	/**
 	 * Controller method that will find all documents of user.
 	 * 
-	 * @param username
-	 * @param pagingData
-	 * @method POST
+	 * @param username   that is requested
+	 * @param pagingData to set response size, sort order and search phrase
 	 * @return documents list and paging information
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -274,9 +269,9 @@ public class UserController {
 	 * This method will create initial administrator. It only can be executed
 	 * successfully if there is no user with administrator role in database.
 	 * 
-	 * @param command
-	 * @method POST
-	 * @return ResponseEntity
+	 * @param command to create initial user
+	 * @return ResponseEntity of response status
+	 * 
 	 */
 	@PostMapping("/api/user/first/create")
 	public ResponseEntity<String> createInitialAdmin(@RequestBody CreateUserCommand command) {
@@ -296,8 +291,7 @@ public class UserController {
 	/**
 	 * Returns info if initial user needs to be created.
 	 * 
-	 * @method GET
-	 * @return ResponseEntity
+	 * @return ResponseEntity of response status
 	 */
 	@GetMapping("/api/user/first")
 	public ResponseEntity<String> shouldInitAdminBeCreated() {
@@ -314,8 +308,7 @@ public class UserController {
 	 * Controller method that will find all users and their information without
 	 * groups.
 	 * 
-	 * @param pagingData
-	 * @method POST
+	 * @param pagingData to set response size, sort order and search phrase
 	 * @return users and paging information
 	 */
 	@Secured({ "ROLE_ADMIN" })

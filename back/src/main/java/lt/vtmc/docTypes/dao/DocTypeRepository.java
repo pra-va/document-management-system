@@ -21,9 +21,10 @@ public interface DocTypeRepository extends JpaRepository<DocType, String> {
 	/**
 	 * Finds doc types with pageable parameter and custom search phrase.
 	 * 
-	 * @param searchValueString
-	 * @param firstPageable
-	 * @return
+	 * @param searchValueString search phrase
+	 * @param firstPageable     to set amount of items per page, search phrase,
+	 *                          sorting order
+	 * @return page of document types requested in parameters
 	 */
 	@Query("SELECT d FROM DocType d WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', ?1,'%'))")
 	Page<DocType> findLike(String searchValueString, Pageable firstPageable);
@@ -31,8 +32,9 @@ public interface DocTypeRepository extends JpaRepository<DocType, String> {
 	/**
 	 * Finds list of document type names with pageable parameter.
 	 * 
-	 * @param searchValuString
-	 * @param pageable
+	 * @param searchValuString search phrase
+	 * @param pageable         to set amount of items per page, search phrase,
+	 *                         sorting order
 	 * @return list of document type names
 	 */
 	@Query("select dt.name from DocType dt where LOWER(dt.name) LIKE LOWER(CONCAT('%', ?1,'%'))")
@@ -41,8 +43,8 @@ public interface DocTypeRepository extends JpaRepository<DocType, String> {
 	/**
 	 * Finds groups that approve specific document type by name.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name of document type
+	 * @return list of groups approving
 	 */
 	@Query("select ga.name from DocType d join d.groupsApproving ga where d.name = ?1")
 	List<String> findGroupsApprovingByDocTypeName(String name);
@@ -50,8 +52,8 @@ public interface DocTypeRepository extends JpaRepository<DocType, String> {
 	/**
 	 * Finds groups that create specific document type by name.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name of document type
+	 * @return list of groups creating
 	 */
 	@Query("select gc.name from DocType d join d.groupsCreating gc where d.name = ?1")
 	List<String> findGroupsCreatingByDocTypeName(String name);

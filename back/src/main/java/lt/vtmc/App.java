@@ -17,7 +17,7 @@ public class App extends SpringBootServletInitializer {
 	/**
 	 * Main application method.
 	 * 
-	 * @param args
+	 * @param args for application
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);

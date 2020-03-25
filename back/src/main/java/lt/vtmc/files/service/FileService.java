@@ -89,20 +89,27 @@ public class FileService {
 				.body(new ByteArrayResource(file4db.getData()));
 	}
 
+	/**
+	 * Will turn requested file in bytes array to response entity of type resource.
+	 * 
+	 * @param fileByteData
+	 * @param fileName
+	 * @return ResponseEntity
+	 */
 	@Transactional
 	public ResponseEntity<Resource> downloadFileByUID(byte[] fileByteData, String fileName) {
 		return ResponseEntity.ok().contentType(MediaType.TEXT_PLAIN)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
 				.body(new ByteArrayResource(fileByteData));
 	}
-	
+
 	/**
 	 * This method returns all file details created by username
 	 * 
 	 * @param username
 	 * @return List<FileDetailsDTO>
 	 */
-	
+
 	public List<FileDetailsDTO> findAllFileDetailsByUsername(String username) {
 		List<Document> tmpList = docService.findAllDocumentsByUsername(username);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
@@ -123,7 +130,7 @@ public class FileService {
 	 * @param UID
 	 * @return List<FileDetailsDTO>
 	 */
-	
+
 	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID) {
 		Document tmpDoc = docService.findDocumentByUID(UID);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
@@ -142,7 +149,7 @@ public class FileService {
 	 * @return
 	 * @throws IOException
 	 */
-	
+
 	public ResponseEntity<Resource> generateCSV(String username) {
 		String csv = null;
 		try {
@@ -153,6 +160,13 @@ public class FileService {
 		return downloadFileByUID(csv.getBytes(), "file.csv");
 	}
 
+	/**
+	 * Returns string representation of csv file.
+	 * 
+	 * @param username
+	 * @return String representation of csv file.
+	 * @throws Exception
+	 */
 	public String getCsv(String username) throws Exception {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
 		StringBuilder builder = new StringBuilder();
@@ -164,6 +178,12 @@ public class FileService {
 		return builder.toString();
 	}
 
+	/**
+	 * This method will find all files by username provided as parameter.
+	 * 
+	 * @param username
+	 * @return Map of files that belong to a user
+	 */
 	public Map<String, ByteArrayResource> findAllFilesByUsername(String username) {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
 		Map<String, ByteArrayResource> filesAsBytes = new HashMap<>();
@@ -179,7 +199,7 @@ public class FileService {
 	 * 
 	 * @param UID
 	 */
-	
+
 	public void deleteFileByUID(String uID) {
 		File4DB tmpFile = filesRepository.findFile4dbByUID(uID);
 		tmpFile.getDocument().getFileList().remove(tmpFile);
@@ -191,7 +211,7 @@ public class FileService {
 	 * 
 	 * @param UID
 	 */
-	
+
 	public void deleteFile(File4DB tmpFile) {
 		filesRepository.delete(tmpFile);
 	}

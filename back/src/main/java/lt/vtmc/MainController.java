@@ -18,8 +18,8 @@ public class MainController {
 	/**
 	 * URLs that can only be reached by users with administrator role.
 	 * 
-	 * @param model
-	 * @return ModelAndView
+	 * @param model map
+	 * @return model and view
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(value = { "/users", "/groups", "/doctypes", "/admin" })
@@ -30,8 +30,8 @@ public class MainController {
 	/**
 	 * URLs that can only be reached by users with administrator or user role.
 	 * 
-	 * @param model
-	 * @return ModelAndView
+	 * @param model map
+	 * @return model and view
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@RequestMapping(value = { "/home", "/document", "/documents", "/sign", "/statistics" })
@@ -42,8 +42,8 @@ public class MainController {
 	/**
 	 * URLs that can be reached by anyone.
 	 * 
-	 * @param model
-	 * @return ModelAndView
+	 * @param model map
+	 * @return model and view
 	 */
 	@RequestMapping(value = { "/notfound" })
 	public ModelAndView notFound(ModelMap model) {

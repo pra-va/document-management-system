@@ -43,9 +43,8 @@ public class DocTypeController {
 	 * Creates docType. Only system administrator should be able to access this
 	 * method.
 	 * 
-	 * @url /api/createdoctype
-	 * @method POST
-	 * @param user details
+	 * @param command with doc type details
+	 * @return response entity with status and message
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doct/create")
@@ -63,8 +62,8 @@ public class DocTypeController {
 	/**
 	 * Controller method that will return all document types.
 	 * 
-	 * @param pagingData
-	 * @method POST
+	 * @param pagingData to set amount of items per page, search phrase, sorting
+	 *                   order
 	 * @return allDocumentTypes and paging info for table.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -78,8 +77,8 @@ public class DocTypeController {
 	/**
 	 * Controller method to get all document types without groups.
 	 * 
-	 * @param pagingData
-	 * @method POST
+	 * @param pagingData to set amount of items per page, search phrase, sorting
+	 *                   order
 	 * @return allDocumentTypes and paging info for table.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -94,8 +93,7 @@ public class DocTypeController {
 	 * Controller method to get approving groups by user name provided in
 	 * parameters.
 	 * 
-	 * @param docTypeName
-	 * @method GET
+	 * @param docTypeName document type name
 	 * @return List of groups that approve doc type provided in parameters.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -109,8 +107,7 @@ public class DocTypeController {
 	/**
 	 * Controller method to get creating groups by user name provided in parameters.
 	 * 
-	 * @param docTypeName
-	 * @method GET
+	 * @param docTypeName document type name
 	 * @return List of groups that approve doc type provided in parameters.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -125,8 +122,7 @@ public class DocTypeController {
 	 * Controller method to find document type by provided name. Name has to be
 	 * exact.
 	 * 
-	 * @param name
-	 * @method GET
+	 * @param name of document type
 	 * @return DocType
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -140,8 +136,7 @@ public class DocTypeController {
 	/**
 	 * Controller method to delete docType by provided name.
 	 * 
-	 * @param name
-	 * @method DELETE
+	 * @param name of document type
 	 * @return ResponseEntity
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -157,8 +152,7 @@ public class DocTypeController {
 	 * Controller method that will find groups that can sign document type by
 	 * provided name.
 	 * 
-	 * @param name
-	 * @method GET
+	 * @param name of document type
 	 * @return List of groups that can sign specific doc type
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -172,9 +166,8 @@ public class DocTypeController {
 	/**
 	 * Controller method that will return list of groups creating doc type.
 	 * 
-	 * @param name
-	 * @method GET
-	 * @return
+	 * @param name of document type
+	 * @return list of groups that are able to create doc
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doct/{name}/creates")
@@ -187,8 +180,7 @@ public class DocTypeController {
 	/**
 	 * Controller method to check if doc type with provided name exists
 	 * 
-	 * @param name
-	 * @method GET
+	 * @param name of document type
 	 * @return true if exists, false otherwise
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -203,9 +195,8 @@ public class DocTypeController {
 	/**
 	 * Controller method to update document type by name.
 	 * 
-	 * @param command
-	 * @param name
-	 * @method POST
+	 * @param command with updated document type information
+	 * @param name    of document type to update
 	 * @return ResponseEntity
 	 */
 	@Secured({ "ROLE_ADMIN" })

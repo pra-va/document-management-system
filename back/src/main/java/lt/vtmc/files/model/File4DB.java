@@ -13,6 +13,12 @@ import javax.persistence.Table;
 
 import lt.vtmc.documents.model.Document;
 
+/**
+ * Files entity.
+ * 
+ * @author pra-va
+ *
+ */
 @Entity
 @Table(name = "files")
 public class File4DB {
