@@ -53,7 +53,9 @@ public class GroupController {
 	 * 
 	 * @url /api/creategroup
 	 * @method POST
-	 * @param user details
+	 * @param CreateGroupCommand containing group name, description, user list and
+	 *                           document type lists
+	 * @return responseEntity containing response text and Http status
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/creategroup", method = RequestMethod.POST)
@@ -73,15 +75,16 @@ public class GroupController {
 					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 		return new ResponseEntity<String>("Failed to create group", HttpStatus.CONFLICT);
 	}
-	
+
 	/**
 	 * Returns all groups created within the system with paging
 	 * 
 	 * @url /api/groups
 	 * @method POST
-	 * @param PagingData
+	 * @param pagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return
 	 */
-	
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
 	public Map<String, Object> listAllGroups(@RequestBody PagingData pagingData) {
@@ -91,12 +94,14 @@ public class GroupController {
 
 		return groupService.retrieveAllGroups(pagingData);
 	}
+
 	/**
 	 * Returns a single group by specified name
 	 * 
 	 * @url /api/groups/{groupname}
 	 * @method GET
-	 * @param name
+	 * @param name of the group
+	 * @return GroupDetailsDTO type object
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/groups/{groupname}")
@@ -107,15 +112,16 @@ public class GroupController {
 
 		return new GroupDetailsDTO(groupService.findGroupByName(name));
 	}
-	
+
 	/**
 	 * Adds a single user to specified groups
 	 * 
 	 * @url /api/addGroup/{username}
 	 * @method POST
-	 * @param username, String[] GroupNames
+	 * @param username   unique name within the system
+	 * @param GroupNames list of groups to add the user to
+	 * @return Response text and http status
 	 */
-	
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/addGroup/{username}")
 	public ResponseEntity<String> addGroup(@PathVariable("username") String username, @RequestBody String[] names) {
@@ -139,6 +145,10 @@ public class GroupController {
 	 * 
 	 * @url /api/groups/{groupname}
 	 * @method POST
+	 * @param command containing new name, description and userlist as well as
+	 *                document types to approve and create
+	 * @param name
+	 * @return
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/groups/update/{groupname}")
@@ -164,8 +174,8 @@ public class GroupController {
 	/**
 	 * Checks if provided groupname exists.
 	 * 
-	 * @param name
-	 * @return
+	 * @param name of the group
+	 * @return true or false
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/group/{name}/exists")
@@ -176,10 +186,12 @@ public class GroupController {
 			return false;
 		}
 	}
+
 	/**
 	 * Deletes a group
 	 * 
-	 * @param name
+	 * @param name of the group to delete
+	 * @return Response text and http status
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/api/group/{groupname}/delete")

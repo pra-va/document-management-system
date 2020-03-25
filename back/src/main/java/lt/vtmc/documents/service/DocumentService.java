@@ -48,10 +48,10 @@ public class DocumentService {
 	private FileService fileService;
 
 	/**
-	 * 
 	 * This method finds a document from group repository by name.
 	 * 
-	 * @return Document
+	 * @param UID document unique identification number
+	 * @return Document type object
 	 */
 
 	public Document findDocumentByUID(String UID) {
@@ -61,9 +61,13 @@ public class DocumentService {
 	/**
 	 * Method to create new document.
 	 * 
-	 * @return Document
+	 * @param name           of the document
+	 * @param authorUsername is the username of user creating the document
+	 * @param description    string value describing the document
+	 * @param dType          is document type
+	 * @param currentTime    local system time
+	 * @return Document type object
 	 */
-
 	@Transactional
 	public Document createDocument(String name, String authorUsername, String description, String dType,
 			String currentTime) {
@@ -80,10 +84,10 @@ public class DocumentService {
 	/**
 	 * Returns all documents
 	 * 
-	 * @param PagingData
-	 * @return Map<String, Object> responseMap
+	 * @param pagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of items found
 	 */
-
 	public Map<String, Object> retrieveAllDocuments(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<Document> documentlist = docRepo.findLike(pagingData.getSearchValueString(), firstPageable);
@@ -98,8 +102,9 @@ public class DocumentService {
 	/**
 	 * Deletes a document from the system
 	 * 
-	 * @param Document
+	 * @param Document to delete from database
 	 */
+
 	@Transactional
 	public void deleteDocument(Document document) {
 		List<File4DB> tmpList = document.getFileList();
@@ -138,7 +143,7 @@ public class DocumentService {
 	/**
 	 * Sets document status to Submitted
 	 * 
-	 * @param UID
+	 * @param UID document unique identification number
 	 */
 
 	@Transactional
@@ -152,7 +157,7 @@ public class DocumentService {
 	/**
 	 * Sets document status to Accepted
 	 * 
-	 * @param UID
+	 * @param UID document unique identification number
 	 */
 
 	@Transactional
@@ -173,7 +178,8 @@ public class DocumentService {
 	/**
 	 * Sets document status to Rejected
 	 * 
-	 * @param UID, String reasonToReject
+	 * @param UID            document unique identification number
+	 * @param reasonToReject to explain why the document was rejected
 	 */
 
 	@Transactional
@@ -194,9 +200,9 @@ public class DocumentService {
 	/**
 	 * Generates unique UID from time of creation
 	 * 
-	 * @param time
+	 * @param time to generate UID for the document from
+	 * @return UID document unique identification number
 	 */
-
 	public String generateUID(String time) {
 		StringBuilder UID = new StringBuilder();
 		for (int i = 0; i < time.length(); i++) {
@@ -206,14 +212,16 @@ public class DocumentService {
 		}
 		return UID.toString();
 	}
-	
+
 	/**
 	 * Returns all documents by username
 	 * 
-	 * @param username, PagingData
-	 * @return Map<String, Object> responseMap
+	 * @param username   users' unique name within the system
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of items found
 	 */
-	
+
 	public Map<String, Object> returnAllDocumentsByUsername(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsername(username, pagingData.getSearchValueString(), pageable);
@@ -224,14 +232,14 @@ public class DocumentService {
 				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
 		return responseMap;
 	}
-	
+
 	/**
 	 * Returns all documents by username for internal use
 	 * 
-	 * @param username
-	 * @return List<Document>
+	 * @param username users' unique name within the system
+	 * @return getCreatedDocuments() users created documents
 	 */
-	
+
 	public List<Document> findAllDocumentsByUsername(String username) {
 		User tmpUser = userRepo.findUserByUsername(username);
 		return tmpUser.getCreatedDocuments();
@@ -240,10 +248,12 @@ public class DocumentService {
 	/**
 	 * Returns all documents the user is permitted to approve/reject
 	 * 
-	 * @param username, PagingData
-	 * @return Map<String, Object>
+	 * @param username   users' unique name within the system
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of items found
 	 */
-	
+
 	public Map<String, Object> findAllDocumentsToSignByUsername(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsToSignByUsername(username, pagingData.getSearchValueString(), pageable);
@@ -258,9 +268,13 @@ public class DocumentService {
 	/**
 	 * Updates document details
 	 * 
-	 * @param String docUID, String newName, String newDescription, String newDocType, String[] filesToRemove
+	 * @param docUID         documents Unique ID
+	 * @param newName        new desired name for the document
+	 * @param newDescription new desired description for the document
+	 * @param newDocType     new desired type
+	 * @param filesToRemove  from the document filelist
 	 */
-	
+
 	@Transactional
 	public void updateDocument(String docUID, String newName, String newDescription, String newDocType,
 			String[] filesToRemove) {
@@ -283,10 +297,12 @@ public class DocumentService {
 	/**
 	 * Returns all documents the user submitted
 	 * 
-	 * @param username, PagingData
-	 * @return Map<String, Object>
+	 * @param username   users' unique name within the system
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of items found
 	 */
-	
+
 	public Map<String, Object> returnSubmitted(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -300,12 +316,14 @@ public class DocumentService {
 	}
 
 	/**
-	 * Returns all documents with status accepted for the user 
+	 * Returns all documents with status accepted for the user
 	 * 
-	 * @param username, PagingData
-	 * @return Map<String, Object>
+	 * @param username   users' unique name within the system
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of items found
 	 */
-	
+
 	public Map<String, Object> returnAccepted(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -319,12 +337,14 @@ public class DocumentService {
 	}
 
 	/**
-	 * Returns all documents with status rejected for the user 
+	 * Returns all documents with status rejected for the user
 	 * 
-	 * @param username, PagingData
-	 * @return Map<String, Object>
+	 * @param username   users' unique name within the system
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of items found
 	 */
-	
+
 	public Map<String, Object> returnRejected(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -338,12 +358,14 @@ public class DocumentService {
 	}
 
 	/**
-	 * Returns all documents with status created for the user 
+	 * Returns all documents with status created for the user
 	 * 
-	 * @param username, PagingData
-	 * @return Map<String, Object>
+	 * @param username   users' unique name within the system
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return responseMap of items found
 	 */
-	
+
 	public Map<String, Object> returnCreated(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -357,11 +379,13 @@ public class DocumentService {
 	}
 
 	/**
-	 * Deletes the document if the user requesting this is the author of the document
+	 * Deletes the document if the user requesting this is the author of the
+	 * document
 	 * 
-	 * @param UID, username
+	 * @param UID      unique document number
+	 * @param username users' unique name within the system
 	 */
-	
+
 	@Transactional
 	public boolean deleteDocumentRequestedByUser(String uid, String username) {
 		boolean doesUserHaveDoc = docRepo.doesUserHaveDoc(uid, username);

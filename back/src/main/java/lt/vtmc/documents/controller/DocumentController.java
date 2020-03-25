@@ -51,9 +51,10 @@ public class DocumentController {
 	/**
 	 * Creates document with specified fields.
 	 * 
+	 * @url /api/doc/create
 	 * @method POST
-	 * @param command create document command
-	 * @return Document UID
+	 * @param command CreateDocumentCommand type JSON containing document name, author username, description and document type.
+	 * @return UID document unique identification number
 	 */
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -70,10 +71,12 @@ public class DocumentController {
 	/**
 	 * Uploads files to database and adds the to existing document
 	 * 
-	 * @param UID
-	 * @param files
+	 * @url /api/doc/upload/{UID}
 	 * @method POST
+	 * @param UID unique identification number
+	 * @param files files in MultipartFile[] format
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping("/api/doc/upload/{UID}")
 	public void addFiles(@PathVariable("UID") String UID, @RequestParam("files") MultipartFile[] files) {
@@ -87,10 +90,12 @@ public class DocumentController {
 	/**
 	 * Finds one specific document by UID
 	 * 
+	 * @url /api/api/doc/{UID}
 	 * @method GET
-	 * @param Document UID
-	 * @return Returns DocumentDetailsDTO
+	 * @param UID unique identification number
+	 * @return DocumentDetailsDTO a structurised version of document object without recursions
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(path = "/api/doc/{UID}")
 	public DocumentDetailsDTO findDocument(@PathVariable("UID") String UID) {
@@ -102,10 +107,11 @@ public class DocumentController {
 	/**
 	 * Deletes document and associated files
 	 * 
+	 * @url /api/doc/delete/{UID}
 	 * @method DELETE
-	 * @param document UID
-	 * @return ResponseEntity of string
+	 * @param UID unique document id
 	 */
+	
 	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping(path = "/api/doc/delete/{UID}")
 	public ResponseEntity<String> deleteDocument(@PathVariable("UID") String UID) {
@@ -116,12 +122,13 @@ public class DocumentController {
 	}
 
 	/**
-	 * Changes document status to submitted.
+	 * Changes document status to submitted
 	 * 
+	 * @url /api/doc/submit/{UID}
 	 * @method POST
-	 * @param document UID
-	 * @return ResponseEntity of string
+	 * @param UID unique document id
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/submit/{UID}")
 	public ResponseEntity<String> submitDocument(@PathVariable("UID") String UID) {
@@ -132,12 +139,13 @@ public class DocumentController {
 	}
 
 	/**
-	 * Changes document status to approved.
+	 * Changes document status to approved
 	 * 
-	 * @param UID     of document
-	 * @param command approve document command
-	 * @return response entity of String
+	 * @url /api/doc/approve/{UID}
+	 * @method POST
+	 * @param UID unique document id
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/approve/{UID}")
 	public ResponseEntity<String> approveDocument(@PathVariable("UID") String UID,
@@ -151,10 +159,11 @@ public class DocumentController {
 	/**
 	 * Changes document status to rejected
 	 * 
-	 * @param UID    of document
-	 * @param reject document rejection body
-	 * @return response entity of string
+	 * @url /api/doc/reject/{UID}
+	 * @method POST
+	 * @param UID unique document id
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/reject/{UID}")
 	public ResponseEntity<String> rejectDocument(@PathVariable("UID") String UID,
@@ -166,12 +175,14 @@ public class DocumentController {
 	}
 
 	/**
-	 * Updates document details.
+	 * Updates document details
 	 * 
-	 * @param UID     of document
-	 * @param command update document command
-	 * @return response entity of string
+	 * @url /api/doc/update/{UID}
+	 * @method POST
+	 * @param UID unique document id
+	 * @param UpdateDocumentCommand containing new name, new description, new document type and file list to remove
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/update{UID}")
 	public ResponseEntity<String> updateDocument(@PathVariable("UID") String UID,
@@ -186,11 +197,14 @@ public class DocumentController {
 	/**
 	 * Returns all submitted documents for the specified user
 	 * 
+	 * @url /api/doc/allsubmitted/{username}
 	 * @method POST
-	 * @param username   of specific user
-	 * @param pagingData to set number of items, sorting order and search phrase
-	 * @return map of submitted documents and paging data
+	 * @param Username   users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return allSubmittedDocuments and paging info for the table
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allsubmitted/{username}")
 	public Map<String, Object> returnAllSubmittedDocuments(@PathVariable("username") String username,
@@ -203,10 +217,13 @@ public class DocumentController {
 	/**
 	 * Returns all documents with status Created for the specified user
 	 * 
-	 * @param username   of specific user
-	 * @param pagingData to set number of items, sorting order and search phrase
-	 * @return map of created documents and paging data
+	 * @url /api/doc/allcreated/{username}
+	 * @method POST
+	 * @param Username users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting order
+	 * @return allCreatedDocuments and paging info for the table
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allcreated/{username}")
 	public Map<String, Object> returnAllCreatedDocuments(@PathVariable("username") String username,
@@ -219,11 +236,13 @@ public class DocumentController {
 	/**
 	 * Returns all documents with status Accepted for the specified user
 	 * 
+	 * @url /api/doc/allaccepted/{username}
 	 * @method POST
-	 * @param username   of specific user
-	 * @param pagingData to set number of items, sorting order and search phrase
-	 * @return map of created documents and paging data
+	 * @param Username users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting order
+	 * @return allAcceptedDocuments and paging info for the table
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allaccepted/{username}")
 	public Map<String, Object> returnAllAcceptedDocuments(@PathVariable("username") String username,
@@ -236,11 +255,13 @@ public class DocumentController {
 	/**
 	 * Returns all documents with status Rejected for the specified user
 	 * 
+	 * @url /api/doc/allrejected/{username}
 	 * @method POST
-	 * @param username   of specific user
-	 * @param pagingData to set number of items, sorting order and search phrase
-	 * @return map of created documents and paging data
+	 * @param Username users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting order
+	 * @return allRejectedDocuments and paging info for the table
 	 */
+	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/doc/allrejected/{username}")
 	public Map<String, Object> returnAllRejectedDocuments(@PathVariable("username") String username,
@@ -251,12 +272,12 @@ public class DocumentController {
 	}
 
 	/**
-	 * 
 	 * Remove document by document unique id if it belongs to a user that is sending
 	 * this request.
 	 * 
-	 * @param uid of a document
-	 * @return response entity of type string
+	 * @method DELETE
+	 * @param UID documents unique identification number
+	 * @return response status describing outcome
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@DeleteMapping("/api/doc/byUser/{uid}")
