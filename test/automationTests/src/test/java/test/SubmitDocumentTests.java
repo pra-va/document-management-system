@@ -84,9 +84,28 @@ public class SubmitDocumentTests extends AbstractTest {
 		API.deleteGroup(groupNameCR, sessionID);
 		API.deleteGroup(groupNameSIGN, sessionID);
 		API.deleteDoctype(docTypeName, sessionID);
-
 	}
 
+	/*-	 
+	 * Preconditions: 
+	 * - two group were created;
+	 * - two users were created and added to groups, one user per group;
+	 * - one document type was created, one group rights were set to "Create", other to "Sign";
+	 * - user with document creation rights is logged in the system.
+	 * 	
+	 * Test steps: 	 	  
+	 * 1. Click "Create document" button. 
+	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name,
+	 *    click "Choose File", select file, click "Open".
+	 * 3. Click "Create" button. 	 
+	 * 4. Open "My Documents" list.
+	 * 5. Click button "Submit".
+	 * Expected condition: document status changed to "Submitted".
+	 * 6. Click button "Log out".
+	 * 7. Log in as user who can sign document: fill "Username", "Password", click "Log in".
+	 * 8. Click button "Sign Document".
+	 * Expected conditions: document is shown, it's status is "Submitted". 	 		 
+	 */
 	@Parameters({ "documentName", "documentDescription", "docTypeName", "filePath", "fileName", "UserUserNameSIGN",
 			"UserPassswordSIGN" })
 	@Test(groups = { "submitDocument" }, priority = 1, enabled = true)
@@ -104,10 +123,7 @@ public class SubmitDocumentTests extends AbstractTest {
 		documentID = myDocumentsPage.getIDbyDocumentName(documentName);
 		fileID = API.getFileDetails(documentID, sessionID);
 		myDocumentsPage.waitForDocumentVisibility(documentName);
-		//myDocumentsPage.waitForButtonSubmitBeClickable();
 		myDocumentsPage.clickButtonSubmit(documentName);
-		//myDocumentsPage.waitForButtonSubmitNotBeClickable();
-
 		myDocumentsPage.clearSearchDocumentField();
 		myDocumentsPage.sendKeysSearchDocument(documentName);
 		myDocumentsPage.waitForDocumentVisibility(documentName);

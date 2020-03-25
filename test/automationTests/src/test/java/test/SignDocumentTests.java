@@ -21,7 +21,7 @@ import page.SignDocumentPage;
 import utilities.API;
 import utilities.GetSessionId;
 
-public class SignDocumentTests extends AbstractTest{
+public class SignDocumentTests extends AbstractTest {
 
 	LoginPage loginPage;
 	MainPage mainPage;
@@ -33,13 +33,14 @@ public class SignDocumentTests extends AbstractTest{
 	String sessionID = "";
 	String fileID;
 	String documentID;
-	
-	@Parameters({ "adminUserName", "adminPassword", "groupDescriptionCR","groupNameCR", "groupDescriptionSIGN", "groupNameSIGN",
-		"userFirstNameCR", "userLastNameCR", "userPasswordCR", "userUserNameCR", "docTypeName", "UserFirstNameSIGN", "UserLastNameSIGN",
-		"UserUserNameSIGN", "UserPassswordSIGN"})
+
+	@Parameters({ "adminUserName", "adminPassword", "groupDescriptionCR", "groupNameCR", "groupDescriptionSIGN",
+			"groupNameSIGN", "userFirstNameCR", "userLastNameCR", "userPasswordCR", "userUserNameCR", "docTypeName",
+			"UserFirstNameSIGN", "UserLastNameSIGN", "UserUserNameSIGN", "UserPassswordSIGN" })
 	@BeforeClass
-	public void preconditions(String adminUserName, String adminPassword, String groupDescriptionCR, String groupNameCR, String groupDescriptionSIGN, String groupNameSIGN, 
-			String userFirstNameCR,String userLastNameCR,String userPasswordCR, String userUserNameCR, String docTypeName,String UserFirstNameSIGN, 
+	public void preconditions(String adminUserName, String adminPassword, String groupDescriptionCR, String groupNameCR,
+			String groupDescriptionSIGN, String groupNameSIGN, String userFirstNameCR, String userLastNameCR,
+			String userPasswordCR, String userUserNameCR, String docTypeName, String UserFirstNameSIGN,
 			String UserLastNameSIGN, String UserUserNameSIGN, String UserPassswordSIGN) throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
@@ -47,13 +48,15 @@ public class SignDocumentTests extends AbstractTest{
 		myDocumentsPage = new MyDocumentsPage(driver);
 		editDocumentPage = new EditDocumentPage(driver);
 		signDocumentPage = new SignDocumentPage(driver);
-		signDeclineDocumentPage = new SignDeclineDocumentPage(driver);	
-		sessionID =  GetSessionId.login(adminUserName, adminPassword);	
+		signDeclineDocumentPage = new SignDeclineDocumentPage(driver);
+		sessionID = GetSessionId.login(adminUserName, adminPassword);
 		API.createGroup(groupDescriptionCR, "[]", "[]", groupNameCR, "[]", sessionID);
 		API.createGroup(groupDescriptionSIGN, "[]", "[]", groupNameSIGN, "[]", sessionID);
-		API.createUser("[\"" + groupNameCR + "\"]", userFirstNameCR, userLastNameCR, userPasswordCR, userUserNameCR, sessionID);
-		API.createDocType("[\"" + groupNameSIGN + "\"]", "[\"" + groupNameCR + "\"]", docTypeName, sessionID); 		
-		API.createUser("[\"" + groupNameSIGN + "\"]", UserFirstNameSIGN, UserLastNameSIGN, UserPassswordSIGN, UserUserNameSIGN, sessionID);
+		API.createUser("[\"" + groupNameCR + "\"]", userFirstNameCR, userLastNameCR, userPasswordCR, userUserNameCR,
+				sessionID);
+		API.createDocType("[\"" + groupNameSIGN + "\"]", "[\"" + groupNameCR + "\"]", docTypeName, sessionID);
+		API.createUser("[\"" + groupNameSIGN + "\"]", UserFirstNameSIGN, UserLastNameSIGN, UserPassswordSIGN,
+				UserUserNameSIGN, sessionID);
 	}
 
 	@Parameters({ "userUserNameCR", "userPasswordCR" })
@@ -65,55 +68,80 @@ public class SignDocumentTests extends AbstractTest{
 	}
 
 	@AfterGroups("signDocument")
-	public void logout() {		
+	public void logout() {
 		mainPage.waitForLogoutButton();
 		mainPage.clickLogoutButton();
 	}
-	
-	@Parameters({ "adminUserName", "adminPassword", "userUserNameCR", "UserUserNameSIGN", "groupNameCR", "groupNameSIGN", "docTypeName"})
+
+	@Parameters({ "adminUserName", "adminPassword", "userUserNameCR", "UserUserNameSIGN", "groupNameCR",
+			"groupNameSIGN", "docTypeName" })
 	@AfterClass
-	public void deleteEntities(String adminUserName, String adminPassword, String userUserNameCR, String UserUserNameSIGN, 
-			String groupNameCR, String groupNameSIGN, String docTypeName) throws IOException {
-		sessionID =  GetSessionId.login(adminUserName, adminPassword);				
+	public void deleteEntities(String adminUserName, String adminPassword, String userUserNameCR,
+			String UserUserNameSIGN, String groupNameCR, String groupNameSIGN, String docTypeName) throws IOException {
+		sessionID = GetSessionId.login(adminUserName, adminPassword);
 		API.deleteUser(userUserNameCR, sessionID);
 		API.deleteUser(UserUserNameSIGN, sessionID);
-		API.deleteGroup(groupNameCR, sessionID);		
-		API.deleteGroup(groupNameSIGN, sessionID);	
-		API.deleteDoctype(docTypeName, sessionID);		
-		
+		API.deleteGroup(groupNameCR, sessionID);
+		API.deleteGroup(groupNameSIGN, sessionID);
+		API.deleteDoctype(docTypeName, sessionID);
+
 	}
-	
-	@Parameters({ "adminUserName", "adminPassword", "documentName", "documentDescription", "docTypeName", "filePath", "fileName", "UserUserNameSIGN", 
-		"UserPassswordSIGN", "userUserNameCR", "userPasswordCR"})
+
+	/*-	 
+	 * Preconditions: 
+	 * - two group were created;
+	 * - two users were created and added to groups, one user per group;
+	 * - one document type was created, one group rights were set to "Create", other to "Sign";
+	 * - user with document creation rights is logged in the system.
+	 * 	
+	 * Test steps: 	 	  
+	 * 1. Click "Create document" button. 
+	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name,
+	 *    click "Choose File", select file, click "Open".
+	 * 3. Click "Create" button. 	 
+	 * 4. Open "My Documents" list.
+	 * 5. Click button "Submit".
+	 * 6. Click button "Log out".
+	 * 7. Log in as user who can sign document: fill "Username", "Password", click "Log in".
+	 * 8. Click button "Sign Document".
+	 * 9. Click button "Sign / Decline".
+	 * 10. Click button "Log out".
+	 * 11.  Log in as user created document: fill "Username", "Password", click "Log in".
+	 * 12. Click "My Documents" button.	
+	 * Expected conditions: document status is "ACCEPTED" on My Documents list.  		 
+	 */
+	@Parameters({ "adminUserName", "adminPassword", "documentName", "documentDescription", "docTypeName", "filePath",
+			"fileName", "UserUserNameSIGN", "UserPassswordSIGN", "userUserNameCR", "userPasswordCR" })
 	@Test(groups = { "signDocument" }, priority = 1, enabled = true)
-	public void signDocumentTest(String adminUserName, String adminPassword, String documentName, String documentDescription, 
-			String docTypeName,String filePath, String fileName, String UserUserNameSIGN, String UserPassswordSIGN, 
-			String userUserNameCR, String userPasswordCR) throws InterruptedException, IOException {
-		
+	public void signDocumentTest(String adminUserName, String adminPassword, String documentName,
+			String documentDescription, String docTypeName, String filePath, String fileName, String UserUserNameSIGN,
+			String UserPassswordSIGN, String userUserNameCR, String userPasswordCR)
+			throws InterruptedException, IOException {
+
 		mainPage.waitForLogoutButton();
-		mainPage.clickCreateDocumentButton();		
-		newDocumentPage.createDocument(documentName, documentDescription, docTypeName, filePath, fileName);	
+		mainPage.clickCreateDocumentButton();
+		newDocumentPage.createDocument(documentName, documentDescription, docTypeName, filePath, fileName);
 		mainPage.waitForLogoutButton();
-		mainPage.clickMyDocumentsButton();			
-		myDocumentsPage.sendKeysSearchDocument(documentName);			
-		sessionID =  GetSessionId.login(adminUserName, adminPassword);	
-		documentID = myDocumentsPage.getIDbyDocumentName(documentName);		
-		fileID = API.getFileDetails(documentID, sessionID);				
-		myDocumentsPage.waitForDocumentVisibility(documentName);		
-		myDocumentsPage.waitForButtonSubmitBeClickable();		
-		myDocumentsPage.clickButtonSubmit(documentName);					
+		mainPage.clickMyDocumentsButton();
+		myDocumentsPage.sendKeysSearchDocument(documentName);
+		sessionID = GetSessionId.login(adminUserName, adminPassword);
+		documentID = myDocumentsPage.getIDbyDocumentName(documentName);
+		fileID = API.getFileDetails(documentID, sessionID);
+		myDocumentsPage.waitForDocumentVisibility(documentName);
+		myDocumentsPage.waitForButtonSubmitBeClickable();
+		myDocumentsPage.clickButtonSubmit(documentName);
 		mainPage.clickLogoutButton();
-		loginPage.waitForLoginButton();	
+		loginPage.waitForLoginButton();
 		loginPage.sendKeysUserName(UserUserNameSIGN);
-		loginPage.sendKeysPassword(UserPassswordSIGN);		
-		loginPage.clickButtonLogin();		
-		mainPage.waitForLogoutButton();		
-		mainPage.clickSignDocumentButton();	
+		loginPage.sendKeysPassword(UserPassswordSIGN);
+		loginPage.clickButtonLogin();
+		mainPage.waitForLogoutButton();
+		mainPage.clickSignDocumentButton();
 		signDocumentPage.sendKeysSearchDocument(documentName);
 		signDocumentPage.clickButtonSignDecline(documentName);
-		signDeclineDocumentPage.waitForSignDeclineDocumentPage();			
+		signDeclineDocumentPage.waitForSignDeclineDocumentPage();
 		signDeclineDocumentPage.clickSignButton();
-		mainPage.waitForLogoutButtonToBeClickable();	
+		mainPage.waitForLogoutButtonToBeClickable();
 		mainPage.clickLogoutButton();
 		loginPage.waitForLoginButton();
 		loginPage.sendKeysUserName(userUserNameCR);
@@ -121,12 +149,11 @@ public class SignDocumentTests extends AbstractTest{
 		loginPage.clickButtonLogin();
 		mainPage.waitForLogoutButton();
 		mainPage.clickMyDocumentsButton();
-		myDocumentsPage.sendKeysSearchDocument(documentName);			
+		myDocumentsPage.sendKeysSearchDocument(documentName);
 		assertTrue(myDocumentsPage.getStatusByDocumentName(documentName).equals("ACCEPTED"),
-				"Document status is't \"ACCEPTED\", it wasn't signed");			
+				"Document status is't \"ACCEPTED\", it wasn't signed");
 		API.deleteFile(fileID, sessionID);
 		API.deleteDocument(documentID, sessionID);
 	}
-				
-	
+
 }
