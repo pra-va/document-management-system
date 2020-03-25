@@ -15,15 +15,15 @@ public interface FilesRepository extends JpaRepository<File4DB, Integer> {
 	/**
 	 * Finds a file by UID
 	 * 
-	 * @param UID
+	 * @param UID of file that is looked for
+	 * @return file for db dto
 	 */
-
 	File4DB findFile4dbByUID(String UID);
 
 	/**
 	 * Deletes a file from the system
 	 * 
-	 * @param UID
+	 * @param UID of file to be deleted
 	 */
 
 	void deleteFileByUID(String UID);

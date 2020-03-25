@@ -1,6 +1,5 @@
 package lt.vtmc.files.service;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,8 +53,9 @@ public class FileService {
 	/**
 	 * This method saves single files to a database.
 	 * 
-	 * @param file
-	 * @throws Exception
+	 * @param file to be saved to database
+	 * @param doc  document owner of file
+	 * @throws Exception if saving file fails
 	 */
 	@Transactional
 	public void saveFile(MultipartFile file, Document doc) throws Exception {
@@ -78,8 +78,8 @@ public class FileService {
 	 * This method handles single file download from database. It looks for specific
 	 * file name and returns this file as response entity.
 	 * 
-	 * @param fileName
-	 * @return
+	 * @param fileUID that is requested to download
+	 * @return response entity with file
 	 */
 	@Transactional
 	public ResponseEntity<Resource> downloadFileByUID(String fileUID) {
@@ -92,9 +92,9 @@ public class FileService {
 	/**
 	 * Will turn requested file in bytes array to response entity of type resource.
 	 * 
-	 * @param fileByteData
-	 * @param fileName
-	 * @return ResponseEntity
+	 * @param fileByteData to convert to response entity
+	 * @param fileName     for new file
+	 * @return ResponseEntity with file
 	 */
 	@Transactional
 	public ResponseEntity<Resource> downloadFileByUID(byte[] fileByteData, String fileName) {
@@ -106,8 +106,8 @@ public class FileService {
 	/**
 	 * This method returns all file details created by username
 	 * 
-	 * @param username
-	 * @return List<FileDetailsDTO>
+	 * @param username of owner of files
+	 * @return file details transfer object
 	 */
 
 	public List<FileDetailsDTO> findAllFileDetailsByUsername(String username) {
@@ -127,8 +127,8 @@ public class FileService {
 	/**
 	 * This method returns all file details attached to document
 	 * 
-	 * @param UID
-	 * @return List<FileDetailsDTO>
+	 * @param UID of document
+	 * @return list of file details
 	 */
 
 	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID) {
@@ -145,9 +145,8 @@ public class FileService {
 	/**
 	 * Returns Resource type ResponseEntity for users uploaded files and documents.
 	 * 
-	 * @param username
-	 * @return
-	 * @throws IOException
+	 * @param username of csv file owner
+	 * @return response entity with csv file
 	 */
 
 	public ResponseEntity<Resource> generateCSV(String username) {
@@ -163,11 +162,10 @@ public class FileService {
 	/**
 	 * Returns string representation of csv file.
 	 * 
-	 * @param username
+	 * @param username of generated csv file owner
 	 * @return String representation of csv file.
-	 * @throws Exception
 	 */
-	public String getCsv(String username) throws Exception {
+	public String getCsv(String username) {
 		List<FileDetailsDTO> usersFilesDetails = findAllFileDetailsByUsername(username);
 		StringBuilder builder = new StringBuilder();
 		builder.append(
@@ -181,7 +179,7 @@ public class FileService {
 	/**
 	 * This method will find all files by username provided as parameter.
 	 * 
-	 * @param username
+	 * @param username of files owner
 	 * @return Map of files that belong to a user
 	 */
 	public Map<String, ByteArrayResource> findAllFilesByUsername(String username) {
@@ -195,9 +193,9 @@ public class FileService {
 	}
 
 	/**
-	 * Deletes file from hte system by UID
+	 * Deletes file from the system by UID
 	 * 
-	 * @param UID
+	 * @param uID of file that should be deleted
 	 */
 
 	public void deleteFileByUID(String uID) {
@@ -209,7 +207,7 @@ public class FileService {
 	/**
 	 * Deletes file from the system
 	 * 
-	 * @param UID
+	 * @param tmpFile representation of file to be deleted
 	 */
 
 	public void deleteFile(File4DB tmpFile) {

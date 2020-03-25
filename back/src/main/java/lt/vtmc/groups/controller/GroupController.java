@@ -51,10 +51,8 @@ public class GroupController {
 	 * Creates group with ADMIN role. Only system administrator should be able to
 	 * access this method.
 	 * 
-	 * @url /api/creategroup
-	 * @method POST
-	 * @param CreateGroupCommand containing group name, description, user list and
-	 *                           document type lists
+	 * @param command containing group name, description, user list and document
+	 *                type lists
 	 * @return responseEntity containing response text and Http status
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -79,11 +77,9 @@ public class GroupController {
 	/**
 	 * Returns all groups created within the system with paging
 	 * 
-	 * @url /api/groups
-	 * @method POST
 	 * @param pagingData to set amount of items per page, search phrase and sorting
 	 *                   order
-	 * @return
+	 * @return list of groups and paging data
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
@@ -98,8 +94,6 @@ public class GroupController {
 	/**
 	 * Returns a single group by specified name
 	 * 
-	 * @url /api/groups/{groupname}
-	 * @method GET
 	 * @param name of the group
 	 * @return GroupDetailsDTO type object
 	 */
@@ -116,10 +110,8 @@ public class GroupController {
 	/**
 	 * Adds a single user to specified groups
 	 * 
-	 * @url /api/addGroup/{username}
-	 * @method POST
-	 * @param username   unique name within the system
-	 * @param GroupNames list of groups to add the user to
+	 * @param username unique name within the system
+	 * @param names    list of groups to add the user to
 	 * @return Response text and http status
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -143,12 +135,10 @@ public class GroupController {
 	/**
 	 * Updates group information
 	 * 
-	 * @url /api/groups/{groupname}
-	 * @method POST
 	 * @param command containing new name, description and userlist as well as
 	 *                document types to approve and create
-	 * @param name
-	 * @return
+	 * @param name    of the group
+	 * @return response entity of action status
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/groups/update/{groupname}")
@@ -190,7 +180,7 @@ public class GroupController {
 	/**
 	 * Deletes a group
 	 * 
-	 * @param name of the group to delete
+	 * @param groupname of the group to delete
 	 * @return Response text and http status
 	 */
 	@Secured({ "ROLE_ADMIN" })

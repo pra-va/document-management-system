@@ -62,13 +62,6 @@ public class User {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Document> processedDocuments = new ArrayList<Document>();
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param passwordGroups
-	 * @param username
-	 * @param role
-	 */
 	public User(String username, String name, String surname, String password, String role) {
 		this.username = username;
 		this.name = name;
@@ -77,9 +70,6 @@ public class User {
 		this.role = role;
 	}
 
-	/**
-	 * Empty constructor.
-	 */
 	public User() {
 	}
 
@@ -99,100 +89,50 @@ public class User {
 		this.processedDocuments = processedDocuments;
 	}
 
-	/**
-	 * 
-	 * @return password
-	 */
 	public String getPassword() {
 		return password;
 	}
 
-	/**
-	 * 
-	 * @param password
-	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	/**
-	 * 
-	 * @return username
-	 */
 	public String getUsername() {
 		return username;
 	}
 
-	/**
-	 * 
-	 * @param username
-	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-	/**
-	 * 
-	 * @return name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * 
-	 * @param name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * 
-	 * @return surname
-	 */
 	public String getSurname() {
 		return surname;
 	}
 
-	public void/**
-				 * 
-				 * @param surname
-				 */
-			setSurname(String surname) {
+	public void setSurname(String surname) {
 		this.surname = surname;
 	}
 
-	/**
-	 * Set
-	 * 
-	 * @return role
-	 */
 	public String getRole() {
 		return role;
 	}
 
-	/**
-	 * Groups
-	 * 
-	 * @param role
-	 */
 	public void setRole(String role) {
 		this.role = role;
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	public List<Group> getGroupList() {
 		return groupList;
 	}
 
-	/**
-	 * 
-	 * @param groupList
-	 */
 	public void setGroupList(List<Group> groupList) {
 		this.groupList = groupList;
 	}

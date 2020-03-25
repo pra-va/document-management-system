@@ -1,5 +1,7 @@
 package lt.vtmc.security.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,9 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Security controller for system users.
@@ -30,8 +29,7 @@ public class SecurityController {
 	/**
 	 * This method will return logged in users username.
 	 * 
-	 * @url /api/loggedin
-	 * @method GET
+	 * 
 	 * @return username or "not logged".
 	 */
 	@RequestMapping(path = "/api/loggedin", method = RequestMethod.GET)
@@ -74,7 +72,6 @@ public class SecurityController {
 	@RequestMapping(path = "/api/administrator", method = RequestMethod.GET)
 	@PreAuthorize("hasRole('ADMIN')")
 	public boolean isUserAdmin() {
-		LOG.info("# LOG # User [{}] is Admin #", SecurityContextHolder.getContext().getAuthentication().getName());
 		return true;
 	}
 }

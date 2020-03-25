@@ -32,10 +32,10 @@ public class ZipService {
 	 * This method will turn files provided as byteArrayResource in a map to a byte
 	 * array of a zip file.
 	 * 
-	 * @param files
-	 * @param username
+	 * @param files    to be ziped
+	 * @param username of owner to generate csv gile
 	 * @return byte array of zip file
-	 * @throws IOException
+	 * @throws IOException if exception would be thrown
 	 */
 	public byte[] zipFiles(Map<String, ByteArrayResource> files, String username) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

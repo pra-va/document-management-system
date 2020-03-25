@@ -102,7 +102,7 @@ public class DocumentService {
 	/**
 	 * Deletes a document from the system
 	 * 
-	 * @param Document to delete from database
+	 * @param document to delete from database
 	 */
 
 	@Transactional
@@ -157,7 +157,8 @@ public class DocumentService {
 	/**
 	 * Sets document status to Accepted
 	 * 
-	 * @param UID document unique identification number
+	 * @param UID      document unique identification number
+	 * @param username of validator
 	 */
 
 	@Transactional
@@ -180,6 +181,7 @@ public class DocumentService {
 	 * 
 	 * @param UID            document unique identification number
 	 * @param reasonToReject to explain why the document was rejected
+	 * @param username       of a validator
 	 */
 
 	@Transactional
@@ -217,7 +219,7 @@ public class DocumentService {
 	 * Returns all documents by username
 	 * 
 	 * @param username   users' unique name within the system
-	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 * @param pagingData to set amount of items per page, search phrase and sorting
 	 *                   order
 	 * @return responseMap of items found
 	 */
@@ -249,7 +251,7 @@ public class DocumentService {
 	 * Returns all documents the user is permitted to approve/reject
 	 * 
 	 * @param username   users' unique name within the system
-	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 * @param pagingData to set amount of items per page, search phrase and sorting
 	 *                   order
 	 * @return responseMap of items found
 	 */
@@ -298,7 +300,7 @@ public class DocumentService {
 	 * Returns all documents the user submitted
 	 * 
 	 * @param username   users' unique name within the system
-	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 * @param pagingData to set amount of items per page, search phrase and sorting
 	 *                   order
 	 * @return responseMap of items found
 	 */
@@ -319,7 +321,7 @@ public class DocumentService {
 	 * Returns all documents with status accepted for the user
 	 * 
 	 * @param username   users' unique name within the system
-	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 * @param pagingData to set amount of items per page, search phrase and sorting
 	 *                   order
 	 * @return responseMap of items found
 	 */
@@ -340,7 +342,7 @@ public class DocumentService {
 	 * Returns all documents with status rejected for the user
 	 * 
 	 * @param username   users' unique name within the system
-	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 * @param pagingData to set amount of items per page, search phrase and sorting
 	 *                   order
 	 * @return responseMap of items found
 	 */
@@ -361,7 +363,7 @@ public class DocumentService {
 	 * Returns all documents with status created for the user
 	 * 
 	 * @param username   users' unique name within the system
-	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 * @param pagingData to set amount of items per page, search phrase and sorting
 	 *                   order
 	 * @return responseMap of items found
 	 */
@@ -382,8 +384,9 @@ public class DocumentService {
 	 * Deletes the document if the user requesting this is the author of the
 	 * document
 	 * 
-	 * @param UID      unique document number
+	 * @param uid      unique document number
 	 * @param username users' unique name within the system
+	 * @return true if document is deleted
 	 */
 
 	@Transactional

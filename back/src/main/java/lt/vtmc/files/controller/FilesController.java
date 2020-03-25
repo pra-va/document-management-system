@@ -49,10 +49,8 @@ public class FilesController {
 	 * API method that accepts single multipart file and calls service layer method
 	 * for this file to be preserved on database.
 	 * 
-	 * @url /api/file
-	 * @method GET
-	 * @param MultipartFile file, Document doc
-	 * @return
+	 * @param file to be uploaded
+	 * @param doc  owner of file
 	 */
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -70,10 +68,8 @@ public class FilesController {
 	/**
 	 * This API method will return a downloadable file by file name.
 	 * 
-	 * @url /api/files/{fileUID}
-	 * @method GET
-	 * @param fileName
-	 * @return
+	 * @param fileUID parameter to be used in search for files
+	 * @return response entity with file
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/{fileUID}")
@@ -82,16 +78,14 @@ public class FilesController {
 				SecurityContextHolder.getContext().getAuthentication().getName(), fileUID);
 		return fileService.downloadFileByUID(fileUID);
 	}
-	
+
 	/**
 	 * Returns the details of files belonging to the user
 	 * 
-	 * @url /api/files/info/username/{username}
-	 * @method GET
-	 * @param username
-	 * @return List<FileDetailsDTO>
+	 * @param username parameter by which file details will be found
+	 * @return list of file details dto
 	 */
-	
+
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/info/username/{username}")
 	public List<FileDetailsDTO> findAllFIleDetailsByUsername(@PathVariable("username") String username) {
@@ -103,12 +97,10 @@ public class FilesController {
 	/**
 	 * Returns the details of files attached to document
 	 * 
-	 * @url /api/files/info/docname/{docname}
-	 * @method GET
-	 * @param documentName
-	 * @return List<FileDetailsDTO>
+	 * @param docName of which details should be found
+	 * @return list of file details
 	 */
-	
+
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping("/api/files/info/docname/{docname}")
 	public List<FileDetailsDTO> findAllFIleDetailsByDocument(@PathVariable("docname") String docName) {
@@ -120,30 +112,32 @@ public class FilesController {
 	/**
 	 * Creates a .zip file containing all files the user has created
 	 * 
-	 * @url /api/files/zip/{username}
-	 * @method GET
-	 * @param HttpServletResponse response, username
+	 * @param response of servlet
+	 * @param username owner of files that will be downloaded by zip file
+	 * @return byte array of zip file
 	 */
-	
+
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(value = "/api/files/zip/{username}", produces = "application/zip")
-	public byte[] downloadFiles(HttpServletResponse response, @PathVariable("username") String username)
-			throws IOException {
+	public byte[] downloadFiles(HttpServletResponse response, @PathVariable("username") String username) {
 		response.setContentType("application/zip");
 		response.setStatus(HttpServletResponse.SC_OK);
 		response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
 		LOG.info("# LOG # Initiated by [{}]: User downloaded archive with all files created#",
 				SecurityContextHolder.getContext().getAuthentication().getName());
-		return zipService.zipFiles(fileService.findAllFilesByUsername(username), username);
+		try {
+			return zipService.zipFiles(fileService.findAllFilesByUsername(username), username);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
 	 * Returns csv file of users files and documents.
 	 * 
-	 * @url /api/files/csv/{username}
-	 * @method GET
-	 * @param username
-	 * @return
+	 * @param username of which csv file should be formed
+	 * @return response entity with resourse of csv file
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@GetMapping(value = "/api/files/csv/{username}")
@@ -152,18 +146,17 @@ public class FilesController {
 				SecurityContextHolder.getContext().getAuthentication().getName());
 		return fileService.generateCSV(username);
 	}
-	
+
 	/**
 	 * Deletes a file from the system
 	 * 
-	 * @url /api/files/delete/{UID}
-	 * @method DELETE
-	 * @param UID
+	 * @param UID of file to be deleted
+	 * @return response entity of delete status
 	 */
-	
+
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@DeleteMapping(path = "/api/files/delete/{UID}")
-	public ResponseEntity<String> deleteFileByUID(@PathVariable("UID") String UID) throws IOException {
+	public ResponseEntity<String> deleteFileByUID(@PathVariable("UID") String UID) {
 		fileService.deleteFileByUID(UID);
 		LOG.info("# LOG # Initiated by [{}]: User deleted file with file UID: [{}]#",
 				SecurityContextHolder.getContext().getAuthentication().getName(), UID);

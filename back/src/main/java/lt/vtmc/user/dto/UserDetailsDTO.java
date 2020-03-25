@@ -21,17 +21,6 @@ public class UserDetailsDTO {
 
 	private String[] groupList;
 
-	/**
-	 * Constructor method for GroupDetails
-	 * 
-	 * @param username
-	 * @param password
-	 * @param name
-	 * @param surname
-	 * @param role
-	 * @param groupList
-	 */
-
 	public UserDetailsDTO(User user) {
 		super();
 		this.username = user.getUsername();

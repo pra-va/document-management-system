@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
 
 	/**
 	 * Will return User object based user found by
-	 * {@link lt.vtmc.security.service.UserService.findUserByUsername(String)}.
+	 * lt.vtmc.security.service.UserService.findUserByUsername(String).
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -69,8 +69,8 @@ public class UserService implements UserDetailsService {
 	/**
 	 * This method finds users from user repository.
 	 * 
-	 * @param username
-	 * @return User
+	 * @param username to be looked up
+	 * @return User object
 	 */
 	public User findUserByUsername(String username) {
 		return userRepository.findUserByUsername(username);
@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
 	 * Will check if such user name exists. This method should be used when creating
 	 * and updating user to avoid duplicate user names.
 	 * 
-	 * @param username
+	 * @param username to be checked if it exists
 	 * @return true if username exists
 	 */
 	public boolean checkIfUsernameExists(String username) {
@@ -90,11 +90,11 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Method to create users.
 	 * 
-	 * @param username
-	 * @param name
-	 * @param surname
-	 * @param password
-	 * @return User
+	 * @param username of the new user
+	 * @param name     of the new user
+	 * @param surname  of the new user
+	 * @param password of the new user
+	 * @return new user object that was created
 	 */
 	@Transactional
 	public User createUser(String username, String name, String surname, String password) {
@@ -110,11 +110,11 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Method to create system administrators.
 	 * 
-	 * @param username
-	 * @param name
-	 * @param surname
-	 * @param password
-	 * @return User
+	 * @param username of the new administrator
+	 * @param name     of the new administrator
+	 * @param surname  of the new administrator
+	 * @param password of the new administrator
+	 * @return new administrator object that was created
 	 */
 	@Transactional
 	public User createSystemAdministrator(String username, String name, String surname, String password) {
@@ -131,6 +131,12 @@ public class UserService implements UserDetailsService {
 		return newUser;
 	}
 
+	/**
+	 * Returns all users as page requested in parameters.
+	 * 
+	 * @param pagingData to set response list size, sort order and search phrase
+	 * @return map of users and paging data
+	 */
 	public Map<String, Object> retrieveAllUsers(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<User> userlist = userRepository.findLike(pagingData.getSearchValueString(), firstPageable);
@@ -145,7 +151,7 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Method to delete system users.
 	 * 
-	 * @param User
+	 * @param user to be deleted
 	 */
 	@Transactional
 	public void deleteUser(User user) {
@@ -155,11 +161,12 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Method to update system user details.
 	 * 
-	 * @param username
-	 * @param name
-	 * @param surname
-	 * @param password
-	 * @return User
+	 * @param username to be updated
+	 * @param name     of updated user
+	 * @param surname  of updated user
+	 * @param password of updated user
+	 * @param role     of updated user
+	 * @return updated user
 	 */
 	@Transactional
 	public User updateUserDetails(String username, String name, String surname, String password, String role) {
@@ -179,8 +186,8 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Returns document types that user provided in parameters can create.
 	 * 
-	 * @param username
-	 * @param pagingData
+	 * @param username   to get doc types that he or she can create
+	 * @param pagingData to set response list size, sort order and search phrase
 	 * @return document types that user can create and paging information
 	 */
 	public Map<String, Object> getUserDocTypesToCreate(String username, PagingData pagingData) {
@@ -197,8 +204,7 @@ public class UserService implements UserDetailsService {
 	/**
 	 * Returns document types that user provided in parameters can sign.
 	 * 
-	 * @param username
-	 * @param pagingData
+	 * @param username to get doc types that he or she can sign
 	 * @return document types that user can sign and paging information
 	 */
 	public List<DocumentDetailsDTO> getUserDocumentsToBeSigned(String username) {
@@ -242,8 +248,8 @@ public class UserService implements UserDetailsService {
 	 * This method will find users and return them without groups by provided
 	 * username and paging data.
 	 * 
-	 * @param searchPhrase
-	 * @param pagingData
+	 * @param searchPhrase to find
+	 * @param pagingData   to set response list size, sort order and search phrase
 	 * @return users, their information without groups and pagign data
 	 */
 	public Map<String, Object> getUsersNoGroups(String searchPhrase, PagingData pagingData) {

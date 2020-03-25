@@ -17,17 +17,6 @@ public class UserNoGroupsDTO {
 
 	private String role;
 
-	/**
-	 * Constructor method for GroupDetails
-	 * 
-	 * @param username
-	 * @param password
-	 * @param name
-	 * @param surname
-	 * @param role
-	 * @param groupList
-	 */
-
 	public UserNoGroupsDTO(String username, String name, String surname, String role) {
 		this.username = username;
 		this.name = name;

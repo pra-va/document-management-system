@@ -34,83 +34,42 @@ public class PagingData {
 		this.page = 0;
 	}
 
-	/**
-	 * 
-	 * @return search value
-	 */
 	public String getSearchValueString() {
 		return searchValueString;
 	}
 
-	/**
-	 * 
-	 * @param searchValueString
-	 */
 	public void setSearchValueString(String searchValueString) {
 		this.searchValueString = searchValueString;
 	}
 
-	/**
-	 * 
-	 * @return field name to sort by.
-	 */
 	public String getSortBy() {
 		return sortBy;
 	}
 
-	/**
-	 * 
-	 * @param sortBy
-	 */
 	public void setSortBy(String sortBy) {
 		this.sortBy = sortBy;
 	}
 
-	/**
-	 * 
-	 * @return order for sorting field "sortBy"
-	 */
 	public String getOrder() {
 		return order;
 	}
 
-	/**
-	 * 
-	 * @param orderBy - "desc" for descending or anything else for ascending
-	 */
 	public void setOrder(String orderBy) {
 		this.order = orderBy;
 	}
 
-	/**
-	 * 
-	 * @return size per page
-	 */
 	public int getLimit() {
 		return limit;
 	}
 
-	/**
-	 * set size per page
-	 * 
-	 * @param limit
-	 */
 	public void setLimit(int limit) {
 		this.limit = limit;
 	}
 
-	/**
-	 * 
-	 * @return number of page where first page is 0
-	 */
 	public int getPage() {
 		return page;
 	}
 
-	/**
-	 * 
-	 * @param page number where 0 is first page
-	 */
 	public void setPage(int page) {
 		this.page = page;
 	}

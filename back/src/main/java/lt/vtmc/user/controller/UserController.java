@@ -206,11 +206,10 @@ public class UserController {
 	 * 
 	 * @param username to check if it exists
 	 * @return true if user name exists
-	 * @throws Exception
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/user/exists")
-	public boolean checkIfUserExists(String username) throws Exception {
+	public boolean checkIfUserExists(String username) {
 		return userService.checkIfUsernameExists(username);
 	}
 
