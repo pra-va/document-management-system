@@ -2,11 +2,16 @@ package lt.vtmc.user.dto;
 
 import lt.vtmc.user.model.User;
 
+/**
+ * This is DTO for user details. This method is used to retrieve user
+ * information.
+ * 
+ * @author pra-va
+ *
+ */
 public class UserDetailsDTO {
 
 	private String username;
-
-//	private String password;
 
 	private String name;
 
@@ -15,9 +20,6 @@ public class UserDetailsDTO {
 	private String role;
 
 	private String[] groupList;
-
-//	@JsonIgnore
-//	private List<Group> groupList;
 
 	/**
 	 * Constructor method for GroupDetails
@@ -33,12 +35,10 @@ public class UserDetailsDTO {
 	public UserDetailsDTO(User user) {
 		super();
 		this.username = user.getUsername();
-//		this.password = user.getPassword();
 		this.name = user.getName();
 		this.surname = user.getSurname();
 		this.role = user.getRole();
 		this.groupList = filterUsersGroups(user);
-//		this.groupList = user.getGroupList();
 	}
 
 	private String[] filterUsersGroups(User user) {
@@ -65,14 +65,6 @@ public class UserDetailsDTO {
 		this.username = username;
 	}
 
-//	public String getPassword() {
-//		return password;
-//	}
-//
-//	public void setPassword(String password) {
-//		this.password = password;
-//	}
-
 	public String getName() {
 		return name;
 	}
@@ -96,21 +88,5 @@ public class UserDetailsDTO {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-//	public List<Group> getGroupListArray() {
-//		return groupList;
-//	}
-
-//	public String[] getGroupList() {
-//		String[] groupNames = new String[groupList.size()];
-//		for (int i = 0; i < groupList.size(); i++) {
-//			groupNames[i] = groupList.get(i).getName();
-//		}
-//		return groupNames;
-//	}
-
-//	public void setGroupList(List<Group> groupList) {
-//		this.groupList = groupList;
-//	}
 
 }

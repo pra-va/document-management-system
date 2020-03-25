@@ -64,6 +64,7 @@ public class DocTypeController {
 	 * Controller method that will return all document types.
 	 * 
 	 * @param pagingData
+	 * @method POST
 	 * @return allDocumentTypes and paging info for table.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -78,6 +79,7 @@ public class DocTypeController {
 	 * Controller method to get all document types without groups.
 	 * 
 	 * @param pagingData
+	 * @method POST
 	 * @return allDocumentTypes and paging info for table.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -93,6 +95,7 @@ public class DocTypeController {
 	 * parameters.
 	 * 
 	 * @param docTypeName
+	 * @method GET
 	 * @return List of groups that approve doc type provided in parameters.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -107,6 +110,7 @@ public class DocTypeController {
 	 * Controller method to get creating groups by user name provided in parameters.
 	 * 
 	 * @param docTypeName
+	 * @method GET
 	 * @return List of groups that approve doc type provided in parameters.
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -122,6 +126,7 @@ public class DocTypeController {
 	 * exact.
 	 * 
 	 * @param name
+	 * @method GET
 	 * @return DocType
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -136,6 +141,7 @@ public class DocTypeController {
 	 * Controller method to delete docType by provided name.
 	 * 
 	 * @param name
+	 * @method DELETE
 	 * @return ResponseEntity
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -152,6 +158,7 @@ public class DocTypeController {
 	 * provided name.
 	 * 
 	 * @param name
+	 * @method GET
 	 * @return List of groups that can sign specific doc type
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -166,6 +173,7 @@ public class DocTypeController {
 	 * Controller method that will return list of groups creating doc type.
 	 * 
 	 * @param name
+	 * @method GET
 	 * @return
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -180,6 +188,7 @@ public class DocTypeController {
 	 * Controller method to check if doc type with provided name exists
 	 * 
 	 * @param name
+	 * @method GET
 	 * @return true if exists, false otherwise
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -196,6 +205,7 @@ public class DocTypeController {
 	 * 
 	 * @param command
 	 * @param name
+	 * @method POST
 	 * @return ResponseEntity
 	 */
 	@Secured({ "ROLE_ADMIN" })

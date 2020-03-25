@@ -67,8 +67,10 @@ public class UserService implements UserDetailsService {
 	}
 
 	/**
-	 * 
 	 * This method finds users from user repository.
+	 * 
+	 * @param username
+	 * @return User
 	 */
 	public User findUserByUsername(String username) {
 		return userRepository.findUserByUsername(username);
@@ -79,7 +81,7 @@ public class UserService implements UserDetailsService {
 	 * and updating user to avoid duplicate user names.
 	 * 
 	 * @param username
-	 * @return
+	 * @return true if username exists
 	 */
 	public boolean checkIfUsernameExists(String username) {
 		return userRepository.isUsernameExists(username);
@@ -129,19 +131,6 @@ public class UserService implements UserDetailsService {
 		return newUser;
 	}
 
-	/**
-	 * Method to return all system users.
-	 * 
-	 */
-//	public List<UserDetailsDTO> retrieveAllUsers() {
-//		List<User> tmpList = userRepository.findAll();
-//		List<UserDetailsDTO> allUsers = new ArrayList<UserDetailsDTO>();
-//		for (int i = 0; i < tmpList.size(); i++) {
-//			allUsers.add(new UserDetailsDTO(tmpList.get(i)));
-//		}
-//		return allUsers;
-//	}
-//	
 	public Map<String, Object> retrieveAllUsers(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<User> userlist = userRepository.findLike(pagingData.getSearchValueString(), firstPageable);
@@ -187,6 +176,13 @@ public class UserService implements UserDetailsService {
 		return updatedUser;
 	}
 
+	/**
+	 * Returns document types that user provided in parameters can create.
+	 * 
+	 * @param username
+	 * @param pagingData
+	 * @return document types that user can create and paging information
+	 */
 	public Map<String, Object> getUserDocTypesToCreate(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<String> docTypeNames = userRepository.docTypesUserCreatesByUsername(username,
@@ -198,6 +194,13 @@ public class UserService implements UserDetailsService {
 		return responseMap;
 	}
 
+	/**
+	 * Returns document types that user provided in parameters can sign.
+	 * 
+	 * @param username
+	 * @param pagingData
+	 * @return document types that user can sign and paging information
+	 */
 	public List<DocumentDetailsDTO> getUserDocumentsToBeSigned(String username) {
 		User tmpUser = userRepository.findUserByUsername(username);
 		List<Group> tmpGroupList = tmpUser.getGroupList();
@@ -225,7 +228,7 @@ public class UserService implements UserDetailsService {
 	 * This method will return true if there is initial user created and otherwise -
 	 * false.
 	 * 
-	 * @return
+	 * @return true if there is no initial system administrator
 	 */
 	public boolean shouldCreateFirstUser() {
 		int usersCount = userRepository.countUsers();
@@ -235,6 +238,14 @@ public class UserService implements UserDetailsService {
 		return false;
 	}
 
+	/**
+	 * This method will find users and return them without groups by provided
+	 * username and paging data.
+	 * 
+	 * @param searchPhrase
+	 * @param pagingData
+	 * @return users, their information without groups and pagign data
+	 */
 	public Map<String, Object> getUsersNoGroups(String searchPhrase, PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<UserNoGroupsDTO> userlist = userRepository.findLikeNoGroups(pagingData.getSearchValueString(),

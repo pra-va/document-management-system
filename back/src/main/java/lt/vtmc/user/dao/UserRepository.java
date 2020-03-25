@@ -117,6 +117,10 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 	/**
 	 * 
+	 * Finds statistics data for user of his/her doc types that he can validate. For
+	 * every document type of user, provided in parameters, returns count of
+	 * documents with SUBMITTED, ACCEPTED OR REJECTED status that user can validate.
+	 * 
 	 * @param username
 	 * @param searchPhrase
 	 * @param startDate
@@ -128,9 +132,23 @@ public interface UserRepository extends JpaRepository<User, String> {
 	Page<StatisticsDocTypeDTO> statisticsByDocType(String username, String searchPhrase, String startDate,
 			String endDate, Pageable pageable);
 
+	/**
+	 * 
+	 * Finds statistics data for user of his/her document type creating users stats
+	 * (number of created documents).
+	 * 
+	 * @param username
+	 * @param searchPhrase
+	 * @param pageable
+	 * @return
+	 */
 	@Query("select new lt.vtmc.statistics.dto.StatisticsDocTypeDTO(da.name as docTypeName, sum(case when d.status = '1' then 1 else 0 end) as submited, sum(case when d.status = '2' then 1 else 0 end) as accepted, sum(case when d.status = '3' then 1 else 0 end) as declined) from User u join u.groupList g join g.docTypesToApprove da join da.documentList d where u.username = ?1 and LOWER(d.name) LIKE LOWER(CONCAT('%', ?2,'%')) group by da.name")
 	Page<StatisticsDocTypeDTO> statisticsByDocType(String username, String searchPhrase, Pageable pageable);
 
+	/**
+	 * 
+	 * @return count of users with admin role.
+	 */
 	@Query("select count(u) from User u where u.role = 'ADMIN'")
 	int countUsers();
 

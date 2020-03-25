@@ -261,9 +261,4 @@ public class User {
 				+ surname + ", role=" + role + ", groupList=" + groupList + "]";
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-
 }
