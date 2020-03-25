@@ -69,16 +69,16 @@ public class NewGroupTests extends AbstractTest {
 		mainPage.navigateToMainPage();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 * Test steps:
-	 * 1. Open new group page.
-	 * 2. Enter groups name and description.
-	 * 3. Add user "adminas" to this group.
-	 * 4. Click create button.
-	 * Expected results:
-	 *   - New group is created successfully.
+	/**-
+	 * Preconditions:<br> 
+	 *   - admin is logged in the system;<br>
+	 * Test steps:<br>
+	 * 1. Open new group page.<br>
+	 * 2. Enter groups name and description.<br>
+	 * 3. Add user "adminas" to this group.<br>
+	 * 4. Click create button.<br>
+	 * Expected results:<br>
+	 *   - New group is created successfully.<br>
 	 */
 	@Parameters({ "adminUserName", "groupName", "groupDescription" })
 	@Test(groups = { "createGroup" }, priority = 1, enabled = true)
@@ -93,15 +93,15 @@ public class NewGroupTests extends AbstractTest {
 				"Created group name isn't displayed or group wasn't created");
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 * Test steps:
-	 * 1. Open new group page.
-	 * 2. Leave groups name field empty.
-	 * 3. Click create button.
-	 * Expected results:
-	 *   - New group should not be created without a name.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 * Test steps:<br>
+	 * 1. Open new group page.<br>
+	 * 2. Leave groups name field empty.<br>
+	 * 3. Click create button.<br>
+	 * Expected results:<br>
+	 *   - New group should not be created without a name.<br>
 	 */
 	@Test(groups = { "createGroup" }, priority = 0, enabled = true)
 	public void groupWithoutNameTest() {
@@ -113,15 +113,15 @@ public class NewGroupTests extends AbstractTest {
 		groupPage.clickCancelButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 * Test steps:
-	 * 1. Open admin users page.
-	 * 2. Enter "adminas" name in the search field.
-	 * 3. Click edit/view.
-	 * Expected results:
-	 *   - User should be assigned to the proper group.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 * Test steps:<br>
+	 * 1. Open admin users page.<br>
+	 * 2. Enter "adminas" name in the search field.<br>
+	 * 3. Click edit/view.<br>
+	 * Expected results:<br>
+	 *   - User should be assigned to the proper group.<br>
 	 */
 	@Parameters({ "adminUserName", "groupName" })
 	@Test(groups = { "createGroup" }, priority = 2, enabled = true)

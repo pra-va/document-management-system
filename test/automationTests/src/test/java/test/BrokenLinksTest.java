@@ -61,15 +61,15 @@ public class BrokenLinksTest extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system (API URL's are locked for other users);
-	 * Test steps:
-	 * 1. Find all links by their tag "a".
-	 * 2. Get each links "href" attribute.
-	 * 3. Try to establish connection with each link and check the response code.
-	 * Expected results:
-	 *    - response code should be 200 for a working link.
+	/**-
+	 * Preconditions:<br> 
+	 *   - admin is logged in the system;<br>
+	 * Test steps:<br>
+	 * 1. Find all links by their tag "a".<br>
+	 * 2. Get each links "href" attribute.<br>
+	 * 3. Try to establish connection with each link and check the response code.<br>
+	 * Expected results:<br>
+	 *    - response code should be 200 for a working link.<br>
 	 */
 	@Test(groups = { "brokenLinks" }, priority = 1, enabled = true)
 	public void brokenLinksTest() {
@@ -105,14 +105,14 @@ public class BrokenLinksTest extends AbstractTest {
 		}
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system (API URL's are locked for other users);
-	 * Test steps:
-	 * 1. Click a specific button.
-	 * 2. Check if it navigates you to the expected page.
-	 * Expected results:
-	 *    - All the buttons work as intended.
+	/**-
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 * Test steps:<br>
+	 * 1. Click a specific button.<br>
+	 * 2. Check if it navigates you to the expected page.<br>
+	 * Expected results:<br>
+	 *    - All the buttons work as intended.<br>
 	 */
 	@Test(groups = { "brokenLinks" }, priority = 0, enabled = true)
 	public void brokeButtonsTest() {

@@ -83,22 +83,22 @@ public class NewUserTests extends AbstractTest {
 		API.deleteGroup(groupName, sessionID);
 	}
 
-	/*-	
-	 * Preconditions: admin is logged in the system, at least one group was created.
+	/**-	
+	 * Preconditions: admin is logged in the system, at least one group was created.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password", 
-	 * check "Yes" on "Admin" selection, search for a group name, click button "Add", click button "Create". 
-	 * 3. Click "Admin" menu, "Users" option. 
-	 * 4. Search for created Username. 
-	 * 5. Check if properties ("First Name", "Last Name", "Username", "Role") on a list are displayed correctly . 
-	 * 6. Click "Edit / View" button. 
-	 * Expected conditions: all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly. 
-	 * 7. Click button "Cancel". 
-	 * 8. Click button "Logout". 
-	 * 9. Login to the system using new admin's username and password, click button "Login". 	
-	 * Expected conditions: all data on Profile Page is displayed correctly.
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password",<br> 
+	 * check "Yes" on "Admin" selection, search for a group name, click button "Add", click button "Create". <br>
+	 * 3. Click "Admin" menu, "Users" option. <br>
+	 * 4. Search for created Username. <br>
+	 * 5. Check if properties ("First Name", "Last Name", "Username", "Role") on a list are displayed correctly . <br>
+	 * 6. Click "Edit / View" button.<br> 
+	 * Expected conditions: all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly.<br> 
+	 * 7. Click button "Cancel".<br> 
+	 * 8. Click button "Logout".<br> 
+	 * 9. Login to the system using new admin's username and password, click button "Login". <br>	
+	 * Expected results: all data on Profile Page is displayed correctly.<br>
 	 */
 	@Parameters({ "newAdminFirstName", "newAdminLastName", "newAdminUserName", "newAdminPassword", "newAdminRole",
 			"groupName" })
@@ -154,22 +154,22 @@ public class NewUserTests extends AbstractTest {
 		profilePage.clickButtonClose();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system, at least one group is created.
+	/**-	 
+	 * Precondition: admin is logged in the system, at least one group is created.<br>
 	 * 
-	 * Test steps: 	 
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password", search for a group name, click button
-	 *    "Add", click button "Create". 
-	 * 3. Click "Admin" menu, "Users" option. 
-	 * 4. Search for created Username. 
-	 * Expected conditions:  ("First Name", "Last Name", "Username", "Role") on a list are displayed correctly . 
-	 * 5. Click "Edit / View" button. 
-	 * 6. Check if all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly. 
-	 * 7. Click button "Cancel".
-	 * 8. Click button "Logout". 
-	 * 9. Login to the system using new user's username and password, click button "Login".	 
-	 * Expected conditions:  Check if all user data on Profile Page is displayed correctly.
+	 * Test steps:<br> 
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password", search for a group name, click button<br>
+	 *    "Add", click button "Create". <br>
+	 * 3. Click "Admin" menu, "Users" option. <br>
+	 * 4. Search for created Username.<br> 
+	 * Expected conditions:  ("First Name", "Last Name", "Username", "Role") on a list are displayed correctly. <br>
+	 * 5. Click "Edit / View" button.<br> 
+	 * 6. Check if all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly.<br> 
+	 * 7. Click button "Cancel".<br>
+	 * 8. Click button "Logout". <br>
+	 * 9. Login to the system using new user's username and password, click button "Login".	<br> 
+	 * Expected results: all user data on Profile Page is displayed correctly.<br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName", "newUserPassword", "newUserRole",
 			"groupName" })
@@ -228,14 +228,14 @@ public class NewUserTests extends AbstractTest {
 		softAssertion.assertAll();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system.
+	/**-	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "Last Name", "Username", "Password", click button "Create". 
-	 * Expected conditions: Fist Name field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 * "Condition not met." and cross mark is shown).	
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option.<br> 
+	 * 2. Fill fields in New User form: "Last Name", "Username", "Password", click button "Create". <br>
+	 * Expected results: Fist Name field length validation message is displayed correctly (attribute "aria-label" value changes to <br>
+	 * "Condition not met." and cross mark is shown).<br>	
 	 */
 	@Parameters({ "newUserLastName", "newUserUserName1", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
@@ -251,16 +251,16 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system.
+	/**-	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name"(21 characters), "Last Name", "Username", "Password", click button "Create". 
-	 * Expected conditions: 
-	 *    First Name input in New User form cannot be longer than 20 characters; 
-	 *    field length validation message is displayed correctly 
-	 *    (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).	 
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option.<br> 
+	 * 2. Fill fields in New User form: "First Name"(21 characters), "Last Name", "Username", "Password", click button "Create".<br> 
+	 * Expected results: <br>
+	 *    First Name input in New User form cannot be longer than 20 characters; <br>
+	 *    field length validation message is displayed correctly <br>
+	 *    (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>	 
 	 */
 	@Parameters({ "newUserFirstName21char", "newUserLastName", "newUserUserName1", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
@@ -277,13 +277,13 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	
-	 * Precondition: admin is logged in the system.
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Username", "Password", click button "Create". 
-	 * Expected conditions: Last Name field in New User form is mandatory; field length validation message is displayed correctly 
-	 *(attribute "aria-label" value changes to "Condition not met." and cross mark is shown).	 
+	/**-	
+	 * Precondition: admin is logged in the system.<br>
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Username", "Password", click button "Create". <br>
+	 * Expected results: Last Name field in New User form is mandatory; field length validation message is displayed correctly <br> 
+	 *(attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>	 
 	 */
 	@Parameters({ "newUserFirstName", "newUserUserName1", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
@@ -299,15 +299,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	 	 
-	 * Precondition: admin is logged in the system.
+	/**-	 	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name"(21 characters), "Username", "Password", click button "Create". 
-	 * Expected conditions: Last Name input in New User form cannot be longer than 20 characters; 
-	 * field length validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name"(21 characters), "Username", "Password", click button "Create". <br>
+	 * Expected results: Last Name input in New User form cannot be longer than 20 characters; <br>
+	 * field length validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName21char", "newUserUserName1", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
@@ -324,15 +324,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system.
+	/**-	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(3 characters), "Password", click button "Create". 
-	 * Expected conditions: Username input in New User form cannot be shorter than 3 characters;
-	 * field length validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option.<br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(3 characters), "Password", click button "Create".<br> 
+	 * Expected results: Username input in New User form cannot be shorter than 3 characters;<br>
+	 * field length validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName3char", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
@@ -349,15 +349,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system.
+	/**-	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(21 characters), "Password", click button "Create". 
-	 * Expected conditions: Username input in New User form cannot be longer than 20 characters;
-	 * field length validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(21 characters), "Password", click button "Create". <br>
+	 * Expected results: Username input in New User form cannot be longer than 20 characters;<br>
+	 * field length validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>
 	 */
 
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName21char", "newUserPassword" })
@@ -375,15 +375,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	  
-	 * Precondition: admin is logged in the system.
+	/**-	  
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(not unique), "Password", click button "Create". 
-	 * Expected conditions: Username input in New User form must be unique;
-	 * field length validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(not unique), "Password", click button "Create".<br> 
+	 * Expected results: Username input in New User form must be unique;<br>
+	 * field length validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
@@ -400,15 +400,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	
-	 * Precondition: admin is logged in the system.
+	/**-	
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(with special characters), "Password", click button "Create". 
-	 * Expected conditions: Username input in New User form cannot contain special characters;
-	 * field input validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(with special characters), "Password", click button "Create".<br> 
+	 * Expected results: Username input in New User form cannot contain special characters;<br>
+	 * field input validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserNameSpecChar", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
@@ -425,15 +425,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	  
-	 * Precondition: admin is logged in the system.
+	/**-	  
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(with space), "Password", click button "Create". 
-	 * Expected conditions: Username input in New User form cannot contain space;
-	 * field input validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(with space), "Password", click button "Create". <br>
+	 * Expected results: Username input in New User form cannot contain space;<br>
+	 * field input validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).<br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserNameContainsSpace", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
@@ -450,15 +450,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system.
+	/**-	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(3 characters), click button "Create".
-	 * Expected conditions: Password input in New User form cannot be shorter than 4 characters;
-	 * field input validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). 
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(3 characters), click button "Create".<br>
+	 * Expected results: Password input in New User form cannot be shorter than 4 characters;<br>
+	 * field input validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). <br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName1", "newUserPassword3char" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
@@ -476,15 +476,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system.
+	/**-	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(3 characters), click button "Create". 
-	 * Expected conditions: Password input in New User form cannot be longer than 21 characters;
-	 * field input validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). 
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(3 characters), click button "Create". <br>
+	 * Expected results: Password input in New User form cannot be longer than 21 characters;<br>
+	 * field input validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). <br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName1", "newUserPassword21char" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
@@ -502,15 +502,15 @@ public class NewUserTests extends AbstractTest {
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-	 
-	 * Precondition: admin is logged in the system.
+	/**-	 
+	 * Precondition: admin is logged in the system.<br>
 	 * 
-	 * Test steps:
-	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(with spaces), click button "Create". 
-	 * Expected conditions: Password input in New User form cannot contain spaces;
-	 * field input validation message is displayed correctly 
-	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). 
+	 * Test steps:<br>
+	 * 1. Click "Admin" menu, "New user" option. <br>
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(with spaces), click button "Create". <br>
+	 * Expected results: Password input in New User form cannot contain spaces;<br>
+	 * field input validation message is displayed correctly <br>
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). <br>
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName1", "newUserPasswordWithSpace" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)

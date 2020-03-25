@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <meta charset='utf-8'>
+  <title>TestNG reports</title>
+
+    <link type="text/css" href="testng-reports.css" rel="stylesheet" />
+    <script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="testng-reports.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      var suiteTableInitFunctions = new Array();
+      var suiteTableData = new Array();
+    </script>
+    <!--
+      <script type="text/javascript" src="jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+     -->
+  </head>
+
+  <body>
+    <div class="top-banner-root">
+      <span class="top-banner-title-font">Test results</span>
+      <br/>
+      <span class="top-banner-font-1">1 suite</span>
+    </div> <!-- top-banner-root -->
+    <div class="navigator-root">
+      <div class="navigator-suite-header">
+        <span>All suites</span>
+        <a href="#" class="collapse-all-link" title="Collapse/expand all the suites">
+          <img class="collapse-all-icon" src="collapseall.gif">
+          </img> <!-- collapse-all-icon -->
+        </a> <!-- collapse-all-link -->
+      </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" class="navigator-link" panel-name="suite-newUserTests">
+              <span class="suite-name border-skipped">newUserTests</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="test-xml-newUserTests">
+                    <span>C:\Users\Gintare\Documents\GitHub\data-management-system\test\automationTests\src\test\java\testSuites\newUserTestSuite.xml</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="testlist-newUserTests">
+                    <span class="test-stats">1 test</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="group-newUserTests">
+                    <span>2 groups</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="times-newUserTests">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="reporter-newUserTests">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="ignored-methods-newUserTests">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" class="navigator-link " panel-name="chronological-newUserTests">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">14 methods,  14 skipped,  </span>
+                  </li>
+                  <li>
+                    <span class="method-list-title skipped">Skipped methods</span>
+                    <span class="show-or-hide-methods skipped">
+                      <a href="#" panel-name="suite-newUserTests" class="hide-methods skipped suite-newUserTests"> (hide)</a> <!-- hide-methods skipped suite-newUserTests -->
+                      <a href="#" panel-name="suite-newUserTests" class="show-methods skipped suite-newUserTests"> (show)</a> <!-- show-methods skipped suite-newUserTests -->
+                    </span>
+                    <div class="method-list-content skipped suite-newUserTests">
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="createNewAdminTest">createNewAdminTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="createNewUserTest">createNewUserTest</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestEmptyFirstNameField">newUserTestEmptyFirstNameField</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestEmptyLastNameField">newUserTestEmptyLastNameField</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestFirstName21char">newUserTestFirstName21char</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestLastName21char">newUserTestLastName21char</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestNotUniqueUsername">newUserTestNotUniqueUsername</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestPassword21char">newUserTestPassword21char</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestPassword3char">newUserTestPassword3char</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestPasswordWithSpace">newUserTestPasswordWithSpace</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestUsername21char">newUserTestUsername21char</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestUsername3char">newUserTestUsername3char</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestUsernameSpecChar">newUserTestUsernameSpecChar</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="skipped.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-newUserTests" title="test.NewUserTests" hash-for-method="newUserTestUsernameWithSpace">newUserTestUsernameWithSpace</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content skipped suite-newUserTests -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
+    </div> <!-- navigator-root -->
+    <div class="wrapper">
+      <div class="main-panel-root">
+        <div panel-name="suite-newUserTests" class="panel newUserTests">
+          <div class="suite-newUserTests-class-skipped">
+            <div class="main-panel-header rounded-window-top">
+              <img src="skipped.png"/>
+              <span class="class-name">test.NewUserTests</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="createNewAdminTest">
+                  </a> <!-- createNewAdminTest -->
+                  <span class="method-name">createNewAdminTest</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="createNewUserTest">
+                  </a> <!-- createNewUserTest -->
+                  <span class="method-name">createNewUserTest</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestEmptyFirstNameField">
+                  </a> <!-- newUserTestEmptyFirstNameField -->
+                  <span class="method-name">newUserTestEmptyFirstNameField</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestEmptyLastNameField">
+                  </a> <!-- newUserTestEmptyLastNameField -->
+                  <span class="method-name">newUserTestEmptyLastNameField</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestFirstName21char">
+                  </a> <!-- newUserTestFirstName21char -->
+                  <span class="method-name">newUserTestFirstName21char</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestLastName21char">
+                  </a> <!-- newUserTestLastName21char -->
+                  <span class="method-name">newUserTestLastName21char</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestNotUniqueUsername">
+                  </a> <!-- newUserTestNotUniqueUsername -->
+                  <span class="method-name">newUserTestNotUniqueUsername</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestPassword21char">
+                  </a> <!-- newUserTestPassword21char -->
+                  <span class="method-name">newUserTestPassword21char</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestPassword3char">
+                  </a> <!-- newUserTestPassword3char -->
+                  <span class="method-name">newUserTestPassword3char</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestPasswordWithSpace">
+                  </a> <!-- newUserTestPasswordWithSpace -->
+                  <span class="method-name">newUserTestPasswordWithSpace</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestUsername21char">
+                  </a> <!-- newUserTestUsername21char -->
+                  <span class="method-name">newUserTestUsername21char</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestUsername3char">
+                  </a> <!-- newUserTestUsername3char -->
+                  <span class="method-name">newUserTestUsername3char</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestUsernameSpecChar">
+                  </a> <!-- newUserTestUsernameSpecChar -->
+                  <span class="method-name">newUserTestUsernameSpecChar</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="newUserTestUsernameWithSpace">
+                  </a> <!-- newUserTestUsernameWithSpace -->
+                  <span class="method-name">newUserTestUsernameWithSpace</span>
+                  <div class="stack-trace">org.openqa.selenium.SessionNotCreatedException: session not created
+from chrome not reachable
+  (Session info: chrome=80.0.3987.149)
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;GINBAKS&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_231&apos;
+Driver info: driver.version: ChromeDriver
+remote stacktrace: Backtrace:
+	Ordinal0 [0x00ABA113+1548563]
+	Ordinal0 [0x00A3DDA1+1039777]
+	Ordinal0 [0x009BE32E+516910]
+	Ordinal0 [0x009B8012+491538]
+	Ordinal0 [0x009B86EB+493291]
+	Ordinal0 [0x009B9855+497749]
+	Ordinal0 [0x009B5885+481413]
+	Ordinal0 [0x009BF0D0+520400]
+	Ordinal0 [0x0096C030+180272]
+	Ordinal0 [0x0096B59D+177565]
+	Ordinal0 [0x009695FB+169467]
+	Ordinal0 [0x0095160A+71178]
+	Ordinal0 [0x00952690+75408]
+	Ordinal0 [0x00952629+75305]
+	Ordinal0 [0x00A571B7+1143223]
+	GetHandleVerifier [0x00B52B46+507814]
+	GetHandleVerifier [0x00B52864+507076]
+	GetHandleVerifier [0x00B59F47+537511]
+	GetHandleVerifier [0x00B53402+510050]
+	Ordinal0 [0x00A4F29C+1110684]
+	Ordinal0 [0x00A5938B+1151883]
+	Ordinal0 [0x00A594F3+1152243]
+	Ordinal0 [0x00A583F5+1147893]
+	BaseThreadInitThunk [0x76EC8494+36]
+	RtlAreBitsSet [0x778441C8+136]
+	RtlAreBitsSet [0x77844198+88]
+
+	at org.openqa.selenium.remote.W3CHandshakeResponse.lambda$errorHandler$0(W3CHandshakeResponse.java:62)
+	at org.openqa.selenium.remote.HandshakeResponse.lambda$getResponseFunction$0(HandshakeResponse.java:30)
+	at org.openqa.selenium.remote.ProtocolHandshake.lambda$createSession$0(ProtocolHandshake.java:126)
+	at java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:193)
+	at java.util.Spliterators$ArraySpliterator.tryAdvance(Spliterators.java:958)
+	at java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:126)
+	at java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:499)
+	at java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:486)
+	at java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:472)
+	at java.util.stream.FindOps$FindOp.evaluateSequential(FindOps.java:152)
+	at java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.util.stream.ReferencePipeline.findFirst(ReferencePipeline.java:464)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:128)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:74)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:136)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:181)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:168)
+	at org.openqa.selenium.chrome.ChromeDriver.&lt;init&gt;(ChromeDriver.java:123)
+	at test.AbstractTest.beforeSuite(AbstractTest.java:16)
+... Removed 24 stack frames
+</div> <!-- stack-trace -->
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-newUserTests-class-skipped -->
+        </div> <!-- panel newUserTests -->
+        <div panel-name="test-xml-newUserTests" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">C:\Users\Gintare\Documents\GitHub\data-management-system\test\automationTests\src\test\java\testSuites\newUserTestSuite.xml</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE suite SYSTEM &quot;http://testng.org/testng-1.0.dtd&quot;&gt;
+&lt;suite guice-stage=&quot;DEVELOPMENT&quot; name=&quot;newUserTests&quot;&gt;
+  &lt;test thread-count=&quot;5&quot; name=&quot;newUserTests&quot;&gt;
+    &lt;parameter name=&quot;newAdminPassword&quot; value=&quot;12345678&quot;/&gt;
+    &lt;parameter name=&quot;newUserFirstName&quot; value=&quot;TestUserFirstName&quot;/&gt;
+    &lt;parameter name=&quot;newUserUserNameSpecChar&quot; value=&quot;userName!!&quot;/&gt;
+    &lt;parameter name=&quot;adminUserName&quot; value=&quot;admin&quot;/&gt;
+    &lt;parameter name=&quot;newUserUserNameContainsSpace&quot; value=&quot;user Name&quot;/&gt;
+    &lt;parameter name=&quot;newUserRole&quot; value=&quot;USER&quot;/&gt;
+    &lt;parameter name=&quot;newUserPassword21char&quot; value=&quot;user12345678910111213&quot;/&gt;
+    &lt;parameter name=&quot;newUserPassword3char&quot; value=&quot;123&quot;/&gt;
+    &lt;parameter name=&quot;newUserLastName21char&quot; value=&quot;user12345678910111213&quot;/&gt;
+    &lt;parameter name=&quot;newAdminFirstName&quot; value=&quot;TestAdminFirstName&quot;/&gt;
+    &lt;parameter name=&quot;newUserUserName&quot; value=&quot;TestUserUsername1&quot;/&gt;
+    &lt;parameter name=&quot;newAdminLastName&quot; value=&quot;TestAdminLastName&quot;/&gt;
+    &lt;parameter name=&quot;groupName&quot; value=&quot;GroupForNewUserTests1&quot;/&gt;
+    &lt;parameter name=&quot;newUserUserName3char&quot; value=&quot;123&quot;/&gt;
+    &lt;parameter name=&quot;newUserFirstName21char&quot; value=&quot;user12345678910111213&quot;/&gt;
+    &lt;parameter name=&quot;newAdminRole&quot; value=&quot;ADMIN&quot;/&gt;
+    &lt;parameter name=&quot;newAdminUserName&quot; value=&quot;TestAdminUserName&quot;/&gt;
+    &lt;parameter name=&quot;newUserPassword&quot; value=&quot;abc123456789&quot;/&gt;
+    &lt;parameter name=&quot;newUserPasswordWithSpace&quot; value=&quot;user password&quot;/&gt;
+    &lt;parameter name=&quot;newUserLastName&quot; value=&quot;TestUSerLastName&quot;/&gt;
+    &lt;parameter name=&quot;newUserUserName21char&quot; value=&quot;user12345678910111213&quot;/&gt;
+    &lt;parameter name=&quot;newUserUserName1&quot; value=&quot;testUserName1&quot;/&gt;
+    &lt;parameter name=&quot;adminPassword&quot; value=&quot;adminadmin&quot;/&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;test.NewUserTests&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- newUserTests --&gt;
+&lt;/suite&gt; &lt;!-- newUserTests --&gt;
+            </pre>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="testlist-newUserTests" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Tests for newUserTests</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <ul>
+              <li>
+                <span class="test-name">newUserTests (1 class)</span>
+              </li>
+            </ul>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="group-newUserTests" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Groups for newUserTests</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="test-group">
+              <span class="test-group-name">newUserFieldValidationTests</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestEmptyFirstNameField</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestEmptyLastNameField</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestFirstName21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestLastName21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestNotUniqueUsername</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestPassword21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestPassword3char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestPasswordWithSpace</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsername21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsername3char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsernameSpecChar</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsernameWithSpace</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
+            <div class="test-group">
+              <span class="test-group-name">newUserTests</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">createNewAdminTest</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">createNewUserTest</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestEmptyFirstNameField</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestEmptyLastNameField</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestFirstName21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestLastName21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestNotUniqueUsername</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestPassword21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestPassword3char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestPasswordWithSpace</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsername21char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsername3char</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsernameSpecChar</span>
+                <br/>
+              </div> <!-- method-in-group -->
+              <div class="method-in-group">
+                <span class="method-in-group-name">newUserTestUsernameWithSpace</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="times-newUserTests" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Times for newUserTests</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="times-div">
+              <script type="text/javascript">
+suiteTableInitFunctions.push('tableData_newUserTests');
+function tableData_newUserTests() {
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Number');
+data.addColumn('string', 'Method');
+data.addColumn('string', 'Class');
+data.addColumn('number', 'Time (ms)');
+data.addRows(14);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'newUserTestPassword21char')
+data.setCell(0, 2, 'test.NewUserTests')
+data.setCell(0, 3, 0);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'newUserTestLastName21char')
+data.setCell(1, 2, 'test.NewUserTests')
+data.setCell(1, 3, 0);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'newUserTestNotUniqueUsername')
+data.setCell(2, 2, 'test.NewUserTests')
+data.setCell(2, 3, 0);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'newUserTestUsernameWithSpace')
+data.setCell(3, 2, 'test.NewUserTests')
+data.setCell(3, 3, 0);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'createNewUserTest')
+data.setCell(4, 2, 'test.NewUserTests')
+data.setCell(4, 3, 0);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'newUserTestUsername3char')
+data.setCell(5, 2, 'test.NewUserTests')
+data.setCell(5, 3, 0);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'newUserTestUsernameSpecChar')
+data.setCell(6, 2, 'test.NewUserTests')
+data.setCell(6, 3, 0);
+data.setCell(7, 0, 7)
+data.setCell(7, 1, 'newUserTestPassword3char')
+data.setCell(7, 2, 'test.NewUserTests')
+data.setCell(7, 3, 0);
+data.setCell(8, 0, 8)
+data.setCell(8, 1, 'newUserTestEmptyFirstNameField')
+data.setCell(8, 2, 'test.NewUserTests')
+data.setCell(8, 3, 0);
+data.setCell(9, 0, 9)
+data.setCell(9, 1, 'newUserTestEmptyLastNameField')
+data.setCell(9, 2, 'test.NewUserTests')
+data.setCell(9, 3, 0);
+data.setCell(10, 0, 10)
+data.setCell(10, 1, 'newUserTestPasswordWithSpace')
+data.setCell(10, 2, 'test.NewUserTests')
+data.setCell(10, 3, 0);
+data.setCell(11, 0, 11)
+data.setCell(11, 1, 'newUserTestUsername21char')
+data.setCell(11, 2, 'test.NewUserTests')
+data.setCell(11, 3, 0);
+data.setCell(12, 0, 12)
+data.setCell(12, 1, 'createNewAdminTest')
+data.setCell(12, 2, 'test.NewUserTests')
+data.setCell(12, 3, 0);
+data.setCell(13, 0, 13)
+data.setCell(13, 1, 'newUserTestFirstName21char')
+data.setCell(13, 2, 'test.NewUserTests')
+data.setCell(13, 3, 0);
+window.suiteTableData['newUserTests']= { tableData: data, tableDiv: 'times-div-newUserTests'}
+return data;
+}
+              </script>
+              <span class="suite-total-time">Total running time: 0 ms</span>
+              <div id="times-div-newUserTests">
+              </div> <!-- times-div-newUserTests -->
+            </div> <!-- times-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="reporter-newUserTests" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Reporter output for newUserTests</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="ignored-methods-newUserTests" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">0 ignored methods</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="chronological-newUserTests" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Methods in chronological order</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="chronological-class">
+              <div class="chronological-class-name">test.NewUserTests</div> <!-- chronological-class-name -->
+              <div class="test-method">
+                <span class="method-name">createNewAdminTest</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">createNewUserTest</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestEmptyFirstNameField</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestEmptyLastNameField</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestNotUniqueUsername</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestFirstName21char</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestLastName21char</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestPassword21char</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestPassword3char</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestPasswordWithSpace</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestUsername21char</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestUsername3char</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestUsernameSpecChar</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="test-method">
+                <span class="method-name">newUserTestUsernameWithSpace</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-suite before">
+                <img src="failed.png">
+                </img>
+                <span class="method-name">beforeSuite</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- configuration-suite before -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+      </div> <!-- main-panel-root -->
+    </div> <!-- wrapper -->
+  </body>
+</html>
