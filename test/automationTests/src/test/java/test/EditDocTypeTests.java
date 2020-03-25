@@ -49,6 +49,6 @@ public class EditDocTypeTests extends AbstractTest {
 		// editDocPage.createDocType("Crossroads", "Crossroads", "test1");
 		// editDocPage.createGroup("asd", "newDoctype", "newDoctype", "qwerty",
 		// "adminas");
-		API.createGroup("asd", " ", " ", "qwerty", " ");
+		//API.createGroup("asd", " ", " ", "qwerty", " ");
 	}
 }

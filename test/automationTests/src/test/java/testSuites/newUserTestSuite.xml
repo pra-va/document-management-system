@@ -6,14 +6,14 @@
 		<parameter name="adminPassword" value="adminadmin"/>
 		<parameter name="newAdminFirstName" value="TestAdminFirstName"/>
 		<parameter name="newAdminLastName" value="TestAdminLastName"/>
-		<parameter name="newAdminUserName" value="TestAdminUserName15"/>
+		<parameter name="newAdminUserName" value="TestAdminUserName"/>
 		<parameter name="newAdminPassword" value="12345678"/>
 		<parameter name="newAdminRole" value="ADMIN"/>
-		<parameter name="groupName" value="GroupForNewUserTests"/>
+		<parameter name="groupName" value="GroupForNewUserTests1"/>
 		<parameter name="newUserFirstName" value="TestUserFirstName"/>
 		<parameter name="newUserLastName" value="TestUSerLastName"/>
-		<parameter name="newUserUserName" value="TestUserUsername15"/>
-		<parameter name="newUserUserName1" value="testUserName15"/>
+		<parameter name="newUserUserName" value="TestUserUsername1"/>
+		<parameter name="newUserUserName1" value="testUserName1"/>
 		<parameter name="newUserPassword" value="abc123456789"/>
 		<parameter name="newUserRole" value="USER"/>
 		<parameter name="newUserFirstName21char" value="user12345678910111213"/>		

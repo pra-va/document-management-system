@@ -3,6 +3,7 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,18 +49,9 @@ public class EditUserPage extends AbstractPage {
 
 	@FindBy(id = "radioAdmin")
 	private WebElement radioAdmin;
-	
-
+		
+		
 	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
-	private WebElement searchGroups;
-	
-	@FindBy(xpath = "//*[@aria-label='Search']")
-	private WebElement searchField;
-	
-	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
-	private WebElement searchField2;
-
-	@FindBy(xpath = "//input[@placeholder='Search']")
 	private WebElement searchGroupField;
 
 	
@@ -80,14 +72,10 @@ public class EditUserPage extends AbstractPage {
 		this.passwordField.sendKeys(password);
 	}
 
-	public void sendKeysSearchGroups(String groupName) {
+	public void sendKeysSearchGroups(String groupName) {		
 		searchGroupField.sendKeys(groupName);
 	}
-	
-	public void sendKeysSearchGroups2(String groupName) {
-		searchField2.sendKeys(groupName);
-	}
-		
+			
 	/* CLICK BUTTONS */
 
 	public void checkUpdatePassword() {
@@ -155,9 +143,12 @@ public class EditUserPage extends AbstractPage {
 	}
 	
 	public boolean isUserAddedToGroup(String groupName) {
+		new WebDriverWait(driver, 4).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.elementToBeClickable(By.xpath("//td[@class='selection-cell']/input")));	
 		return driver.findElement(By.xpath("//td[@class='selection-cell']/input")).isSelected();
 	}	
 	
+		
 	/* WAITS */
 
 	public void waitForVisibility(WebElement element) {
@@ -176,6 +167,11 @@ public class EditUserPage extends AbstractPage {
 	
 	public void waitForEditUserPage() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(buttonCancel));
+	}
+	
+	public void waitForSearchFieldToBeAttached() {
+		new WebDriverWait(driver, 4).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.presenceOfElementLocated((By.xpath("//div[@id='newUserGroups']//input[@placeholder='Search']"))));
 	}
 }
 

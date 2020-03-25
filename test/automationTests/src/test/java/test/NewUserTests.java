@@ -4,7 +4,6 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
@@ -15,7 +14,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import page.AdminNewUserPage;
@@ -39,9 +37,9 @@ public class NewUserTests extends AbstractTest {
 	String deleteGroupApiUrl;
 	String sessionID;
 
-	@Parameters({ "groupName" })
+	@Parameters({ "adminUserName", "adminPassword", "groupName" })
 	@BeforeClass
-	public void preconditions(String groupName) throws IOException {
+	public void preconditions(String adminUserName, String adminPassword, String groupName) throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		adminNewUserPage = new AdminNewUserPage(driver);
@@ -51,7 +49,7 @@ public class NewUserTests extends AbstractTest {
 		wait = new WebDriverWait(driver, 2);
 		deleteUserApiURL = "http://akademijait.vtmc.lt:8180/dvs/api/delete/{username}";
 		deleteGroupApiUrl = "http://akademijait.vtmc.lt:8180/dvs/api/group/{groupname}/delete";
-		sessionID =  GetSessionId.login("admin", "adminadmin");
+		sessionID = GetSessionId.login(adminUserName, adminPassword);
 		API.createGroup("Some group description", "[]", "[]", groupName, "[]", sessionID);
 	}
 
@@ -67,9 +65,8 @@ public class NewUserTests extends AbstractTest {
 	public void navigateToNewUserPage() {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminNewUserButton();
-		
 	}
-	
+
 	@AfterGroups("newUserTests")
 	public void logout() throws UnirestException {
 		mainPage.waitForLogoutButton();
@@ -77,18 +74,16 @@ public class NewUserTests extends AbstractTest {
 	}
 
 	@AfterClass
-	@Parameters({ "newUserUserName", "newAdminUserName", "groupName" })
-	public void deleteEntities(String newUserUserName, String newAdminUserName, String groupName) throws IOException{
-	sessionID =  GetSessionId.login("admin", "adminadmin");
-	API.deleteUser(newUserUserName,sessionID);	
-	API.deleteUser(newAdminUserName, sessionID);
-	API.deleteGroup(groupName, sessionID);	
+	@Parameters({ "adminUserName", "adminPassword", "newUserUserName", "newAdminUserName", "groupName" })
+	public void deleteEntities(String adminUserName, String adminPassword, String newUserUserName,
+			String newAdminUserName, String groupName) throws IOException {
+		sessionID = GetSessionId.login(adminUserName, adminPassword);
+		API.deleteUser(newUserUserName, sessionID);
+		API.deleteUser(newAdminUserName, sessionID);
+		API.deleteGroup(groupName, sessionID);
 	}
 
-	/*-
-	 * Test creates new user with admin role, checks if all properties are saved correctly in user list, 
-	 * "Edit user" page and "Profile" page, checks login to the system with new user's credentials.
-	 * 
+	/*-	
 	 * Preconditions: admin is logged in the system, at least one group was created.
 	 * 
 	 * Test steps:
@@ -99,24 +94,23 @@ public class NewUserTests extends AbstractTest {
 	 * 4. Search for created Username. 
 	 * 5. Check if properties ("First Name", "Last Name", "Username", "Role") on a list are displayed correctly . 
 	 * 6. Click "Edit / View" button. 
-	 * 7. Check if all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly. 
-	 * 8. Click button "Cancel". 
-	 * 9. Click button "Logout". 
-	 * 10. Login to the system using new admin's username and password, click button "Login". 	
-	 * 11. Check if all data on Profile Page is displayed correctly.
+	 * Expected conditions: all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly. 
+	 * 7. Click button "Cancel". 
+	 * 8. Click button "Logout". 
+	 * 9. Login to the system using new admin's username and password, click button "Login". 	
+	 * Expected conditions: all data on Profile Page is displayed correctly.
 	 */
 	@Parameters({ "newAdminFirstName", "newAdminLastName", "newAdminUserName", "newAdminPassword", "newAdminRole",
 			"groupName" })
 	@Test(groups = { "newUserTests" }, priority = 1, enabled = true)
 	public void createNewAdminTest(String newAdminFirstName, String newAdminLastName, String newAdminUserName,
 			String newAdminPassword, String newAdminRole, String groupName) throws InterruptedException {
-		 SoftAssert softAssertion= new SoftAssert();
 		adminNewUserPage.sendKeysFirstName(newAdminFirstName);
 		adminNewUserPage.sendKeysLastName(newAdminLastName);
 		adminNewUserPage.sendKeysUserName(newAdminUserName);
 		adminNewUserPage.sendKeysPassword(newAdminPassword);
 		adminNewUserPage.clickAdminRadio();
-		adminNewUserPage.sendKeysSearchGroup(groupName);		
+		adminNewUserPage.sendKeysSearchGroup(groupName);
 		adminNewUserPage.clickAddRemoveSpecificGroupButton(groupName);
 		adminNewUserPage.waitForGroupSelection();
 		adminNewUserPage.clickCreateButton();
@@ -137,7 +131,8 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(editUserPage.getLastName().equals(newAdminLastName),
 				"Admin Last Name isn't displayed correctly in Edit user form");
 		assertTrue(editUserPage.isRadioButtonAdminSelected(),
-				"Admin's role isn't displayed correctly in Edit user form");	
+				"Admin's role isn't displayed correctly in Edit user form");
+		editUserPage.waitForSearchFieldToBeAttached();
 		editUserPage.sendKeysSearchGroups(groupName);
 		assertTrue(editUserPage.isUserAddedToGroup(groupName), "User was not added to the group correctly");
 		editUserPage.clickCancelButton();
@@ -157,13 +152,9 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(profilePage.getTextUserGroups().equals(groupName),
 				"Admin's group isn't displayed correctly in profile page");
 		profilePage.clickButtonClose();
-		softAssertion.assertAll();
 	}
 
-	/*-
-	 * Test creates new user, checks if all properties are saved correctly in user list, 
-	 * "Edit user" page and "Profile" page, checks logins to the system with new user's credentials.
-	 * 
+	/*-	 
 	 * Precondition: admin is logged in the system, at least one group is created.
 	 * 
 	 * Test steps: 	 
@@ -172,27 +163,28 @@ public class NewUserTests extends AbstractTest {
 	 *    "Add", click button "Create". 
 	 * 3. Click "Admin" menu, "Users" option. 
 	 * 4. Search for created Username. 
-	 * 5. Check if properties ("First Name", "Last Name", "Username", "Role") on a list are displayed correctly . 
-	 * 6. Click "Edit / View" button. 
-	 * 7. Check if all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly. 
-	 * 8. Click button "Cancel".
-	 * 9. Click button "Logout". 
-	 * 10. Login to the system using new user's username and password, click button "Login".	 
-	 * 11. Check if all user data on Profile Page is displayed correctly.
+	 * Expected conditions:  ("First Name", "Last Name", "Username", "Role") on a list are displayed correctly . 
+	 * 5. Click "Edit / View" button. 
+	 * 6. Check if all properties ("First Name", "Last Name", "Username", "Role", groups) are displayed correctly. 
+	 * 7. Click button "Cancel".
+	 * 8. Click button "Logout". 
+	 * 9. Login to the system using new user's username and password, click button "Login".	 
+	 * Expected conditions:  Check if all user data on Profile Page is displayed correctly.
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName", "newUserPassword", "newUserRole",
 			"groupName" })
 	@Test(groups = { "newUserTests" }, priority = 1, enabled = true)
 	public void createNewUserTest(String newUserFirstName, String newUserLastName, String newUserUserName,
-			String newUserPassword, String newUserRole, String groupName) {
-		
-		 SoftAssert softAssertion= new SoftAssert();
+			String newUserPassword, String newUserRole, String groupName) throws InterruptedException {
+
+		SoftAssert softAssertion = new SoftAssert();
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
 		adminNewUserPage.sendKeysLastName(newUserLastName);
 		adminNewUserPage.sendKeysUserName(newUserUserName);
 		adminNewUserPage.sendKeysPassword(newUserPassword);
 		adminNewUserPage.checkShowPassword();
 		adminNewUserPage.sendKeysSearchGroup(groupName);
+
 		adminNewUserPage.clickAddRemoveSpecificGroupButton(groupName);
 		adminNewUserPage.clickCreateButton();
 		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "New admin isn't created");
@@ -213,6 +205,7 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(editUserPage.getLastName().equals(newUserLastName),
 				"User's Last Name isn't displayed correctly in Edit user page");
 		assertTrue(editUserPage.isRadioButtonUserSelected(), "User's role isn't displayed correctly in Edit user page");
+		editUserPage.waitForSearchFieldToBeAttached();
 		editUserPage.sendKeysSearchGroups(groupName);
 		assertTrue(editUserPage.isUserAddedToGroup(groupName), "User was not added to the group correctly");
 		editUserPage.clickCancelButton();
@@ -235,15 +228,14 @@ public class NewUserTests extends AbstractTest {
 		softAssertion.assertAll();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - First Name field in New User form is mandatory;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "Last Name", "Username", "Password", click button "Create". 
+	 * Expected conditions: Fist Name field length validation message is displayed correctly (attribute "aria-label" value changes to 
+	 * "Condition not met." and cross mark is shown).	
 	 */
 	@Parameters({ "newUserLastName", "newUserUserName1", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
@@ -255,22 +247,23 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.firstNameLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "User should not be created without First Name");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - First Name input in New User form cannot be longer than 20 characters;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name"(21 characters), "Last Name", "Username", "Password", click button "Create". 
+	 * Expected conditions: 
+	 *    First Name input in New User form cannot be longer than 20 characters; 
+	 *    field length validation message is displayed correctly 
+	 *    (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).	 
 	 */
 	@Parameters({ "newUserFirstName21char", "newUserLastName", "newUserUserName1", "newUserPassword" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestFirstName21char(String newUserFirstName21char, String newUserLastName,
 			String newUserUserName1, String newUserPassword) {
 		adminNewUserPage.sendKeysFirstName(newUserFirstName21char);
@@ -280,20 +273,17 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.firstNameLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with First Name longer than 20 characters");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Last Name field in New User form is mandatory;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	
 	 * Precondition: admin is logged in the system.
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Username", "Password", click button "Create". 
+	 * Expected conditions: Last Name field in New User form is mandatory; field length validation message is displayed correctly 
+	 *(attribute "aria-label" value changes to "Condition not met." and cross mark is shown).	 
 	 */
 	@Parameters({ "newUserFirstName", "newUserUserName1", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
@@ -305,22 +295,22 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.lastNameLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "User should not be created without Last Name");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Last Name input in New User form cannot be longer than 20 characters;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name"(21 characters), "Username", "Password", click button "Create". 
+	 * Expected conditions: Last Name input in New User form cannot be longer than 20 characters; 
+	 * field length validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName21char", "newUserUserName1", "newUserPassword" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestLastName21char(String newUserFirstName, String newUserLastName21char,
 			String newUserUserName1, String newUserPassword) {
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
@@ -330,23 +320,22 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.lastNameLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with Last Name longer than 20 characters");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Username input in New User form cannot be shorter than 3 characters;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(3 characters), "Password", click button "Create". 
+	 * Expected conditions: Username input in New User form cannot be shorter than 3 characters;
+	 * field length validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName3char", "newUserPassword" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestUsername3char(String newUserFirstName, String newUserLastName, String newUserUserName3char,
 			String newUserPassword) {
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
@@ -356,23 +345,23 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.userNameLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with UserName shorter than 3 characters");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Username input in New User form cannot be longer than 20 characters;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(21 characters), "Password", click button "Create". 
+	 * Expected conditions: Username input in New User form cannot be longer than 20 characters;
+	 * field length validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
 	 */
+
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName21char", "newUserPassword" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestUsername21char(String newUserFirstName, String newUserLastName, String newUserUserName21char,
 			String newUserPassword) {
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
@@ -382,20 +371,19 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.userNameLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with UserName longer than 21 characters");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Username input in New User form must be unique;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	  
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(not unique), "Password", click button "Create". 
+	 * Expected conditions: Username input in New User form must be unique;
+	 * field length validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName", "newUserPassword" })
 	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
@@ -408,22 +396,22 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.userNameUniquenessValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "User should not be created with not unique Username");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Username input in New User form cannot contain special characters;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(with special characters), "Password", click button "Create". 
+	 * Expected conditions: Username input in New User form cannot contain special characters;
+	 * field input validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserNameSpecChar", "newUserPassword" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestUsernameSpecChar(String newUserFirstName, String newUserLastName,
 			String newUserUserNameSpecChar, String newUserPassword) {
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
@@ -433,23 +421,22 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.userNameNoSpecCharValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with Username with special characters");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Username input in New User form cannot contain space;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	  
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username"(with space), "Password", click button "Create". 
+	 * Expected conditions: Username input in New User form cannot contain space;
+	 * field input validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown).
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserNameContainsSpace", "newUserPassword" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestUsernameWithSpace(String newUserFirstName, String newUserLastName,
 			String newUserUserNameContainsSpace, String newUserPassword) {
 		adminNewUserPage.sendKeysFirstName(newUserFirstName);
@@ -459,22 +446,22 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.userNameNoSpacesValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "User should not be created with Username with space");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Password input in New User form cannot be shorter than 4 characteras;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
-	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(3 characters), click button "Create". 
+	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(3 characters), click button "Create".
+	 * Expected conditions: Password input in New User form cannot be shorter than 4 characters;
+	 * field input validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). 
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName1", "newUserPassword3char" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestPassword3char(String newUserFirstName, String newUserLastName, String newUserUserName1,
 			String newUserPassword3char) {
 
@@ -485,23 +472,22 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.passwordLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with Password shorter than 4 characters");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Password input in New User form cannot be shorter than 4 characters;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(3 characters), click button "Create". 
+	 * Expected conditions: Password input in New User form cannot be longer than 21 characters;
+	 * field input validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). 
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName1", "newUserPassword21char" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestPassword21char(String newUserFirstName, String newUserLastName, String newUserUserName1,
 			String newUserPassword21char) {
 
@@ -512,23 +498,22 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.passwordLengthValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with Password longer than 21 characters");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
 
-	/*-
-	 * Test checks if:
-	 *   - Password input in New User form cannot contain spaces;
-	 *   - field length validation message is displayed correctly (attribute "aria-label" value changes to 
-	 *   "Condition not met." and cross mark is shown).	 
+	/*-	 
 	 * Precondition: admin is logged in the system.
+	 * 
 	 * Test steps:
 	 * 1. Click "Admin" menu, "New user" option. 
 	 * 2. Fill fields in New User form: "First Name", "Last Name", "Username", "Password"(with spaces), click button "Create". 
+	 * Expected conditions: Password input in New User form cannot contain spaces;
+	 * field input validation message is displayed correctly 
+	 * (attribute "aria-label" value changes to "Condition not met." and cross mark is shown). 
 	 */
 	@Parameters({ "newUserFirstName", "newUserLastName", "newUserUserName1", "newUserPasswordWithSpace" })
-	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 1, enabled = true)
+	@Test(groups = { "newUserTests", "newUserFieldValidationTests" }, priority = 3, enabled = true)
 	public void newUserTestPasswordWithSpace(String newUserFirstName, String newUserLastName, String newUserUserName1,
 			String newUserPasswordWithSpace) {
 
@@ -539,9 +524,7 @@ public class NewUserTests extends AbstractTest {
 		assertTrue(adminNewUserPage.passwordNoSpacesValidationLabelAttribute().equals("Condition not met."),
 				"Validation message isn't displayed correctly");
 		adminNewUserPage.clickCreateButton();
-		assertTrue(adminNewUserPage.isCreateButtonDisplayed(),
-				"User should not be created with Password that contains space");
+		assertTrue(adminNewUserPage.isCreateButtonDisplayed(), "Create button should be disabled");
 		adminNewUserPage.clickCancelButton();
 	}
-
 }

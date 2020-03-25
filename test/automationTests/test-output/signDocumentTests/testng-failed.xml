@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [signDocumentTests]">
+  <test thread-count="5" name="signDocumentTests(failed)">
+    <parameter name="fileName" value="testFile1.pdf"/>
+    <parameter name="documentDescription" value="documentDescriptionForSignDocumentTests"/>
+    <parameter name="groupDescriptionCR" value="groupDescriptionCR"/>
+    <parameter name="UserLastNameSIGN" value="NameSIGN"/>
+    <parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+    <parameter name="userFirstNameCR" value="NameCR"/>
+    <parameter name="groupNameSIGN" value="groupSignsSignDocTests"/>
+    <parameter name="userPasswordCR" value="PasswordCR"/>
+    <parameter name="documentName" value="docForSubmitDocTests"/>
+    <parameter name="UserUserNameSIGN" value="UserSIGN"/>
+    <parameter name="docTypeName" value="DTypeForSignDocTests"/>
+    <parameter name="groupNameCR" value="groupCreatesSignDocTests"/>
+    <parameter name="docName" value="Resignation Letter"/>
+    <parameter name="UserFirstNameSIGN" value="NameSIGN"/>
+    <parameter name="UserPassswordSIGN" value="PassswordSIGN"/>
+    <parameter name="userUserNameCR" value="UserCR"/>
+    <parameter name="userLastNameCR" value="NameCR"/>
+    <parameter name="groupDescriptionSIGN" value="groupDescriptionSIGN"/>
+    <classes>
+      <class name="test.SignDocumentTests">
+        <methods>
+          <include name="preconditions"/>
+          <include name="signDocumentTest"/>
+          <include name="beforeSuite"/>
+          <include name="deleteEntities"/>
+          <include name="afterSuite"/>
+        </methods>
+      </class> <!-- test.SignDocumentTests -->
+    </classes>
+  </test> <!-- signDocumentTests(failed) -->
+</suite> <!-- Failed suite [signDocumentTests] -->

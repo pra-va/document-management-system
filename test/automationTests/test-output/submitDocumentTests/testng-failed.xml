@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [submitDocumentTests]">
+  <test thread-count="5" name="submitDocumentTests(failed)">
+    <parameter name="fileName" value="testFile1.pdf"/>
+    <parameter name="adminUserName" value="admin"/>
+    <parameter name="documentDescription" value="docDescription"/>
+    <parameter name="groupDescriptionCR" value="groupDescriptionCR"/>
+    <parameter name="UserLastNameSIGN" value="LastNameSIGN"/>
+    <parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+    <parameter name="userFirstNameCR" value="FirstNameCR"/>
+    <parameter name="groupNameSIGN" value="groupThatSignsSubmitDocTests"/>
+    <parameter name="userPasswordCR" value="PasswordCR"/>
+    <parameter name="documentName" value="docForSubmitDocTests"/>
+    <parameter name="UserUserNameSIGN" value="UserNameSIGN"/>
+    <parameter name="docTypeName" value="docTypeForSubmitDocTests"/>
+    <parameter name="groupNameCR" value="groupThatCreatesSubmitDocTests"/>
+    <parameter name="docName" value="Resignation Letter"/>
+    <parameter name="UserFirstNameSIGN" value="FirstNameSIGN"/>
+    <parameter name="UserPassswordSIGN" value="PassswordSIGN"/>
+    <parameter name="userUserNameCR" value="UserNameCR3"/>
+    <parameter name="userLastNameCR" value="LastNameCR"/>
+    <parameter name="groupDescriptionSIGN" value="groupDescriptionSIGN"/>
+    <parameter name="adminPassword" value="adminadmin"/>
+    <classes>
+      <class name="test.SubmitDocumentTests">
+        <methods>
+          <include name="preconditions"/>
+          <include name="beforeSuite"/>
+          <include name="submitDocumentTest" invocation-numbers="0"/>
+          <include name="afterSuite"/>
+          <include name="deleteEntities"/>
+        </methods>
+      </class> <!-- test.SubmitDocumentTests -->
+    </classes>
+  </test> <!-- submitDocumentTests(failed) -->
+</suite> <!-- Failed suite [submitDocumentTests] -->
