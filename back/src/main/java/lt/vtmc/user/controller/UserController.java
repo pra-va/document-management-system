@@ -186,7 +186,7 @@ public class UserController {
 			if (userService.findUserByUsername(username) != null) {
 				userService.updateUserDetails(username, command.getName(), command.getSurname(), command.getPassword(),
 						command.getRole());
-				groupService.compareGroups(command.getGroupList(), username);
+				groupService.updateGroups(command.getGroupList(), username);
 
 				LOG.info("# LOG # Initiated by [{}]: User [{}] was updated #",
 						SecurityContextHolder.getContext().getAuthentication().getName(), username);

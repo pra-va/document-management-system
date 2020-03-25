@@ -114,10 +114,10 @@ public class GroupService {
 	}
 
 	/**
-	 * Method to add users to groups.
+	 * Method to remove users from groups.
 	 * 
 	 * @param names
-	 * @param username
+	 * @param username, String[] userlist
 	 */
 	@Transactional
 	public void removeUsersFromGroup(String groupname, String[] userlist) {
@@ -134,7 +134,12 @@ public class GroupService {
 			}
 		}
 	}
-
+	/**
+	 * Method to add users to groups.
+	 * 
+	 * @param names
+	 * @param username, String[] userlist
+	 */
 	@Transactional
 	public void addUsersToGroup(String groupname, String[] userlist) {
 		Group groupToAddTo = groupRepository.findGroupByName(groupname);
@@ -150,7 +155,11 @@ public class GroupService {
 			}
 		}
 	}
-
+	/**
+	 * Method to return all groups.
+	 * 
+	 * @param PagingData
+	 */
 	public Map<String, Object> retrieveAllGroups(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<Group> grouplist = groupRepository.findLike(pagingData.getSearchValueString(), firstPageable);
@@ -162,7 +171,13 @@ public class GroupService {
 		return responseMap;
 	}
 
-	public void compareGroups(String[] newGroupList, String username) {
+	/**
+	 * Method to update user groups.
+	 * 
+	 * @param Username, String[]groupList
+	 */
+	
+	public void updateGroups(String[] newGroupList, String username) {
 		List<Group> currentGroupList = new ArrayList<Group>();
 		for (int i = 0; i < newGroupList.length; i++) {
 			currentGroupList.add(groupRepository.findGroupByName(newGroupList[i]));
@@ -172,6 +187,13 @@ public class GroupService {
 		userRepository.save(tmpUser);
 	}
 
+	/**
+	 * Method to update group details.
+	 * 
+	 * @param String newName, String name, String description, String[] newUserList,
+	 *	String[] docTypesToApprove, String[] docTypesToCreate
+	 */
+	
 	@Transactional
 	public void updateGroupDetails(String newName, String name, String description, String[] newUserList,
 			String[] docTypesToApprove, String[] docTypesToCreate) {
@@ -199,7 +221,12 @@ public class GroupService {
 		}
 		groupRepository.save(groupToUpdate);
 	}
-
+	/**
+	 * Method to add document types to existing group.
+	 * 
+	 * @param String name, String[] docTypesToApprove, String[] docTypesToCreate
+	 */
+	
 	@Transactional
 	public void addDocTypes(String name, String[] docTypesToApprove, String[] docTypesToCreate) {
 		Group groupToAddTo = groupRepository.findGroupByName(name);
