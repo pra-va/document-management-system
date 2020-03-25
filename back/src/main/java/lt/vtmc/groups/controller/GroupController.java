@@ -53,7 +53,8 @@ public class GroupController {
 	 * 
 	 * @url /api/creategroup
 	 * @method POST
-	 * @param user details
+	 * @param CreateGroupCommand containing group name, description, user list and document type lists
+	 * @return responseEntity containing response text and Http status
 	 */
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/creategroup", method = RequestMethod.POST)
@@ -79,9 +80,9 @@ public class GroupController {
 	 * 
 	 * @url /api/groups
 	 * @method POST
-	 * @param PagingData
+	 * @param pagingData to set amount of items per page, search phrase and sorting order
+	 * @return 
 	 */
-	
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
 	public Map<String, Object> listAllGroups(@RequestBody PagingData pagingData) {

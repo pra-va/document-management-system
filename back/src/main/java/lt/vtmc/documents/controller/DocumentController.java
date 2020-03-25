@@ -53,8 +53,8 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/create
 	 * @method POST
-	 * @param document details
-	 * @return Document UID
+	 * @param command CreateDocumentCommand type JSON containing document name, author username, description and document type.
+	 * @return UID document unique identification number
 	 */
 
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -73,7 +73,8 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/upload/{UID}
 	 * @method POST
-	 * @param Document UID, MultipartFile[] files
+	 * @param UID unique identification number
+	 * @param files files in MultipartFile[] format
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -91,8 +92,8 @@ public class DocumentController {
 	 * 
 	 * @url /api/api/doc/{UID}
 	 * @method GET
-	 * @param Document UID
-	 * @return Returns DocumentDetailsDTO 
+	 * @param UID unique identification number
+	 * @return DocumentDetailsDTO a structurised version of document object without recursions
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -108,7 +109,7 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/delete/{UID}
 	 * @method DELETE
-	 * @param document UID
+	 * @param UID unique document id
 	 */
 	
 	@Secured({ "ROLE_ADMIN" })
@@ -125,7 +126,7 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/submit/{UID}
 	 * @method POST
-	 * @param document UID
+	 * @param UID unique document id
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -142,7 +143,7 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/approve/{UID}
 	 * @method POST
-	 * @param document UID
+	 * @param UID unique document id
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -160,7 +161,7 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/reject/{UID}
 	 * @method POST
-	 * @param document UID
+	 * @param UID unique document id
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -178,7 +179,8 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/update/{UID}
 	 * @method POST
-	 * @param document UID, UpdateDocumentCommand
+	 * @param UID unique document id
+	 * @param UpdateDocumentCommand containing new name, new description, new document type and file list to remove
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -197,7 +199,10 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/allsubmitted/{username}
 	 * @method POST
-	 * @param Username, PagingData
+	 * @param Username   users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting
+	 *                   order
+	 * @return allSubmittedDocuments and paging info for the table
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -214,7 +219,9 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/allcreated/{username}
 	 * @method POST
-	 * @param Username, PagingData
+	 * @param Username users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting order
+	 * @return allCreatedDocuments and paging info for the table
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -231,7 +238,9 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/allaccepted/{username}
 	 * @method POST
-	 * @param Username, PagingData
+	 * @param Username users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting order
+	 * @return allAcceptedDocuments and paging info for the table
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -248,7 +257,9 @@ public class DocumentController {
 	 * 
 	 * @url /api/doc/allrejected/{username}
 	 * @method POST
-	 * @param Username, PagingData
+	 * @param Username users unique username
+	 * @param PagingData to set amount of items per page, search phrase and sorting order
+	 * @return allRejectedDocuments and paging info for the table
 	 */
 	
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
@@ -263,6 +274,10 @@ public class DocumentController {
 	/**
 	 * Remove document by document unique id if it belongs to a user that is sending
 	 * this request.
+	 * 
+	 * @method DELETE
+	 * @param UID documents unique identification number
+	 * @return response status describing outcome
 	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@DeleteMapping("/api/doc/byUser/{uid}")
