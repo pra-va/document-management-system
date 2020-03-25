@@ -13,7 +13,7 @@ public class GroupListPage extends MainPage {
 
 	/* FIELDS */
 
-	@FindBy(xpath = "//*[@aria-label='Search']")
+	@FindBy(xpath = "//input")
 	private WebElement searchField;
 
 	/* CLICK BUTTONS */

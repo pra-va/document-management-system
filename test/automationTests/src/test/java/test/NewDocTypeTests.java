@@ -52,7 +52,7 @@ public class NewDocTypeTests extends AbstractTest {
 	@Parameters({ "docTypeName", "groupName" })
 	@AfterClass
 	public void deleteDocTypeCreatedForTest(String docTypeName, String groupName) throws IOException {
-		sessionID = GetSessionId.login("adminas", "adminadmin");
+		sessionID = GetSessionId.login("admin", "adminadmin");
 		API.deleteGroup(groupName, sessionID);
 		API.deleteDoctype(docTypeName, sessionID);
 	}

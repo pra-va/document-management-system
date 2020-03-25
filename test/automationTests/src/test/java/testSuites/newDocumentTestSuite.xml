@@ -12,8 +12,8 @@
 		<parameter name="documentName" value="DocNameForNewDocumentTests1"/>
 		<parameter name="documentDescription" value="Resignation Letter"/>
 		<parameter name="docTypeName" value="DocTypeForNewDocumentTests1"/>
-		<parameter name="filePath" value="src/test/java/utilities/testFile.pdf"/>
-		<parameter name="fileName" value="testFile.pdf"/>		
+		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+		<parameter name="fileName" value="testFile1.pdf"/>		
 		<classes>
 			<class name="test.NewDocumentTests"/>
 		</classes>

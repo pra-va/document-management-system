@@ -1,5 +1,7 @@
 package page;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -75,7 +77,8 @@ public class EditDocTypePage extends AbstractPage {
 
 	public void clearSearchField() {
 		this.searchField.clear();
-
+	}
+	
 	public void createDocType(String groupsThatApprove, String groupsThatCreate, String docTypeName)
 			throws IOException {
 		//API.createDocType(groupsThatApprove, groupsThatCreate, docTypeName);

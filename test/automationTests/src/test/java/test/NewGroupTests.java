@@ -46,7 +46,7 @@ public class NewGroupTests extends AbstractTest {
 	@Parameters({ "groupName" })
 	@AfterClass
 	public void deleteGroupCreatedForTest(String groupName) throws IOException {
-		sessionID = GetSessionId.login("adminas", "adminadmin");
+		sessionID = GetSessionId.login("admin", "adminadmin");
 		API.deleteGroup(groupName, sessionID);
 	}
 
@@ -132,7 +132,7 @@ public class NewGroupTests extends AbstractTest {
 		userPage.sendKeysSearchForUser(p1);
 		userPage.clickEditSpecificUserButton(p1);
 		editUserPage.waitForEditUserPage();
-		editUserPage.sendKeysSearchGroups2(p2);
+		editUserPage.sendKeysSearchGroups(p2);
 		newUserPage.waitForCancelButton();
 		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]/..//td[1]//input")).isSelected(),
 				"User was not added to the group correctly");

@@ -46,18 +46,9 @@ public class EditUserPage extends AbstractPage {
 	private WebElement radioUser;
 
 	@FindBy(id = "radioAdmin")
-	private WebElement radioAdmin;	
+	private WebElement radioAdmin;
 
 	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
-	private WebElement searchGroups;
-
-	@FindBy(xpath = "//*[@aria-label='Search']")
-	private WebElement searchField;
-
-	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
-	private WebElement searchField2;
-
-	@FindBy(xpath = "//input[@placeholder='Search']")
 	private WebElement searchGroupField;
 
 	@FindBy(xpath = "//th[text()='Name']")
@@ -79,10 +70,6 @@ public class EditUserPage extends AbstractPage {
 
 	public void sendKeysSearchGroups(String groupName) {
 		searchGroupField.sendKeys(groupName);
-	}
-
-	public void sendKeysSearchGroups2(String groupName) {
-		searchField2.sendKeys(groupName);
 	}
 
 	/* CLICK BUTTONS */
@@ -153,24 +140,24 @@ public class EditUserPage extends AbstractPage {
 
 	public boolean isUserAddedToGroup(String groupName) {
 		return driver.findElement(By.xpath("//td[@class='selection-cell']/input")).isSelected();
-	}	
-	
+	}
+
 	/* WAITS */
 
 	public void waitForVisibility(WebElement element) {
 		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element));
 	}
-	
+
 	public void waitForGroupNameVisibility(String groupName) {
-		new WebDriverWait(driver, 4).until(ExpectedConditions.
-				visibilityOf(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
+		new WebDriverWait(driver, 4).until(ExpectedConditions
+				.visibilityOf(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
 	}
-	
+
 	public void waitForGroupNameSelection(String groupName) {
-		new WebDriverWait(driver, 4).until(ExpectedConditions.
-				elementToBeSelected(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
+		new WebDriverWait(driver, 4).until(ExpectedConditions
+				.elementToBeSelected(driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]"))));
 	}
-	
+
 	public void waitForEditUserPage() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(buttonCancel));
 	}

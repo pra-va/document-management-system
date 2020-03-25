@@ -26,6 +26,9 @@ public class MainPage extends AbstractPage {
 	@FindBy(xpath = "//a[contains(text(),'My Documents ')]")
 	private WebElement buttonMyDocuments;
 
+	@FindBy(xpath = "//a[contains(text(),'Statistics ')]")
+	private WebElement buttonStatistics;
+
 	@FindBy(xpath = "//a[contains(text(),'Admin')]")
 	private WebElement buttonAdmin;
 
@@ -72,6 +75,10 @@ public class MainPage extends AbstractPage {
 
 	public void clickMyDocumentsButton() {
 		this.buttonMyDocuments.click();
+	}
+
+	public void clickStatisticsButton() {
+		this.buttonStatistics.click();
 	}
 
 	public void clickProfileButton() {
