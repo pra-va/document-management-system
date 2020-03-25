@@ -20,19 +20,45 @@ import lt.vtmc.documents.model.Document;
  */
 
 public interface DocumentRepository extends JpaRepository<Document, String> {
+	
+	/**
+	 * Finds document by name from the database
+	 */
+	
 	Document findDocumentByName(String name);
 
+	/**
+	 * Finds document by UID from the database
+	 */
+	
 	Document findDocumentByUID(String UID);
 
+	/**
+	 * Finds all documents by document type from the database
+	 */
+	
 	List<Document> findAllBydType(DocType dType);
-
+	
+	/**
+	 * Finds all documents containing search phrase within their name
+	 */
+	
 	@Query("SELECT d FROM Document d WHERE LOWER(d.name) LIKE LOWER(CONCAT('%', ?1,'%'))")
 
 	Page<Document> findLike(String searchValueString, Pageable firstPageable);
 
+	/**
+	 * Checks if the user is the author of the document
+	 */
+	
 	@Query("select case when (count(d.UID) = 1) then true else false end from User u join u.createdDocuments d where u.username = ?2 and d.UID = ?1 and d.status = '0'")
 	boolean doesUserHaveDoc(String uid, String username);
 
+
+	/**
+	 * Deletes document from database by UID
+	 */
+	
 	@Transactional
 	@Modifying
 	@Query("delete from Document d where d.UID = ?1")
