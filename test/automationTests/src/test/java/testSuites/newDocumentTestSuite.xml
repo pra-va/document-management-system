@@ -7,11 +7,11 @@
 		<parameter name="userPassword" value="123456789"/>
 		<parameter name="userFirstName" value="userFirstName"/>
 		<parameter name="userLastName" value="userLastName"/>
-		<parameter name="userUserName" value="userUserName3"/>		
-		<parameter name="groupName" value="GroupForNewDocumentTests1"/>		
-		<parameter name="documentName" value="DocNameForNewDocumentTests1"/>
+		<parameter name="userUserName" value="userUserName1"/>		
+		<parameter name="groupName" value="GroupForNewDocumentTests"/>		
+		<parameter name="documentName" value="DocForNewDocumentTests"/>
 		<parameter name="documentDescription" value="Resignation Letter"/>
-		<parameter name="docTypeName" value="DocTypeForNewDocumentTests1"/>
+		<parameter name="docTypeName" value="DocTypeForNewDocumentTests"/>
 		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
 		<parameter name="fileName" value="testFile1.pdf"/>		
 		<classes>

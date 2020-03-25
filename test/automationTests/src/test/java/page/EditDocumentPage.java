@@ -74,8 +74,9 @@ public class EditDocumentPage extends AbstractPage {
 		this.buttonCancel.click();
 	}
 	
-	public void clickRemoveFileButton(String fileName) {		
-		this.driver.findElement(By.xpath("//div[contains(text(),"+ fileName +")]//button[@aria-label='Close']")).click();		
+	public void clickRemoveFileButton(String fileName) throws InterruptedException {		
+		this.driver.findElement(By.xpath("//div[contains(text(),"+ fileName +")]//button[@aria-label='Close']")).click();
+		Thread.sleep(1000);
 	}
 	
 	/* SELECT METHOD*/
@@ -109,7 +110,7 @@ public class EditDocumentPage extends AbstractPage {
 	}
 	
 	public void waitForFileNameVisibility(String fileName) {
-		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf
+		new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf
 				(driver.findElement(By.xpath("//div[contains(text(),"+ fileName + ")]"))));
 	}
 	

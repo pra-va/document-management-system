@@ -132,6 +132,7 @@ public class NewGroupTests extends AbstractTest {
 		userPage.sendKeysSearchForUser(p1);
 		userPage.clickEditSpecificUserButton(p1);
 		editUserPage.waitForEditUserPage();
+		//editUserPage.sendKeysSearchGroups2(p2);
 		editUserPage.sendKeysSearchGroups(p2);
 		newUserPage.waitForCancelButton();
 		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]/..//td[1]//input")).isSelected(),

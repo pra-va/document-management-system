@@ -3,6 +3,7 @@ package page;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -115,6 +116,8 @@ public class AdminNewUserPage extends AbstractPage {
 	}
 	
 	public void clickAddRemoveSpecificGroupButton(String groupName) {
+		new WebDriverWait(driver, 4).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.elementToBeClickable(By.xpath("//td[contains(text(),'" + groupName + "')]")));	
 		driver.findElement(By.xpath("//td[contains(text(),'" + groupName + "')]")).click();			
 	}
 

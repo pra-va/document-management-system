@@ -1,6 +1,7 @@
 package page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,51 +20,22 @@ public class SignDeclineDocumentPage extends AbstractPage{
 	@FindBy(id = "inputDocDescription")
 	private WebElement declineReasonField;
 	
-//	@FindBy(id = "inputDocDescription")
-//	private WebElement docDescriptionFied;
-	
-//	@FindBy(id = "documentFileUpload")
-//	private WebElement fileUploadField;
-	
-//	/* SELECT */
-//	
-//	@FindBy(id = "selectDocType")
-//	private Select drpdwDocumentType;
-//		
-//	/* BUTTONS */
+	/* BUTTONS */
 		
 	@FindBy(xpath = "//button[contains(text(),'Close')]")
 	private WebElement buttonClose;
 	
-	@FindBy(xpath = "//button[contains(text(),'Sign')]")
+	@FindBy(xpath = "//button[text()='Sign']")
 	private WebElement buttonSign;
-	
-	@FindBy(xpath = "//button[contains(text(),'Decline')]")
+		
+	@FindBy(xpath = "//button[text()='Decline']")
 	private WebElement buttonDecline;
 		
 	/* SEND KEYS */
 	
 	public void sendKeysDeclineReasonField(String declineReason) {
 		this.declineReasonField.sendKeys(declineReason);
-	}
-	
-//	public void sendKeysDocDescriptionField(String docDescription) {
-//		this.docDescriptionFied.sendKeys(docDescription);
-//	}
-//	
-//	public void sendKeysFileUploadField(String filePath) {
-//		this.fileUploadField.sendKeys(filePath);
-//	}
-//		
-//	/*CLEAR FIELDS*/
-//			
-//	public void clearDocNameField() {
-//		this.docNameField.clear();
-//	}
-//	
-//	public void clearDocDescriptionField() {
-//		this.docDescriptionFied.clear();
-//	}
+	}	
 		
 	/* CLICK BUTTONS */
 	
@@ -71,36 +43,18 @@ public class SignDeclineDocumentPage extends AbstractPage{
 		this.buttonClose.click();
 	}
 
-	public void clickDeclineButton() {		
+	public void clickDeclineButton() {
+		new WebDriverWait(driver, 5).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.elementToBeClickable(buttonDecline));		
 		this.buttonDecline.click();
 	}
 	
-	public void clickSignButton() {		
-		this.buttonSign.click();
+	public void clickSignButton() throws InterruptedException {	
+		Thread.sleep(1000);
+		new WebDriverWait(driver, 3).ignoring(StaleElementReferenceException.class).
+		until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Sign')]")));
+		this.buttonSign.click();		
 	}
-//	
-//	public void clickRemoveFileButton(String fileName) {		
-//		this.driver.findElement(By.xpath("//div[contains(text(),"+ fileName +")]//button[@aria-label='Close']")).click();		
-//	}
-	
-	/* SELECT METHOD*/
-//	public void selectDocumentType(String documentType) {
-//	this.drpdwDocumentType.selectByVisibleText(documentType);
-//}	
-
-	/* GET TEXT METHODS */
-
-//	public String getDocName() {
-//		return this.docNameField.getAttribute("value");
-//	}
-
-//	public String getDocDescription() {
-//		return this.docDescriptionFied.getAttribute("value");
-//	}
-		
-//	public String getDocType() {
-//		return this.drpdwDocumentType.getFirstSelectedOption().getText();
-//	}
 	
 	/* WAITS */
 

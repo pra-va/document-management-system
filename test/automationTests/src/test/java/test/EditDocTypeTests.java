@@ -76,6 +76,12 @@ public class EditDocTypeTests extends AbstractTest {
 	 */
 	@Parameters({ "docTypeName", "newDocTypeName" })
 	@Test(groups = { "editDocType" }, priority = 0, enabled = true)
+	public void editDocTypeNameTest(String p1, String p2) throws IOException {
+		System.out.println("labas");
+		// editDocPage.createDocType("Crossroads", "Crossroads", "test1");
+		// editDocPage.createGroup("asd", "newDoctype", "newDoctype", "qwerty",
+		// "adminas");
+		//API.createGroup("asd", " ", " ", "qwerty", " ");
 	public void editDocTypeNameTest(String p1, String p2) {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
