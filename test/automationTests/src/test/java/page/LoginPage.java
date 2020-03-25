@@ -1,5 +1,6 @@
 package page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,11 +42,15 @@ public class LoginPage extends AbstractPage {
 		this.passwordField.sendKeys(str);
 	}
 
-
 	/* OTHER METHODS */
 
 	public void waitForLoginButton() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.elementToBeClickable(this.buttonLogin));
+	}
+
+	public void waitForWrongLoginText() {
+		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(
+				driver.findElement(By.xpath("//*[contains(text(), 'Incorrect Username or Password!')]"))));
 	}
 
 	public void clearLoginFields() {

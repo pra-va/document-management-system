@@ -8,7 +8,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 public class AdminNewGroupPage extends AbstractPage {
+	MainPage mainPage = new MainPage(driver);
 
 	public AdminNewGroupPage(WebDriver driver) {
 		super(driver);
@@ -61,11 +65,11 @@ public class AdminNewGroupPage extends AbstractPage {
 	}
 
 	public void clickAddSpecificUserButton(String user) {
-		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[6]//button")).click();
+		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[1]//input")).click();
 	}
 
 	public void clickRemoveSpecificUserButton(String user) {
-		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[6]//button[contains(text(),'Remove')]"))
+		driver.findElement(By.xpath("//td[contains(text()," + user + ")]/..//td[5]//button[contains(text(),'Remove')]"))
 				.click();
 	}
 
@@ -91,5 +95,23 @@ public class AdminNewGroupPage extends AbstractPage {
 
 	public void waitForcancelButton() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.visibilityOf(this.buttonCancel));
+	}
+
+	public void createGroup(String userName, String groupName, String groupDescription) {
+		this.mainPage.clickAdminButton();
+		this.mainPage.clickAdminNewGroupButton();
+		this.sendKeysGroupName(groupName);
+		this.sendKeysGroupDescription(groupDescription);
+		this.clickAddSpecificUserButton(userName);
+		this.clickCreateButton();
+	}
+
+	public void deleteGroup(String groupName) {
+		try {
+			Unirest.delete("http://akademijait.vtmc.lt:8180/dvs/api/group/{groupname}/delete")
+					.routeParam("groupname", groupName).asString();
+		} catch (UnirestException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,7 +1,5 @@
 package page;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,7 +7,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+
 public class AdminNewDocTypePage extends AbstractPage {
+	MainPage mainPage = new MainPage(driver);
 
 	public AdminNewDocTypePage(WebDriver driver) {
 		super(driver);
@@ -20,8 +22,8 @@ public class AdminNewDocTypePage extends AbstractPage {
 	@FindBy(id = "groupNameInput")
 	private WebElement docTypeNameField;
 
-	@FindBy(xpath = "//*[@aria-label='Search']")
-	private List<WebElement> searchFields;
+	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
+	private WebElement searchField;
 
 	/* BUTTONS */
 
@@ -47,16 +49,20 @@ public class AdminNewDocTypePage extends AbstractPage {
 				.click();
 	}
 
-	public void clickCreateDocRigthsCheckBox(String sameGroupName) {
-		new WebDriverWait(driver, 4).until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//input[@id='createRightsFor:" + sameGroupName + "']")));
-		driver.findElement(By.xpath("//input[@id='createRightsFor:" + sameGroupName + "']")).click();
+	public void clickCreateDocRigthsCheckBox(String groupName) throws InterruptedException {
+		Thread.sleep(1000);
+		driver.findElement(
+				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[2]//input"))
+				.click();
+		Thread.sleep(1000);
 	}
 
-	public void clickSignDocRigthsCheckBox(String sameGroupName) {
-		new WebDriverWait(driver, 4).until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//input[@id='signRightsFor:" + sameGroupName + "']")));
-		driver.findElement(By.xpath("//input[@id='signRightsFor:" + sameGroupName + "']")).click();
+	public void clickSignDocRigthsCheckBox(String groupName) throws InterruptedException {
+		Thread.sleep(1000);
+		driver.findElement(
+				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[3]//input"))
+				.click();
+		Thread.sleep(1000);
 	}
 
 	/* SEND KEYS */
@@ -65,13 +71,32 @@ public class AdminNewDocTypePage extends AbstractPage {
 		this.docTypeNameField.sendKeys(name);
 	}
 
-	public void sendKeysSearchSetRigths(String groupName) {
-		searchFields.get(1).sendKeys(groupName);
+	public void sendKeysSearchField(String groupName) {
+		this.searchField.sendKeys(groupName);
 	}
 
 	/* OTHER METHODS */
 
 	public void waitForCreateButton() {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.elementToBeClickable(this.buttonCreate));
+	}
+
+	public void createDocType(String docTypeName, String groupName) throws InterruptedException {
+		mainPage.clickAdminButton();
+		mainPage.clickAdminNewDocTypeButton();
+		this.sendKeysDocTypeName(docTypeName);
+		this.sendKeysSearchField(groupName);
+		this.clickCreateDocRigthsCheckBox(groupName);
+		this.clickSignDocRigthsCheckBox(groupName);
+		this.clickCreateButton();
+	}
+
+	public void deleteDocType(String docTypeName) {
+		try {
+			Unirest.delete("http://akademijait.vtmc.lt:8180/dvs/api/doct/delete/{name}").routeParam("name", docTypeName)
+					.asString();
+		} catch (UnirestException e) {
+			e.printStackTrace();
+		}
 	}
 }

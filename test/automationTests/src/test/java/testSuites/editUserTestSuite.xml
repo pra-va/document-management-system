@@ -2,12 +2,23 @@
 
 <suite name="editUserTests" preserve-order="true">
 	<test name="editUserTests">
-		<parameter name="" value="" />
-		<parameter name="" value="" />
-		<parameter name="" value="" />
-		<parameter name="" value="" />
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPassword" value="adminadmin" />
+		<parameter name="newAdminFirstName" value="newAdminFirstName" />
+		<parameter name="newAdminLastName" value="newAdminLastName" />
+		<parameter name="newAdminUserName" value="newAdminUserName" />
+		<parameter name="newAdminPassword" value="12345678" />
+		<parameter name="newAdminRole" value="ADMIN" />
+		<parameter name="groupNameOne" value="GroupOneForEditUserTests" />
+		<parameter name="groupNameTwo" value="GroupTwoForEditUserTests" />
+		<parameter name="newUserFirstName" value="newUserFirstName" />
+		<parameter name="newUserLastName" value="newUserLastName" />
+		<parameter name="newUserUserName" value="newUserUserName" />
+		<parameter name="newUserUserName1" value="testUserName" />
+		<parameter name="updatedPassword" value="abc1234567" />
+		<parameter name="newUserRole" value="USER" />
 		<classes>
-			<class name="test.???"/>
+			<class name="test.EditUserTests" />
 		</classes>
 	</test>
 </suite>

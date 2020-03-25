@@ -4,6 +4,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import lt.vtmc.files.model.File4DB;
 
+/**
+ * DAO for files. Files are saved as byte array in repository.
+ * 
+ * @author pra-va
+ *
+ */
 public interface FilesRepository extends JpaRepository<File4DB, Integer> {
 
 	/**
@@ -11,7 +17,7 @@ public interface FilesRepository extends JpaRepository<File4DB, Integer> {
 	 * 
 	 * @param UID
 	 */
-	
+
 	File4DB findFile4dbByUID(String UID);
 
 	/**
@@ -19,7 +25,7 @@ public interface FilesRepository extends JpaRepository<File4DB, Integer> {
 	 * 
 	 * @param UID
 	 */
-	
+
 	void deleteFileByUID(String UID);
 
 }

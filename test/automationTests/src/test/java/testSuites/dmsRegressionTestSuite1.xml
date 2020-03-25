@@ -22,9 +22,9 @@
 	<test name="newGroupTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPasswrod" value="adminadmin" />
-		<parameter name="groupName" value="Project managers" />
+		<parameter name="groupName" value="ProjectManagers" />
 		<parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers." />
-		<parameter name="docTypeName" value="Resignation letter" />
+		<parameter name="docTypeName" value="ResignationLetter" />
 		<classes>
 			<class name="test.NewGroupTests"/>
 		</classes>
@@ -32,10 +32,44 @@
 	<test name="newDocTypeTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPasswrod" value="adminadmin" />
-		<parameter name="docTypeName" value="Resignation letter" />
-		<parameter name="groupName" value="Project managers" />
+		<parameter name="docTypeName" value="ResignationLetter" />
+		<parameter name="groupName" value="ProjectManagers" />
 		<classes>
 			<class name="test.NewDocTypeTests"/>
+		</classes>
+	</test>
+	<test name="EditDocTypeTests">
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
+		<parameter name="groupName" value="ProjectManagers" />
+		<parameter name="docTypeName" value="ResignationLetter" />
+		<parameter name="newDocTypeName" value="New name" />
+		<classes>
+			<class name="test.EditDocTypeTests"/>
+		</classes>
+	</test>
+	<test name="editGroupTests">
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPasswrod" value="adminadmin" />
+		<parameter name="groupName" value="ProjectManagers" />
+		<parameter name="newGroupName" value="New Project managers" />
+		<parameter name="docTypeName" value="ResignationLetter" />
+		<classes>
+			<class name="test.EditGroupTest"/>
+		</classes>
+	</test>
+	<test name="statisticsTests">
+		<parameter name="newAdminFirstName" value="adminForStats" />
+		<parameter name="newAdminLastName" value="adminForStats" />
+		<parameter name="newAdminUserName" value="adminForStats" />
+		<parameter name="newAdminPassword" value="12345678" />
+		<parameter name="groupName" value="GroupForStatsTest" />
+		<parameter name="docTypeName" value="DocTypeForStatsTest" />
+		<parameter name="docName" value="docForTest" />
+		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+		<parameter name="fileName" value="testFile1.pdf"/>		
+		<classes>
+			<class name="test.StatisticsTests"/>
 		</classes>
 	</test>
 </suite>

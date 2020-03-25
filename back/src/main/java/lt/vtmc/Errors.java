@@ -23,8 +23,8 @@ public class Errors implements ErrorController {
 	 * /dvs/notfound. Please check index.js in front end application for further
 	 * info.
 	 * 
-	 * @param attributes
-	 * @return
+	 * @param attributes for redirection
+	 * @return redirect view
 	 */
 	@RequestMapping("/error")
 	public RedirectView handleError(RedirectAttributes attributes) {
