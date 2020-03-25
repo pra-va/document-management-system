@@ -2,7 +2,7 @@
 <testng-results skipped="0" failed="0" ignored="0" total="3" passed="3">
   <reporter-output>
   </reporter-output>
-  <suite name="editGroupTests" duration-ms="10557" started-at="2020-03-25T07:13:37Z" finished-at="2020-03-25T07:13:48Z">
+  <suite name="editGroupTests" duration-ms="9881" started-at="2020-03-25T10:15:35Z" finished-at="2020-03-25T10:15:45Z">
     <groups>
       <group name="editGroup">
         <method signature="EditGroupTest.editGroupName(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="editGroupName" class="test.EditGroupTest"/>
@@ -10,13 +10,13 @@
         <method signature="EditGroupTest.updateGroupUsersTest(java.lang.String, java.lang.String)[pri:1, instance:test.EditGroupTest@146ba0ac]" name="updateGroupUsersTest" class="test.EditGroupTest"/>
       </group> <!-- editGroup -->
     </groups>
-    <test name="editGroupTests" duration-ms="10557" started-at="2020-03-25T07:13:37Z" finished-at="2020-03-25T07:13:48Z">
+    <test name="editGroupTests" duration-ms="9881" started-at="2020-03-25T10:15:35Z" finished-at="2020-03-25T10:15:45Z">
       <class name="test.EditGroupTest">
-        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.EditGroupTest@146ba0ac]" name="beforeSuite" is-config="true" duration-ms="10935" started-at="2020-03-25T07:13:26Z" finished-at="2020-03-25T07:13:37Z">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:test.EditGroupTest@146ba0ac]" name="beforeSuite" is-config="true" duration-ms="11069" started-at="2020-03-25T10:15:24Z" finished-at="2020-03-25T10:15:35Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeSuite -->
-        <test-method status="PASS" signature="preconitions(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="preconitions" is-config="true" duration-ms="172" started-at="2020-03-25T07:13:37Z" finished-at="2020-03-25T07:13:37Z">
+        <test-method status="PASS" signature="preconitions(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="preconitions" is-config="true" duration-ms="198" started-at="2020-03-25T10:15:35Z" finished-at="2020-03-25T10:15:35Z">
           <params>
             <param index="0">
               <value>
@@ -32,7 +32,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- preconitions -->
-        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="login" is-config="true" duration-ms="344" started-at="2020-03-25T07:13:37Z" finished-at="2020-03-25T07:13:38Z">
+        <test-method status="PASS" signature="login(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="login" is-config="true" duration-ms="353" started-at="2020-03-25T10:15:35Z" finished-at="2020-03-25T10:15:35Z">
           <params>
             <param index="0">
               <value>
@@ -48,7 +48,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- login -->
-        <test-method status="PASS" signature="editGroupName(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="editGroupName" duration-ms="3000" started-at="2020-03-25T07:13:38Z" finished-at="2020-03-25T07:13:41Z">
+        <test-method status="PASS" signature="editGroupName(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="editGroupName" duration-ms="2823" started-at="2020-03-25T10:15:35Z" finished-at="2020-03-25T10:15:38Z">
           <params>
             <param index="0">
               <value>
@@ -64,7 +64,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- editGroupName -->
-        <test-method status="PASS" signature="updateGroupUsersTest(java.lang.String, java.lang.String)[pri:1, instance:test.EditGroupTest@146ba0ac]" name="updateGroupUsersTest" duration-ms="2916" started-at="2020-03-25T07:13:41Z" finished-at="2020-03-25T07:13:43Z">
+        <test-method status="PASS" signature="updateGroupUsersTest(java.lang.String, java.lang.String)[pri:1, instance:test.EditGroupTest@146ba0ac]" name="updateGroupUsersTest" duration-ms="2672" started-at="2020-03-25T10:15:38Z" finished-at="2020-03-25T10:15:41Z">
           <params>
             <param index="0">
               <value>
@@ -80,7 +80,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- updateGroupUsersTest -->
-        <test-method status="PASS" signature="updateGroupCreatSignRightsTest(java.lang.String, java.lang.String)[pri:2, instance:test.EditGroupTest@146ba0ac]" name="updateGroupCreatSignRightsTest" duration-ms="3776" started-at="2020-03-25T07:13:43Z" finished-at="2020-03-25T07:13:47Z">
+        <test-method status="PASS" signature="updateGroupCreatSignRightsTest(java.lang.String, java.lang.String)[pri:2, instance:test.EditGroupTest@146ba0ac]" name="updateGroupCreatSignRightsTest" duration-ms="3507" started-at="2020-03-25T10:15:41Z" finished-at="2020-03-25T10:15:44Z">
           <params>
             <param index="0">
               <value>
@@ -96,11 +96,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- updateGroupCreatSignRightsTest -->
-        <test-method status="PASS" signature="logout()[pri:0, instance:test.EditGroupTest@146ba0ac]" name="logout" is-config="true" duration-ms="195" started-at="2020-03-25T07:13:47Z" finished-at="2020-03-25T07:13:47Z">
+        <test-method status="PASS" signature="logout()[pri:0, instance:test.EditGroupTest@146ba0ac]" name="logout" is-config="true" duration-ms="178" started-at="2020-03-25T10:15:44Z" finished-at="2020-03-25T10:15:44Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logout -->
-        <test-method status="PASS" signature="deleteEntities(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="deleteEntities" is-config="true" duration-ms="113" started-at="2020-03-25T07:13:47Z" finished-at="2020-03-25T07:13:48Z">
+        <test-method status="PASS" signature="deleteEntities(java.lang.String, java.lang.String)[pri:0, instance:test.EditGroupTest@146ba0ac]" name="deleteEntities" is-config="true" duration-ms="118" started-at="2020-03-25T10:15:44Z" finished-at="2020-03-25T10:15:45Z">
           <params>
             <param index="0">
               <value>
@@ -116,7 +116,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- deleteEntities -->
-        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.EditGroupTest@146ba0ac]" name="afterSuite" is-config="true" duration-ms="705" started-at="2020-03-25T07:13:48Z" finished-at="2020-03-25T07:13:48Z">
+        <test-method status="PASS" signature="afterSuite()[pri:0, instance:test.EditGroupTest@146ba0ac]" name="afterSuite" is-config="true" duration-ms="676" started-at="2020-03-25T10:15:45Z" finished-at="2020-03-25T10:15:45Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterSuite -->
