@@ -73,7 +73,15 @@ public class GroupController {
 					SecurityContextHolder.getContext().getAuthentication().getName(), command.getGroupName());
 		return new ResponseEntity<String>("Failed to create group", HttpStatus.CONFLICT);
 	}
-
+	
+	/**
+	 * Returns all groups created within the system with paging
+	 * 
+	 * @url /api/groups
+	 * @method POST
+	 * @param PagingData
+	 */
+	
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/groups", method = RequestMethod.POST)
 	public Map<String, Object> listAllGroups(@RequestBody PagingData pagingData) {
@@ -83,7 +91,13 @@ public class GroupController {
 
 		return groupService.retrieveAllGroups(pagingData);
 	}
-
+	/**
+	 * Returns a single group by specified name
+	 * 
+	 * @url /api/groups/{groupname}
+	 * @method GET
+	 * @param name
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/groups/{groupname}")
 	public GroupDetailsDTO findGroupByName(@PathVariable("groupname") String name) {
@@ -93,7 +107,15 @@ public class GroupController {
 
 		return new GroupDetailsDTO(groupService.findGroupByName(name));
 	}
-
+	
+	/**
+	 * Adds a single user to specified groups
+	 * 
+	 * @url /api/addGroup/{username}
+	 * @method POST
+	 * @param username, String[] GroupNames
+	 */
+	
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping(path = "/api/addGroup/{username}")
 	public ResponseEntity<String> addGroup(@PathVariable("username") String username, @RequestBody String[] names) {
@@ -154,7 +176,11 @@ public class GroupController {
 			return false;
 		}
 	}
-
+	/**
+	 * Deletes a group
+	 * 
+	 * @param name
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@DeleteMapping("/api/group/{groupname}/delete")
 	public ResponseEntity<String> deleteGroupByName(@PathVariable("groupname") String groupname) {

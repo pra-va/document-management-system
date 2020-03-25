@@ -53,6 +53,7 @@ public class DocumentService {
 	 * 
 	 * @return Document
 	 */
+
 	public Document findDocumentByUID(String UID) {
 		return docRepo.findDocumentByUID(UID);
 	}
@@ -62,6 +63,7 @@ public class DocumentService {
 	 * 
 	 * @return Document
 	 */
+
 	@Transactional
 	public Document createDocument(String name, String authorUsername, String description, String dType,
 			String currentTime) {
@@ -75,6 +77,13 @@ public class DocumentService {
 		return docRepo.save(newDocument);
 	}
 
+	/**
+	 * Returns all documents
+	 * 
+	 * @param PagingData
+	 * @return Map<String, Object> responseMap
+	 */
+
 	public Map<String, Object> retrieveAllDocuments(PagingData pagingData) {
 		Pageable firstPageable = pagingData.getPageable();
 		Page<Document> documentlist = docRepo.findLike(pagingData.getSearchValueString(), firstPageable);
@@ -86,15 +95,11 @@ public class DocumentService {
 		return responseMap;
 	}
 
-	public List<DocumentDetailsDTO> findAll() {
-		List<Document> tmpList = docRepo.findAll();
-		List<DocumentDetailsDTO> list = new ArrayList<DocumentDetailsDTO>();
-		for (int i = 0; i < tmpList.size(); i++) {
-			list.add(new DocumentDetailsDTO(tmpList.get(i)));
-		}
-		return list;
-	}
-
+	/**
+	 * Deletes a document from the system
+	 * 
+	 * @param Document
+	 */
 	@Transactional
 	public void deleteDocument(Document document) {
 		List<File4DB> tmpList = document.getFileList();
@@ -130,6 +135,12 @@ public class DocumentService {
 		docRepo.delete(document);
 	}
 
+	/**
+	 * Sets document status to Submitted
+	 * 
+	 * @param UID
+	 */
+
 	@Transactional
 	public void setStatusPateiktas(String UID) {
 		Document tmp = findDocumentByUID(UID);
@@ -137,6 +148,12 @@ public class DocumentService {
 		tmp.setStatus(Status.SUBMITTED);
 		docRepo.save(tmp);
 	}
+
+	/**
+	 * Sets document status to Accepted
+	 * 
+	 * @param UID
+	 */
 
 	@Transactional
 	public void setStatusPriimtas(String UID, String username) {
@@ -153,6 +170,12 @@ public class DocumentService {
 		docRepo.save(tmp);
 	}
 
+	/**
+	 * Sets document status to Rejected
+	 * 
+	 * @param UID, String reasonToReject
+	 */
+
 	@Transactional
 	public void setStatusAtmestas(String UID, String username, String reasonToReject) {
 		Document tmp = findDocumentByUID(UID);
@@ -168,6 +191,12 @@ public class DocumentService {
 		docRepo.save(tmp);
 	}
 
+	/**
+	 * Generates unique UID from time of creation
+	 * 
+	 * @param time
+	 */
+
 	public String generateUID(String time) {
 		StringBuilder UID = new StringBuilder();
 		for (int i = 0; i < time.length(); i++) {
@@ -177,7 +206,14 @@ public class DocumentService {
 		}
 		return UID.toString();
 	}
-
+	
+	/**
+	 * Returns all documents by username
+	 * 
+	 * @param username, PagingData
+	 * @return Map<String, Object> responseMap
+	 */
+	
 	public Map<String, Object> returnAllDocumentsByUsername(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsername(username, pagingData.getSearchValueString(), pageable);
@@ -188,12 +224,26 @@ public class DocumentService {
 				documents.getContent().stream().map(doc -> new DocumentDetailsDTO(doc)).collect(Collectors.toList()));
 		return responseMap;
 	}
-
+	
+	/**
+	 * Returns all documents by username for internal use
+	 * 
+	 * @param username
+	 * @return List<Document>
+	 */
+	
 	public List<Document> findAllDocumentsByUsername(String username) {
 		User tmpUser = userRepo.findUserByUsername(username);
 		return tmpUser.getCreatedDocuments();
 	}
 
+	/**
+	 * Returns all documents the user is permitted to approve/reject
+	 * 
+	 * @param username, PagingData
+	 * @return Map<String, Object>
+	 */
+	
 	public Map<String, Object> findAllDocumentsToSignByUsername(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsToSignByUsername(username, pagingData.getSearchValueString(), pageable);
@@ -205,6 +255,12 @@ public class DocumentService {
 		return responseMap;
 	}
 
+	/**
+	 * Updates document details
+	 * 
+	 * @param String docUID, String newName, String newDescription, String newDocType, String[] filesToRemove
+	 */
+	
 	@Transactional
 	public void updateDocument(String docUID, String newName, String newDescription, String newDocType,
 			String[] filesToRemove) {
@@ -224,6 +280,13 @@ public class DocumentService {
 		docRepo.save(documentToUpdate);
 	}
 
+	/**
+	 * Returns all documents the user submitted
+	 * 
+	 * @param username, PagingData
+	 * @return Map<String, Object>
+	 */
+	
 	public Map<String, Object> returnSubmitted(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -236,6 +299,13 @@ public class DocumentService {
 		return responseMap;
 	}
 
+	/**
+	 * Returns all documents with status accepted for the user 
+	 * 
+	 * @param username, PagingData
+	 * @return Map<String, Object>
+	 */
+	
 	public Map<String, Object> returnAccepted(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -248,6 +318,13 @@ public class DocumentService {
 		return responseMap;
 	}
 
+	/**
+	 * Returns all documents with status rejected for the user 
+	 * 
+	 * @param username, PagingData
+	 * @return Map<String, Object>
+	 */
+	
 	public Map<String, Object> returnRejected(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -260,6 +337,13 @@ public class DocumentService {
 		return responseMap;
 	}
 
+	/**
+	 * Returns all documents with status created for the user 
+	 * 
+	 * @param username, PagingData
+	 * @return Map<String, Object>
+	 */
+	
 	public Map<String, Object> returnCreated(String username, PagingData pagingData) {
 		Pageable pageable = pagingData.getPageable();
 		Page<Document> documents = userRepo.docsByUsernameAndStatus(username, pagingData.getSearchValueString(),
@@ -272,6 +356,12 @@ public class DocumentService {
 		return responseMap;
 	}
 
+	/**
+	 * Deletes the document if the user requesting this is the author of the document
+	 * 
+	 * @param UID, username
+	 */
+	
 	@Transactional
 	public boolean deleteDocumentRequestedByUser(String uid, String username) {
 		boolean doesUserHaveDoc = docRepo.doesUserHaveDoc(uid, username);

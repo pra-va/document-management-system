@@ -95,7 +95,14 @@ public class FileService {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
 				.body(new ByteArrayResource(fileByteData));
 	}
-
+	
+	/**
+	 * This method returns all file details created by username
+	 * 
+	 * @param username
+	 * @return List<FileDetailsDTO>
+	 */
+	
 	public List<FileDetailsDTO> findAllFileDetailsByUsername(String username) {
 		List<Document> tmpList = docService.findAllDocumentsByUsername(username);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
@@ -110,6 +117,13 @@ public class FileService {
 		return returnList;
 	}
 
+	/**
+	 * This method returns all file details attached to document
+	 * 
+	 * @param UID
+	 * @return List<FileDetailsDTO>
+	 */
+	
 	public List<FileDetailsDTO> findAllFileDetailsByDocument(String UID) {
 		Document tmpDoc = docService.findDocumentByUID(UID);
 		Set<File4DB> listToReturn = new HashSet<File4DB>();
@@ -128,6 +142,7 @@ public class FileService {
 	 * @return
 	 * @throws IOException
 	 */
+	
 	public ResponseEntity<Resource> generateCSV(String username) {
 		String csv = null;
 		try {
@@ -159,14 +174,25 @@ public class FileService {
 		return filesAsBytes;
 	}
 
+	/**
+	 * Deletes file from hte system by UID
+	 * 
+	 * @param UID
+	 */
+	
 	public void deleteFileByUID(String uID) {
 		File4DB tmpFile = filesRepository.findFile4dbByUID(uID);
 		tmpFile.getDocument().getFileList().remove(tmpFile);
 		filesRepository.delete(tmpFile);
 	}
 
+	/**
+	 * Deletes file from the system
+	 * 
+	 * @param UID
+	 */
+	
 	public void deleteFile(File4DB tmpFile) {
-//		tmpFile.getDocument().getFileList().remove(tmpFile);
 		filesRepository.delete(tmpFile);
 	}
 }
