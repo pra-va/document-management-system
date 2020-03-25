@@ -1,0 +1,153 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="regressionTests2" preserve-order="true">
+	<test name="newUserTests">
+		<parameter name="adminUserName" value="admin"/>		
+		<parameter name="adminPassword" value="adminadmin"/>
+		<parameter name="newAdminFirstName" value="TestAdminFirstName2"/>
+		<parameter name="newAdminLastName" value="TestAdminLastName2"/>
+		<parameter name="newAdminUserName" value="TestAdminUserName2"/>
+		<parameter name="newAdminPassword" value="12345678"/>
+		<parameter name="newAdminRole" value="ADMIN"/>
+		<parameter name="groupName" value="GroupForNewUserTest2"/>
+		<parameter name="newUserFirstName" value="TestUserFirstName2"/>
+		<parameter name="newUserLastName" value="TestUSerLastName2"/>
+		<parameter name="newUserUserName" value="TestUserUsername2"/>
+		<parameter name="newUserUserName1" value="testUserName2"/>
+		<parameter name="newUserPassword" value="abc123456789"/>
+		<parameter name="newUserRole" value="USER"/>
+		<parameter name="newUserFirstName21char" value="user12345678910111213"/>		
+		<parameter name="newUserLastName21char" value="user12345678910111213"/>	
+		<parameter name="newUserUserName3char" value="123"/>
+		<parameter name="newUserUserName21char" value="user12345678910111213"/>		
+		<parameter name="newUserUserNameSpecChar" value="userName!!"/>
+		<parameter name="newUserUserNameContainsSpace" value="user Name"/>
+		<parameter name="newUserPassword3char" value="123"/>	
+		<parameter name="newUserPassword21char" value="user12345678910111213"/>	
+	    <parameter name="newUserPasswordWithSpace" value="user password"/>	
+		<classes>
+			<class name="test.NewUserTests"/>
+		</classes>
+	</test>
+	<test name="editUserTests">
+		<parameter name="adminUserName" value="admin" />
+		<parameter name="adminPassword" value="adminadmin" />
+		<parameter name="newAdminFirstName" value="newAdminFirstName" />
+		<parameter name="newAdminLastName" value="newAdminLastName" />
+		<parameter name="newAdminUserName" value="newAdminUserName" />
+		<parameter name="newAdminPassword" value="12345678" />
+		<parameter name="newAdminRole" value="ADMIN" />
+		<parameter name="groupNameOne" value="GroupOneForEditUserTests" />
+		<parameter name="groupNameTwo" value="GroupTwoForEditUserTests" />
+		<parameter name="newUserFirstName" value="newUserFirstName" />
+		<parameter name="newUserLastName" value="newUserLastName" />
+		<parameter name="newUserUserName" value="newUserUserName" />
+		<parameter name="newUserUserName1" value="testUserName" />
+		<parameter name="updatedPassword" value="abc1234567" />
+		<parameter name="newUserRole" value="USER" />
+		<classes>
+			<class name="test.EditUserTests" />
+		</classes>
+	</test>
+		<test name="newDocumentTests">
+		<parameter name="adminUserName" value="admin"/>		
+		<parameter name="adminPassword" value="adminadmin"/>			
+		<parameter name="userPassword" value="123456789"/>
+		<parameter name="userFirstName" value="userFirstName"/>
+		<parameter name="userLastName" value="userLastName"/>
+		<parameter name="userUserName" value="userUserName2"/>		
+		<parameter name="groupName" value="GroupForNewDocumentTests1"/>		
+		<parameter name="documentName" value="DocForNewDocumentTests"/>
+		<parameter name="documentDescription" value="Resignation Letter"/>
+		<parameter name="docTypeName" value="DocTypeForNewDocumentTests1"/>
+		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+		<parameter name="fileName" value="testFile1.pdf"/>		
+		<classes>
+			<class name="test.NewDocumentTests"/>
+		</classes>
+		</test>
+	<test name="editDocumentTests">
+		<parameter name="adminUserName" value="admin"/>		
+		<parameter name="adminPassword" value="adminadmin"/>
+		<parameter name="userFirstName" value="userForEditDocTest"/>
+		<parameter name="userLastName" value="userEditDocTest"/>
+		<parameter name="userUserName" value="userForEditDocTest4"/>
+		<parameter name="userPassword" value="12345678"/>	
+		<parameter name="docTypeName" value="DocTypeForEditDocumentTests4"/>		
+		<parameter name="groupName" value="GroupForEditDocumentTests4"/>		
+		<parameter name="groupDescription" value="groupDescription"/>
+		<parameter name="documentName" value="documentName"/>
+		<parameter name="updatedDocumentName" value="updatedDocumentName"/>
+		<parameter name="documentDescription" value="docDescriptionForEditDocTests"/>
+		<parameter name="updatedDocumentDescription" value="updDocDescriptionForEditDocTests"/>
+		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>		
+		<parameter name="fileName" value="testFile1.pdf"/>
+		<parameter name="updatedFilePath" value="src/test/java/utilities/testFile2.pdf"/>
+		<parameter name="updatedFileName" value="testFile2.pdf"/>		
+		<classes>
+			<class name="test.EditDocumentTests"/>
+		</classes>
+	</test>
+	<test name="submitDocumentTests">	
+		<parameter name="adminUserName" value="admin"/>	
+		<parameter name="adminPassword" value="adminadmin"/>	
+		<parameter name="groupDescriptionCR" value="groupDescriptionCR11"/>	
+		<parameter name="groupNameCR" value="groupThatCreatesSubmitDocTests11"/>	
+		<parameter name="groupDescriptionSIGN" value="groupDescriptionSIGN11"/>
+		<parameter name="groupNameSIGN" value="groupThatSignsSubmitDocTests11"/>
+		<parameter name="userFirstNameCR" value="FirstNameCR"/>
+		<parameter name="userLastNameCR" value="LastNameCR"/>
+		<parameter name="userPasswordCR" value="PasswordCR"/>
+		<parameter name="userUserNameCR" value="UserNameCR11"/>
+		<parameter name="docTypeName" value="docTypeForSubmitDocTests11"/>
+		<parameter name="UserFirstNameSIGN" value="FirstNameSIGN"/>
+		<parameter name="UserLastNameSIGN" value="LastNameSIGN"/>
+		<parameter name="UserUserNameSIGN" value="UserNameSIGN11"/>
+		<parameter name="UserPassswordSIGN" value="PassswordSIGN"/>					
+		<parameter name="docName" value="Resignation Letter"/>			
+		<parameter name="documentName" value="1docForSubmitDocTests"/>
+		<parameter name="documentDescription" value="docDescription"/>
+		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+		<parameter name="fileName" value="testFile1.pdf"/>	
+		<classes>
+			<class name="test.SubmitDocumentTests"/>
+		</classes>
+	</test>
+		<test name="signDocumentTests">
+		<parameter name="adminPassword" value="adminadmin"/>	
+		<parameter name="adminUserName" value="admin"/>
+		<parameter name="groupDescriptionCR" value="groupDescriptionCR"/>	
+		<parameter name="groupNameCR" value="groupCreatesSignDocTests"/>	
+		<parameter name="groupDescriptionSIGN" value="groupDescriptionSIGN"/>
+		<parameter name="groupNameSIGN" value="groupSignsSignDocTests"/>
+		<parameter name="userFirstNameCR" value="NameCR"/>
+		<parameter name="userLastNameCR" value="NameCR"/>
+		<parameter name="userPasswordCR" value="PasswordCR"/>
+		<parameter name="userUserNameCR" value="UserCR"/>
+		<parameter name="docTypeName" value="DTypeForSignDocTests"/>
+		<parameter name="UserFirstNameSIGN" value="NameSIGN"/>
+		<parameter name="UserLastNameSIGN" value="NameSIGN"/>
+		<parameter name="UserUserNameSIGN" value="UserSIGN"/>
+		<parameter name="UserPassswordSIGN" value="PassswordSIGN"/>					
+		<parameter name="docName" value="Resignation Letter"/>			
+		<parameter name="documentName" value="docForSubmitDocTests"/>
+		<parameter name="documentDescription" value="documentDescriptionForSignDocumentTests"/>
+		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+		<parameter name="fileName" value="testFile1.pdf"/>	
+		<classes>
+			<class name="test.SignDocumentTests"/>
+		</classes>
+	</test>	
+	<test name="passwordHashingTests">	
+		<parameter name="adminUserName" value="admin"/>		
+		<parameter name="adminPassword" value="adminadmin"/>	
+		<parameter name="userFirstName" value="userForHashTest"/>		
+		<parameter name="userLastName" value="userForHashTest"/>	
+		<parameter name="userPassword" value="userHashTest"/>	
+		<parameter name="userLastName" value="123456789"/>	
+		<parameter name="userUserName" value="userForHashTest"/>		
+		<classes>
+			<class name="test.PasswordHashingTests"/>
+		</classes>
+	</test>
+</suite>

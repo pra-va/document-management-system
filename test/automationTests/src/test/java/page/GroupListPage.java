@@ -13,20 +13,28 @@ public class GroupListPage extends MainPage {
 
 	/* FIELDS */
 
-	@FindBy(xpath = "//*[@aria-label='Search']")
+	@FindBy(xpath = "//input")
 	private WebElement searchField;
-
-	/* BUTTONS */
 
 	/* CLICK BUTTONS */
 
 	public void clickEditSpecificGroupButton(String group) {
-		driver.findElement(By.xpath("//td[contains(text()," + group + ")]/..//td[4]//button")).click();
+		driver.findElement(By.xpath("//td[contains(text(),'" + group + "')]/..//td[3]//button")).click();
 	}
 
 	/* SEND KEYS */
 
 	public void sendKeysSearchForUser(String userInformation) {
 		searchField.sendKeys(userInformation);
+	}
+
+	public void sendKeysSearchForGroup(String groupName) {
+		searchField.sendKeys(groupName);
+	}
+
+	/* CLEAR FIELDS */
+
+	public void clearSearchField() {
+		this.searchField.clear();
 	}
 }

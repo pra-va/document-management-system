@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="statisticsTests" preserve-order="true">
+	<test name="statisticsTests">
+		<parameter name="newAdminFirstName" value="adminForStats" />
+		<parameter name="newAdminLastName" value="adminForStats" />
+		<parameter name="newAdminUserName" value="adminForStats" />
+		<parameter name="newAdminPassword" value="12345678" />
+		<parameter name="groupName" value="GroupForStatsTest" />
+		<parameter name="docTypeName" value="DocTypeForStatsTest" />
+		<parameter name="docName" value="docForTest" />
+		<parameter name="filePath" value="src/test/java/utilities/testFile1.pdf"/>
+		<parameter name="fileName" value="testFile1.pdf"/>		
+		<classes>
+			<class name="test.StatisticsTests"/>
+		</classes>
+	</test>
+</suite>

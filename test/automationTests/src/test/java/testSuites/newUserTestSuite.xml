@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="newUserTests" preserve-order="true">
+	<test name="newUserTests">
+		<parameter name="adminUserName" value="admin"/>		
+		<parameter name="adminPassword" value="adminadmin"/>
+		<parameter name="newAdminFirstName" value="TestAdminFirstName"/>
+		<parameter name="newAdminLastName" value="TestAdminLastName"/>
+		<parameter name="newAdminUserName" value="TestAdminUserName"/>
+		<parameter name="newAdminPassword" value="12345678"/>
+		<parameter name="newAdminRole" value="ADMIN"/>
+		<parameter name="groupName" value="GroupForNewUserTests1"/>
+		<parameter name="newUserFirstName" value="TestUserFirstName"/>
+		<parameter name="newUserLastName" value="TestUSerLastName"/>
+		<parameter name="newUserUserName" value="TestUserUsername1"/>
+		<parameter name="newUserUserName1" value="testUserName1"/>
+		<parameter name="newUserPassword" value="abc123456789"/>
+		<parameter name="newUserRole" value="USER"/>
+		<parameter name="newUserFirstName21char" value="user12345678910111213"/>		
+		<parameter name="newUserLastName21char" value="user12345678910111213"/>	
+		<parameter name="newUserUserName3char" value="123"/>
+		<parameter name="newUserUserName21char" value="user12345678910111213"/>		
+		<parameter name="newUserUserNameSpecChar" value="userName!!"/>
+		<parameter name="newUserUserNameContainsSpace" value="user Name"/>
+		<parameter name="newUserPassword3char" value="123"/>	
+		<parameter name="newUserPassword21char" value="user12345678910111213"/>	
+	    <parameter name="newUserPasswordWithSpace" value="user password"/>	
+		<classes>
+			<class name="test.NewUserTests"/>
+		</classes>
+	</test>
+</suite>
+
