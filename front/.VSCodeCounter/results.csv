@@ -1,93 +1,134 @@
-filename, language, JavaScript, CSS, comment, blank, total
-/home/pra-va/programavimas/4-projektas/front/src/components/0-MainWindow/App.css, CSS, 0, 26, 0, 7, 33
-/home/pra-va/programavimas/4-projektas/front/src/components/0-MainWindow/App.js, JavaScript, 6, 0, 0, 3, 9
-/home/pra-va/programavimas/4-projektas/front/src/components/1-Errors/PageNotFound.js, JavaScript, 5, 0, 0, 3, 8
-/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/Form.css, CSS, 0, 25, 1, 6, 32
-/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/LoginForm.js, JavaScript, 124, 0, 0, 11, 135
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/01-Navigation/Navigation.css, CSS, 0, 44, 0, 10, 54
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/01-Navigation/Navigation.js, JavaScript, 60, 0, 0, 8, 68
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/01-Navigation/NavigationPresentation.js, JavaScript, 141, 0, 0, 19, 160
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/02-Main/Main.css, CSS, 0, 46, 0, 9, 55
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/02-Main/Main.js, JavaScript, 95, 0, 0, 6, 101
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/HomePage.js, JavaScript, 34, 0, 0, 6, 40
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/02-Profile/Components/1-UsernameReciever.js, JavaScript, 17, 0, 0, 5, 22
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/02-Profile/Components/2-UserDetails.js, JavaScript, 76, 0, 0, 9, 85
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/02-Profile/UsersProfile.js, JavaScript, 54, 0, 0, 5, 59
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/1-EditInfo.js, JavaScript, 54, 0, 0, 7, 61
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/2-SelectDocType.js, JavaScript, 76, 0, 0, 10, 86
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/3-AttachFiles.js, JavaScript, 28, 0, 0, 4, 32
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/4-AttachedFiles.js, JavaScript, 24, 0, 0, 4, 28
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/AttachFiles.css, CSS, 0, 0, 4, 1, 5
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/Table.css, CSS, 0, 24, 0, 8, 32
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/CreateDocument.css, CSS, 0, 15, 0, 2, 17
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/CreateDocument.js, JavaScript, 232, 0, 0, 19, 251
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/04-SignDocument/Components/SignTable.js, JavaScript, 34, 0, 0, 5, 39
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/04-SignDocument/SignDocuments.js, JavaScript, 78, 0, 0, 9, 87
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/EditDocButton.js, JavaScript, 23, 0, 0, 4, 27
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/MyDocsTable.css, CSS, 0, 30, 0, 10, 40
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/MyDocsTable.js, JavaScript, 142, 0, 0, 12, 154
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/ViewButton.js, JavaScript, 23, 0, 0, 4, 27
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/1-EditInfo.js, JavaScript, 54, 0, 0, 7, 61
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/2-SelectDocType.js, JavaScript, 90, 0, 0, 11, 101
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/3-AttachFiles.js, JavaScript, 28, 0, 0, 4, 32
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/4-AttachedFiles.js, JavaScript, 24, 0, 0, 4, 28
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/AttachFiles.css, CSS, 0, 0, 4, 1, 5
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/Table.css, CSS, 0, 24, 0, 8, 32
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/EditDocument.css, CSS, 0, 5, 0, 1, 6
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/EditDocument.js, JavaScript, 270, 0, 22, 28, 320
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/MyDocuments.css, CSS, 0, 3, 0, 1, 4
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/MyDocuments.js, JavaScript, 95, 0, 0, 8, 103
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/ViewDocument/ViewDocument.css, CSS, 0, 0, 3, 1, 4
-/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/ViewDocument/ViewDocument.js, JavaScript, 108, 0, 0, 5, 113
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/FormComponents/1-UserInformation.js, JavaScript, 175, 0, 0, 17, 192
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/FormComponents/2-Groups.css, CSS, 0, 8, 0, 2, 10
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/FormComponents/2-Groups.js, JavaScript, 53, 0, 0, 9, 62
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/FormComponents/3-UsersGroups.js, JavaScript, 43, 0, 0, 8, 51
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/NewUser.css, CSS, 0, 3, 0, 1, 4
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/NewUser.js, JavaScript, 185, 0, 0, 25, 210
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/FormComponents/1-GroupInformation.js, JavaScript, 80, 0, 0, 9, 89
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/FormComponents/2-AddUsersToGroup.js, JavaScript, 43, 0, 0, 6, 49
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/FormComponents/3-GroupUsers.js, JavaScript, 28, 0, 0, 4, 32
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/NewGroup.js, JavaScript, 173, 0, 0, 20, 193
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/1-EditUserInformation.js, JavaScript, 193, 0, 0, 18, 211
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/2-Groups.css, CSS, 0, 8, 0, 2, 10
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/2-Groups.js, JavaScript, 118, 0, 0, 12, 130
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/EditUser.js, JavaScript, 137, 0, 0, 21, 158
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/ListOfUsers.js, JavaScript, 10, 0, 0, 3, 13
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/4-Groups/EditGroupModal/EditGroup.js, JavaScript, 22, 0, 0, 3, 25
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/4-Groups/ListOfGroups.js, JavaScript, 10, 0, 0, 3, 13
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/EditTableItemButton.js, JavaScript, 38, 0, 1, 7, 46
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/UsersAndGroups.css, CSS, 0, 11, 0, 3, 14
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/UsersAndGroups.js, JavaScript, 134, 0, 1, 12, 147
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/DocTypes.css, CSS, 0, 3, 0, 1, 4
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/DocTypes.js, JavaScript, 126, 0, 0, 9, 135
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditButton.js, JavaScript, 29, 0, 1, 7, 37
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/EditDocType.js, JavaScript, 260, 0, 0, 21, 281
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/FormComponents/1-DocTypeInfo.js, JavaScript, 50, 0, 0, 5, 55
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/FormComponents/2-AssignToGroups.js, JavaScript, 69, 0, 0, 10, 79
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/FormComponents/2-Groups.css, CSS, 0, 8, 0, 2, 10
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/FormComponents/3-SetRights.js, JavaScript, 43, 0, 0, 8, 51
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/FormComponents/1-DocTypeInfo.js, JavaScript, 50, 0, 0, 5, 55
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/FormComponents/2-AssignToGroups.js, JavaScript, 54, 0, 0, 9, 63
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/FormComponents/2-Groups.css, CSS, 0, 8, 0, 2, 10
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/FormComponents/3-SetRights.js, JavaScript, 43, 0, 0, 8, 51
-/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/NewDocType.js, JavaScript, 237, 0, 0, 19, 256
-/home/pra-va/programavimas/4-projektas/front/src/components/5-Context/UserRole.js, JavaScript, 3, 0, 0, 3, 6
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/1-TableHead/TableHead.js, JavaScript, 18, 0, 0, 4, 22
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/2-TableBody/TableBody.js, JavaScript, 15, 0, 0, 3, 18
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/2-TableBody/TableRow/TableRow.js, JavaScript, 14, 0, 0, 5, 19
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/Table.js, JavaScript, 14, 0, 0, 3, 17
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/2-AdvancedTable/AdvancedTable.css, CSS, 0, 41, 3, 10, 54
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/2-AdvancedTable/AdvancedTable.js, JavaScript, 124, 0, 10, 16, 150
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/2-AdvancedTable/CustomSearch.js, JavaScript, 38, 0, 0, 5, 43
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/3-FormSingleInput/FormSingleInput.js, JavaScript, 168, 0, 4, 14, 186
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove.js, JavaScript, 30, 0, 0, 6, 36
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/5-FormInputValidationLine/Validation.js, JavaScript, 24, 0, 1, 3, 28
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/6-CheckBox/CheckBox.js, JavaScript, 33, 0, 4, 8, 45
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/8-PopOver/PopOver.css, CSS, 0, 3, 0, 1, 4
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/8-PopOver/PopOver.js, JavaScript, 25, 0, 1, 5, 31
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/9-AddRemoveDocType/AddRemoveDocType.js, JavaScript, 203, 0, 1, 17, 221
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/9-AddRemoveDocType/Components/1-NotAddedDocTypes.js, JavaScript, 50, 0, 0, 8, 58
-/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/9-AddRemoveDocType/Components/2-AddedDocTypes.js, JavaScript, 41, 0, 0, 8, 49
-/home/pra-va/programavimas/4-projektas/front/src/components/7-properties/1-URL.js, JavaScript, 2, 0, 1, 2, 5
-Total, -, 5200, 335, 62, 697, 6294
+filename, language, Markdown, JSON, JavaScript, CSS, HTML, XML, Log, comment, blank, total
+/home/pra-va/programavimas/4-projektas/front/.VSCodeCounter/details.md, Markdown, 100, 0, 0, 0, 0, 0, 0, 0, 6, 106
+/home/pra-va/programavimas/4-projektas/front/.VSCodeCounter/results.md, Markdown, 64, 0, 0, 0, 0, 0, 0, 0, 7, 71
+/home/pra-va/programavimas/4-projektas/front/README.md, Markdown, 37, 0, 0, 0, 0, 0, 0, 0, 32, 69
+/home/pra-va/programavimas/4-projektas/front/package-lock.json, JSON, 0, 15660, 0, 0, 0, 0, 0, 0, 1, 15661
+/home/pra-va/programavimas/4-projektas/front/package.json, JSON, 0, 55, 0, 0, 0, 0, 0, 0, 1, 56
+/home/pra-va/programavimas/4-projektas/front/public/index.html, HTML, 0, 0, 0, 0, 20, 0, 0, 23, 1, 44
+/home/pra-va/programavimas/4-projektas/front/public/manifest.json, JSON, 0, 25, 0, 0, 0, 0, 0, 0, 1, 26
+/home/pra-va/programavimas/4-projektas/front/src/components/0-MainWindow/App.css, CSS, 0, 0, 0, 26, 0, 0, 0, 0, 7, 33
+/home/pra-va/programavimas/4-projektas/front/src/components/0-MainWindow/App.js, JavaScript, 0, 0, 6, 0, 0, 0, 0, 0, 3, 9
+/home/pra-va/programavimas/4-projektas/front/src/components/1-Errors/PageNotFound.js, JavaScript, 0, 0, 5, 0, 0, 0, 0, 0, 3, 8
+/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/Components/CreateInitialUser/FormComponents/1-UserInformation.js, JavaScript, 0, 0, 114, 0, 0, 0, 0, 0, 16, 130
+/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/Components/CreateInitialUser/NewUser.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/Components/CreateInitialUser/NewUser.js, JavaScript, 0, 0, 124, 0, 0, 0, 0, 0, 14, 138
+/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/Components/LoginPresentation/LoginFormPresentation.js, JavaScript, 0, 0, 103, 0, 0, 0, 0, 0, 8, 111
+/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/Form.css, CSS, 0, 0, 0, 28, 0, 0, 0, 1, 7, 36
+/home/pra-va/programavimas/4-projektas/front/src/components/2-LoginForm/LoginForm.js, JavaScript, 0, 0, 78, 0, 0, 0, 0, 0, 10, 88
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/01-Navigation/Navigation.css, CSS, 0, 0, 0, 44, 0, 0, 0, 0, 10, 54
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/01-Navigation/Navigation.js, JavaScript, 0, 0, 60, 0, 0, 0, 0, 0, 8, 68
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/01-Navigation/NavigationPresentation.js, JavaScript, 0, 0, 146, 0, 0, 0, 0, 0, 20, 166
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/02-Main/Main.css, CSS, 0, 0, 0, 33, 0, 0, 0, 0, 7, 40
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/02-Main/Main.js, JavaScript, 0, 0, 101, 0, 0, 0, 0, 0, 6, 107
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/01-MainWindow/HomePage.js, JavaScript, 0, 0, 34, 0, 0, 0, 0, 0, 6, 40
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/02-Profile/Components/1-UsernameReciever.js, JavaScript, 0, 0, 17, 0, 0, 0, 0, 0, 5, 22
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/02-Profile/Components/2-UserDetails.js, JavaScript, 0, 0, 76, 0, 0, 0, 0, 0, 9, 85
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/02-Profile/UsersProfile.js, JavaScript, 0, 0, 58, 0, 0, 0, 0, 0, 5, 63
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/1-EditInfo.js, JavaScript, 0, 0, 54, 0, 0, 0, 0, 0, 7, 61
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/2-SelectDocType.js, JavaScript, 0, 0, 113, 0, 0, 0, 0, 1, 12, 126
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/3-AttachFiles.js, JavaScript, 0, 0, 29, 0, 0, 0, 0, 0, 4, 33
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/Components/4-AttachedFiles.js, JavaScript, 0, 0, 52, 0, 0, 0, 0, 0, 9, 61
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/CreateDocument.css, CSS, 0, 0, 0, 11, 0, 0, 0, 0, 2, 13
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/03-CreateDocument/CreateDocument.js, JavaScript, 0, 0, 243, 0, 0, 0, 0, 0, 22, 265
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/04-SignDocument/AcceptOrReject/AcceptOrReject.js, JavaScript, 0, 0, 190, 0, 0, 0, 0, 0, 14, 204
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/04-SignDocument/SignDocument.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/04-SignDocument/SignDocuments.js, JavaScript, 0, 0, 142, 0, 0, 0, 0, 0, 14, 156
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/04-SignDocument/SignOrRejectButton.js, JavaScript, 0, 0, 23, 0, 0, 0, 0, 0, 4, 27
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/EditDocButton.js, JavaScript, 0, 0, 27, 0, 0, 0, 0, 0, 4, 31
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/MyDocsTable.css, CSS, 0, 0, 0, 6, 0, 0, 0, 32, 2, 40
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/MyDocsTable.js, JavaScript, 0, 0, 264, 0, 0, 0, 0, 0, 18, 282
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/Components/ViewButton.js, JavaScript, 0, 0, 23, 0, 0, 0, 0, 0, 4, 27
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/1-EditInfo.js, JavaScript, 0, 0, 54, 0, 0, 0, 0, 0, 7, 61
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/2-SelectDocType.js, JavaScript, 0, 0, 97, 0, 0, 0, 0, 0, 12, 109
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/3-AttachFiles.js, JavaScript, 0, 0, 29, 0, 0, 0, 0, 0, 4, 33
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/4-AttachedFiles.js, JavaScript, 0, 0, 50, 0, 0, 0, 0, 0, 9, 59
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/AttachFiles.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/Components/Table.css, CSS, 0, 0, 0, 30, 0, 0, 0, 0, 10, 40
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/EditDocument.css, CSS, 0, 0, 0, 12, 0, 0, 0, 0, 3, 15
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/EditDocument/EditDocument.js, JavaScript, 0, 0, 334, 0, 0, 0, 0, 0, 28, 362
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/MyDocuments.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/MyDocuments.js, JavaScript, 0, 0, 96, 0, 0, 0, 0, 0, 8, 104
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/ViewDocument/ViewDocument.css, CSS, 0, 0, 0, 0, 0, 0, 0, 3, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/3-UserPage/05-MyDocuments/ViewDocument/ViewDocument.js, JavaScript, 0, 0, 110, 0, 0, 0, 0, 0, 5, 115
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/FormComponents/1-UserInformation.js, JavaScript, 0, 0, 179, 0, 0, 0, 0, 0, 17, 196
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/FormComponents/2-Groups.css, CSS, 0, 0, 0, 8, 0, 0, 0, 0, 2, 10
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/FormComponents/2-Groups.js, JavaScript, 0, 0, 111, 0, 0, 0, 0, 0, 13, 124
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/NewUser.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/1-NewUser/NewUser.js, JavaScript, 0, 0, 144, 0, 0, 0, 0, 0, 17, 161
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/FormComponents/1-GroupInformation.js, JavaScript, 0, 0, 80, 0, 0, 0, 0, 0, 9, 89
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/FormComponents/2-AddUsersToGroup.js, JavaScript, 0, 0, 102, 0, 0, 0, 0, 1, 14, 117
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/FormComponents/3-AddDocTypes.js, JavaScript, 0, 0, 168, 0, 0, 0, 0, 0, 15, 183
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/2-NewGroup/NewGroup.js, JavaScript, 0, 0, 128, 0, 0, 0, 0, 0, 14, 142
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/EditUser.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/EditUser.js, JavaScript, 0, 0, 127, 0, 0, 0, 0, 0, 18, 145
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/FormComponents/1-UserInformation.js, JavaScript, 0, 0, 196, 0, 0, 0, 0, 0, 18, 214
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/FormComponents/2-Groups.css, CSS, 0, 0, 0, 8, 0, 0, 0, 0, 2, 10
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/EditUserModal/FormComponents/2-Groups.js, JavaScript, 0, 0, 119, 0, 0, 0, 0, 0, 14, 133
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/3-Users/ListOfUsers.js, JavaScript, 0, 0, 10, 0, 0, 0, 0, 0, 3, 13
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/4-Groups/EditGroupModal/EditGroup.js, JavaScript, 0, 0, 111, 0, 0, 0, 0, 0, 15, 126
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/4-Groups/EditGroupModal/FormComponents/1-GroupInformation.js, JavaScript, 0, 0, 80, 0, 0, 0, 0, 0, 9, 89
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/4-Groups/EditGroupModal/FormComponents/2-AddUsersToGroup.js, JavaScript, 0, 0, 163, 0, 0, 0, 0, 1, 17, 181
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/4-Groups/EditGroupModal/FormComponents/3-AddDocTypes.js, JavaScript, 0, 0, 173, 0, 0, 0, 0, 1, 15, 189
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/4-Groups/ListOfGroups.js, JavaScript, 0, 0, 10, 0, 0, 0, 0, 0, 3, 13
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/EditTableItemButton.js, JavaScript, 0, 0, 40, 0, 0, 0, 0, 1, 7, 48
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/UsersAndGroups.css, CSS, 0, 0, 0, 14, 0, 0, 0, 0, 4, 18
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/3and4-UsersAndGroups/UsersAndGroups.js, JavaScript, 0, 0, 250, 0, 0, 0, 0, 1, 18, 269
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/DocTypes.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/DocTypes.js, JavaScript, 0, 0, 170, 0, 0, 0, 0, 0, 13, 183
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditButton.js, JavaScript, 0, 0, 30, 0, 0, 0, 0, 1, 7, 38
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/EditDocType.js, JavaScript, 0, 0, 99, 0, 0, 0, 0, 0, 14, 113
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/FormComponents/1-DocInfo.js, JavaScript, 0, 0, 50, 0, 0, 0, 0, 0, 5, 55
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/5-DocTypes/EditDocType/FormComponents/2-AssignRights.js, JavaScript, 0, 0, 182, 0, 0, 0, 0, 1, 15, 198
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/FormComponents/1-DocInfo.js, JavaScript, 0, 0, 50, 0, 0, 0, 0, 0, 5, 55
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/FormComponents/2-AssignRights.js, JavaScript, 0, 0, 165, 0, 0, 0, 0, 1, 14, 180
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/6-NewDocType/NewDocType.js, JavaScript, 0, 0, 101, 0, 0, 0, 0, 0, 13, 114
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/AdminScreen.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3
+/home/pra-va/programavimas/4-projektas/front/src/components/4-Admin/AdminScreen.js, JavaScript, 0, 0, 175, 0, 0, 0, 0, 0, 17, 192
+/home/pra-va/programavimas/4-projektas/front/src/components/5-Context/UserRole.js, JavaScript, 0, 0, 3, 0, 0, 0, 0, 0, 3, 6
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/1-TableHead/TableHead.js, JavaScript, 0, 0, 18, 0, 0, 0, 0, 0, 4, 22
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/2-TableBody/TableBody.js, JavaScript, 0, 0, 15, 0, 0, 0, 0, 0, 3, 18
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/2-TableBody/TableRow/TableRow.js, JavaScript, 0, 0, 14, 0, 0, 0, 0, 0, 5, 19
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/1-BasicTable/Table.js, JavaScript, 0, 0, 14, 0, 0, 0, 0, 0, 3, 17
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/10-TopContentWrapper/ContentWrapper.css, CSS, 0, 0, 0, 4, 0, 0, 0, 0, 1, 5
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/10-TopContentWrapper/ContentWrapper.js, JavaScript, 0, 0, 10, 0, 0, 0, 0, 0, 3, 13
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/11-Alert/Alert.css, CSS, 0, 0, 0, 7, 0, 0, 0, 0, 2, 9
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/11-Alert/Alert.js, JavaScript, 0, 0, 26, 0, 0, 0, 0, 1, 4, 31
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/2-AdvancedTable/AdvancedTable.css, CSS, 0, 0, 0, 44, 0, 0, 0, 4, 11, 59
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/2-AdvancedTable/AdvancedTable.js, JavaScript, 0, 0, 214, 0, 0, 0, 0, 12, 19, 245
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/2-AdvancedTable/CustomSearch.js, JavaScript, 0, 0, 39, 0, 0, 0, 0, 0, 5, 44
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/3-FormSingleInput/FormSingleInput.js, JavaScript, 0, 0, 172, 0, 0, 0, 0, 4, 14, 190
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/4-Buttons/1-AddRemove/ButtonAddOrRemove.js, JavaScript, 0, 0, 31, 0, 0, 0, 0, 0, 6, 37
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/5-FormInputValidationLine/Validation.js, JavaScript, 0, 0, 24, 0, 0, 0, 0, 1, 3, 28
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/6-CheckBox/CheckBox.css, CSS, 0, 0, 0, 6, 0, 0, 0, 0, 1, 7
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/6-CheckBox/CheckBox.js, JavaScript, 0, 0, 33, 0, 0, 0, 0, 3, 7, 43
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/8-PopOver/PopOver.css, CSS, 0, 0, 0, 3, 0, 0, 0, 0, 1, 4
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/8-PopOver/PopOver.js, JavaScript, 0, 0, 25, 0, 0, 0, 0, 1, 5, 31
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/9-AddRemoveDocType/AddRemoveDocType.js, JavaScript, 0, 0, 203, 0, 0, 0, 0, 1, 17, 221
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/9-AddRemoveDocType/Components/1-NotAddedDocTypes.js, JavaScript, 0, 0, 50, 0, 0, 0, 0, 0, 8, 58
+/home/pra-va/programavimas/4-projektas/front/src/components/6-CommonElements/9-AddRemoveDocType/Components/2-AddedDocTypes.js, JavaScript, 0, 0, 41, 0, 0, 0, 0, 0, 8, 49
+/home/pra-va/programavimas/4-projektas/front/src/components/7-properties/1-URL.js, JavaScript, 0, 0, 2, 0, 0, 0, 0, 1, 2, 5
+/home/pra-va/programavimas/4-projektas/front/src/components/8-Statistics/Statistics.js, JavaScript, 0, 0, 298, 0, 0, 0, 0, 0, 23, 321
+/home/pra-va/programavimas/4-projektas/front/src/components/8-Statistics/StatisticsByUsers.js, JavaScript, 0, 0, 131, 0, 0, 0, 0, 0, 10, 141
+/home/pra-va/programavimas/4-projektas/front/src/index.css, CSS, 0, 0, 0, 12, 0, 0, 0, 0, 2, 14
+/home/pra-va/programavimas/4-projektas/front/src/index.js, JavaScript, 0, 0, 43, 0, 0, 0, 0, 17, 6, 66
+/home/pra-va/programavimas/4-projektas/front/src/resources/Admin/DocTypes.svg, XML, 0, 0, 0, 0, 0, 40, 0, 1, 1, 42
+/home/pra-va/programavimas/4-projektas/front/src/resources/Admin/Groups.svg, XML, 0, 0, 0, 0, 0, 75, 0, 1, 1, 77
+/home/pra-va/programavimas/4-projektas/front/src/resources/Admin/NewDoc.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/Admin/NewGroup.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/Admin/NewUser.svg, XML, 0, 0, 0, 0, 0, 29, 0, 0, 1, 30
+/home/pra-va/programavimas/4-projektas/front/src/resources/Admin/NewUser_old.svg, XML, 0, 0, 0, 0, 0, 52, 0, 1, 1, 54
+/home/pra-va/programavimas/4-projektas/front/src/resources/Admin/Users.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/admin.svg, XML, 0, 0, 0, 0, 0, 53, 0, 1, 1, 55
+/home/pra-va/programavimas/4-projektas/front/src/resources/doc.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/download.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/my-documents.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/new-document.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/search.svg, XML, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+/home/pra-va/programavimas/4-projektas/front/src/resources/sign-document.svg, XML, 0, 0, 0, 0, 0, 72, 0, 1, 1, 74
+/home/pra-va/programavimas/4-projektas/front/src/resources/team.svg, XML, 0, 0, 0, 0, 0, 73, 0, 1, 1, 75
+/home/pra-va/programavimas/4-projektas/front/src/resources/user.svg, XML, 0, 0, 0, 0, 0, 43, 0, 1, 1, 45
+/home/pra-va/programavimas/4-projektas/front/src/serviceWorker.js, JavaScript, 0, 0, 94, 0, 0, 0, 0, 31, 13, 138
+/home/pra-va/programavimas/4-projektas/front/src/tests/App.test.js, JavaScript, 0, 0, 8, 0, 0, 0, 0, 0, 2, 10
+/home/pra-va/programavimas/4-projektas/front/src/tests/setupTests.js, JavaScript, 0, 0, 1, 0, 0, 0, 0, 4, 1, 6
+/home/pra-va/programavimas/4-projektas/front/yarn-error.log, Log, 0, 0, 0, 0, 0, 0, 10150, 0, 1530, 11680
+Total, -, 201, 15740, 7574, 320, 20, 445, 10150, 155, 2480, 37085

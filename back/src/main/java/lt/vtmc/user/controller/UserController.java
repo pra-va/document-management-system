@@ -52,7 +52,7 @@ public class UserController {
 	 * access this method.
 	 * 
 	 * @url /api/createadmin
-	 * @method POST }
+	 * @method POST
 	 * @param user details
 	 */
 	@Secured({ "ROLE_ADMIN" })
@@ -114,6 +114,13 @@ public class UserController {
 		return new ResponseEntity<String>("Failed to create user", HttpStatus.CONFLICT);
 	}
 
+	/**
+	 * Controller method to get a list of users by paging data provided.
+	 * 
+	 * @param pagingData
+	 * @method POST
+	 * @return map of users and paging information
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@RequestMapping(path = "/api/users", method = RequestMethod.POST)
 	public Map<String, Object> listAllUsers(@RequestBody PagingData pagingData) {
@@ -195,12 +202,29 @@ public class UserController {
 		return new ResponseEntity<String>("No user found", HttpStatus.NOT_FOUND);
 	}
 
+	/**
+	 * Method will check if provided user name already exists in data base.
+	 * 
+	 * @param username
+	 * @return true if user name exists
+	 * @method GET
+	 * @throws Exception
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@GetMapping(path = "/api/user/exists")
 	public boolean checkIfUserExists(String username) throws Exception {
 		return userService.checkIfUsernameExists(username);
 	}
 
+	/**
+	 * 
+	 * Controller method will return document types that a user can create.
+	 * 
+	 * @param username
+	 * @param pagingData
+	 * @method POST
+	 * @return list of doc types user can create and paging information
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/{username}/dtypescreate")
 	public Map<String, Object> getUserDocTypesCreate(@PathVariable("username") String username,
@@ -210,6 +234,15 @@ public class UserController {
 		return userService.getUserDocTypesToCreate(username, pagingData);
 	}
 
+	/**
+	 * 
+	 * Controller method will return document types that a user can sign.
+	 * 
+	 * @param username
+	 * @param pagingData
+	 * @method POST
+	 * @return list of doc types user can sign and paging information
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/{username}/doctobesigned")
 	public Map<String, Object> getDocumentsToBeSigned(@PathVariable("username") String username,
@@ -219,6 +252,14 @@ public class UserController {
 		return docService.findAllDocumentsToSignByUsername(username, pagingData);
 	}
 
+	/**
+	 * Controller method that will find all documents of user.
+	 * 
+	 * @param username
+	 * @param pagingData
+	 * @method POST
+	 * @return documents list and paging information
+	 */
 	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
 	@PostMapping(path = "/api/{username}/alldocuments")
 	public Map<String, Object> getAllDocumentsByUsername(@PathVariable("username") String username,
@@ -234,7 +275,8 @@ public class UserController {
 	 * successfully if there is no user with administrator role in database.
 	 * 
 	 * @param command
-	 * @return
+	 * @method POST
+	 * @return ResponseEntity
 	 */
 	@PostMapping("/api/user/first/create")
 	public ResponseEntity<String> createInitialAdmin(@RequestBody CreateUserCommand command) {
@@ -254,7 +296,8 @@ public class UserController {
 	/**
 	 * Returns info if initial user needs to be created.
 	 * 
-	 * @return
+	 * @method GET
+	 * @return ResponseEntity
 	 */
 	@GetMapping("/api/user/first")
 	public ResponseEntity<String> shouldInitAdminBeCreated() {
@@ -267,6 +310,14 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Controller method that will find all users and their information without
+	 * groups.
+	 * 
+	 * @param pagingData
+	 * @method POST
+	 * @return users and paging information
+	 */
 	@Secured({ "ROLE_ADMIN" })
 	@PostMapping("/api/user/nogroups")
 	public Map<String, Object> getUsersNoGroup(@RequestBody PagingData pagingData) {
