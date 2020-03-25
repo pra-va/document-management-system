@@ -6,10 +6,10 @@
 		<parameter name="adminPassword" value="adminadmin"/>
 		<parameter name="userFirstName" value="userForEditDocTest"/>
 		<parameter name="userLastName" value="userEditDocTest"/>
-		<parameter name="userUserName" value="userForEditDocTest"/>
+		<parameter name="userUserName" value="userForEditDocTest4"/>
 		<parameter name="userPassword" value="12345678"/>	
-		<parameter name="docTypeName" value="DocTypeForEditDocumentTests"/>		
-		<parameter name="groupName" value="GroupForEditDocumentTests"/>		
+		<parameter name="docTypeName" value="DocTypeForEditDocumentTests4"/>		
+		<parameter name="groupName" value="GroupForEditDocumentTests4"/>		
 		<parameter name="groupDescription" value="groupDescription"/>
 		<parameter name="documentName" value="documentName"/>
 		<parameter name="updatedDocumentName" value="updatedDocumentName"/>

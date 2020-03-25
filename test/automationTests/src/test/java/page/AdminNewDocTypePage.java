@@ -49,16 +49,20 @@ public class AdminNewDocTypePage extends AbstractPage {
 				.click();
 	}
 
-	public void clickCreateDocRigthsCheckBox(String groupName) {
+	public void clickCreateDocRigthsCheckBox(String groupName) throws InterruptedException {
+		Thread.sleep(1000);
 		driver.findElement(
 				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[2]//input"))
 				.click();
+		Thread.sleep(1000);
 	}
 
-	public void clickSignDocRigthsCheckBox(String groupName) {
+	public void clickSignDocRigthsCheckBox(String groupName) throws InterruptedException {
+		Thread.sleep(1000);
 		driver.findElement(
 				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[3]//input"))
 				.click();
+		Thread.sleep(1000);
 	}
 
 	/* SEND KEYS */
@@ -77,7 +81,7 @@ public class AdminNewDocTypePage extends AbstractPage {
 		new WebDriverWait(driver, 4).until(ExpectedConditions.elementToBeClickable(this.buttonCreate));
 	}
 
-	public void createDocType(String docTypeName, String groupName) {
+	public void createDocType(String docTypeName, String groupName) throws InterruptedException {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminNewDocTypeButton();
 		this.sendKeysDocTypeName(docTypeName);

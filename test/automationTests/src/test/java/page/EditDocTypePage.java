@@ -51,16 +51,20 @@ public class EditDocTypePage extends AbstractPage {
 		this.buttonCancel.click();
 	}
 
-	public void clickSpecificGroupCreateCheckBox(String groupName) {
+	public void clickSpecificGroupCreateCheckBox(String groupName) throws InterruptedException {
+		Thread.sleep(1000);
 		driver.findElement(
 				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[2]//input"))
 				.click();
+		Thread.sleep(1000);
 	}
 
-	public void clickSpecificGroupSignCheckBox(String groupName) {
+	public void clickSpecificGroupSignCheckBox(String groupName) throws InterruptedException {
+		Thread.sleep(1000);
 		driver.findElement(
 				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[3]//input"))
 				.click();
+		Thread.sleep(1000);
 	}
 
 	/* WAITS */
@@ -79,14 +83,5 @@ public class EditDocTypePage extends AbstractPage {
 		this.searchField.clear();
 	}
 	
-	public void createDocType(String groupsThatApprove, String groupsThatCreate, String docTypeName)
-			throws IOException {
-		//API.createDocType(groupsThatApprove, groupsThatCreate, docTypeName);
-	}
-
-	public void createGroup(String description, String docTypesToCreate, String docTypesToSign, String groupName,
-			String userList) throws IOException {
-		//API.createGroup(description, docTypesToCreate, docTypesToSign, groupName, userList);
-	}
 
 }

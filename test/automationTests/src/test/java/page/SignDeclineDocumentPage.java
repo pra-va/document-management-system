@@ -53,7 +53,8 @@ public class SignDeclineDocumentPage extends AbstractPage{
 		Thread.sleep(1000);
 		new WebDriverWait(driver, 3).ignoring(StaleElementReferenceException.class).
 		until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Sign')]")));
-		this.buttonSign.click();		
+		this.buttonSign.click();
+		
 	}
 	
 	/* WAITS */

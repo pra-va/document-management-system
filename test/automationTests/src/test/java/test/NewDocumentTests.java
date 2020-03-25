@@ -86,7 +86,7 @@ public class NewDocumentTests extends AbstractTest {
 	 * Preconditions: 
 	 * - one group was created;
 	 * - one user was created and added to this group;
-	 * - one document type was create and previously created group was added to list of groups that can create this type; 
+	 * - one document type was created and previously, group was added to list of groups that can create this type; 
 	 * - user with document creation rights is logged in the system.
 	 * 	
 	 * Test steps: 	 

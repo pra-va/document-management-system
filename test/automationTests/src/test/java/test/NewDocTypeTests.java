@@ -106,7 +106,7 @@ public class NewDocTypeTests extends AbstractTest {
 	 */
 	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "newDocType" }, priority = 1, enabled = true)
-	public void createNewDocTypeTest(String p1, String p2) {
+	public void createNewDocTypeTest(String p1, String p2) throws InterruptedException {
 		newDocTypePage.createDocType(p1, p2);
 		driver.navigate().refresh();
 		mainPage.clickAdminButton();

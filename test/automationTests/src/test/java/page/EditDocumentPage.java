@@ -75,7 +75,9 @@ public class EditDocumentPage extends AbstractPage {
 	}
 	
 	public void clickRemoveFileButton(String fileName) throws InterruptedException {		
-		this.driver.findElement(By.xpath("//div[contains(text(),"+ fileName +")]//button[@aria-label='Close']")).click();
+		this.driver.findElement(
+				By.xpath("//div[contains(text(),"+ fileName +")]//button[@aria-label='Close']"))
+				.click();
 		Thread.sleep(1000);
 	}
 	

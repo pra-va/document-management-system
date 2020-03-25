@@ -54,9 +54,6 @@
 		<parameter name="newUserUserNameContainsSpace" value="user Name"/>
 		<parameter name="newUserPassword3char" value="123"/>	
 		<parameter name="newUserPassword21char" value="user12345678910111213"/>	
-	    <parameter name="newUserPasswordWithSpace" value="user password"/>	
-		<classes>
-			<class name="test.NewUserTests"/>
-		</classes>
-	</test>
+	    <parameter name="newUserPasswordWithSpace" value="user password"/>		  
+	</test>		
 </suite>

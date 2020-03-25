@@ -111,7 +111,7 @@ public class EditDocTypeTests extends AbstractTest {
 	 */
 	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "editDocType" }, priority = 1, enabled = true)
-	public void editDocTypeGroupTest(String docTypeName, String groupName) {
+	public void editDocTypeGroupTest(String docTypeName, String groupName) throws InterruptedException {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
 		docListPage.sendKeysDocTypeSearch(docTypeName);
