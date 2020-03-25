@@ -3,25 +3,12 @@ package test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-
-import org.testng.annotations.AfterSuite;
-
 import org.testng.annotations.BeforeSuite;
-
-import com.thoughtworks.xstream.XStream;
-
-import utilities.User;
 
 public abstract class AbstractTest {
 
 	protected static WebDriver driver;
-	protected static XStream xstream;
-	protected static User user;
-	protected static User admin;
-	protected static User wrongInfo;
 
 	@BeforeSuite
 	public void beforeSuite() {
