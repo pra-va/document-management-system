@@ -1,7 +1,5 @@
 package page;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,8 +22,8 @@ public class AdminNewDocTypePage extends AbstractPage {
 	@FindBy(id = "groupNameInput")
 	private WebElement docTypeNameField;
 
-	@FindBy(xpath = "//*[@aria-label='Search']")
-	private List<WebElement> searchFields;
+	@FindBy(xpath = "//div[@id='newUserGroups']//input[@placeholder='Search']")
+	private WebElement searchField;
 
 	/* BUTTONS */
 
@@ -51,16 +49,16 @@ public class AdminNewDocTypePage extends AbstractPage {
 				.click();
 	}
 
-	public void clickCreateDocRigthsCheckBox(String sameGroupName) {
-		new WebDriverWait(driver, 4).until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//input[@id='createRightsFor:" + sameGroupName + "']")));
-		driver.findElement(By.xpath("//input[@id='createRightsFor:" + sameGroupName + "']")).click();
+	public void clickCreateDocRigthsCheckBox(String groupName) {
+		driver.findElement(
+				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[2]//input"))
+				.click();
 	}
 
-	public void clickSignDocRigthsCheckBox(String sameGroupName) {
-		new WebDriverWait(driver, 4).until(ExpectedConditions
-				.elementToBeClickable(By.xpath("//input[@id='signRightsFor:" + sameGroupName + "']")));
-		driver.findElement(By.xpath("//input[@id='signRightsFor:" + sameGroupName + "']")).click();
+	public void clickSignDocRigthsCheckBox(String groupName) {
+		driver.findElement(
+				By.xpath("//div[@id='newUserGroups']//td[contains(text(), '" + groupName + "')]/..//td[3]//input"))
+				.click();
 	}
 
 	/* SEND KEYS */
@@ -69,8 +67,8 @@ public class AdminNewDocTypePage extends AbstractPage {
 		this.docTypeNameField.sendKeys(name);
 	}
 
-	public void sendKeysSearchSetRigths(String groupName) {
-		searchFields.get(1).sendKeys(groupName);
+	public void sendKeysSearchField(String groupName) {
+		this.searchField.sendKeys(groupName);
 	}
 
 	/* OTHER METHODS */
@@ -83,7 +81,7 @@ public class AdminNewDocTypePage extends AbstractPage {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminNewDocTypeButton();
 		this.sendKeysDocTypeName(docTypeName);
-		this.clickAddSpecificGroupButton(groupName);
+		this.sendKeysSearchField(groupName);
 		this.clickCreateDocRigthsCheckBox(groupName);
 		this.clickSignDocRigthsCheckBox(groupName);
 		this.clickCreateButton();

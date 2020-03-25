@@ -2,6 +2,8 @@ package test;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
@@ -18,6 +20,8 @@ import page.GroupListPage;
 import page.LoginPage;
 import page.MainPage;
 import page.UserListPage;
+import utilities.API;
+import utilities.GetSessionId;
 
 public class NewDocTypeTests extends AbstractTest {
 	LoginPage loginPage;
@@ -28,9 +32,11 @@ public class NewDocTypeTests extends AbstractTest {
 	GroupListPage groupListPage;
 	DocTypeListPage docPage;
 	EditDocTypePage editDocPage;
+	String sessionID;
 
+	@Parameters({ "groupName" })
 	@BeforeClass
-	public void preconitions() {
+	public void preconitions(String groupName) throws IOException {
 		loginPage = new LoginPage(driver);
 		mainPage = new MainPage(driver);
 		groupPage = new AdminNewGroupPage(driver);
@@ -39,12 +45,16 @@ public class NewDocTypeTests extends AbstractTest {
 		groupListPage = new GroupListPage(driver);
 		docPage = new DocTypeListPage(driver);
 		editDocPage = new EditDocTypePage(driver);
+		sessionID = GetSessionId.login("admin", "adminadmin");
+		API.createGroup("Random description", "[]", "[]", groupName, "[]", sessionID);
 	}
 
-	@Parameters({ "docTypeName" })
+	@Parameters({ "docTypeName", "groupName" })
 	@AfterClass
-	public void deleteDocTypeCreatedForTest(String p1) {
-		newDocTypePage.deleteDocType(p1);
+	public void deleteDocTypeCreatedForTest(String docTypeName, String groupName) throws IOException {
+		sessionID = GetSessionId.login("admin", "adminadmin");
+		API.deleteGroup(groupName, sessionID);
+		API.deleteDoctype(docTypeName, sessionID);
 	}
 
 	@Parameters({ "adminUserName", "adminPasswrod" })
@@ -94,11 +104,11 @@ public class NewDocTypeTests extends AbstractTest {
 	 * Expected results:
 	 *   - New document type is created.
 	 */
-	@Parameters({ "docTypeName", "groupName", "adminUserName", "groupDescription" })
+	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "newDocType" }, priority = 1, enabled = true)
-	public void createNewDocTypeTest(String p1, String p2, String p3, String p4) {
-//		groupPage.createGroup(p3, p2, p4);
-//		newDocTypePage.createDocType(p1, p2);
+	public void createNewDocTypeTest(String p1, String p2) {
+		newDocTypePage.createDocType(p1, p2);
+		driver.navigate().refresh();
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
 		mainPage.waitForAdminButton();
@@ -120,13 +130,14 @@ public class NewDocTypeTests extends AbstractTest {
 	 */
 	@Parameters({ "docTypeName", "groupName" })
 	@Test(groups = { "newDocType" }, priority = 2, enabled = true)
-	public void docTypeGroupsTest(String p1, String p2) throws InterruptedException {
+	public void docTypeGroupsTest(String p1, String p2) {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminDocTypesButton();
 		mainPage.waitForAdminButton();
 		docPage.sendKeysDocTypeSearch(p1);
 		docPage.clickEditSpecificDocType(p1);
 		editDocPage.waitForCancelButton();
+		editDocPage.sendKeysSearchField(p2);
 		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]/..//td[2]//input")).isSelected(),
 				"group rights weren't assigned properly");
 		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]/..//td[3]//input")).isSelected(),

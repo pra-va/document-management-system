@@ -19,6 +19,8 @@ import page.GroupListPage;
 import page.LoginPage;
 import page.MainPage;
 import page.UserListPage;
+import utilities.API;
+import utilities.GetSessionId;
 
 public class NewGroupTests extends AbstractTest {
 	LoginPage loginPage;
@@ -28,6 +30,7 @@ public class NewGroupTests extends AbstractTest {
 	AdminNewUserPage newUserPage;
 	GroupListPage groupListPage;
 	EditUserPage editUserPage;
+	String sessionID;
 
 	@BeforeClass
 	public void preconitions() throws IOException {
@@ -42,8 +45,9 @@ public class NewGroupTests extends AbstractTest {
 
 	@Parameters({ "groupName" })
 	@AfterClass
-	public void deleteGroupCreatedForTest(String p1) {
-		groupPage.deleteGroup(p1);
+	public void deleteGroupCreatedForTest(String groupName) throws IOException {
+		sessionID = GetSessionId.login("admin", "adminadmin");
+		API.deleteGroup(groupName, sessionID);
 	}
 
 	@Parameters({ "adminUserName", "adminPasswrod" })
@@ -77,7 +81,7 @@ public class NewGroupTests extends AbstractTest {
 	 *   - New group is created successfully.
 	 */
 	@Parameters({ "adminUserName", "groupName", "groupDescription" })
-	@Test(groups = { "createGroup" }, priority = 0, enabled = true)
+	@Test(groups = { "createGroup" }, priority = 1, enabled = true)
 	public void createGroupTest(String p1, String p2, String p3) {
 		groupPage.createGroup(p1, p2, p3);
 		driver.navigate().refresh();
@@ -99,7 +103,7 @@ public class NewGroupTests extends AbstractTest {
 	 * Expected results:
 	 *   - New group should not be created without a name.
 	 */
-	@Test(groups = { "createGroup" }, priority = 1, enabled = true)
+	@Test(groups = { "createGroup" }, priority = 0, enabled = true)
 	public void groupWithoutNameTest() {
 		mainPage.clickAdminButton();
 		mainPage.clickAdminNewGroupButton();
@@ -129,6 +133,7 @@ public class NewGroupTests extends AbstractTest {
 		userPage.clickEditSpecificUserButton(p1);
 		editUserPage.waitForEditUserPage();
 		//editUserPage.sendKeysSearchGroups2(p2);
+		editUserPage.sendKeysSearchGroups(p2);
 		newUserPage.waitForCancelButton();
 		assertTrue(driver.findElement(By.xpath("//td[contains(text(), '" + p2 + "')]/..//td[1]//input")).isSelected(),
 				"User was not added to the group correctly");

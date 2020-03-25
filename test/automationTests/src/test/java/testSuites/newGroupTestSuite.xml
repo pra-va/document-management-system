@@ -4,9 +4,9 @@
 	<test name="newGroupTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPasswrod" value="adminadmin" />
-		<parameter name="groupName" value="Project managers" />
+		<parameter name="groupName" value="ProjectManagers" />
 		<parameter name="groupDescription" value="Project managers who manage projects that need managing by the managers." />
-		<parameter name="docTypeName" value="Resignation Letter" />
+		<parameter name="docTypeName" value="ResignationLetter" />
 		<classes>
 			<class name="test.NewGroupTests"/>
 		</classes>

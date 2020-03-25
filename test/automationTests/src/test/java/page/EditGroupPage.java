@@ -20,7 +20,7 @@ public class EditGroupPage extends AbstractPage {
 	@FindBy(id = "inputGroupName")
 	private WebElement groupNameField;
 
-	@FindBy(xpath = "//*[@placeholder='Find by Name']")
+	@FindBy(xpath = "//*[@placeholder='Search']")
 	private List<WebElement> searchFields;
 
 	/* BUTTONS */

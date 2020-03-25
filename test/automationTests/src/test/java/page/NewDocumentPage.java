@@ -66,12 +66,13 @@ public class NewDocumentPage extends AbstractPage {
 	/* WAITS */
 
 	public void waitForFileNameVisibility(String fileName) {
-		new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf
-				(driver.findElement(By.xpath("//div[contains(text(),"+ fileName + ")]"))));
+		new WebDriverWait(driver, 2).until(ExpectedConditions
+				.visibilityOf(driver.findElement(By.xpath("//div[contains(text()," + fileName + ")]"))));
 	}
-	
-	public void createDocument(String documentName, String DocDescription, String docTypeName, String filePath, String fileName) {
-		
+
+	public void createDocument(String documentName, String DocDescription, String docTypeName, String filePath,
+			String fileName) {
+
 		sendKeysDocNameField(documentName);
 		sendKeysDocDescriptionField(DocDescription);
 		sendKeysSearchForDocType(docTypeName);
@@ -81,7 +82,5 @@ public class NewDocumentPage extends AbstractPage {
 		waitForFileNameVisibility(fileName);
 		clickCreateButton();
 	}
-	
-	
-	
+
 }

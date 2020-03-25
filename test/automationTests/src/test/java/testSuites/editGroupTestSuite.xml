@@ -1,12 +1,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="newGrouTests" preserve-order="true">
-	<test name="newGroupTests">
+<suite name="editGroupTests" preserve-order="true">
+	<test name="editGroupTests">
 		<parameter name="adminUserName" value="admin" />
 		<parameter name="adminPasswrod" value="adminadmin" />
-		<parameter name="groupName" value="Project managers" />
+		<parameter name="groupName" value="ProjectManagers" />
 		<parameter name="newGroupName" value="New Project managers" />
-		<parameter name="docTypeName" value="Resignation Letter" />
+		<parameter name="docTypeName" value="ResignationLetter" />
 		<classes>
 			<class name="test.EditGroupTest"/>
 		</classes>
