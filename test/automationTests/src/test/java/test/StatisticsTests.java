@@ -75,17 +75,17 @@ public class StatisticsTests extends AbstractTest {
 		mainPage.clickLogoutButton();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - admin is logged in the system;
-	 *   - one doc type, group and user are created using api calls for testing purpose.
-	 * Test steps:
-	 * 1. Open create document page.
-	 * 2. fill out the required fields.
-	 * 3. Click create.
-	 * 4. Navigate Statistics page.
-	 * Expected results:
-	 *   - Doc type you created is displayed in the statistics page.
+	/**-	
+	 * Preconditions: <br>
+	 *   - admin is logged in the system;<br>
+	 *   - one doc type, group and user are created using api calls for testing purpose.<br>
+	 * Test steps:<br>
+	 * 1. Open create document page.<br>
+	 * 2. fill out the required fields.<br>
+	 * 3. Click create.<br>
+	 * 4. Navigate Statistics page.<br>
+	 * Expected results:<br>
+	 *   - Doc type you created is displayed in the statistics page.<br>
 	 */
 	@Parameters({ "docName", "docTypeName", "filePath", "fileName" })
 	@Test(groups = { "statsTests" }, priority = 0, enabled = true)

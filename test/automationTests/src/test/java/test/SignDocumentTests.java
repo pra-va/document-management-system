@@ -87,28 +87,28 @@ public class SignDocumentTests extends AbstractTest {
 
 	}
 
-	/*-	 
-	 * Preconditions: 
-	 * - two group were created;
-	 * - two users were created and added to groups, one user per group;
-	 * - one document type was created, one group rights were set to "Create", other to "Sign";
-	 * - user with document creation rights is logged in the system.
+	/**-	 
+	 * Preconditions: <br>
+	 * - two group were created;<br>
+	 * - two users were created and added to groups, one user per group;<br>
+	 * - one document type was created, one group rights were set to "Create", other to "Sign";<br>
+	 * - user with document creation rights is logged in the system.<br>
 	 * 	
-	 * Test steps: 	 	  
-	 * 1. Click "Create document" button. 
-	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name,
-	 *    click "Choose File", select file, click "Open".
-	 * 3. Click "Create" button. 	 
-	 * 4. Open "My Documents" list.
-	 * 5. Click button "Submit".
-	 * 6. Click button "Log out".
-	 * 7. Log in as user who can sign document: fill "Username", "Password", click "Log in".
-	 * 8. Click button "Sign Document".
-	 * 9. Click button "Sign / Decline".
-	 * 10. Click button "Log out".
-	 * 11.  Log in as user created document: fill "Username", "Password", click "Log in".
-	 * 12. Click "My Documents" button.	
-	 * Expected conditions: document status is "ACCEPTED" on My Documents list.  		 
+	 * Test steps: 	 <br>	  
+	 * 1. Click "Create document" button. <br>
+	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name,<br>
+	 *    click "Choose File", select file, click "Open".<br>
+	 * 3. Click "Create" button. 	<br> 
+	 * 4. Open "My Documents" list.<br>
+	 * 5. Click button "Submit".<br>
+	 * 6. Click button "Log out".<br>
+	 * 7. Log in as user who can sign document: fill "Username", "Password", click "Log in".<br>
+	 * 8. Click button "Sign Document".<br>
+	 * 9. Click button "Sign / Decline".<br>
+	 * 10. Click button "Log out".<br>
+	 * 11.  Log in as user created document: fill "Username", "Password", click "Log in".<br>
+	 * 12. Click "My Documents" button.	<br>
+	 * Expected results: document status is "ACCEPTED" on My Documents list.  		 
 	 */
 	@Parameters({ "adminUserName", "adminPassword", "documentName", "documentDescription", "docTypeName", "filePath",
 			"fileName", "UserUserNameSIGN", "UserPassswordSIGN", "userUserNameCR", "userPasswordCR" })

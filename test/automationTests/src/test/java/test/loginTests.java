@@ -27,14 +27,14 @@ public class loginTests extends AbstractTest {
 		loginPage.clearLoginFields();
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - login page is open;
-	 * Test steps:
-	 * 1. Enter admin login name and password.
-	 * 2. Click login.
-	 * Expected results:
-	 *    - Admin is logged in the system properly.
+	/**-
+	 * Preconditions: <br>
+	 *   - login page is open;<br>
+	 * Test steps:<br>
+	 * 1. Enter admin login name and password.<br>
+	 * 2. Click login.<br>
+	 * Expected results:<br>
+	 *    - Admin is logged in the system properly.<br>
 	 */
 	@Parameters({ "adminUserName", "adminPasswrod" })
 	@Test(groups = { "loginTests" }, priority = 2, enabled = true)
@@ -52,14 +52,14 @@ public class loginTests extends AbstractTest {
 				"You should no be able to navigate back after logging out");
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - login page is open;
-	 * Test steps:
-	 * 1. Enter user login name and password.
-	 * 2. Click login.
-	 * Expected results:
-	 *    - User is logged in the system properly.
+	/**-
+	 * Preconditions: <br>
+	 *   - login page is open;<br>
+	 * Test steps:<br>
+	 * 1. Enter user login name and password.<br>
+	 * 2. Click login.<br>
+	 * Expected results:<br>
+	 *    - User is logged in the system properly.<br>
 	 */
 	@Parameters({ "userUserName", "userPassword" })
 	@Test(groups = { "loginTests" }, priority = 3, enabled = true)
@@ -77,14 +77,14 @@ public class loginTests extends AbstractTest {
 				"You should not be able to navigate back after logging out");
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - login page is open;
-	 * Test steps:
-	 * 1. Leave login name and password fields empty.
-	 * 2. Click login.
-	 * Expected results:
-	 *    - "Incorrect Username or Password!" message is displayed.
+	/**-
+	 * Preconditions: <br>
+	 *   - login page is open;<br>
+	 * Test steps:<br>
+	 * 1. Leave login name and password fields empty.<br>
+	 * 2. Click login.<br>
+	 * Expected results:<br>
+	 *    - "Incorrect Username or Password!" message is displayed.<br>
 	 */
 	@Test(groups = { "loginTests" }, priority = 1, enabled = true)
 	public void emptyLoginFieldsTest() {
@@ -97,14 +97,14 @@ public class loginTests extends AbstractTest {
 				"Incorrect Username or Password! text is not displayed");
 	}
 
-	/*-
-	 * Preconditions: 
-	 *   - login page is open;
-	 * Test steps:
-	 * 1. Enter wrong user login name and password.
-	 * 2. Click login.
-	 * Expected results:
-	 *    - "Incorrect Username or Password!" message is displayed.
+	/**-
+	 * Preconditions: <br>
+	 *   - login page is open;<br>
+	 * Test steps:<br>
+	 * 1. Enter wrong user login name and password.<br>
+	 * 2. Click login.<br>
+	 * Expected results:<br>
+	 *    - "Incorrect Username or Password!" message is displayed.<br>
 	 */
 	@Parameters({ "userNameWrong", "passwordWrong" })
 	@Test(groups = { "loginTests" }, priority = 4, enabled = true)

@@ -82,22 +82,22 @@ public class NewDocumentTests extends AbstractTest {
 		API.deleteDoctype(docTypeName, sessionID);
 	}
 
-	/*-	 
-	 * Preconditions: 
-	 * - one group was created;
-	 * - one user was created and added to this group;
-	 * - one document type was created and previously, group was added to list of groups that can create this type; 
-	 * - user with document creation rights is logged in the system.
+	/**-	 
+	 * Preconditions: <br>
+	 * - one group was created;<br>
+	 * - one user was created and added to this group;<br>
+	 * - one document type was created and previously, group was added to list of groups that can create this type; <br>
+	 * - user with document creation rights is logged in the system.<br>
 	 * 	
-	 * Test steps: 	 
-	 * 1. Log in as previously created user.
-	 * 1. Click "Create document" button. 
-	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name,
-	 *    click "Choose File", select file, click "Open".
-	 * 3. Click "Create" button. 	 
-	 *    Expected conditions: all properties ("Name", "Type", "Status", creation date) on "My Documents" list are displayed correctly. 
-	 * 5. Click "Edit / View" button.	
-	 *    Expected conditions: all properties ("Name", "Type", file name) are displayed correctly. 		 
+	 * Test steps: <br>	 
+	 * 1. Log in as previously created user.<br>
+	 * 1. Click "Create document" button. <br>
+	 * 2. Fill fields in form: "Document Name", "Document Description", search for document type, click on document type name,<br>
+	 *    click "Choose File", select file, click "Open".<br>
+	 * 3. Click "Create" button. <br>	 
+	 *    Expected conditions: all properties ("Name", "Type", "Status", creation date) on "My Documents" list are displayed correctly. <br>
+	 * 5. Click "Edit / View" button.	<br>
+	 *    Expected results: all properties ("Name", "Type", file name) are displayed correctly. <br>		 
 	 */
 
 	@Parameters({ "adminUserName", "adminPassword", "documentName", "documentDescription", "filePath", "fileName",
