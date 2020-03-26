@@ -54,10 +54,8 @@ public class SecurityController {
 	public boolean isUserLoggedIn() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (!(authentication instanceof AnonymousAuthenticationToken)) {
-			LOG.info("# LOG # User [{}] is authenticated #", authentication.getName());
 			return true;
 		} else {
-			LOG.info("# LOG # User [{}] is NOT authenticated #", authentication.getName());
 			return false;
 		}
 	}
