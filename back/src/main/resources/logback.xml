@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<property name="HOME_LOG" value="${user.home}/dvs.log" />  
-<!--  <property name="HOME_LOG" value="/tmp/dvs.log" /> -->
+	<!-- <property name="HOME_LOG" value="${user.home}/dvs.log" />   -->
+  <property name="HOME_LOG" value="/tmp/dvs.log" /> 
 
 	<appender name="CONSOLE"
 		class="ch.qos.logback.core.ConsoleAppender">

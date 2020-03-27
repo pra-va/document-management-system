@@ -1,0 +1,6 @@
+#FileLock
+#Fri Mar 27 08:33:08 EET 2020
+hostName=ThinkPad-L580
+id=1711ab1b6331e2aa04f208fa3b0bc0a251afb1c9b9d
+method=file
+server=127.0.1.1\:43921
